@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mysimplepasswordstorage/models/account_data.dart';
 
-// ignore: public_member_api_docs
 class PasswordsListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PasswordListPageState();
@@ -10,12 +10,9 @@ class PasswordsListPage extends StatefulWidget {
 class _PasswordListPageState extends State<PasswordsListPage> {
   @override
   Widget build(BuildContext context) {
-    Widget getAccountTile(
-        {String accountName,
-        String nick,
-        String loginEmail,
-        String password,
-        AssetImage icon = const AssetImage('images/facebook.png')}) {
+    Widget getAccountTile({AccountData accountData}) {
+      var icon = const AssetImage('images/facebook.png');
+
       Widget getExpandedPart() {
         Widget loginAndPassword = Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -46,11 +43,23 @@ class _PasswordListPageState extends State<PasswordsListPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("$nick", overflow: TextOverflow.clip,),
+                    Text(
+                      "${accountData.nick}",
+                      softWrap: true,
+                      overflow: TextOverflow.clip,
+                    ),
                     SizedBox(height: 10),
-                    Text("$loginEmail", softWrap: true, ),
+                    Text(
+                      "${accountData.login}",
+                      softWrap: true,
+                      overflow: TextOverflow.clip,
+                    ),
                     SizedBox(height: 10),
-                    Text("$password", overflow: TextOverflow.clip,),
+                    Text(
+                      "${accountData.password}",
+                      softWrap: true,
+                      overflow: TextOverflow.clip,
+                    ),
                   ],
                 ),
               ),
@@ -106,10 +115,36 @@ class _PasswordListPageState extends State<PasswordsListPage> {
           ],
         );
 
+        Widget additionalInfo = Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Text(
+                  "Additionial Information:",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    child: Text(
+                      "${accountData.additionalInfo}",
+                      overflow: TextOverflow.clip,
+                      softWrap: true,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
         return Column(
           children: <Widget>[
             loginAndPassword,
             buttons,
+            accountData.additionalInfo != null ? additionalInfo : Container(),
           ],
         );
       }
@@ -118,8 +153,9 @@ class _PasswordListPageState extends State<PasswordsListPage> {
           child: ExpansionTile(
             leading: CircleAvatar(
               backgroundImage: icon,
-              backgroundColor: Colors.transparent,),
-            title: Text("$accountName"),
+              backgroundColor: Colors.transparent,
+            ),
+            title: Text("${accountData.accountName}"),
             children: <Widget>[
               getExpandedPart(),
             ],
@@ -127,26 +163,38 @@ class _PasswordListPageState extends State<PasswordsListPage> {
           color: Theme.of(context).primaryColor);
     }
 
-    return ListView(
-      children: <Widget>[
-        getAccountTile(
-            accountName: "Facebook",
-            nick: "LiLatee",
-            loginEmail: "marcin.hradowicz@gmail.com",
-            password: "**********",
-            icon: AssetImage('images/facebook.png')),
-        getAccountTile(
-            accountName: "Twitter",
-            nick: "LiLatee",
-            loginEmail: "marcin.hradow333333333333333icz222@gmail.com",
-            password: "**********"),
-        getAccountTile(
-            accountName: "Twitter",
-            nick: "LiLatee",
-            loginEmail: "marcin.hradowicz@gmail.com",
-            password: "**********",
-            icon: AssetImage('images/twitter.png'))
-      ],
+    var testAccounts = [
+      AccountData(
+          accountName: "Facebook",
+          nick: "LiLatee",
+          login: "me.myself.and.i@gmail.com",
+          password: "sdnfuimejbgdn39032fnw v",
+          additionalInfo: "I love my parents."),
+      AccountData(
+          accountName: "Twitter",
+          nick: "Kadanna",
+          login: "we.have_a_city_to_burn@gmail.com",
+          password: "sdnfuimejbgdn39032fnw v"),
+      AccountData(
+        accountName: "Facebook",
+        nick: "CookieMonster123",
+        login: "where_are_my_cookies?@gmail.com",
+        password: "sdnfuimejbgdn39032fnw v",
+        additionalInfo: " Hej. Co tam słychać? U mnie w porządku. "
+            "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
+            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+            "A co u Ciebie? "
+            "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?",
+      ),
+    ];
+
+    // Testing list of accounts.
+    return ListView.builder(
+      itemCount: testAccounts.length,
+      itemBuilder: (var context, var index) =>
+          getAccountTile(accountData: testAccounts[index]),
     );
   }
 }
