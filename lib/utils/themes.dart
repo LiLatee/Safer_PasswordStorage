@@ -19,20 +19,26 @@ ThemeData lightTheme = defaultTheme.copyWith(
 );
 
 ThemeData darkTheme = defaultTheme.copyWith(
-    backgroundColor: Colors.black,
-    brightness: Brightness.dark,
-    primaryColor: Color(0xFF414141),
-    accentColor: Colors.blue,
-    scaffoldBackgroundColor: Color(0xFF313131),
-    unselectedWidgetColor: Colors.red,
-    iconTheme: IconThemeData(color: Colors.grey),
-    textTheme: TextTheme(
-      subtitle1: TextStyle(
-        color: Colors.white,
-      ),
-    ),
-    // ListTile text color
-    accentIconTheme: IconThemeData(color: Colors.blue),
-
-
+  backgroundColor: Colors.black,
+  brightness: Brightness.dark,
+  primaryColor: Color(0xFF414141),
+  accentColor: Colors.blue,
+  scaffoldBackgroundColor: Color(0xFF313131),
+  unselectedWidgetColor: Colors.red,
+  iconTheme: IconThemeData(color: Colors.grey),
+  textTheme: TextTheme(
+    subtitle1: TextStyle(), // style of account's names as Facebook, Twitter...
+    subtitle2: TextStyle(
+      color: Colors.white,
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+    ), // style of section as Nick, Login/Email...
+    bodyText1: TextStyle(
+      color: Colors.white,
+      fontSize: 18,
+      fontWeight: FontWeight.normal,
+    ), // style of values for Nick, Login/Email...
+  ),
+  // ListTile text color
+  accentIconTheme: IconThemeData(color: Colors.blue),
 );
