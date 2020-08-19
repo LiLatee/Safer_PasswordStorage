@@ -8,64 +8,60 @@ class PasswordsListPage extends StatefulWidget {
 }
 
 class _PasswordListPageState extends State<PasswordsListPage> {
+  void createNewRecord() {}
+
   @override
   Widget build(BuildContext context) {
     Widget getAccountTile({AccountData accountData}) {
       var icon = const AssetImage('images/facebook.png');
 
       Widget getExpandedPart() {
-        Widget loginAndPassword = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            DefaultTextStyle(
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Text("Nick: "),
-                  SizedBox(height: 10),
-                  Text("Login/Email: "),
-                  SizedBox(height: 10),
-                  Text("Password: "),
-                ],
-              ),
-            ),
-            DefaultTextStyle(
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal),
-              child: Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "${accountData.nick}",
-                      softWrap: true,
-                      overflow: TextOverflow.clip,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "${accountData.login}",
-                      softWrap: true,
-                      overflow: TextOverflow.clip,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "${accountData.password}",
-                      softWrap: true,
-                      overflow: TextOverflow.clip,
-                    ),
-                  ],
+
+        var dataValueMap = <String, String>{
+          "Nick": accountData.nick,
+          "Login": accountData.login,
+          "Password": accountData.password,
+        };
+
+        List<Widget> mainInfoTitles = dataValueMap.entries
+            .map((entry) => Text(
+                  '${entry.key}:\t',
+                  textAlign: TextAlign.end,
+                  style: Theme.of(context).textTheme.subtitle2,
+                ))
+            .toList();
+
+        List<Widget> mainInfoValues = dataValueMap.entries
+            .map(
+              (entry) => Expanded(
+                child: TextFormField(
+                  readOnly: true,
+                  obscureText: entry.key == "Password" ? true : false,
+                  textAlign: TextAlign.start,
+                  initialValue:
+                      entry.key == "Password" ? "Password" : entry.value,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
-            ),
-          ],
-        );
+            )
+            .toList();
+
+        Widget mainInfoSection = IntrinsicHeight(
+          child: Row(
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: mainInfoTitles,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: mainInfoValues,
+                ),
+              ),
+            ],
+          ),);
 
         Widget buttons = Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -142,7 +138,7 @@ class _PasswordListPageState extends State<PasswordsListPage> {
         );
         return Column(
           children: <Widget>[
-            loginAndPassword,
+            mainInfoSection,
             buttons,
             accountData.additionalInfo != null ? additionalInfo : Container(),
           ],
@@ -178,9 +174,9 @@ class _PasswordListPageState extends State<PasswordsListPage> {
       AccountData(
         accountName: "Facebook",
         nick: "CookieMonster123",
-        login: "where_are_my_cookies?@gmail.com",
+        login: "where_are_my_cookiesLOOOOOOLLLL?@gmail.com",
         password: "sdnfuimejbgdn39032fnw v",
-        additionalInfo: " Hej. Co tam słychać? U mnie w porządku. "
+        additionalInfo: "Hej. Co tam słychać? U mnie w porządku. "
             "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
             "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
             "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
@@ -190,11 +186,18 @@ class _PasswordListPageState extends State<PasswordsListPage> {
       ),
     ];
 
-    // Testing list of accounts.
-    return ListView.builder(
-      itemCount: testAccounts.length,
-      itemBuilder: (var context, var index) =>
-          getAccountTile(accountData: testAccounts[index]),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("My Simple Password Storage"),
+      ),
+      body: ListView.builder(
+        itemCount: testAccounts.length,
+        itemBuilder: (var context, var index) =>
+            getAccountTile(accountData: testAccounts[index]),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
+      ),
     );
   }
 }

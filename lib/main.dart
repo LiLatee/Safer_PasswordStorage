@@ -56,11 +56,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'My Simple Password Storage',
       theme: custom_themes.darkTheme,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("My Simple Password Storage"),),
-        body: PasswordsListPage(),
-      ),
+      home: PasswordsListPage(),
     );
   }
 }
