@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'My Simple Password Storage',
-      theme: custom_themes.darkTheme,
+      theme: custom_themes.lightTheme,
       home: PasswordsListPage(),
     );
   }

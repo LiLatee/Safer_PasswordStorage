@@ -14,40 +14,55 @@ class AccountTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return buildTileHeader(context, size);
+  }
+
+  Stack buildTileHeader(BuildContext context, Size size) {
     return Stack(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.all(20),
+          margin: EdgeInsets.all(constants.defaultPadding / 2),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: Colors.grey,
-            boxShadow: [BoxShadow(blurRadius: 5, offset: Offset(5, 5))],
+            borderRadius: BorderRadius.circular(constants.defaultIconRadius),
+            // border: Border.all(color: Colors.grey),
+            color: Theme.of(context).cardColor,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 5,
+                offset: Offset(5, 5),
+                color: Colors.grey,
+              )
+            ],
           ),
           child: Row(
             children: <Widget>[
               Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    boxShadow: [
-                      BoxShadow(blurRadius: 5, offset: Offset(5, 5))
-                    ]),
+                  borderRadius:
+                      BorderRadius.circular(constants.defaultIconRadius),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 5, offset: Offset(0, 0), color: Colors.grey)
+                  ],
+                ),
                 child: buildCircleAvatar(
                     iconName: accountData.accountName.toLowerCase(),
-                    radius: 25.0),
+                    radius: constants.defaultIconRadius),
               ),
-              Expanded(
-                child: Container(),
-              )
             ],
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 15, right: 20),
+          margin: EdgeInsets.only(top: 5, right: size.width * 0.03),
           child: ExpansionTile(
             title: Row(
               children: <Widget>[
                 SizedBox(
-                  width: 70,
+                  width: constants.defaultIconRadius * 2 +
+                      constants.defaultPadding,
                 ),
                 Text(accountData.accountName)
               ],
