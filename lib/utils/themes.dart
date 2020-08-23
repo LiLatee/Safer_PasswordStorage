@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 ThemeData defaultTheme = ThemeData(
-  fontFamily: 'Georgia',
+  fontFamily: 'Roboto',
   textTheme: TextTheme(
     headline1: TextStyle(
         fontSize: 72.0, fontWeight: FontWeight.bold, color: Colors.white),
@@ -14,8 +14,11 @@ ThemeData defaultTheme = ThemeData(
 
 ThemeData lightTheme = defaultTheme.copyWith(
   brightness: Brightness.light,
-  primaryColor: Color(0xFFd8b9c3),
-  accentColor: Color(0xFF827397),
+  // primaryColor: Color(0xFFd8b9c3),
+  primaryColor: Colors.white,
+  // cardColor: Colors.grey,
+  cardColor: Colors.white,
+  accentColor: Color(0xFF0f3460),
 );
 
 ThemeData darkTheme = defaultTheme.copyWith(

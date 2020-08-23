@@ -16,7 +16,7 @@ class _PasswordListPageState extends State<PasswordsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      // appBar: buildAppBar(),
       body: Body(),
       floatingActionButton: buildFloatingActionButton(),
     );
