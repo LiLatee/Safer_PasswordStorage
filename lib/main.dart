@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:mysimplepasswordstorage/pages/passwords_list_page.dart';
-import 'package:mysimplepasswordstorage/utils/encryption.dart';
+import 'screens/passwords_list/passwords_list_page.dart';
+import 'utils/themes.dart' as custom_themes;
 
-import 'package:mysimplepasswordstorage/utils/themes.dart' as custom_themes;
 void main() => runApp(MyApp());
 
 //Future<void> main() async {
@@ -22,7 +19,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     var test = Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: ListView(
@@ -43,9 +39,7 @@ class MyApp extends StatelessWidget {
                 ],
               ),
               ListTile(
-                title: Text(
-                    'data'
-                ),
+                title: Text('data'),
               )
             ],
           ),
@@ -60,5 +54,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
