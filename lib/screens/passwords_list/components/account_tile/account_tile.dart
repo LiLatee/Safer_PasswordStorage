@@ -47,9 +47,10 @@ class AccountTile extends StatelessWidget {
                         blurRadius: 5, offset: Offset(0, 0), color: Colors.grey)
                   ],
                 ),
-                child: buildCircleAvatar(
-                    iconName: accountData.accountName.toLowerCase(),
-                    radius: constants.defaultIconRadius),
+                child: accountData.icon,
+                // child: buildCircleAvatar(
+                //     iconName: accountData.accountName.toLowerCase(),
+                //     radius: constants.defaultIconRadius),
               ),
             ],
           ),
@@ -93,10 +94,8 @@ class AccountTile extends StatelessWidget {
         backgroundColor: Colors.transparent,
       );
     }
-    icon = functions.getDefaultIcon(
-        accountName: accountData.accountName,
-        color: Colors.blueGrey, // TODO
-        radius: radius);
+    icon = functions.generateDefaultIcon(
+        accountName: accountData.accountName, radius: radius);
 
     return icon;
   }

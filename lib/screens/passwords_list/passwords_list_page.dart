@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/BLoCs/all_accounts_bloc.dart';
+import 'package:mysimplepasswordstorage/screens/passwords_list/components/add_account_dialog/add_account_dialog.dart';
 
 import '../../models/account_data.dart';
 import 'components/body.dart';
-import 'components/passwords_list.dart';
 
 class PasswordsListPage extends StatefulWidget {
   @override
@@ -16,19 +16,31 @@ class PasswordsListPage extends StatefulWidget {
 class _PasswordListPageState extends State<PasswordsListPage> {
   static List<AccountData> testAccounts = [
     AccountData(
-        accountName: "Facebook2",
-        email: Field(name: "Email", value: "me.myself.and.i@gmail.com"),
-        password: Field(name: "Password", value: "sdnfuimejbgdn39032fnw v")),
-    AccountData(
-      accountName: "Twitter",
-      email: Field(name: "Email", value: "we.have_a_city_to_burn@gmail.com"),
-      password: Field(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
+      accountName: "Facebook",
+      email: FieldData(name: "Email", value: "me.myself.and.i@gmail.com"),
+      password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
+      icon: CircleAvatar(
+        radius: 25.0,
+        backgroundImage: AssetImage('images/facebook.png'),
+        backgroundColor: Colors.transparent,
+      ),
     ),
     AccountData(
-      accountName: "Facebook",
-      email: Field(
+      accountName: "Twitter",
+      email:
+          FieldData(name: "Email", value: "we.have_a_city_to_burn@gmail.com"),
+      password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
+      icon: CircleAvatar(
+        radius: 25.0,
+        backgroundImage: AssetImage('images/twitter.png'),
+        backgroundColor: Colors.transparent,
+      ),
+    ),
+    AccountData(
+      accountName: "Wooggi",
+      email: FieldData(
           name: "Email", value: "where_are_my_cookiesLOOOOOOLLLL?@gmail.com"),
-      password: Field(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
+      password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
     ),
   ];
 
@@ -71,9 +83,14 @@ class _PasswordListPageState extends State<PasswordsListPage> {
   FloatingActionButton buildFloatingActionButton() {
     return FloatingActionButton(
       onPressed: () {
-        _allAccountsBloc.addAccount();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              AddAccountDialog(addAccountFunc: _allAccountsBloc.addAccount),
+        );
+        // _allAccountsBloc.addAccount();
       },
-      backgroundColor: Colors.red,
+      child: Icon(Icons.add),
     );
   }
 
