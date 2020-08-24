@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../models/account_data.dart';
-import 'account_tile2/account_tile.dart';
+import 'account_tile/account_tile.dart';
 
 class PasswordsList extends StatelessWidget {
   const PasswordsList({
