@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 
-Widget getDefaultIcon({String accountName, Color color, double radius = 25}) {
+Widget generateDefaultIcon({String accountName, double radius = 25}) {
   return CircleAvatar(
     backgroundColor: RandomColor().randomColor(
         colorHue: ColorHue.multiple(

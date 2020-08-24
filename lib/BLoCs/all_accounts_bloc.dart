@@ -1,8 +1,5 @@
-import 'dart:developer';
-
-import 'package:rxdart/rxdart.dart';
-
 import 'package:mysimplepasswordstorage/models/account_data.dart';
+import 'package:rxdart/rxdart.dart';
 
 class AllAccountsBloc {
   List<AccountData> accounts = [];
@@ -20,8 +17,8 @@ class AllAccountsBloc {
   void addAccount({accountData: AccountData}) {
     accounts.add(AccountData(
         accountName: "Eluwa",
-        email: Field(name: "Email", value: "sdfsdf@gmail.com"),
-        password: Field(name: "Password", value: "haselko")));
+        email: FieldData(name: "Email", value: "sdfsdf@gmail.com"),
+        password: FieldData(name: "Password", value: "haselko")));
     _behaviorSubject.sink.add(accounts);
   }
 }
