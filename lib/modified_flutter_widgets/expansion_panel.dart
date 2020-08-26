@@ -2,17 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import 'constants.dart';
-import 'expand_icon.dart';
-import 'ink_well.dart';
-import 'material_localizations.dart';
-import 'mergeable_material.dart';
-import 'theme.dart';
+import 'mergeable_material.dart' as mmm;
 
-const double _kPanelHeaderCollapsedHeight = kMinInteractiveDimension;
+// const double _kPanelHeaderCollapsedHeight = kMinInteractiveDimension;
+const double _kPanelHeaderCollapsedHeight = 64.0;
 const EdgeInsets _kPanelHeaderExpandedDefaultPadding =
     EdgeInsets.symmetric(vertical: 64.0 - _kPanelHeaderCollapsedHeight);
 
@@ -453,13 +451,13 @@ class _ExpansionPanelListState extends State<ExpansionPanelList> {
 
   @override
   Widget build(BuildContext context) {
-    final List<MergeableMaterialItem> items = <MergeableMaterialItem>[];
+    final List<mmm.MergeableMaterialItem> items = <mmm.MergeableMaterialItem>[];
 
     for (int index = 0; index < widget.children.length; index += 1) {
-      if (_isChildExpanded(index) && index != 0 && !_isChildExpanded(index - 1))
-        items.add(MaterialGap(
-            size: 0.0,
-            key: _SaltedKey<BuildContext, int>(context, index * 2 - 1)));
+      // if (_isChildExpanded(index) && index != 0 && !_isChildExpanded(index - 1))
+      //   items.add(MaterialGap(
+      //       size: 0.0,
+      //       key: _SaltedKey<BuildContext, int>(context, index * 2 - 1)));
 
       final ExpansionPanel child = widget.children[index];
       final Widget headerWidget = child.headerBuilder(
@@ -516,7 +514,7 @@ class _ExpansionPanelListState extends State<ExpansionPanelList> {
         );
       }
       items.add(
-        MaterialSlice(
+        mmm.MaterialSlice(
           key: _SaltedKey<BuildContext, int>(context, index * 2),
           child: Column(
             children: <Widget>[
@@ -539,14 +537,15 @@ class _ExpansionPanelListState extends State<ExpansionPanelList> {
         ),
       );
 
-      if (_isChildExpanded(index) && index != widget.children.length - 1)
-        items.add(MaterialGap(
-            size: 0.0,
-            key: _SaltedKey<BuildContext, int>(context, index * 2 + 1)));
+      // if (_isChildExpanded(index) && index != widget.children.length - 1)
+      //   items.add(MaterialGap(
+      //       size: 0.0,
+      //       key: _SaltedKey<BuildContext, int>(context, index * 2 + 1)));
     }
 
-    return MergeableMaterial(
+    return mmm.MergeableMaterial(
       // hasDividers: true,
+      elevation: 0,
       children: items,
     );
   }

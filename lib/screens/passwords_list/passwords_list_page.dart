@@ -7,7 +7,6 @@ import 'package:mysimplepasswordstorage/screens/passwords_list/components/add_ac
 
 import '../../models/account_data.dart';
 import 'components/body.dart';
-import 'components/body2.dart';
 
 class PasswordsListPage extends StatefulWidget {
   @override
@@ -49,17 +48,17 @@ class _PasswordListPageState extends State<PasswordsListPage> {
 
   @override
   Widget build(BuildContext context) {
-    // testAccounts[2].addField(
-    //     name: 'Notes',
-    //     value: "Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie? "
-    //         "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?");
+    testAccounts[2].addField(
+        name: 'Notes',
+        value: "Hej. Co tam słychać? U mnie w porządku. "
+            "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
+            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+            "A co u Ciebie? "
+            "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?");
 
-    // testAccounts[1].addField(name: 'Notes', value: "Haslo zwierzak");
+    testAccounts[1].addField(name: 'Notes', value: "Haslo zwierzak");
 
     return Scaffold(
       // appBar: buildAppBar(),
@@ -69,7 +68,7 @@ class _PasswordListPageState extends State<PasswordsListPage> {
         builder: (context, AsyncSnapshot<List<AccountData>> snapshot) {
           if (snapshot.hasData) {
             return Body2(
-              testAccounts: snapshot.data,
+              accounts: snapshot.data,
             );
           } else {
             return Center(

@@ -6,8 +6,8 @@ import '../../../../constants.dart' as constants;
 import '../../../../models/account_data.dart';
 import '../../../../utils/functions.dart' as functions;
 import '../../../../utils/functions.dart';
-import 'buttons_section.dart';
-import 'fields_section.dart';
+import 'body_buttons_section.dart';
+import 'body_fields_section.dart';
 
 class AccountTile extends StatefulWidget {
   final AccountData accountData;

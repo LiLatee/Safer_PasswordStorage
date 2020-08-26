@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mysimplepasswordstorage/models/account_data.dart';
 import 'package:random_color/random_color.dart';
+import '../constants.dart' as Constants;
+import 'functions.dart' as Functions;
 
 Widget generateDefaultIcon({String accountName, double radius = 25}) {
   return CircleAvatar(
@@ -17,4 +20,23 @@ Widget generateDefaultIcon({String accountName, double radius = 25}) {
       ),
     ),
   );
+}
+
+Widget buildCircleAvatar(
+    {double radius = 25.0, @required AccountData accountData}) {
+  var icon;
+  if (Constants.availableIconsNames
+      .contains(accountData.accountName.toLowerCase())) {
+    icon = AssetImage('images/${accountData.accountName.toLowerCase()}.png');
+
+    return CircleAvatar(
+      radius: radius,
+      backgroundImage: icon,
+      backgroundColor: Colors.transparent,
+    );
+  }
+  icon = Functions.generateDefaultIcon(
+      accountName: accountData.accountName, radius: radius);
+
+  return icon;
 }
