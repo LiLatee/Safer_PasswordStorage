@@ -17,6 +17,7 @@ ThemeData defaultTheme = ThemeData(
 );
 
 ThemeData lightTheme = ThemeData(
+  scaffoldBackgroundColor: Colors.white, // TODO jaki kolor
   brightness: Brightness.light,
   // primaryColor: Color(0xFFd8b9c3),
   primaryColor: Colors.white,

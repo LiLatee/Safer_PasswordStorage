@@ -7,6 +7,7 @@ import 'package:mysimplepasswordstorage/screens/passwords_list/components/add_ac
 
 import '../../models/account_data.dart';
 import 'components/body.dart';
+import 'components/body2.dart';
 
 class PasswordsListPage extends StatefulWidget {
   @override
@@ -62,11 +63,12 @@ class _PasswordListPageState extends State<PasswordsListPage> {
 
     return Scaffold(
       // appBar: buildAppBar(),
+      // backgroundColor: Colors.white,
       body: StreamBuilder(
         stream: _allAccountsBloc.accountsObservable,
         builder: (context, AsyncSnapshot<List<AccountData>> snapshot) {
           if (snapshot.hasData) {
-            return Body(
+            return Body2(
               testAccounts: snapshot.data,
             );
           } else {
@@ -81,13 +83,29 @@ class _PasswordListPageState extends State<PasswordsListPage> {
   }
 
   FloatingActionButton buildFloatingActionButton() {
+    Size size = MediaQuery.of(context).size;
+
     return FloatingActionButton(
       onPressed: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) =>
-              AddAccountDialog(addAccountFunc: _allAccountsBloc.addAccount),
-        );
+        showGeneralDialog(
+            barrierColor: Colors.black.withOpacity(0.5),
+            transitionBuilder: (context, a1, a2, widget) {
+              return Transform.scale(
+                origin: Offset(size.width / 2,
+                    size.height / 2), // TODO jak wziąć pozycje przycisku
+                scale: a1.value,
+                child: Opacity(
+                  opacity: a1.value,
+                  child: AddAccountDialog(
+                      addAccountFunc: _allAccountsBloc.addAccount),
+                ),
+              );
+            },
+            transitionDuration: Duration(milliseconds: 200),
+            barrierDismissible: true,
+            barrierLabel: '',
+            context: context,
+            pageBuilder: (context, animation1, animation2) {});
         // _allAccountsBloc.addAccount();
       },
       child: Icon(Icons.add),
@@ -100,3 +118,4 @@ class _PasswordListPageState extends State<PasswordsListPage> {
     );
   }
 }
+// AddAccountDialog(addAccountFunc: _allAccountsBloc.addAccount)
