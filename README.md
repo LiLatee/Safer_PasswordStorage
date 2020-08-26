@@ -1,6 +1,6 @@
 # MySimplePasswordStorage
 
-Attempting to create a simple app to store passwords that is secure and user is able to choose storing data locally or in cloud.
+Attempt to create a simple app to store passwords that is secure and user is able to choose storing data locally or in cloud.
 
 ## Getting Started
 
