@@ -1,73 +1,55 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart' as Constants;
 import '../../../models/account_data.dart';
-import 'account_tile/account_tile.dart';
+import '../../../modified_flutter_widgets/expansion_panel.dart' as epn;
+import '../../../utils/functions.dart' as Functions;
+import 'account_tile/body_buttons_section.dart';
+import 'account_tile/body_fields_section.dart';
+import 'account_tile/header.dart';
 
-class Body extends StatefulWidget {
-  final List<AccountData> testAccounts;
+class Body2 extends StatefulWidget {
+  final List<AccountData> accounts;
 
-  Body({@required this.testAccounts});
+  Body2({@required this.accounts});
 
   @override
-  _BodyState createState() => _BodyState();
+  _Body2State createState() => _Body2State();
 }
 
-class _BodyState extends State<Body> {
-  int selectedTileIndex = 0;
-  callback(newIndex) {
-    setState(() {
-      log("3", name: "LOL");
-      log("BYŁO:${selectedTileIndex.toString()}", name: "LOL");
-      selectedTileIndex = newIndex;
-    });
-  }
-
+class _Body2State extends State<Body2> {
   @override
   Widget build(BuildContext context) {
-    log("HALO", name: "LOL");
-    log("JEST:${selectedTileIndex.toString()}", name: "LOL");
-    return ListView.builder(
-      itemCount: widget.testAccounts.length,
-      itemBuilder: (var context, var index) => AccountTile(
-          accountData: widget.testAccounts[index],
-          selectedTileIndex: selectedTileIndex,
-          index: index,
-          callback: callback),
-    );
+    return ListView(children: <Widget>[
+      epn.ExpansionPanelList.radio(
+        children: widget.accounts
+            .map<epn.ExpansionPanelRadio>(
+                (accountData) => buildExpansionPanel(accountData: accountData))
+            .toList(),
+      ),
+    ]);
+  }
 
-    // return Column(children: <Widget>[
-    //   ExpansionPanelList(
-    //     expansionCallback: (int index, bool isExpanded) {},
-    //     children: [
-    //       ExpansionPanel(
-    //         headerBuilder: (BuildContext context, bool isExpanded) {
-    //           return ListTile(
-    //             title: Text('Item 1'),
-    //           );
-    //         },
-    //         body: ListTile(
-    //           title: Text('Item 1 child'),
-    //           subtitle: Text('Details goes here'),
-    //         ),
-    //         isExpanded: true,
-    //       ),
-    //       ExpansionPanel(
-    //         headerBuilder: (BuildContext context, bool isExpanded) {
-    //           return ListTile(
-    //             title: Text('Item 2'),
-    //           );
-    //         },
-    //         body: ListTile(
-    //           title: Text('Item 2 child'),
-    //           subtitle: Text('Details goes here'),
-    //         ),
-    //         isExpanded: false,
-    //       ),
-    //     ],
-    //   ),
-    // ]);
+  epn.ExpansionPanelRadio buildExpansionPanel(
+      {@required AccountData accountData}) {
+    return epn.ExpansionPanelRadio(
+        canTapOnHeader: true,
+        value: UniqueKey(),
+        headerBuilder: (BuildContext context, bool isExpanded) {
+          return AccountTileHeader(
+            accountData: accountData,
+          );
+        },
+        body: buildExpandedPart(accountData: accountData));
+  }
+
+  Widget buildExpandedPart({AccountData accountData}) {
+    return Column(
+      children: <Widget>[
+        FieldsSection(accountData: accountData),
+        ButtonsSection(),
+      ],
+    );
   }
 }
