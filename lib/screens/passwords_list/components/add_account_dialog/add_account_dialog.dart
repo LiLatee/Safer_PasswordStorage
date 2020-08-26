@@ -1,11 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:mysimplepasswordstorage/components/dialog_template.dart';
 
-import '../../../../BLoCs/all_accounts_bloc.dart';
 import '../../../../constants.dart' as Constants;
 import '../../../../utils/functions.dart' as MyFunctions;
-import '../../../../models/account_data.dart';
-import 'field_widget.dart';
-import 'fields_section.dart';
+import '../../../../components/field_widget.dart';
+import 'add_new_field_widget.dart';
 
 class AddAccountDialog extends StatefulWidget {
   final Function addAccountFunc;
@@ -20,140 +20,114 @@ class AddAccountDialog extends StatefulWidget {
 
 class _AddAccountDialogState extends State<AddAccountDialog> {
   List<Widget> fieldsWidgets = [
+    FieldWidget(label: "Account name", isPassword: false),
     FieldWidget(label: "Email", isPassword: false),
     FieldWidget(label: "Password", isPassword: true),
-    FieldWidget(label: "Nick", isPassword: false),
   ];
 
-  dialogContent(BuildContext context) {
+  Column combinedContent(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Stack(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(top: 25.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.white,
-              ),
-              margin: EdgeInsets.only(top: 25),
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(
-                        Constants.defaultPadding / 2,
-                        Constants.defaultPadding / 2,
-                        Constants.defaultPadding / 2,
-                        0.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                              right: Constants.defaultPadding / 2),
-                          child: MyFunctions.generateDefaultIcon(
-                            accountName: "Icon",
-                          ),
-                        ),
-                        FlatButton(
-                          onPressed: () {},
-                          color: Theme.of(context).accentColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            // side: BorderSide(
-                            //   color: Theme.of(context).accentColor,
-                            //   width: 2.0,
-                            // ),
-                          ),
-                          // color: Theme.of(context).buttonColor,
-                          child: Container(
-                            child: Text(
-                              "Change icon",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    children: fieldsWidgets,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: Constants.defaultPadding / 2),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).accentColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(10.0),
-                        bottomRight: Radius.circular(10.0),
-                      ),
-                    ),
-                    child: IntrinsicHeight(
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: FlatButton(
-                              onPressed: () {},
-                              child: Container(
-                                child: Text(
-                                  "Cancel",
-                                ),
-                              ),
-                            ),
-                          ),
-                          VerticalDivider(
-                              color: Theme.of(context).primaryColor),
-                          Expanded(
-                            child: FlatButton(
-                              onPressed: () {},
-                              child: Container(
-                                child: Text("Add"),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            buildDialogHeader(context)
-          ],
-        ),
+        chooseIconSection(context),
+        Column(children: fieldsWidgets),
+        FlatButton.icon(
+            color: Theme.of(context).accentColor,
+            onPressed: () {
+              setState(() {
+                fieldsWidgets.add(
+                  AddFieldWidget(label: "Set field name"),
+                );
+              });
+            },
+            icon: Icon(Icons.add),
+            label: Text("Add field")),
+        bottomButtonsSection(context)
       ],
     );
   }
 
-  Positioned buildDialogHeader(BuildContext context) {
-    return Positioned(
-      left: Constants.defaultPadding,
-      right: Constants.defaultPadding,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50.0),
-          color: Theme.of(context).accentColor,
+  Container bottomButtonsSection(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: Constants.defaultPadding / 2),
+      decoration: BoxDecoration(
+        color: Theme.of(context).accentColor,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10.0),
+          bottomRight: Radius.circular(10.0),
         ),
-        height: 50,
-        child: Center(
-          child: Text(
-            "Adding new account",
-            style: Theme.of(context).textTheme.headline2,
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: FlatButton(
+                onPressed: () {},
+                child: Container(
+                  child: Text(
+                    "Cancel",
+                  ),
+                ),
+              ),
+            ),
+            VerticalDivider(color: Theme.of(context).primaryColor),
+            Expanded(
+              child: FlatButton(
+                onPressed: () {},
+                child: Container(
+                  child: Text("Add"),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Padding chooseIconSection(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(Constants.defaultPadding / 2,
+          Constants.defaultPadding / 2, Constants.defaultPadding / 2, 0.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: Constants.defaultPadding / 2),
+            child: MyFunctions.generateDefaultIcon(
+              accountName: "Icon",
+            ),
           ),
-        ),
+          FlatButton(
+            onPressed: () {},
+            color: Theme.of(context).accentColor,
+            // shape: RoundedRectangleBorder(
+            //     // borderRadius: BorderRadius.circular(20.0),
+            //     // side: BorderSide(
+            //     //   color: Theme.of(context).accentColor,
+            //     //   width: 2.0,
+            //     // ),
+            //     ),
+            // color: Theme.of(context).buttonColor,
+            child: Container(
+              child: Text(
+                "Change icon",
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Constants.defaultPadding),
-      ),
-      elevation: 10.0,
-      backgroundColor: Colors.transparent,
-      child: dialogContent(context),
-    );
+    return MyDialog(
+        content: combinedContent(context),
+        title: AutoSizeText(
+          "Adding new account",
+          style: Theme.of(context).textTheme.headline2,
+          maxLines: 2,
+          textAlign: TextAlign.center,
+        ));
   }
 }

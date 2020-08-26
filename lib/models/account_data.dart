@@ -12,11 +12,8 @@ class AccountData {
 
   AccountData(
       {@required this.accountName, this.email, this.password, this.icon}) {
-    log(this.icon.toString(), name: "LOL");
     if (icon == null) {
-      log("hmmm", name: "LOL");
       this.icon = Functions.generateDefaultIcon(accountName: accountName);
-      log(this.icon.toString(), name: "LOL");
     }
   }
 
