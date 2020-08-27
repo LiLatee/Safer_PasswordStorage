@@ -7,6 +7,7 @@ import 'package:mysimplepasswordstorage/screens/passwords_list/components/add_ac
 
 import '../../models/account_data.dart';
 import 'components/body.dart';
+import '../../utils/constants.dart' as Constants;
 
 class PasswordsListPage extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _PasswordListPageState extends State<PasswordsListPage> {
       email: FieldData(name: "Email", value: "me.myself.and.i@gmail.com"),
       password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
       icon: CircleAvatar(
-        radius: 25.0,
+        radius: Constants.defaultIconRadius,
         backgroundImage: AssetImage('images/facebook.png'),
         backgroundColor: Colors.transparent,
       ),
@@ -31,7 +32,7 @@ class _PasswordListPageState extends State<PasswordsListPage> {
           FieldData(name: "Email", value: "we.have_a_city_to_burn@gmail.com"),
       password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
       icon: CircleAvatar(
-        radius: 25.0,
+        radius: Constants.defaultIconRadius,
         backgroundImage: AssetImage('images/twitter.png'),
         backgroundColor: Colors.transparent,
       ),
@@ -96,7 +97,7 @@ class _PasswordListPageState extends State<PasswordsListPage> {
                 child: Opacity(
                   opacity: a1.value,
                   child: AddAccountDialog(
-                      addAccountFunc: _allAccountsBloc.addAccount),
+                      addAccountCallback: _allAccountsBloc.addAccount),
                 ),
               );
             },

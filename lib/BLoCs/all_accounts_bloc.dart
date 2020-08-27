@@ -14,11 +14,8 @@ class AllAccountsBloc {
 
   Stream<List<AccountData>> get accountsObservable => _behaviorSubject.stream;
 
-  void addAccount({accountData: AccountData}) {
-    accounts.add(AccountData(
-        accountName: "Eluwa",
-        email: FieldData(name: "Email", value: "sdfsdf@gmail.com"),
-        password: FieldData(name: "Password", value: "haselko")));
+  void addAccount({AccountData accountData}) {
+    accounts.add(accountData);
     _behaviorSubject.sink.add(accounts);
   }
 }

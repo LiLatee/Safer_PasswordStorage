@@ -1,17 +1,21 @@
+import 'dart:developer';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/components/dialog_template.dart';
+import 'package:mysimplepasswordstorage/models/account_data.dart';
 
-import '../../../../constants.dart' as Constants;
+import '../../../../utils/constants.dart' as Constants;
 import '../../../../utils/functions.dart' as MyFunctions;
 import '../../../../components/field_widget.dart';
 import 'add_new_field_widget.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class AddAccountDialog extends StatefulWidget {
-  final Function addAccountFunc;
+  final Function addAccountCallback;
 
   AddAccountDialog({
-    @required this.addAccountFunc,
+    @required this.addAccountCallback,
   });
 
   @override
@@ -19,36 +23,134 @@ class AddAccountDialog extends StatefulWidget {
 }
 
 class _AddAccountDialogState extends State<AddAccountDialog> {
-  List<Widget> fieldsWidgets = [
-    FieldWidget(label: "Account name", isPassword: false),
-    FieldWidget(label: "Email", isPassword: false),
-    FieldWidget(label: "Password", isPassword: true),
-  ];
+  callback(accountName) {
+    setState(() {
+      this.accountName = accountName;
+    });
+  }
+
+  // List<Widget> fieldsWidgets = [
+  //   FieldWidget(label: "Account name", isPassword: false,),
+  // FieldWidget(label: "Email", isPassword: false),
+  // FieldWidget(label: "Password", isPassword: true),
+  // ];
+
+  String accountName = 'Account name';
+  Widget icon;
+
+  Color pickerColor = Color(0xff443a49);
+  Color currentColor = Color(0xff443a49);
+
+  void changeIconColor(Color color) {
+    setState(() => pickerColor = color);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    icon = MyFunctions.generateRandomColorIcon(
+      name: accountName,
+      color: pickerColor,
+    );
+
+    return MyDialog(
+      content: combinedContent(context),
+      title: "Adding new account",
+    );
+  }
 
   Column combinedContent(BuildContext context) {
     return Column(
       children: <Widget>[
+        FieldWidget(
+          label: "Account name",
+          isSingleLine: true,
+          isPassword: false,
+          callback: callback,
+        ),
         chooseIconSection(context),
-        Column(children: fieldsWidgets),
-        FlatButton.icon(
-            color: Theme.of(context).accentColor,
-            onPressed: () {
-              setState(() {
-                fieldsWidgets.add(
-                  AddFieldWidget(label: "Set field name"),
-                );
-              });
-            },
-            icon: Icon(Icons.add),
-            label: Text("Add field")),
         bottomButtonsSection(context)
       ],
     );
   }
 
+  Widget chooseIconSection(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: Constants.defaultPadding,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          icon,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      child: AlertDialog(
+                        title: Text('Pick a color'),
+                        content: BlockPicker(
+                          pickerColor: currentColor,
+                          onColorChanged: changeIconColor,
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: const Text(
+                              'Got it',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            onPressed: () {
+                              setState(() => currentColor = pickerColor);
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ));
+                },
+                color: Theme.of(context).accentColor,
+                // shape: RoundedRectangleBorder(
+                //     // borderRadius: BorderRadius.circular(20.0),
+                //     // side: BorderSide(
+                //     //   color: Theme.of(context).accentColor,
+                //     //   width: 2.0,
+                //     // ),
+                //     ),
+                // color: Theme.of(context).buttonColor,
+                child: Container(
+                  child: Text(
+                    "Choose color",
+                  ),
+                ),
+              ),
+              FlatButton(
+                onPressed: () {},
+                color: Theme.of(context).accentColor,
+                // shape: RoundedRectangleBorder(
+                //     // borderRadius: BorderRadius.circular(20.0),
+                //     // side: BorderSide(
+                //     //   color: Theme.of(context).accentColor,
+                //     //   width: 2.0,
+                //     // ),
+                //     ),
+                // color: Theme.of(context).buttonColor,
+                child: Container(
+                  child: Text(
+                    "Choose image",
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   Container bottomButtonsSection(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: Constants.defaultPadding / 2),
+      margin: EdgeInsets.only(top: Constants.defaultPadding),
       decoration: BoxDecoration(
         color: Theme.of(context).accentColor,
         borderRadius: BorderRadius.only(
@@ -72,7 +174,12 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
             VerticalDivider(color: Theme.of(context).primaryColor),
             Expanded(
               child: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.addAccountCallback(
+                      accountData:
+                          AccountData(accountName: accountName, icon: icon));
+                  Navigator.of(context).pop();
+                },
                 child: Container(
                   child: Text("Add"),
                 ),
@@ -82,52 +189,5 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
         ),
       ),
     );
-  }
-
-  Padding chooseIconSection(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(Constants.defaultPadding / 2,
-          Constants.defaultPadding / 2, Constants.defaultPadding / 2, 0.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: Constants.defaultPadding / 2),
-            child: MyFunctions.generateDefaultIcon(
-              accountName: "Icon",
-            ),
-          ),
-          FlatButton(
-            onPressed: () {},
-            color: Theme.of(context).accentColor,
-            // shape: RoundedRectangleBorder(
-            //     // borderRadius: BorderRadius.circular(20.0),
-            //     // side: BorderSide(
-            //     //   color: Theme.of(context).accentColor,
-            //     //   width: 2.0,
-            //     // ),
-            //     ),
-            // color: Theme.of(context).buttonColor,
-            child: Container(
-              child: Text(
-                "Change icon",
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MyDialog(
-        content: combinedContent(context),
-        title: AutoSizeText(
-          "Adding new account",
-          style: Theme.of(context).textTheme.headline2,
-          maxLines: 2,
-          textAlign: TextAlign.center,
-        ));
   }
 }

@@ -21,6 +21,7 @@ dependencies:
   rxdart: ^0.24.1
   random_color: ^1.0.5
   auto_size_text: ^2.1.0
+  flutter_colorpicker: ^0.3.4
   flutter:
     sdk: flutter
 
