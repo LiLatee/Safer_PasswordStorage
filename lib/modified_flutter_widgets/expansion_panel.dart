@@ -9,8 +9,7 @@ import 'package:flutter/widgets.dart';
 
 import 'mergeable_material.dart' as mmm;
 
-// const double _kPanelHeaderCollapsedHeight = kMinInteractiveDimension;
-const double _kPanelHeaderCollapsedHeight = 64.0;
+const double _kPanelHeaderCollapsedHeight = kMinInteractiveDimension;
 const EdgeInsets _kPanelHeaderExpandedDefaultPadding =
     EdgeInsets.symmetric(vertical: 64.0 - _kPanelHeaderCollapsedHeight);
 

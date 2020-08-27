@@ -11,14 +11,14 @@ class FieldWidget extends StatelessWidget {
     this.isSingleLine = false,
     this.value,
     this.isPassword = false,
-    this.callback,
+    this.onChangedCallback,
   }) : super(key: key);
 
   final String label;
   final bool isSingleLine;
   final String value;
   final bool isPassword;
-  final Function callback;
+  final Function onChangedCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -42,17 +42,11 @@ class FieldWidget extends StatelessWidget {
         maxLines: (isSingleLine || isPassword) ? 1 : 5,
         obscureText: isPassword,
         initialValue: (value != null) ? value : "",
-        // textInputAction: TextInputAction.done,
         onChanged: (value) {
-          if (callback != null) {
-            callback(value);
+          if (onChangedCallback != null) {
+            onChangedCallback(value);
           }
         },
-        // onFieldSubmitted: (value) {
-        //   if (callback != null) {
-        //     callback(value);
-        //   }
-        // },
       ),
     );
   }

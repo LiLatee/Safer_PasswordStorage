@@ -25,6 +25,18 @@ class AccountData {
   void addField({String name, String value}) {
     additionalFields.add(FieldData(name: name, value: value));
   }
+
+  static bool isNameUsed(
+      {@required List<AccountData> accounts, @required String name}) {
+    bool isUsed = false;
+    for (var el in accounts) {
+      if (el.accountName.toLowerCase() == name.toLowerCase()) {
+        isUsed = true;
+        break;
+      }
+    }
+    return isUsed;
+  }
 }
 
 class FieldData {
