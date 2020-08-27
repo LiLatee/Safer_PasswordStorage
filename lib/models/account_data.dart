@@ -11,9 +11,14 @@ class AccountData {
   Widget icon;
 
   AccountData(
-      {@required this.accountName, this.email, this.password, this.icon}) {
+      {@required this.accountName,
+      this.email,
+      this.password,
+      @required this.icon}) {
+    this.email = FieldData(name: "Password", value: "");
+    this.password = FieldData(name: "Email", value: "");
     if (icon == null) {
-      this.icon = Functions.generateDefaultIcon(accountName: accountName);
+      this.icon = Functions.generateRandomColorIcon(name: accountName);
     }
   }
 

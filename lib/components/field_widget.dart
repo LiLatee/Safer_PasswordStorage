@@ -1,25 +1,32 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import '../constants.dart' as Constants;
+
+import '../utils/constants.dart' as Constants;
 
 class FieldWidget extends StatelessWidget {
   const FieldWidget({
     Key key,
     @required this.label,
-    this.isPassword = false,
+    this.isSingleLine = false,
     this.value,
+    this.isPassword = false,
+    this.callback,
   }) : super(key: key);
 
   final String label;
+  final bool isSingleLine;
   final String value;
   final bool isPassword;
+  final Function callback;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-          top: Constants.defaultPadding / 2,
-          left: Constants.defaultPadding / 2,
-          right: Constants.defaultPadding / 2),
+          top: Constants.defaultPadding,
+          left: Constants.defaultPadding,
+          right: Constants.defaultPadding),
       child: TextFormField(
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
@@ -32,9 +39,20 @@ class FieldWidget extends StatelessWidget {
         readOnly: false,
         keyboardType: TextInputType.multiline,
         minLines: 1,
-        maxLines: isPassword ? 1 : 5,
+        maxLines: (isSingleLine || isPassword) ? 1 : 5,
         obscureText: isPassword,
         initialValue: (value != null) ? value : "",
+        // textInputAction: TextInputAction.done,
+        onChanged: (value) {
+          if (callback != null) {
+            callback(value);
+          }
+        },
+        // onFieldSubmitted: (value) {
+        //   if (callback != null) {
+        //     callback(value);
+        //   }
+        // },
       ),
     );
   }

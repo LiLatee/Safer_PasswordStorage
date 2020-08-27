@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import '../../../../constants.dart' as constants;
+import '../../../../utils/constants.dart' as Constants;
 import '../../../../models/account_data.dart';
 import '../../../../utils/functions.dart' as functions;
 import '../../../../utils/functions.dart';
@@ -46,9 +46,9 @@ class _AccountTileState extends State<AccountTile> {
     return Stack(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.all(constants.defaultPadding / 2),
+          margin: EdgeInsets.all(Constants.defaultPadding),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(constants.defaultIconRadius),
+            borderRadius: BorderRadius.circular(Constants.defaultIconRadius),
             // border: Border.all(color: Colors.grey),
             color: Theme.of(context).cardColor,
             boxShadow: [
@@ -64,7 +64,7 @@ class _AccountTileState extends State<AccountTile> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius:
-                      BorderRadius.circular(constants.defaultIconRadius),
+                      BorderRadius.circular(Constants.defaultIconRadius),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -96,8 +96,8 @@ class _AccountTileState extends State<AccountTile> {
             title: Row(
               children: <Widget>[
                 SizedBox(
-                  width: constants.defaultIconRadius * 2 +
-                      constants.defaultPadding,
+                  width: Constants.defaultIconRadius * 2 +
+                      Constants.defaultPadding,
                 ),
                 Text(widget.accountData.accountName)
               ],
@@ -120,7 +120,7 @@ class _AccountTileState extends State<AccountTile> {
 
   Widget buildCircleAvatar({String iconName, double radius = 25.0}) {
     var icon;
-    if (constants.availableIconsNames.contains(iconName)) {
+    if (Constants.availableIconsNames.contains(iconName)) {
       icon = AssetImage(
           'images/${widget.accountData.accountName.toLowerCase()}.png');
 
@@ -130,8 +130,8 @@ class _AccountTileState extends State<AccountTile> {
         backgroundColor: Colors.transparent,
       );
     }
-    icon = functions.generateDefaultIcon(
-        accountName: widget.accountData.accountName, radius: radius);
+    icon = functions.generateRandomColorIcon(
+        name: widget.accountData.accountName, radius: radius);
 
     return icon;
   }

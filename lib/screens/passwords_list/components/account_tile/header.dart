@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data.dart';
+import 'package:mysimplepasswordstorage/utils/functions.dart';
 
-import '../../../../constants.dart' as Constants;
+import '../../../../utils/constants.dart' as Constants;
 
 class AccountTileHeader extends StatelessWidget {
   final AccountData accountData;
@@ -13,7 +14,7 @@ class AccountTileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(Constants.defaultPadding / 2),
+        margin: EdgeInsets.all(Constants.defaultPadding),
         decoration: BoxDecoration(
           // border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(Constants.defaultIconRadius),
@@ -28,20 +29,9 @@ class AccountTileHeader extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.circular(Constants.defaultIconRadius),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      blurRadius: 5, offset: Offset(0, 0), color: Colors.grey)
-                ],
-              ),
-              child: accountData.icon,
-            ),
+            buildCircleAvatar(accountData: accountData),
             SizedBox(
-              width: Constants.defaultPadding / 2,
+              width: Constants.defaultPadding,
             ),
             Text(accountData.accountName)
           ],

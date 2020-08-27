@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart' as Constants;
+import '../../../utils/constants.dart' as Constants;
 import '../../../models/account_data.dart';
 import '../../../modified_flutter_widgets/expansion_panel.dart' as epn;
 import '../../../utils/functions.dart' as Functions;

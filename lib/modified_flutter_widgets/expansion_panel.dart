@@ -483,7 +483,7 @@ class _ExpansionPanelListState extends State<ExpansionPanelList> {
               ? localizations.expandedIconTapHint
               : localizations.collapsedIconTapHint,
           container: true,
-          // child: expandIconContainer,
+          child: expandIconContainer,
         );
       }
       Widget header = Row(
@@ -498,11 +498,20 @@ class _ExpansionPanelListState extends State<ExpansionPanelList> {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(
                     minHeight: _kPanelHeaderCollapsedHeight),
-                child: headerWidget,
+                child: IntrinsicHeight(
+                  child: Stack(
+                    children: <Widget>[
+                      headerWidget,
+                      Align(
+                        child: expandIconContainer,
+                        alignment: Alignment.centerRight,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-          // expandIconContainer,
         ],
       );
       if (child.canTapOnHeader) {

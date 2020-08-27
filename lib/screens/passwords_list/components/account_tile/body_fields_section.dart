@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/components/field_widget.dart';
-import 'package:mysimplepasswordstorage/constants.dart' as constants;
+import 'package:mysimplepasswordstorage/utils/constants.dart' as constants;
 import 'package:mysimplepasswordstorage/models/account_data.dart';
 
 class FieldsSection extends StatelessWidget {
