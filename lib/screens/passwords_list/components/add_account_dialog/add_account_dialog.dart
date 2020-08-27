@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:mysimplepasswordstorage/components/account_name_field_widget.dart';
 import 'package:mysimplepasswordstorage/components/dialog_template.dart';
 import 'package:mysimplepasswordstorage/models/account_data.dart';
 
@@ -13,9 +14,11 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class AddAccountDialog extends StatefulWidget {
   final Function addAccountCallback;
+  final List<AccountData> currentAccounts;
 
   AddAccountDialog({
     @required this.addAccountCallback,
+    @required this.currentAccounts,
   });
 
   @override
@@ -23,7 +26,7 @@ class AddAccountDialog extends StatefulWidget {
 }
 
 class _AddAccountDialogState extends State<AddAccountDialog> {
-  callback(accountName) {
+  setNewAccountNamecallback({String accountName}) {
     setState(() {
       this.accountName = accountName;
     });
@@ -37,6 +40,7 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
 
   String accountName = 'Account name';
   Widget icon;
+  final accountNameFormKey = GlobalKey<FormState>();
 
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
@@ -61,11 +65,10 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
   Column combinedContent(BuildContext context) {
     return Column(
       children: <Widget>[
-        FieldWidget(
-          label: "Account name",
-          isSingleLine: true,
-          isPassword: false,
-          callback: callback,
+        AccountNameFieldWidget(
+          currentAccounts: widget.currentAccounts,
+          onChangedCallback: setNewAccountNamecallback,
+          accountNameFormKey: accountNameFormKey,
         ),
         chooseIconSection(context),
         bottomButtonsSection(context)
@@ -148,7 +151,7 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
     );
   }
 
-  Container bottomButtonsSection(BuildContext context) {
+  Widget bottomButtonsSection(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: Constants.defaultPadding),
       decoration: BoxDecoration(
@@ -163,7 +166,9 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
           children: <Widget>[
             Expanded(
               child: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
                 child: Container(
                   child: Text(
                     "Cancel",
@@ -175,10 +180,17 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
             Expanded(
               child: FlatButton(
                 onPressed: () {
-                  widget.addAccountCallback(
-                      accountData:
-                          AccountData(accountName: accountName, icon: icon));
-                  Navigator.of(context).pop();
+                  if (accountNameFormKey.currentState.validate()) {
+                    log("DODANE", name: "LOL");
+                    widget.addAccountCallback(
+                        accountData:
+                            AccountData(accountName: accountName, icon: icon));
+                    Navigator.of(context).pop();
+                  } else {
+                    log("NIE DODANE", name: "LOL");
+                    // Scaffold.of(context)
+                    //     .showSnackBar(SnackBar(content: Text('zle')));
+                  }
                 },
                 child: Container(
                   child: Text("Add"),

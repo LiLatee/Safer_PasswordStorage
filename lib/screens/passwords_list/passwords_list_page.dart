@@ -68,7 +68,7 @@ class _PasswordListPageState extends State<PasswordsListPage> {
         stream: _allAccountsBloc.accountsObservable,
         builder: (context, AsyncSnapshot<List<AccountData>> snapshot) {
           if (snapshot.hasData) {
-            return Body2(
+            return Body(
               accounts: snapshot.data,
             );
           } else {
@@ -97,12 +97,14 @@ class _PasswordListPageState extends State<PasswordsListPage> {
                 child: Opacity(
                   opacity: a1.value,
                   child: AddAccountDialog(
-                      addAccountCallback: _allAccountsBloc.addAccount),
+                    currentAccounts: testAccounts,
+                    addAccountCallback: _allAccountsBloc.addAccount,
+                  ),
                 ),
               );
             },
             transitionDuration: Duration(milliseconds: 200),
-            barrierDismissible: true,
+            barrierDismissible: false,
             barrierLabel: '',
             context: context,
             pageBuilder: (context, animation1, animation2) {});

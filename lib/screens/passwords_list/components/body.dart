@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,20 +11,25 @@ import 'account_tile/body_buttons_section.dart';
 import 'account_tile/body_fields_section.dart';
 import 'account_tile/header.dart';
 
-class Body2 extends StatefulWidget {
+class Body extends StatefulWidget {
   final List<AccountData> accounts;
 
-  Body2({@required this.accounts});
+  Body({@required this.accounts});
 
   @override
-  _Body2State createState() => _Body2State();
+  _BodyState createState() => _BodyState();
 }
 
-class _Body2State extends State<Body2> {
+class _BodyState extends State<Body> {
+  String expandedValue;
+
   @override
   Widget build(BuildContext context) {
     return ListView(children: <Widget>[
       epn.ExpansionPanelList.radio(
+        initialOpenPanelValue: expandedValue,
+        expandedHeaderPadding:
+            EdgeInsets.only(left: Constants.defaultPadding * 3),
         children: widget.accounts
             .map<epn.ExpansionPanelRadio>(
                 (accountData) => buildExpansionPanel(accountData: accountData))
@@ -35,8 +42,12 @@ class _Body2State extends State<Body2> {
       {@required AccountData accountData}) {
     return epn.ExpansionPanelRadio(
         canTapOnHeader: true,
-        value: UniqueKey(),
+        value: accountData.accountName,
         headerBuilder: (BuildContext context, bool isExpanded) {
+          if (isExpanded) {
+            expandedValue = accountData.accountName;
+          }
+
           return AccountTileHeader(
             accountData: accountData,
           );
