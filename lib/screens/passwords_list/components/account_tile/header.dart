@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data.dart';
-import 'package:mysimplepasswordstorage/utils/functions.dart';
 
 import '../../../../utils/constants.dart' as Constants;
 
@@ -29,7 +28,7 @@ class AccountTileHeader extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            buildCircleAvatar(accountData: accountData),
+            accountData.icon,
             SizedBox(
               width: Constants.defaultPadding,
             ),
