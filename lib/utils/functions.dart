@@ -30,11 +30,12 @@ Widget generateRandomColorIcon(
 Widget buildCircleAvatar(
     {double radius = Constants.defaultIconRadius,
     @required AccountData accountData}) {
-  var icon;
   Widget iconWidget;
+
   if (Constants.availableIconsNames
       .contains(accountData.accountName.toLowerCase())) {
-    icon = AssetImage('images/${accountData.accountName.toLowerCase()}.png');
+    var icon =
+        AssetImage('images/${accountData.accountName.toLowerCase()}.png');
 
     iconWidget = CircleAvatar(
       radius: radius,
@@ -42,8 +43,6 @@ Widget buildCircleAvatar(
       backgroundColor: Colors.transparent,
     );
   }
-  iconWidget = Functions.generateRandomColorIcon(
-      name: accountData.accountName, radius: radius);
 
   iconWidget = Container(
     decoration: BoxDecoration(
@@ -53,8 +52,26 @@ Widget buildCircleAvatar(
         BoxShadow(blurRadius: 5, offset: Offset(0, 0), color: Colors.grey)
       ],
     ),
-    child: accountData.icon,
+    child: iconWidget,
   );
 
   return iconWidget;
+}
+
+Widget buildCircleAvatarUsingImage(
+    {double radius = Constants.defaultIconRadius,
+    @required Image imageForIcon}) {
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(Constants.defaultIconRadius),
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(blurRadius: 5, offset: Offset(0, 0), color: Colors.grey)
+      ],
+    ),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(Constants.defaultIconRadius),
+      child: imageForIcon,
+    ),
+  );
 }
