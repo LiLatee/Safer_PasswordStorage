@@ -26,8 +26,38 @@ const List<Color> iconDefaultColors = [
   Colors.black,
 ];
 
-const List<String> defaultIconsNames = ['Facebook', 'Twitter'];
+const List<String> defaultIconsNames = [
+  'Facebook',
+  'Twitter',
+  'facebook — kopia',
+  'Twitter — kopia',
+  'facebook — kopia (2)',
+  'facebook — kopia (3)',
+  'Twitter — kopia (2)',
+  'Twitter — kopia (3)',
+  'facebook — kopia (4)',
+  'facebook — kopia (5)',
+  'Twitter — kopia (4)',
+  'Twitter — kopia (5)',
+  'facebook — kopia (4)',
+  'facebook — kopia (5)',
+  'Twitter — kopia (4)',
+  'Twitter — kopia (5)',
+  'facebook — kopia (6)',
+  'facebook — kopia (7)',
+  'Twitter — kopia (6)',
+  'Twitter — kopia (7)',
+  'facebook — kopia (8)',
+  'facebook — kopia (9)',
+  'Twitter — kopia (8)',
+  'Twitter — kopia (9)',
+  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+];
 
 final List<Image> defaultIcons = defaultIconsNames
     .map((e) => Image.asset('images/${e.toLowerCase()}.png'))
     .toList();
+
+final Map<String, Image> defaultIconsMap = Map.fromIterable(defaultIconsNames,
+    key: (el) => el,
+    value: (el) => Image.asset('images/${el.toLowerCase()}.png'));

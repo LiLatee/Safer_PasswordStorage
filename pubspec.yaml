@@ -23,7 +23,6 @@ dependencies:
   auto_size_text: ^2.1.0
   flutter_colorpicker: ^0.3.4
   file_picker: ^1.13.3
-  # image: ^2.1.14
   flutter:
     sdk: flutter
 
