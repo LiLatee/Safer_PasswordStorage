@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../utils/constants.dart' as Constants;
+import '../../../utils/constants.dart' as MyConstants;
 import '../../../models/account_data.dart';
 import '../../../modified_flutter_widgets/expansion_panel.dart' as epn;
 import '../../../utils/functions.dart' as Functions;
@@ -29,7 +29,7 @@ class _BodyState extends State<Body> {
       epn.ExpansionPanelList.radio(
         initialOpenPanelValue: expandedValue,
         expandedHeaderPadding:
-            EdgeInsets.only(left: Constants.defaultPadding * 3),
+            EdgeInsets.only(left: MyConstants.defaultPadding * 3),
         children: widget.accounts
             .map<epn.ExpansionPanelRadio>(
                 (accountData) => buildExpansionPanel(accountData: accountData))

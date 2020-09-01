@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import '../../../../utils/constants.dart' as Constants;
+import '../../../../utils/constants.dart' as MyConstants;
 
 class AddFieldWidget extends StatefulWidget {
   const AddFieldWidget({
@@ -28,9 +28,9 @@ class _AddFieldWidgetState extends State<AddFieldWidget> {
     initialValue = widget.value;
     return Container(
       padding: EdgeInsets.only(
-          top: Constants.defaultPadding,
-          left: Constants.defaultPadding,
-          right: Constants.defaultPadding),
+          top: MyConstants.defaultPadding,
+          left: MyConstants.defaultPadding,
+          right: MyConstants.defaultPadding),
       child: TextFormField(
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
