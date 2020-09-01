@@ -7,7 +7,7 @@ import 'package:mysimplepasswordstorage/screens/passwords_list/components/add_ac
 
 import '../../models/account_data.dart';
 import 'components/body.dart';
-import '../../utils/constants.dart' as Constants;
+import '../../utils/constants.dart' as MyConstants;
 
 class PasswordsListPage extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class _PasswordListPageState extends State<PasswordsListPage> {
       email: FieldData(name: "Email", value: "me.myself.and.i@gmail.com"),
       password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
       icon: CircleAvatar(
-        radius: Constants.defaultIconRadius,
+        radius: MyConstants.defaultIconRadius,
         backgroundImage: AssetImage('images/facebook.png'),
         backgroundColor: Colors.transparent,
       ),
@@ -32,7 +32,7 @@ class _PasswordListPageState extends State<PasswordsListPage> {
           FieldData(name: "Email", value: "we.have_a_city_to_burn@gmail.com"),
       password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
       icon: CircleAvatar(
-        radius: Constants.defaultIconRadius,
+        radius: MyConstants.defaultIconRadius,
         backgroundImage: AssetImage('images/twitter.png'),
         backgroundColor: Colors.transparent,
       ),
@@ -88,26 +88,27 @@ class _PasswordListPageState extends State<PasswordsListPage> {
     return FloatingActionButton(
       onPressed: () {
         showGeneralDialog(
-            barrierColor: Colors.black.withOpacity(0.5),
-            transitionBuilder: (context, a1, a2, widget) {
-              return Transform.scale(
-                origin: Offset(size.width / 2,
-                    size.height / 2), // TODO jak wziąć pozycje przycisku
-                scale: a1.value,
-                child: Opacity(
-                  opacity: a1.value,
-                  child: AddAccountDialog(
-                    currentAccounts: testAccounts,
-                    addAccountCallback: _allAccountsBloc.addAccount,
-                  ),
+          barrierColor: Colors.black.withOpacity(0.5),
+          transitionBuilder: (context, a1, a2, widget) {
+            return Transform.scale(
+              origin: Offset(size.width / 2,
+                  size.height / 2), // TODO jak wziąć pozycje przycisku
+              scale: a1.value,
+              child: Opacity(
+                opacity: a1.value,
+                child: AddAccountDialog(
+                  currentAccounts: testAccounts,
+                  addAccountCallback: _allAccountsBloc.addAccount,
                 ),
-              );
-            },
-            transitionDuration: Duration(milliseconds: 200),
-            barrierDismissible: false,
-            barrierLabel: '',
-            context: context,
-            pageBuilder: (context, animation1, animation2) {});
+              ),
+            );
+          },
+          transitionDuration: Duration(milliseconds: 200),
+          barrierDismissible: false,
+          barrierLabel: '',
+          context: context,
+          pageBuilder: (context, animation1, animation2) {},
+        );
         // _allAccountsBloc.addAccount();
       },
       child: Icon(Icons.add),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data.dart';
 
-import '../../../../utils/constants.dart' as Constants;
+import '../../../../utils/constants.dart' as MyConstants;
 
 class AccountTileHeader extends StatelessWidget {
   final AccountData accountData;
@@ -13,10 +13,10 @@ class AccountTileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(Constants.defaultPadding),
+        margin: EdgeInsets.all(MyConstants.defaultPadding),
         decoration: BoxDecoration(
           // border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(Constants.defaultIconRadius),
+          borderRadius: BorderRadius.circular(MyConstants.defaultIconRadius),
           color: Theme.of(context).cardColor,
           boxShadow: [
             BoxShadow(
@@ -30,7 +30,7 @@ class AccountTileHeader extends StatelessWidget {
           children: <Widget>[
             accountData.icon,
             SizedBox(
-              width: Constants.defaultPadding,
+              width: MyConstants.defaultPadding,
             ),
             Text(accountData.accountName)
           ],

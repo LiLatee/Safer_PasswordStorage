@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import '../utils/functions.dart' as Functions;
+import '../utils/constants.dart' as MyConstants;
 
 class AccountData {
   String accountName;
@@ -11,14 +12,12 @@ class AccountData {
   Widget icon;
 
   AccountData(
-      {@required this.accountName,
-      this.email,
-      this.password,
-      @required this.icon}) {
+      {@required this.accountName, this.email, this.password, this.icon}) {
     this.email = FieldData(name: "Password", value: "");
     this.password = FieldData(name: "Email", value: "");
     if (icon == null) {
-      this.icon = Functions.generateRandomColorIcon(name: accountName);
+      this.icon = Functions.generateRandomColorIcon(
+          name: accountName, color: MyConstants.iconDefaultColors[0]);
     }
   }
 

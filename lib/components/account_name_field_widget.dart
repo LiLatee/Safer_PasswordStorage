@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data.dart';
 
-import '../utils/constants.dart' as Constants;
+import '../utils/constants.dart' as MyConstants;
 
 class AccountNameFieldWidget extends StatefulWidget {
   final Function onChangedCallback;
@@ -26,9 +26,9 @@ class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-          top: Constants.defaultPadding,
-          left: Constants.defaultPadding,
-          right: Constants.defaultPadding),
+          top: MyConstants.defaultPadding,
+          left: MyConstants.defaultPadding,
+          right: MyConstants.defaultPadding),
       child: Form(
         key: widget.accountNameFormKey,
         autovalidate: true,

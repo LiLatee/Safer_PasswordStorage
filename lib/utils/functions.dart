@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data.dart';
 import 'package:random_color/random_color.dart';
-import 'constants.dart' as Constants;
+import 'constants.dart' as MyConstants;
 import 'functions.dart' as Functions;
 
 Widget generateRandomColorIcon(
     {String name = '',
-    double radius = Constants.defaultIconRadius,
+    double radius = MyConstants.defaultIconRadius,
     Color color}) {
   color ??= RandomColor().randomColor(
       colorHue: ColorHue.multiple(
@@ -28,11 +28,11 @@ Widget generateRandomColorIcon(
 }
 
 Widget buildCircleAvatar(
-    {double radius = Constants.defaultIconRadius,
+    {double radius = MyConstants.defaultIconRadius,
     @required AccountData accountData}) {
   Widget iconWidget;
 
-  if (Constants.availableIconsNames
+  if (MyConstants.availableIconsNames
       .contains(accountData.accountName.toLowerCase())) {
     var icon =
         AssetImage('images/${accountData.accountName.toLowerCase()}.png');
@@ -46,7 +46,7 @@ Widget buildCircleAvatar(
 
   iconWidget = Container(
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(Constants.defaultIconRadius),
+      borderRadius: BorderRadius.circular(MyConstants.defaultIconRadius),
       color: Colors.white,
       boxShadow: [
         BoxShadow(blurRadius: 5, offset: Offset(0, 0), color: Colors.grey)
@@ -59,18 +59,18 @@ Widget buildCircleAvatar(
 }
 
 Widget buildCircleAvatarUsingImage(
-    {double radius = Constants.defaultIconRadius,
+    {double radius = MyConstants.defaultIconRadius,
     @required Image imageForIcon}) {
   return Container(
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(Constants.defaultIconRadius),
+      borderRadius: BorderRadius.circular(MyConstants.defaultIconRadius),
       color: Colors.white,
       boxShadow: [
         BoxShadow(blurRadius: 5, offset: Offset(0, 0), color: Colors.grey)
       ],
     ),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(Constants.defaultIconRadius),
+      borderRadius: BorderRadius.circular(MyConstants.defaultIconRadius),
       child: imageForIcon,
     ),
   );

@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/constants.dart' as Constants;
+import '../utils/constants.dart' as MyConstants;
 
 class MyDialog extends StatelessWidget {
   final Widget content;
@@ -17,7 +17,7 @@ class MyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Constants.defaultPadding),
+        borderRadius: BorderRadius.circular(MyConstants.defaultPadding),
       ),
       elevation: 10.0,
       backgroundColor: Colors.transparent,
@@ -51,8 +51,8 @@ class MyDialog extends StatelessWidget {
 
   Widget buildDialogHeader(BuildContext context) {
     return Positioned(
-      left: Constants.defaultPadding,
-      right: Constants.defaultPadding,
+      left: MyConstants.defaultPadding,
+      right: MyConstants.defaultPadding,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50.0),
@@ -61,7 +61,7 @@ class MyDialog extends StatelessWidget {
         height: 50,
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(Constants.defaultPadding / 4),
+            padding: const EdgeInsets.all(MyConstants.defaultPadding / 4),
             child: AutoSizeText(
               title,
               style: Theme.of(context).textTheme.headline2,
