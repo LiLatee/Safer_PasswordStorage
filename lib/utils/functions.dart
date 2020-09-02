@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data.dart';
 import 'package:random_color/random_color.dart';
@@ -61,6 +63,11 @@ Widget buildCircleAvatar(
 Widget buildCircleAvatarUsingImage(
     {double radius = MyConstants.defaultIconRadius,
     @required Image imageForIcon}) {
+  log("circleAvatar-${imageForIcon.width.toString()}", name: "LOL");
+  print("circleAvatar-${imageForIcon.width.toString()}");
+  print("circleAvatar-${imageForIcon.height.toString()}");
+  print("circleAvatar-${imageForIcon.color.toString()}");
+
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(MyConstants.defaultIconRadius),

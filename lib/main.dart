@@ -1,8 +1,13 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'screens/passwords_list/passwords_list_page.dart';
 import 'utils/themes.dart' as custom_themes;
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 //Future<void> main() async {
 //  log("elo1", name: "LOL");
@@ -19,6 +24,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    FlutterError.onError = (FlutterErrorDetails details) {
+      FlutterError.dumpErrorToConsole(details);
+      print(details);
+      log(details.toString(), name: "LOL");
+    };
     return MaterialApp(
       title: 'My Simple Password Storage',
       theme: custom_themes.lightTheme,

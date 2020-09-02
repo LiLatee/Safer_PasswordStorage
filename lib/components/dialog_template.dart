@@ -6,11 +6,13 @@ import '../utils/constants.dart' as MyConstants;
 class MyDialog extends StatelessWidget {
   final Widget content;
   final String title;
+  final List<Widget> actions;
 
   const MyDialog({
     Key key,
     @required this.content,
     @required this.title,
+    this.actions,
   }) : super(key: key);
 
   @override
@@ -27,7 +29,7 @@ class MyDialog extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: <Widget>[
-                buildDialogContent(),
+                buildDialogContent(actions),
                 buildDialogHeader(context)
               ],
             ),
@@ -37,15 +39,23 @@ class MyDialog extends StatelessWidget {
     );
   }
 
-  Widget buildDialogContent() {
+  Widget buildDialogContent(List<Widget> actions) {
     return Container(
-      padding: EdgeInsets.only(top: 25.0),
+      padding: EdgeInsets.only(top: MyConstants.defaultCircularBorderRadius),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius:
+            BorderRadius.circular(MyConstants.defaultCircularBorderRadius),
         color: Colors.white,
       ),
-      margin: EdgeInsets.only(top: 25),
-      child: content,
+      margin: EdgeInsets.only(top: MyConstants.defaultCircularBorderRadius),
+      child: Column(
+        children: [
+          content,
+          ButtonBar(
+            children: actions ?? [],
+          ),
+        ],
+      ),
     );
   }
 

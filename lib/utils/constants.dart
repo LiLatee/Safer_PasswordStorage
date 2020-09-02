@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 const double defaultPadding = 10.0;
-const double defaultIconRadius = 25.0;
+const double defaultIconRadius = kMinInteractiveDimension / 2;
+const double defaultCircularBorderRadius = 25.0;
 const List<String> availableIconsNames = ['facebook', 'twitter'];
 const List<Color> iconDefaultColors = [
   Colors.red,

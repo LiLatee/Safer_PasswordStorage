@@ -16,26 +16,16 @@ class ChooseColorSelectedDropdownMenuItem extends DropdownMenuItem {
               callback(isShowNeeded: true);
             },
             value: 'Choose color',
-            child: Column(
+            child: Row(
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(bottom: MyConstants.defaultPadding),
-                  child: IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        icon,
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Select icon',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                SizedBox(
+                  width: MyConstants.defaultPadding / 2,
+                ),
+                icon,
+                Expanded(
+                  child: Text(
+                    'Select icon',
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ],
