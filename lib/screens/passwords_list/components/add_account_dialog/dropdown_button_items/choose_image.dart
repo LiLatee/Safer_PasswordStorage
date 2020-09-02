@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -13,11 +14,12 @@ class ChooseImageDropdownMenuItem extends DropdownMenuItem {
     this.setIconImageCallback,
   }) : super(
             onTap: () async {
-              File file = await FilePicker.getFile(type: FileType.image);
-              setIconImageCallback(
-                  image: Image.asset(file.path,
-                      width: MyConstants.defaultIconRadius * 2,
-                      height: MyConstants.defaultIconRadius * 2));
+              FilePicker.getFile(type: FileType.image).then((value) {
+                setIconImageCallback(
+                    image: Image.file(value,
+                        width: MyConstants.defaultIconRadius * 2,
+                        height: MyConstants.defaultIconRadius * 2));
+              }).catchError(print); // TODO LOG?
             },
             value: 'Choose image',
             child: Container(

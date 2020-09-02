@@ -8,23 +8,21 @@ class ChooseImageSelectedDropdownMenuItem extends DropdownMenuItem {
     @required this.chooseImageIcon,
   }) : super(
             value: 'Choose image',
-            child: Padding(
-              padding: EdgeInsets.only(bottom: MyConstants.defaultPadding),
-              child: IntrinsicHeight(
-                child: Row(
-                  children: <Widget>[
-                    chooseImageIcon ??
-                        Icon(
-                          Icons.image,
-                          size: MyConstants.defaultIconRadius * 2,
-                        ),
-                    Expanded(
-                        child: Text(
-                      'Choose icon',
-                      textAlign: TextAlign.center,
-                    )),
-                  ],
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  width: MyConstants.defaultPadding / 2,
                 ),
-              ),
+                chooseImageIcon ??
+                    Icon(
+                      Icons.image,
+                      size: MyConstants.defaultIconRadius * 2,
+                    ),
+                Expanded(
+                    child: Text(
+                  'Choose icon',
+                  textAlign: TextAlign.center,
+                )),
+              ],
             ));
 }
