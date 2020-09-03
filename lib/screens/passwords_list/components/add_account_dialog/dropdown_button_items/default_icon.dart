@@ -31,9 +31,11 @@ class DefaultIconDropdownMenuItem extends DropdownMenuItem {
                   SizedBox(
                     width: MyConstants.defaultPadding,
                   ),
-                  Text(
-                    mapElement.key,
-                    overflow: TextOverflow.ellipsis,
+                  Expanded(
+                    child: Text(
+                      mapElement.key,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),

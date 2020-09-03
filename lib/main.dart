@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     FlutterError.onError = (FlutterErrorDetails details) {
       FlutterError.dumpErrorToConsole(details);
       print(details);
-      log(details.toString(), name: "LOL");
+      log(details.toString(), name: "OUPS");
     };
     return MaterialApp(
       title: 'My Simple Password Storage',
