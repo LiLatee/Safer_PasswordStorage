@@ -2,12 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mysimplepasswordstorage/BLoCs/account_expanded_part_bloc.dart';
 
 import '../../../models/account_data.dart';
 import '../../../modified_flutter_widgets/expansion_panel.dart' as epn;
 import '../../../utils/constants.dart' as MyConstants;
-import 'account_tile/body_buttons_section.dart';
-import 'account_tile/body_fields_section.dart';
 import 'account_tile/header.dart';
 import 'account_tile/account_data_expanded_part.dart';
 
@@ -22,32 +21,19 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   // List<bool> isExpandedList;
-  Map<String, bool> isEditableMap;
-  Map<String, bool> showPasswordMap;
+  Map<String, ExpandedPartBloc> expandedPartBlocs;
+
   @override
   Widget build(BuildContext context) {
     // isExpandedList ??= List.filled(widget.accounts.length, false);
-    isEditableMap ??= Map.fromIterables(
+    expandedPartBlocs ??= Map.fromIterables(
         widget.accounts.map((e) => e.accountName),
-        List.filled(widget.accounts.length, false));
-
-    showPasswordMap ??= Map.fromIterables(
-        widget.accounts.map((e) => e.accountName),
-        List.filled(widget.accounts.length, false));
+        List.filled(widget.accounts.length, ExpandedPartBloc()));
 
     return ListView(children: <Widget>[
       epn.ExpansionPanelList.radio(
         expansionCallback: (panelIndex, isExpanded) {
           setState(() {
-            // Expanded/Collapsed tile, so turn off edit mode and hide password everywhere.
-            isEditableMap = Map.fromIterables(
-                widget.accounts.map((e) => e.accountName),
-                List.filled(widget.accounts.length, false));
-
-            showPasswordMap = Map.fromIterables(
-                widget.accounts.map((e) => e.accountName),
-                List.filled(widget.accounts.length, false));
-
             // bool temp = !isExpandedList[panelIndex];
             // isExpandedList[panelIndex] = !isExpanded && temp;
           });
@@ -56,18 +42,15 @@ class _BodyState extends State<Body> {
             EdgeInsets.only(left: MyConstants.defaultPadding * 3),
         children: widget.accounts.map((accountData) {
           return buildExpansionPanel(
-              accountData: accountData,
-              isEditable: isEditableMap[accountData.accountName],
-              showPassword: showPasswordMap[accountData.accountName]);
+            accountData: accountData,
+          );
         }).toList(),
       ),
     ]);
   }
 
   epn.ExpansionPanelRadio buildExpansionPanel(
-      {@required AccountData accountData,
-      @required bool isEditable,
-      @required bool showPassword}) {
+      {@required AccountData accountData, @required bool showPassword}) {
     return epn.ExpansionPanelRadio(
         canTapOnHeader: true,
         value: accountData.accountName,
@@ -78,26 +61,6 @@ class _BodyState extends State<Body> {
         },
         body: AccountDataExpandedPart(
           accountData: accountData,
-          isEditable: isEditable,
-          toogleEditModeCallback: ({accountName}) {
-            toogleEditMode(accountName: accountName);
-          },
-          showPassword: showPassword,
-          toogleShowPasswordCallback: ({accountName}) {
-            toogleShowPassword(accountName: accountName);
-          },
         ));
-  }
-
-  void toogleEditMode({String accountName}) {
-    setState(() {
-      isEditableMap[accountName] = !isEditableMap[accountName];
-    });
-  }
-
-  void toogleShowPassword({String accountName}) {
-    setState(() {
-      showPasswordMap[accountName] = !showPasswordMap[accountName];
-    });
   }
 }

@@ -12,7 +12,7 @@ class AllAccountsBloc {
     _behaviorSubject = BehaviorSubject.seeded(this.accounts);
   }
 
-  Stream<List<AccountData>> get accountsObservable => _behaviorSubject.stream;
+  Stream<List<AccountData>> get accountsStream => _behaviorSubject.stream;
 
   void addAccount({AccountData accountData}) {
     accounts.add(accountData);
