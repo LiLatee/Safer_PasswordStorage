@@ -86,21 +86,21 @@ class _FieldsSectionState extends State<FieldsSection>
     return Column(
       children: [
         Column(children: mainInfos),
-        Container(
-          width: 100,
-          height: 100,
-          child: FlatButton(
-              onPressed: () {
-                setState(() {
-                  _right = 0.0;
-                  _width = size.width -
-                      MyConstants.defaultIconRadius * 1.5 * 3 -
-                      MyConstants.defaultPadding * 2;
-                });
-              },
-              color: Colors.red,
-              child: Text("K")),
-        )
+        // Container(
+        //   width: 100,
+        //   height: 100,
+        //   child: FlatButton(
+        //       onPressed: () {
+        //         setState(() {
+        //           _right = 0.0;
+        //           _width = size.width -
+        //               MyConstants.defaultIconRadius * 1.5 * 3 -
+        //               MyConstants.defaultPadding * 2;
+        //         });
+        //       },
+        //       color: Colors.red,
+        //       child: Text("K")),
+        // )
       ],
     );
   }
@@ -124,7 +124,7 @@ class FieldRowWithButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: EdgeInsets.only(
         top: MyConstants.defaultPadding,
         left: MyConstants.defaultPadding,
@@ -133,40 +133,38 @@ class FieldRowWithButtons extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: IntrinsicHeight(
-              child: Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                  AnimatedContainer(
-                      curve: _curve,
-                      width: _width,
-                      duration: _duration,
-                      child: fieldWidget),
-                  AnimatedPositioned(
+            child: Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                AnimatedPositioned(
+                  curve: _curve,
+                  right: _right,
+                  duration: _duration,
+                  child: ButtonBar(
+                    buttonPadding: EdgeInsets.all(0.0),
+                    children: [
+                      buildIconButton(
+                          context: context,
+                          iconData: Icons.arrow_circle_up,
+                          onPressed: () {}),
+                      buildIconButton(
+                          context: context,
+                          iconData: Icons.arrow_circle_down,
+                          onPressed: () {}),
+                      buildIconButton(
+                          context: context,
+                          iconData: Icons.delete_forever_outlined,
+                          color: MyConstants.pressedButtonColor,
+                          onPressed: () {}),
+                    ],
+                  ),
+                ),
+                AnimatedContainer(
                     curve: _curve,
-                    right: _right,
+                    width: _width,
                     duration: _duration,
-                    child: ButtonBar(
-                      buttonPadding: EdgeInsets.all(0.0),
-                      children: [
-                        buildIconButton(
-                            context: context,
-                            iconData: Icons.arrow_circle_up,
-                            onPressed: () {}),
-                        buildIconButton(
-                            context: context,
-                            iconData: Icons.arrow_circle_down,
-                            onPressed: () {}),
-                        buildIconButton(
-                            context: context,
-                            iconData: Icons.delete_forever_outlined,
-                            color: MyConstants.pressedButtonColor,
-                            onPressed: () {}),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                    child: fieldWidget),
+              ],
             ),
           )
         ],
