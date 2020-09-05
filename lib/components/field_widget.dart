@@ -74,32 +74,26 @@ abstract class FieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // padding: EdgeInsets.only(
-      //     top: Constants.defaultPadding,
-      //     left: Constants.defaultPadding,
-      //     right: Constants.defaultPadding),
-      child: TextFormField(
-        decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).accentColor)),
-            border: OutlineInputBorder(),
-            labelText: label,
-            labelStyle: TextStyle(
-                color: Theme.of(context).accentColor,
-                fontWeight: FontWeight.bold)),
-        readOnly: readOnly,
-        keyboardType: TextInputType.multiline,
-        minLines: 1,
-        maxLines: maxLines,
-        obscureText: isPassword,
-        initialValue: (value != null) ? value : "",
-        onChanged: (value) {
-          if (onChangedCallback != null) {
-            onChangedCallback(value);
-          }
-        },
-      ),
+    return TextFormField(
+      decoration: InputDecoration(
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).accentColor)),
+          border: OutlineInputBorder(),
+          labelText: label,
+          labelStyle: TextStyle(
+              color: Theme.of(context).accentColor,
+              fontWeight: FontWeight.bold)),
+      readOnly: readOnly,
+      keyboardType: TextInputType.multiline,
+      minLines: 1,
+      maxLines: maxLines,
+      obscureText: isPassword,
+      initialValue: (value != null) ? value : "",
+      onChanged: (value) {
+        if (onChangedCallback != null) {
+          onChangedCallback(value);
+        }
+      },
     );
   }
 }

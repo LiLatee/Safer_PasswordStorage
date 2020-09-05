@@ -2,10 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mysimplepasswordstorage/BLoCs/service_locator.dart';
 import 'screens/passwords_list/passwords_list_page.dart';
 import 'utils/themes.dart' as custom_themes;
 
 void main() {
+  setupLocator();
   runApp(MyApp());
 }
 

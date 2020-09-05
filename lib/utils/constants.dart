@@ -5,6 +5,7 @@ const double defaultIconRadius = kMinInteractiveDimension / 2;
 const double defaultCircularBorderRadius = 25.0;
 const Color pressedButtonColor = Color(0xFFe94560);
 const List<String> availableIconsNames = ['facebook', 'twitter'];
+enum ButtonState { pressed, unpressed }
 const List<Color> iconDefaultColors = [
   Colors.red,
   Colors.pink,
