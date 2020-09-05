@@ -11,54 +11,55 @@ class ButtonsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<bool>(
-        stream: Provider.of<ExpandedPartBloc>(context).showButtonStream,
-        builder: (context, AsyncSnapshot<bool> snapshot) {
-          Color pressedButtonColor;
-          if (snapshot.hasData) {
-            if (snapshot.data) {
-              pressedButtonColor = MyConstants.pressedButtonColor;
-            } else {
-              Theme.of(context).accentColor;
-            }
-          }
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ButtonBar(
-                children: <Widget>[
-                  AccountDataTileButton(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ButtonBar(
+          children: <Widget>[
+            StreamBuilder<bool>(
+                stream: Provider.of<ExpandedPartBloc>(context).showButtonStream,
+                builder: (context, AsyncSnapshot<bool> snapshot) {
+                  return AccountDataTileButton(
                     onPressed: () {
                       Provider.of<ExpandedPartBloc>(context, listen: false)
                           .pressShowButton();
                     },
                     icon: Icon(Icons.remove_red_eye),
                     label: 'Show',
-                    pressedButtonColor: pressedButtonColor,
+                    pressedButtonColor: snapshot.data ?? false
+                        ? MyConstants.pressedButtonColor
+                        : Theme.of(context).primaryColor,
                     canBePressed: true,
-                  ),
-                  AccountDataTileButton(
+                  );
+                }),
+            StreamBuilder<MyConstants.ButtonState>(
+                stream: Provider.of<ExpandedPartBloc>(context).editButtonStream,
+                builder: (context, snapshot) {
+                  return AccountDataTileButton(
                     onPressed: () {
                       Provider.of<ExpandedPartBloc>(context, listen: false)
                           .pressEditButton();
                     },
                     icon: Icon(Icons.edit),
                     label: 'Edit',
+                    pressedButtonColor:
+                        snapshot.data == MyConstants.ButtonState.pressed ??
+                                false
+                            ? MyConstants.pressedButtonColor
+                            : Theme.of(context).primaryColor,
                     canBePressed: true,
-                  ),
-                  AccountDataTileButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.delete_forever),
-                      label: 'Remove'),
-                  AccountDataTileButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.add),
-                      label: 'Add field'),
-                ],
-              ),
-            ],
-          );
-        });
+                  );
+                }),
+            AccountDataTileButton(
+                onPressed: () {},
+                icon: Icon(Icons.delete_forever),
+                label: 'Remove'),
+            AccountDataTileButton(
+                onPressed: () {}, icon: Icon(Icons.add), label: 'Add field'),
+          ],
+        ),
+      ],
+    );
   }
 }
 

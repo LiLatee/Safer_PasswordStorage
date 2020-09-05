@@ -21,14 +21,10 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   // List<bool> isExpandedList;
-  Map<String, ExpandedPartBloc> expandedPartBlocs;
 
   @override
   Widget build(BuildContext context) {
     // isExpandedList ??= List.filled(widget.accounts.length, false);
-    expandedPartBlocs ??= Map.fromIterables(
-        widget.accounts.map((e) => e.accountName),
-        List.filled(widget.accounts.length, ExpandedPartBloc()));
 
     return ListView(children: <Widget>[
       epn.ExpansionPanelList.radio(
@@ -50,7 +46,7 @@ class _BodyState extends State<Body> {
   }
 
   epn.ExpansionPanelRadio buildExpansionPanel(
-      {@required AccountData accountData, @required bool showPassword}) {
+      {@required AccountData accountData}) {
     return epn.ExpansionPanelRadio(
         canTapOnHeader: true,
         value: accountData.accountName,
