@@ -65,7 +65,7 @@ class _PasswordListPageState extends State<PasswordsListPage> {
       // appBar: buildAppBar(),
       // backgroundColor: Colors.white,
       body: StreamBuilder(
-        stream: _allAccountsBloc.accountsObservable,
+        stream: _allAccountsBloc.accountsStream,
         builder: (context, AsyncSnapshot<List<AccountData>> snapshot) {
           if (snapshot.hasData) {
             return Body(

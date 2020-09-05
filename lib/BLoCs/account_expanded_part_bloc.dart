@@ -1,18 +1,22 @@
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'package:mysimplepasswordstorage/utils/constants.dart';
 
 class ExpandedPartBloc {
   ButtonState editButtonState = ButtonState.unpressed;
-  BehaviorSubject<ButtonState> _subjectEditButton;
+  bool isShowButtonPressed = false;
 
-  ExpandedPartBloc({
-    this.editButtonState,
-  }) {
-    _subjectEditButton = BehaviorSubject<ButtonState>.seeded(editButtonState);
+  PublishSubject<ButtonState> _subjectEditButton;
+  PublishSubject<bool> _subjectShowButton;
+
+  ExpandedPartBloc() {
+    _subjectEditButton = PublishSubject<ButtonState>();
+    _subjectShowButton = PublishSubject<bool>();
   }
 
   Stream<ButtonState> get editButtonStream => _subjectEditButton.stream;
+  Stream<bool> get showButtonStream => _subjectShowButton.stream;
 
   void pressEditButton() {
     if (editButtonState == ButtonState.pressed) {
@@ -21,5 +25,10 @@ class ExpandedPartBloc {
       editButtonState = ButtonState.pressed;
     }
     _subjectEditButton.sink.add(editButtonState);
+  }
+
+  void pressShowButton() {
+    isShowButtonPressed = !isShowButtonPressed;
+    _subjectShowButton.sink.add(isShowButtonPressed);
   }
 }
