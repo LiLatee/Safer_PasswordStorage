@@ -24,15 +24,8 @@ class FieldsSection extends StatefulWidget {
 
 class _FieldsSectionState extends State<FieldsSection>
     with TickerProviderStateMixin {
-  double _width;
-  double _right;
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    _width ??= size.width;
-    _right ??= -3 * MyConstants.defaultIconRadius * 1.5;
-
     var fieldsWidgetsMap = <String, Widget>{
       widget.accountData.email.name: EmailFieldWidget(
         readOnly: true,
@@ -63,24 +56,7 @@ class _FieldsSectionState extends State<FieldsSection>
             ));
 
     List<Widget> mainInfos = fieldsWidgetsMap.entries
-        .map(
-          (entry) => StreamBuilder<ButtonState>(
-              stream: Provider.of<ExpandedPartBloc>(context).editButtonStream,
-              builder: (context, AsyncSnapshot<ButtonState> snapshot) {
-                if (snapshot.data == ButtonState.unpressed) {
-                  _right = -3 * MyConstants.defaultIconRadius * 1.5;
-                  _width = size.width;
-                } else if (snapshot.data == ButtonState.pressed) {
-                  _right = 0;
-                  _width = size.width -
-                      MyConstants.defaultIconRadius * 1.5 * 3 -
-                      MyConstants.defaultPadding * 2;
-                }
-
-                return FieldRowWithButtons(
-                    fieldWidget: entry.value, width: _width, right: _right);
-              }),
-        )
+        .map((entry) => FieldRowWithButtons(fieldWidget: entry.value))
         .toList();
 
     return Column(
@@ -107,69 +83,90 @@ class _FieldsSectionState extends State<FieldsSection>
 }
 
 class FieldRowWithButtons extends StatelessWidget {
-  const FieldRowWithButtons({
+  FieldRowWithButtons({
     Key key,
-    @required double width,
-    @required double right,
     @required this.fieldWidget,
-  })  : _width = width,
-        _right = right,
-        super(key: key);
+  }) : super(key: key);
 
   final Widget fieldWidget;
-  final double _width;
-  final double _right;
-  final Curve _curve = Curves.easeInOutBack;
-  final Duration _duration = const Duration(milliseconds: 1000);
+
+  final Duration _duration = MyConstants.animationsDuration * 2;
+  double _width;
+  double _right;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-        top: MyConstants.defaultPadding,
-        left: MyConstants.defaultPadding,
-        right: MyConstants.defaultPadding,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Stack(
-              alignment: Alignment.centerLeft,
+    Size size = MediaQuery.of(context).size;
+    _width ??= size.width;
+    _right ??= -3 * MyConstants.defaultIconRadius * 1.5;
+    return StreamBuilder<ButtonState>(
+        stream: Provider.of<ExpandedPartBloc>(context).editButtonStream,
+        builder: (context, AsyncSnapshot<ButtonState> snapshot) {
+          Curve curve = Curves.easeInOutBack;
+
+          if (snapshot.data == ButtonState.unpressed) {
+            curve = Curves.easeInBack;
+            _right = -3 * MyConstants.defaultIconRadius * 1.5;
+            _width = size.width;
+          } else if (snapshot.data == ButtonState.pressed) {
+            curve = Curves.easeOutBack;
+            _right = 0;
+            _width = size.width -
+                MyConstants.defaultIconRadius * 1.5 * 3 -
+                MyConstants.defaultPadding * 2;
+          }
+
+          return Container(
+            padding: EdgeInsets.only(
+              top: MyConstants.defaultPadding,
+              left: MyConstants.defaultPadding,
+              right: MyConstants.defaultPadding,
+            ),
+            child: Row(
               children: [
-                AnimatedPositioned(
-                  curve: _curve,
-                  right: _right,
-                  duration: _duration,
-                  child: ButtonBar(
-                    buttonPadding: EdgeInsets.all(0.0),
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.centerLeft,
                     children: [
-                      buildIconButton(
-                          context: context,
-                          iconData: Icons.arrow_circle_up,
-                          onPressed: () {}),
-                      buildIconButton(
-                          context: context,
-                          iconData: Icons.arrow_circle_down,
-                          onPressed: () {}),
-                      buildIconButton(
-                          context: context,
-                          iconData: Icons.delete_forever_outlined,
-                          color: MyConstants.pressedButtonColor,
-                          onPressed: () {}),
+                      AnimatedPositioned(
+                        curve: curve,
+                        right: _right,
+                        duration: _duration,
+                        child: ButtonBar(
+                          buttonPadding: EdgeInsets.all(0.0),
+                          children: [
+                            buildIconButton(
+                                context: context,
+                                iconData: Icons.arrow_circle_up,
+                                onPressed: () {}),
+                            buildIconButton(
+                                context: context,
+                                iconData: Icons.arrow_circle_down,
+                                onPressed: () {}),
+                            buildIconButton(
+                                context: context,
+                                iconData: Icons.delete_forever_outlined,
+                                color: MyConstants.pressedButtonColor,
+                                onPressed: () {}),
+                          ],
+                        ),
+                      ),
+                      AnimatedContainer(
+                        margin: EdgeInsets.only(
+                            top:
+                                5.0), // without that labels in TextFormField are cut, idk why
+                        curve: curve,
+                        width: _width,
+                        duration: _duration,
+                        child: fieldWidget,
+                      ),
                     ],
                   ),
-                ),
-                AnimatedContainer(
-                    curve: _curve,
-                    width: _width,
-                    duration: _duration,
-                    child: fieldWidget),
+                )
               ],
             ),
-          )
-        ],
-      ),
-    );
+          );
+        });
   }
 
   IconButton buildIconButton(
