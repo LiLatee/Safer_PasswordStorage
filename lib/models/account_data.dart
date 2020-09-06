@@ -13,8 +13,8 @@ class AccountData {
 
   AccountData(
       {@required this.accountName, this.email, this.password, this.icon}) {
-    // this.email = FieldData(name: "Password", value: "");
-    // this.password = FieldData(name: "Email", value: "");
+    this.email = email ?? FieldData(name: "Password", value: "");
+    this.password = password ?? FieldData(name: "Email", value: "");
     if (icon == null) {
       this.icon = Functions.generateRandomColorIcon(
           name: accountName, color: MyConstants.iconDefaultColors[0]);

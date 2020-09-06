@@ -89,12 +89,13 @@ class _AccountDataTileButtonState extends State<AccountDataTileButton> {
   Widget build(BuildContext context) {
     textColor ??= Theme.of(context).accentColor;
     widget.pressedButtonColor ??= Theme.of(context).primaryColor;
-    return Container(
+    return AnimatedContainer(
       decoration: BoxDecoration(
         borderRadius:
             BorderRadius.circular(MyConstants.defaultCircularBorderRadius),
         color: widget.pressedButtonColor,
       ),
+      duration: MyConstants.animationsDuration,
       child: FlatButton(
         textColor: textColor,
         onPressed: () {
