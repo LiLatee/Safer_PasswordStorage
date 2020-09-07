@@ -22,13 +22,15 @@ class AccountDataExpandedPart extends StatefulWidget {
 class _AccountDataExpandedPartState extends State<AccountDataExpandedPart> {
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => ExpandedPartBloc(),
-      child: Column(
+    return MultiProvider(
+      providers: [
+        Provider(create: (context) => ExpandedPartBloc()),
+        ChangeNotifierProvider.value(value: widget.accountData),
+      ],
+      child: ListView(
+        shrinkWrap: true,
         children: <Widget>[
-          FieldsSection(
-            accountData: widget.accountData,
-          ),
+          FieldsSection(),
           ButtonsSection(),
         ],
       ),

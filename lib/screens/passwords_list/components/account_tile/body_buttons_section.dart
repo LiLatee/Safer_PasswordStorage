@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/BLoCs/account_expanded_part_bloc.dart';
+import 'package:mysimplepasswordstorage/models/account_data.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/constants.dart' as MyConstants;
@@ -14,52 +15,88 @@ class ButtonsSection extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        ButtonBar(
-          children: <Widget>[
-            StreamBuilder<bool>(
-                stream: Provider.of<ExpandedPartBloc>(context).showButtonStream,
-                builder: (context, AsyncSnapshot<bool> snapshot) {
-                  return AccountDataTileButton(
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.all(MyConstants.defaultPadding),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                  MyConstants.defaultCircularBorderRadius),
+              color: Theme.of(context).secondaryHeaderColor,
+            ), // TODO
+            child: ButtonBar(
+              alignment: MainAxisAlignment.center,
+              children: <Widget>[
+                buildShowButton(context),
+                buildEditButton(context),
+                AccountDataTileButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.delete_forever),
+                    label: 'Remove'),
+                AccountDataTileButton(
                     onPressed: () {
-                      Provider.of<ExpandedPartBloc>(context, listen: false)
-                          .pressShowButton();
+                      ExpandedPartBloc expandedPartBloc =
+                          Provider.of<ExpandedPartBloc>(context, listen: false);
+                      if (expandedPartBloc.editButtonState ==
+                          MyConstants.ButtonState.unpressed) {
+                        expandedPartBloc.pressEditButton();
+                      }
+
+                      AccountData account =
+                          Provider.of<AccountData>(context, listen: false);
+                      account.addField(
+                          name: "Siemanko", value: "taka se wartość");
+
+                      account.listKey.currentState.insertItem(
+                          account.getNumberOfFields - 1,
+                          duration: MyConstants.animationsDuration);
                     },
-                    icon: Icon(Icons.remove_red_eye),
-                    label: 'Show',
-                    pressedButtonColor: snapshot.data ?? false
-                        ? MyConstants.pressedButtonColor
-                        : Theme.of(context).primaryColor,
-                    canBePressed: true,
-                  );
-                }),
-            StreamBuilder<MyConstants.ButtonState>(
-                stream: Provider.of<ExpandedPartBloc>(context).editButtonStream,
-                builder: (context, snapshot) {
-                  return AccountDataTileButton(
-                    onPressed: () {
-                      Provider.of<ExpandedPartBloc>(context, listen: false)
-                          .pressEditButton();
-                    },
-                    icon: Icon(Icons.edit),
-                    label: 'Edit',
-                    pressedButtonColor:
-                        snapshot.data == MyConstants.ButtonState.pressed ??
-                                false
-                            ? MyConstants.pressedButtonColor
-                            : Theme.of(context).primaryColor,
-                    canBePressed: true,
-                  );
-                }),
-            AccountDataTileButton(
-                onPressed: () {},
-                icon: Icon(Icons.delete_forever),
-                label: 'Remove'),
-            AccountDataTileButton(
-                onPressed: () {}, icon: Icon(Icons.add), label: 'Add field'),
-          ],
+                    icon: Icon(Icons.add),
+                    label: 'Add field'),
+              ],
+            ),
+          ),
         ),
       ],
     );
+  }
+
+  StreamBuilder<MyConstants.ButtonState> buildEditButton(BuildContext context) {
+    return StreamBuilder<MyConstants.ButtonState>(
+        stream: Provider.of<ExpandedPartBloc>(context).editButtonStream,
+        builder: (context, snapshot) {
+          return AccountDataTileButton(
+            onPressed: () {
+              Provider.of<ExpandedPartBloc>(context, listen: false)
+                  .pressEditButton();
+            },
+            icon: Icon(Icons.edit),
+            label: 'Edit',
+            pressedButtonColor:
+                snapshot.data == MyConstants.ButtonState.pressed ?? false
+                    ? MyConstants.pressedButtonColor
+                    : Colors.transparent,
+            canBePressed: true,
+          );
+        });
+  }
+
+  StreamBuilder<bool> buildShowButton(BuildContext context) {
+    return StreamBuilder<bool>(
+        stream: Provider.of<ExpandedPartBloc>(context).showButtonStream,
+        builder: (context, AsyncSnapshot<bool> snapshot) {
+          return AccountDataTileButton(
+            onPressed: () {
+              Provider.of<ExpandedPartBloc>(context, listen: false)
+                  .pressShowButton();
+            },
+            icon: Icon(Icons.remove_red_eye),
+            label: 'Show',
+            pressedButtonColor: snapshot.data ?? false
+                ? MyConstants.pressedButtonColor
+                : Colors.transparent,
+            canBePressed: true,
+          );
+        });
   }
 }
 
@@ -74,7 +111,7 @@ class AccountDataTileButton extends StatefulWidget {
     @required this.onPressed,
     @required this.icon,
     @required this.label,
-    this.pressedButtonColor,
+    this.pressedButtonColor = Colors.transparent,
     this.canBePressed = false,
   }) : super(key: key);
 

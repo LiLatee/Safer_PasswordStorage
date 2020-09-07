@@ -12,11 +12,8 @@ class FieldsSection extends StatefulWidget {
   final bool showPassword;
   FieldsSection({
     Key key,
-    @required this.accountData,
     this.showPassword = false,
   }) : super(key: key);
-
-  final AccountData accountData;
 
   @override
   _FieldsSectionState createState() => _FieldsSectionState();
@@ -24,81 +21,130 @@ class FieldsSection extends StatefulWidget {
 
 class _FieldsSectionState extends State<FieldsSection>
     with TickerProviderStateMixin {
+  List<Widget> fieldsWidgets = [];
+  AccountData accountData;
+  int counter = 0; // TODO do usunięcia
+
+  Widget buildItem(BuildContext context, Widget item, Animation animation,
+      {int itemIndex}) {
+    // return FadeTransition(
+    //   opacity: animation,
+    //   child: item,
+    // );
+
+    // return SlideTransition(
+    //   position: Tween<Offset>(end: Offset.zero, begin: Offset(-1.0, 0)).animate(
+    //       CurvedAnimation(
+    //           parent: animation,
+    //           curve: Curves.easeInOutBack,
+    //           reverseCurve: Curves.easeInOutBack)),
+    //   child: item,
+    // );
+
+    return SizeTransition(
+      sizeFactor: CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeInOutBack,
+          reverseCurve: Curves.easeInOutBack),
+      child: item,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    var fieldsWidgetsMap = <String, Widget>{
-      widget.accountData.email.name: EmailFieldWidget(
+    accountData = Provider.of<AccountData>(context);
+    buildFieldsWidgets(context);
+
+    // return Container(
+    //   constraints: BoxConstraints.loose(Size(double.infinity, 300)),
+    //   child: AnimatedList(
+    //     shrinkWrap: true,
+    //     key: _listKey,
+    //     initialItemCount: items.length,
+    //     itemBuilder: (context, index, animation) =>
+    //         buildItem(context, items[index], animation),
+    //   ),
+    // );
+    return Container(
+      // constraints: BoxConstraints.loose(Size(double.infinity, 300)),
+      child: AnimatedList(
+        shrinkWrap: true,
+        key: Provider.of<AccountData>(context).listKey,
+        initialItemCount: fieldsWidgets.length,
+        itemBuilder: (context, index, animation) =>
+            buildItem(context, fieldsWidgets[index], animation),
+      ),
+    );
+  }
+
+  void buildFieldsWidgets(BuildContext context) {
+    var fieldsWidgetsList = <Widget>[
+      EmailFieldWidget(
         readOnly: true,
-        label: widget.accountData.email.name,
-        value: widget.accountData.email.value,
+        label: accountData.email.name,
+        value: accountData.email.value,
         onChangedCallback: () {},
       ),
-      widget.accountData.password.name: StreamBuilder(
+      StreamBuilder(
         stream: Provider.of<ExpandedPartBloc>(context).showButtonStream,
         builder: (context, AsyncSnapshot<bool> snapshot) {
           return PasswordFieldWidget(
             readOnly: true,
-            label: widget.accountData.password.name,
-            value: widget.accountData.password.value,
+            label: accountData.password.name,
+            value: accountData.password.value,
             onChangedCallback: () {},
             showPassword: snapshot.data ?? false,
           );
         },
       )
-    };
+    ];
 
-    widget.accountData.additionalFields.forEach(
-        (element) => fieldsWidgetsMap[element.name] = AdditionalFieldWidget(
-              label: element.name,
-              readOnly: true,
-              value: element.value,
-              onChangedCallback: () {},
-            ));
+    accountData.getAdditionalFields.forEach((element) {
+      fieldsWidgetsList.add(AdditionalFieldWidget(
+        label: element.name,
+        readOnly: true,
+        value: element.value,
+        onChangedCallback: () {},
+      ));
+    });
 
-    List<Widget> mainInfos = fieldsWidgetsMap.entries
-        .map((entry) => FieldRowWithButtons(fieldWidget: entry.value))
+    fieldsWidgets = fieldsWidgetsList
+        .asMap()
+        .entries
+        .map((e) => FieldRowWithButtons(
+              index: e.key,
+              fieldWidget: e.value,
+              buildItem: buildItem,
+            ))
         .toList();
 
-    return Column(
-      children: [
-        Column(children: mainInfos),
-        // Container(
-        //   width: 100,
-        //   height: 100,
-        //   child: FlatButton(
-        //       onPressed: () {
-        //         setState(() {
-        //           _right = 0.0;
-        //           _width = size.width -
-        //               MyConstants.defaultIconRadius * 1.5 * 3 -
-        //               MyConstants.defaultPadding * 2;
-        //         });
-        //       },
-        //       color: Colors.red,
-        //       child: Text("K")),
-        // )
-      ],
-    );
+    ;
   }
 }
 
 class FieldRowWithButtons extends StatelessWidget {
   FieldRowWithButtons({
     Key key,
+    @required this.index,
     @required this.fieldWidget,
+    @required this.buildItem,
   }) : super(key: key);
 
+  final int index;
   final Widget fieldWidget;
 
   final Duration _duration = MyConstants.animationsDuration * 2;
   double _width;
   double _right;
+  final Function buildItem;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     _width ??= size.width;
     _right ??= -3 * MyConstants.defaultIconRadius * 1.5;
+    AccountData accountData = Provider.of<AccountData>(context);
+
     return StreamBuilder<ButtonState>(
         stream: Provider.of<ExpandedPartBloc>(context).editButtonStream,
         builder: (context, AsyncSnapshot<ButtonState> snapshot) {
@@ -108,7 +154,9 @@ class FieldRowWithButtons extends StatelessWidget {
             curve = Curves.easeInBack;
             _right = -3 * MyConstants.defaultIconRadius * 1.5;
             _width = size.width;
-          } else if (snapshot.data == ButtonState.pressed) {
+          } else if ((snapshot.data == ButtonState.pressed) ||
+              (Provider.of<ExpandedPartBloc>(context).editButtonState ==
+                  ButtonState.pressed)) {
             curve = Curves.easeOutBack;
             _right = 0;
             _width = size.width -
@@ -147,7 +195,19 @@ class FieldRowWithButtons extends StatelessWidget {
                                 context: context,
                                 iconData: Icons.delete_forever_outlined,
                                 color: MyConstants.pressedButtonColor,
-                                onPressed: () {}),
+                                onPressed: () {
+                                  var itemToRemove = this;
+                                  log("indeksik=${index.toString()}",
+                                      name: "LOL");
+                                  accountData.listKey.currentState.removeItem(
+                                      index,
+                                      (context, animation) => buildItem(
+                                          context, itemToRemove, animation,
+                                          itemIndex: index),
+                                      duration: MyConstants.animationsDuration);
+
+                                  accountData.removeFieldAt(index - 2);
+                                }),
                           ],
                         ),
                       ),
