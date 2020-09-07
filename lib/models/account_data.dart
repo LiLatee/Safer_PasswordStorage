@@ -4,12 +4,14 @@ import 'package:flutter/cupertino.dart';
 import '../utils/functions.dart' as Functions;
 import '../utils/constants.dart' as MyConstants;
 
-class AccountData {
+class AccountData extends ChangeNotifier {
   String accountName;
   FieldData email;
   FieldData password;
   List<FieldData> additionalFields = [];
   Widget icon;
+
+  final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   AccountData(
       {@required this.accountName, this.email, this.password, this.icon}) {
@@ -23,7 +25,17 @@ class AccountData {
 
   void addField({String name, String value}) {
     additionalFields.add(FieldData(name: name, value: value));
+    notifyListeners();
   }
+
+  void removeFieldAt(int index) {
+    additionalFields.removeAt(index);
+    notifyListeners();
+  }
+
+  List<FieldData> get getAdditionalFields => additionalFields;
+
+  int get getNumberOfFields => additionalFields.length + 2;
 
   static bool isNameUsed(
       {@required List<AccountData> accounts, @required String name}) {

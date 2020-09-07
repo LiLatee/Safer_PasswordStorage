@@ -63,6 +63,7 @@ abstract class FieldWidget extends StatelessWidget {
     this.onChangedCallback,
     this.readOnly = true,
     this.maxLines,
+    this.keyboardType,
   }) : super(key: key);
 
   final bool readOnly;
@@ -71,10 +72,12 @@ abstract class FieldWidget extends StatelessWidget {
   final bool isPassword;
   final Function onChangedCallback;
   final int maxLines;
+  final TextInputType keyboardType;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: ObjectKey(label),
       decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Theme.of(context).accentColor)),
@@ -84,11 +87,11 @@ abstract class FieldWidget extends StatelessWidget {
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold)),
       readOnly: readOnly,
-      keyboardType: TextInputType.multiline,
+      keyboardType: keyboardType ?? TextInputType.text,
       minLines: 1,
       maxLines: maxLines,
       obscureText: isPassword,
-      initialValue: (value != null) ? value : "",
+      initialValue: value ?? "",
       onChanged: (value) {
         if (onChangedCallback != null) {
           onChangedCallback(value);
@@ -115,7 +118,7 @@ class AdditionalFieldWidget extends FieldWidget {
             value: value,
             onChangedCallback: onChangedCallback,
             readOnly: readOnly,
-            maxLines: 5,
+            maxLines: 1,
             isPassword: false);
 }
 
@@ -160,5 +163,6 @@ class EmailFieldWidget extends FieldWidget {
             onChangedCallback: onChangedCallback,
             readOnly: readOnly,
             maxLines: 1,
-            isPassword: false);
+            isPassword: false,
+            keyboardType: TextInputType.emailAddress);
 }
