@@ -13,6 +13,9 @@ class AccountData extends ChangeNotifier {
 
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
+  bool isShowButtonPressed = false;
+  bool isEditButtonPressed = false;
+
   AccountData(
       {@required this.accountName, this.email, this.password, this.icon}) {
     this.email = email ?? FieldData(name: "Password", value: "");
@@ -33,7 +36,15 @@ class AccountData extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<FieldData> get getAdditionalFields => additionalFields;
+  void pressShowButton() {
+    isShowButtonPressed = !isShowButtonPressed;
+    notifyListeners();
+  }
+
+  void pressEditButton() {
+    isEditButtonPressed = !isEditButtonPressed;
+    notifyListeners();
+  }
 
   int get getNumberOfFields => additionalFields.length + 2;
 
