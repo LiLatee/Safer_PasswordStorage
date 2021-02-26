@@ -31,6 +31,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   get_it: ^4.0.4
   provider: ^4.3.2+1
+  implicitly_animated_reorderable_list: ^0.2.3
 
 dev_dependencies:
   pedantic: ^1.0.0

@@ -8,7 +8,8 @@ class AccountData extends ChangeNotifier {
   String accountName;
   FieldData email;
   FieldData password;
-  List<FieldData> additionalFields = [];
+  // List<FieldData> additionalFields = [];
+  List<FieldData> allFields = [];
   Widget icon;
 
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
@@ -20,6 +21,8 @@ class AccountData extends ChangeNotifier {
       {@required this.accountName, this.email, this.password, this.icon}) {
     this.email = email ?? FieldData(name: "Password", value: "");
     this.password = password ?? FieldData(name: "Email", value: "");
+    allFields.addAll([this.email, this.password]);
+
     if (icon == null) {
       this.icon = Functions.generateRandomColorIcon(
           name: accountName, color: MyConstants.iconDefaultColors[0]);
@@ -27,12 +30,15 @@ class AccountData extends ChangeNotifier {
   }
 
   void addField({String name, String value}) {
-    additionalFields.add(FieldData(name: name, value: value));
+    // additionalFields.add(FieldData(name: name, value: value)); // TODO
+    allFields.add(FieldData(name: name, value: value));
+
     notifyListeners();
   }
 
   void removeFieldAt(int index) {
-    additionalFields.removeAt(index);
+    // additionalFields.removeAt(index);
+    allFields.removeAt(index);
     notifyListeners();
   }
 
@@ -46,7 +52,9 @@ class AccountData extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get getNumberOfFields => additionalFields.length + 2;
+  // int get getNumberOfFields => additionalFields.length + 2;
+  int get getNumberOfFields => allFields.length;
+
 
   static bool isNameUsed(
       {@required List<AccountData> accounts, @required String name}) {
@@ -62,16 +70,21 @@ class AccountData extends ChangeNotifier {
 }
 
 class FieldData {
+  UniqueKey uniqueKey;
   String name;
   String value;
 
   FieldData({
+    uniqueKey,
     this.name,
     this.value,
-  });
+  }) {
+    this.uniqueKey = UniqueKey();
+  }
 
   Map<String, dynamic> toMap() {
     return {
+      'uniqueKey': uniqueKey,
       'name': name,
       'value': value,
     };
@@ -81,6 +94,7 @@ class FieldData {
     if (map == null) return null;
 
     return FieldData(
+      uniqueKey: map['uniqueKey'],
       name: map['name'],
       value: map['value'],
     );
