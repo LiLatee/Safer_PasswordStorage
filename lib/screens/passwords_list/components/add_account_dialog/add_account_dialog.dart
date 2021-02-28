@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../components/account_name_field_widget.dart';
-import '../../../../components/dialog_template.dart';
-import '../../../../models/account_data.dart';
-import '../../../../utils/constants.dart' as MyConstants;
-import '../../../../utils/functions.dart' as MyFunctions;
+import 'package:mysimplepasswordstorage/components/account_name_field_widget.dart';
+import 'package:mysimplepasswordstorage/components/dialog_template.dart';
+import 'package:mysimplepasswordstorage/models/account_data.dart';
+import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
+import 'package:mysimplepasswordstorage/utils/functions.dart' as MyFunctions;
 import 'choose_icon_widget.dart';
 
 class AddAccountDialog extends StatefulWidget {
@@ -40,8 +40,25 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
 
   @override
   Widget build(BuildContext context) {
+    var cancelButton = MyDialogButton(
+        buttonName: "Cancel",
+        onPressed: () {
+          Navigator.of(context).pop();
+        });
+
+    var addButton = MyDialogButton(
+        buttonName: "Add",
+        onPressed: () {
+          if (accountNameFormKey.currentState.validate()) {
+            widget.addAccountCallback(accountData: accountData);
+            Navigator.of(context).pop();
+          } else {
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text('zle')));
+          }
+        });
+
     return MyDialog(
-      actions: [buildCancelButton(context), buildAddButton(context)],
+      buttons: [cancelButton, addButton],
       content: Column(
         children: <Widget>[
           AccountNameFieldWidget(
@@ -65,87 +82,54 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
     );
   }
 
-  FlatButton buildAddButton(BuildContext context) {
-    return FlatButton(
-      onPressed: () {
-        if (accountNameFormKey.currentState.validate()) {
-          widget.addAccountCallback(accountData: accountData);
-          Navigator.of(context).pop();
-        } else {
-          Scaffold.of(context).showSnackBar(SnackBar(content: Text('zle')));
-        }
-      },
-      child: Container(
-        child: Text(
-          "Add",
-          style: TextStyle(color: Theme.of(context).accentColor),
-        ),
-      ),
-    );
-  }
-
-  FlatButton buildCancelButton(BuildContext context) {
-    return FlatButton(
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-      child: Container(
-        child: Text(
-          "Cancel",
-          style: TextStyle(color: Theme.of(context).accentColor),
-        ),
-      ),
-    );
-  }
-
-  // Widget bottomButtonsSection(BuildContext context) {
-  //   return Container(
-  //     margin: EdgeInsets.only(top: MyConstants.defaultPadding),
-  //     decoration: BoxDecoration(
-  //       color: Theme.of(context).accentColor,
-  //       borderRadius: BorderRadius.only(
-  //         bottomLeft: Radius.circular(MyConstants.defaultCircularBorderRadius),
-  //         bottomRight: Radius.circular(MyConstants.defaultCircularBorderRadius),
-  //       ),
-  //     ),
-  //     child: IntrinsicHeight(
-  //       child: Row(
-  //         children: <Widget>[
-  //           Expanded(
-  //             child: FlatButton(
-  //               onPressed: () {
-  //                 Navigator.of(context).pop();
-  //               },
-  //               child: Container(
-  //                 child: Text(
-  //                   "Cancel",
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //           VerticalDivider(color: Theme.of(context).primaryColor),
-  //           Expanded(
-  //             child: FlatButton(
-  //               onPressed: () {
-  //                 if (accountNameFormKey.currentState.validate()) {
-  //                   // if (chooseImageIcon == null) {
-  //                   //   accountData.icon = chooseColorIcon;
-  //                   // }
-  //                   widget.addAccountCallback(accountData: accountData);
-  //                   Navigator.of(context).pop();
-  //                 } else {
-  //                   // Scaffold.of(context)
-  //                   //     .showSnackBar(SnackBar(content: Text('zle')));
-  //                 }
-  //               },
-  //               child: Container(
-  //                 child: Text("Add"),
-  //               ),
-  //             ),
-  //           )
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+// Widget bottomButtonsSection(BuildContext context) {
+//   return Container(
+//     margin: EdgeInsets.only(top: MyConstants.defaultPadding),
+//     decoration: BoxDecoration(
+//       color: Theme.of(context).accentColor,
+//       borderRadius: BorderRadius.only(
+//         bottomLeft: Radius.circular(MyConstants.defaultCircularBorderRadius),
+//         bottomRight: Radius.circular(MyConstants.defaultCircularBorderRadius),
+//       ),
+//     ),
+//     child: IntrinsicHeight(
+//       child: Row(
+//         children: <Widget>[
+//           Expanded(
+//             child: FlatButton(
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//               },
+//               child: Container(
+//                 child: Text(
+//                   "Cancel",
+//                 ),
+//               ),
+//             ),
+//           ),
+//           VerticalDivider(color: Theme.of(context).primaryColor),
+//           Expanded(
+//             child: FlatButton(
+//               onPressed: () {
+//                 if (accountNameFormKey.currentState.validate()) {
+//                   // if (chooseImageIcon == null) {
+//                   //   accountData.icon = chooseColorIcon;
+//                   // }
+//                   widget.addAccountCallback(accountData: accountData);
+//                   Navigator.of(context).pop();
+//                 } else {
+//                   // Scaffold.of(context)
+//                   //     .showSnackBar(SnackBar(content: Text('zle')));
+//                 }
+//               },
+//               child: Container(
+//                 child: Text("Add"),
+//               ),
+//             ),
+//           )
+//         ],
+//       ),
+//     ),
+//   );
+// }
 }

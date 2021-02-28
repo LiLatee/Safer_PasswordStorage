@@ -12,7 +12,7 @@ class AccountData extends ChangeNotifier {
   List<FieldData> allFields = [];
   Widget icon;
 
-  final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
+  // final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   bool isShowButtonPressed = false;
   bool isEditButtonPressed = false;

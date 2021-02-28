@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/constants.dart' as Constants;
 
+typedef onChangeText({String newText});
 // class FieldWidget extends StatelessWidget {
 //   const FieldWidget({
 //     Key key,
@@ -64,15 +65,19 @@ abstract class FieldWidget extends StatelessWidget {
     this.readOnly = true,
     this.maxLines,
     this.keyboardType,
+    this.onEditingComplete,
+    this.textInputAction,
   }) : super(key: key);
 
   final bool readOnly;
   final String label;
   final String value;
   final bool isPassword;
-  final Function onChangedCallback;
+  final onChangeText onChangedCallback;
   final int maxLines;
   final TextInputType keyboardType;
+  final Function onEditingComplete;
+  final TextInputAction textInputAction;
 
   @override
   Widget build(BuildContext context) {
@@ -91,12 +96,13 @@ abstract class FieldWidget extends StatelessWidget {
       minLines: 1,
       maxLines: maxLines,
       obscureText: isPassword,
+      enableInteractiveSelection: true,
       initialValue: value ?? "",
       onChanged: (value) {
-        if (onChangedCallback != null) {
-          onChangedCallback(value);
-        }
+        if (onChangedCallback != null) onChangedCallback(newText: value);
       },
+      onEditingComplete: onEditingComplete,
+      textInputAction: textInputAction,
     );
   }
 }
@@ -105,21 +111,29 @@ class AdditionalFieldWidget extends FieldWidget {
   final bool readOnly;
   final String label;
   final String value;
-  final Function onChangedCallback;
+  final onChangeText onChangedCallback;
+  final Function onEditingComplete;
+  final TextInputAction textInputAction;
+
   AdditionalFieldWidget({
     Key key,
     @required this.label,
     this.value,
     this.onChangedCallback,
     this.readOnly,
+    this.onEditingComplete,
+    this.textInputAction,
   }) : super(
-            key: key,
-            label: label,
-            value: value,
-            onChangedCallback: onChangedCallback,
-            readOnly: readOnly,
-            maxLines: 1,
-            isPassword: false);
+          key: key,
+          label: label,
+          value: value,
+          onChangedCallback: onChangedCallback,
+          readOnly: readOnly,
+          maxLines: 1,
+          isPassword: false,
+          onEditingComplete: onEditingComplete,
+          textInputAction: textInputAction,
+        );
 }
 
 class PasswordFieldWidget extends FieldWidget {
@@ -127,7 +141,9 @@ class PasswordFieldWidget extends FieldWidget {
   final String label;
   final String value;
   final bool showPassword;
-  final Function onChangedCallback;
+  final onChangeText onChangedCallback;
+  final Function onEditingComplete;
+
   PasswordFieldWidget({
     Key key,
     @required this.label,
@@ -135,34 +151,42 @@ class PasswordFieldWidget extends FieldWidget {
     this.onChangedCallback,
     this.readOnly,
     this.showPassword = false,
+    this.onEditingComplete,
   }) : super(
-            key: key,
-            label: label,
-            value: value,
-            onChangedCallback: onChangedCallback,
-            readOnly: readOnly,
-            maxLines: 1,
-            isPassword: !showPassword);
+          key: key,
+          label: label,
+          value: value,
+          onChangedCallback: onChangedCallback,
+          readOnly: readOnly,
+          maxLines: 1,
+          isPassword: !showPassword,
+          onEditingComplete: onEditingComplete,
+        );
 }
 
 class EmailFieldWidget extends FieldWidget {
   final bool readOnly;
   final String label;
   final String value;
-  final Function onChangedCallback;
+  final onChangeText onChangedCallback;
+  final Function onEditingComplete;
+
   EmailFieldWidget({
     Key key,
     @required this.label,
     this.value,
     this.onChangedCallback,
     this.readOnly = true,
+    this.onEditingComplete,
   }) : super(
-            key: key,
-            label: label,
-            value: value,
-            onChangedCallback: onChangedCallback,
-            readOnly: readOnly,
-            maxLines: 1,
-            isPassword: false,
-            keyboardType: TextInputType.emailAddress);
+          key: key,
+          label: label,
+          value: value,
+          onChangedCallback: onChangedCallback,
+          readOnly: readOnly,
+          maxLines: 1,
+          isPassword: false,
+          keyboardType: TextInputType.emailAddress,
+          onEditingComplete: onEditingComplete,
+        );
 }
