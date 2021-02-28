@@ -6,13 +6,13 @@ import '../utils/constants.dart' as MyConstants;
 class MyDialog extends StatelessWidget {
   final Widget content;
   final String title;
-  final List<Widget> actions;
+  final List<Widget> buttons;
 
   const MyDialog({
     Key key,
     @required this.content,
     @required this.title,
-    this.actions,
+    this.buttons,
   }) : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class MyDialog extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: <Widget>[
-                buildDialogContent(actions),
+                buildDialogContent(buttons),
                 buildDialogHeader(context)
               ],
             ),
@@ -39,7 +39,7 @@ class MyDialog extends StatelessWidget {
     );
   }
 
-  Widget buildDialogContent(List<Widget> actions) {
+  Widget buildDialogContent(List<Widget> buttons) {
     return Container(
       padding: EdgeInsets.only(top: MyConstants.defaultCircularBorderRadius),
       decoration: BoxDecoration(
@@ -52,7 +52,7 @@ class MyDialog extends StatelessWidget {
         children: [
           content,
           ButtonBar(
-            children: actions ?? [],
+            children: buttons ?? [],
           ),
         ],
       ),
@@ -79,6 +79,31 @@ class MyDialog extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class MyDialogButton extends StatelessWidget {
+  const MyDialogButton({
+    Key key,
+    this.buttonName,
+    this.onPressed,
+  }) : super(key: key);
+
+  final String buttonName;
+  final Function onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      onPressed: onPressed,
+      splashColor: MyConstants.pressedButtonColor,
+      child: Container(
+        child: Text(
+          buttonName,
+          style: TextStyle(color: Theme.of(context).accentColor),
         ),
       ),
     );
