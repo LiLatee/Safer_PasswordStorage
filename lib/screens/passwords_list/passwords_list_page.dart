@@ -3,7 +3,11 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/BLoCs/all_accounts_bloc.dart';
+import 'package:mysimplepasswordstorage/models/database.dart';
+import 'package:mysimplepasswordstorage/models/field_data.dart';
+import 'package:mysimplepasswordstorage/models/sql_database.dart';
 import 'package:mysimplepasswordstorage/screens/passwords_list/components/add_account_dialog/add_account_dialog.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/account_data.dart';
 import 'components/body.dart';
@@ -45,7 +49,9 @@ class _PasswordListPageState extends State<PasswordsListPage> {
     ),
   ];
 
-  AllAccountsBloc _allAccountsBloc = AllAccountsBloc(accounts: testAccounts);
+  // AllAccountsBloc _allAccountsBloc = AllAccountsBloc(accounts: testAccounts);
+  AllAccountsBloc _allAccountsBloc = AllAccountsBloc();
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,56 +74,6 @@ class _PasswordListPageState extends State<PasswordsListPage> {
             "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
             "A co u Ciebie? "
             "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?");
-
-    // testAccounts[2].addField(
-    //     name: 'Notes2',
-    //     value: "Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie? "
-    //         "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?");
-
-    // testAccounts[2].addField(
-    //     name: 'Notes3',
-    //     value: "Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie? "
-    //         "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?");
-
-    // testAccounts[2].addField(
-    //     name: 'Notes4',
-    //     value: "Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie? "
-    //         "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?");
-
-    // testAccounts[2].addField(
-    //     name: 'Notes5',
-    //     value: "Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie? "
-    //         "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?");
-
-    // testAccounts[2].addField(
-    //     name: 'Notes6',
-    //     value: "Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //         "A co u Ciebie? "
-    //         "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?");
 
     testAccounts[1].addField(name: 'Notes', value: "Haslo zwierzak");
 

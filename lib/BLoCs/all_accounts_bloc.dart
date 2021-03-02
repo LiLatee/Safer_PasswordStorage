@@ -8,8 +8,10 @@ class AllAccountsBloc {
   AllAccountsBloc({
     accounts,
   }) {
-    this.accounts = accounts;
-    _behaviorSubject = BehaviorSubject.seeded(this.accounts);
+    if (accounts != null) {
+      this.accounts = accounts;
+      _behaviorSubject = BehaviorSubject.seeded(this.accounts);
+    }
   }
 
   Stream<List<AccountData>> get accountsStream => _behaviorSubject.stream;
