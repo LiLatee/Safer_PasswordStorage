@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data.dart';
+import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 
 import '../../../../utils/constants.dart' as MyConstants;
 
 class AccountTileHeader extends StatelessWidget {
-  final AccountData accountData;
+  final AccountDataEntity accountData;
   const AccountTileHeader({
     Key key,
     @required this.accountData,
@@ -28,7 +29,7 @@ class AccountTileHeader extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            accountData.icon,
+            // accountData.icon, // TODO
             SizedBox(
               width: MyConstants.defaultPadding,
             ),

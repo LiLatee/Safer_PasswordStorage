@@ -17,7 +17,7 @@ abstract class AccountDao extends ChangeNotifier{
   // Future<bool> isNameUsed(String name);
 
   @Query('SELECT * FROM AccountDataEntity')
-  Future<List<AccountDataEntity>>getAllAccounts();
+  Future<List<AccountDataEntity>> getAllAccounts();
 
   // @Query('SELECT * FROM AccountDataEntity WHERE accountName = :name')
   // Future<List<AccountDataEntity>> getAccountByName(String name);
@@ -25,14 +25,14 @@ abstract class AccountDao extends ChangeNotifier{
   @Query('SELECT * FROM AccountDataEntity WHERE id = :id')
   Future<AccountDataEntity> getAccountById(int id);
 
-  @Query("UPDATE AccountDataEntity SET isShowButtonPressed = :value WHERE id = :id")
-  Future<void> setShowButtonState(int value, int id) {
+  @Query("UPDATE AccountDataEntity SET isShowButtonPressed = :value WHERE id = :accountID")
+  Future<void> setShowButtonState(int value, int accountID) {
     notifyListeners();
     return null;
   }
 
-  @Query("UPDATE AccountDataEntity SET isEditButtonPressed = :value WHERE id = :id")
-  Future<void> setEditButtonState(int value, int id) {
+  @Query("UPDATE AccountDataEntity SET isEditButtonPressed = :value WHERE id = :accountID")
+  Future<void> setEditButtonState(int value, int accountID) {
     notifyListeners();
     return null;
   }
