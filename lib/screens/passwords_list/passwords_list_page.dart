@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/BLoCs/all_accounts_bloc.dart';
+import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/models/database.dart';
 import 'package:mysimplepasswordstorage/models/field_data.dart';
 import 'package:mysimplepasswordstorage/models/sql_database.dart';
@@ -80,9 +81,9 @@ class _PasswordListPageState extends State<PasswordsListPage> {
     return Scaffold(
       // appBar: buildAppBar(),
       // backgroundColor: Colors.white,
-      body: StreamBuilder(
-        stream: _allAccountsBloc.accountsStream,
-        builder: (context, AsyncSnapshot<List<AccountData>> snapshot) {
+      body: FutureBuilder<List<AccountDataEntity>>(
+        future: DBProvider.db.getAllAccounts(),
+        builder: (context, AsyncSnapshot<List<AccountDataEntity>> snapshot) {
           if (snapshot.hasData) {
             return Body(
               accounts: snapshot.data,

@@ -24,8 +24,8 @@ class AccountDataEntity {
   String accountName;
 
   // Widget icon;
-  int isShowButtonPressed = 0;
-  int isEditButtonPressed = 0;
+  int isShowButtonPressed;
+  int isEditButtonPressed;
 
   // final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 

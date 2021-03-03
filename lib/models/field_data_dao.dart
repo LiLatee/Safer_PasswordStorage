@@ -13,7 +13,7 @@ abstract class FieldDataDao {
   @update
   Future<void> updateField(FieldDataEntity field);
 
-  @Query('SELECT * FROM FieldDataEntity WHERE id = :accountId')
+  @Query('SELECT * FROM FieldDataEntity WHERE accountId = :accountId')
   Future<List<FieldDataEntity>> getAllFieldsOfAccount(int accountId);
 
   // @Query("SELECT COUNT(*) FROM FieldDataEntity WHERE id = :accountId")

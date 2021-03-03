@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 
 import '../../../models/account_data.dart';
 import '../../../modified_flutter_widgets/expansion_panel.dart' as epn;
@@ -8,7 +9,7 @@ import 'account_tile/expanded_part/account_data_expanded_part.dart';
 import 'account_tile/header.dart';
 
 class Body extends StatefulWidget {
-  final List<AccountData> accounts;
+  final List<AccountDataEntity> accounts;
 
   Body({@required this.accounts});
 
@@ -43,10 +44,10 @@ class _BodyState extends State<Body> {
   }
 
   epn.ExpansionPanelRadio buildExpansionPanel(
-      {@required AccountData accountData}) {
+      {@required AccountDataEntity accountData}) {
     return epn.ExpansionPanelRadio(
         canTapOnHeader: true,
-        value: accountData.accountName,
+        value: accountData.id,
         headerBuilder: (BuildContext context, bool isExpanded) {
           return AccountTileHeader(
             accountData: accountData,
