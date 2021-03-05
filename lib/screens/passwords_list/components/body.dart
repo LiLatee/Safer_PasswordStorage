@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
+import 'package:provider/provider.dart';
 
 import '../../../models/account_data.dart';
 import '../../../modified_flutter_widgets/expansion_panel.dart' as epn;
@@ -18,43 +21,61 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  // List<bool> isExpandedList;
-
   @override
   Widget build(BuildContext context) {
-    // isExpandedList ??= List.filled(widget.accounts.length, false);
-
-    return ListView(children: <Widget>[
-      epn.ExpansionPanelList.radio(
-        expansionCallback: (panelIndex, isExpanded) {
-          setState(() {
-            // bool temp = !isExpandedList[panelIndex];
-            // isExpandedList[panelIndex] = !isExpanded && temp;
-          });
-        },
-        expandedHeaderPadding:
-            EdgeInsets.only(left: MyConstants.defaultPadding * 3),
-        children: widget.accounts.map((accountData) {
+    return epn.ExpansionPanelList.radio(
+      expandedHeaderPadding:
+          EdgeInsets.only(left: MyConstants.defaultPadding * 3),
+      children: widget.accounts.map(
+        (accountDataEntity) {
           return buildExpansionPanel(
-            accountData: accountData,
+            accountDataEntity: accountDataEntity,
           );
-        }).toList(),
-      ),
-    ]);
+        },
+      ).toList(),
+    );
+
+    // return ListView(
+    //   scrollDirection: Axis.vertical,
+    //   shrinkWrap: true,
+    //   children: <Widget>[
+    //     epn.ExpansionPanelList.radio(
+    //       expansionCallback: (panelIndex, isExpanded) {
+    //         setState(() {
+    //           // bool temp = !isExpandedList[panelIndex];
+    //           // isExpandedList[panelIndex] = !isExpanded && temp;
+    //         });
+    //       },
+    //       expandedHeaderPadding:
+    //           EdgeInsets.only(left: MyConstants.defaultPadding * 3),
+    //       children: widget.accounts.map(
+    //         (accountDataEntity) {
+    //           return buildExpansionPanel(
+    //             accountDataEntity: accountDataEntity,
+    //           );
+    //         },
+    //       ).toList(),
+    //     ),
+    //   ],
+    // );
   }
 
   epn.ExpansionPanelRadio buildExpansionPanel(
-      {@required AccountDataEntity accountData}) {
+      {@required AccountDataEntity accountDataEntity}) {
     return epn.ExpansionPanelRadio(
-        canTapOnHeader: true,
-        value: accountData.id,
-        headerBuilder: (BuildContext context, bool isExpanded) {
-          return AccountTileHeader(
-            accountData: accountData,
-          );
-        },
-        body: AccountDataExpandedPart(
-          accountData: accountData,
-        ));
+      canTapOnHeader: true,
+      value: accountDataEntity.id,
+      headerBuilder: (BuildContext context, bool isExpanded) {
+        // return Text("${accountDataEntity.accountName}");
+        return Provider.value(
+          value: accountDataEntity,
+          child: AccountTileHeader(),
+        );
+      },
+      body: Provider.value(
+        value: accountDataEntity,
+        child: AccountDataExpandedPart(),
+      ),
+    );
   }
 }

@@ -146,9 +146,7 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
 
               if (isShowColorPickerNeeded) {
                 showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    child: MyDialog(
+                    builder: (context) => MyDialog(
                       title: 'Pick a color',
                       content: Container(
                         margin: EdgeInsets.all(MyConstants.defaultPadding),
@@ -162,7 +160,8 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
                           // availableColors: , TODO wybrać kolory
                         ),
                       ),
-                    ));
+                    ), barrierDismissible: false,
+                    context: context);
                 isShowColorPickerNeeded = false;
               }
             });

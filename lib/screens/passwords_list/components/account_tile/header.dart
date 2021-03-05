@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../utils/constants.dart' as MyConstants;
 
 class AccountTileHeader extends StatelessWidget {
-  final AccountDataEntity accountData;
   const AccountTileHeader({
     Key key,
-    @required this.accountData,
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
+    AccountDataEntity accountDataEntity = Provider.of<AccountDataEntity>(context);
     return Container(
         margin: EdgeInsets.all(MyConstants.defaultPadding),
         decoration: BoxDecoration(
@@ -33,7 +34,7 @@ class AccountTileHeader extends StatelessWidget {
             SizedBox(
               width: MyConstants.defaultPadding,
             ),
-            Text(accountData.accountName)
+            Text(accountDataEntity.accountName)
           ],
         ));
   }
