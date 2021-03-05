@@ -16,6 +16,9 @@ abstract class FieldDataDao {
   @Query('SELECT * FROM FieldDataEntity WHERE accountId = :accountId')
   Stream<List<FieldDataEntity>> watchFieldsOfAccount(int accountId);
 
+  @Query('SELECT * FROM FieldDataEntity WHERE accountId = :accountId')
+  Future<List<FieldDataEntity>> getFieldsOfAccount(int accountId);
+
   // @Query("SELECT COUNT(*) FROM FieldDataEntity WHERE id = :accountId")
   // Future<int> getNumberOfFieldsOfAccountId({int accountId});
 
