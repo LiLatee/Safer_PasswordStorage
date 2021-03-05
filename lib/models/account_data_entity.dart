@@ -27,6 +27,9 @@ class AccountDataEntity {
   int isShowButtonPressed;
   int isEditButtonPressed;
 
+  @ignore
+  List<FieldDataEntity> fields;
+
   // final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   AccountDataEntity({
@@ -34,7 +37,10 @@ class AccountDataEntity {
     this.accountName,
     this.isEditButtonPressed = 0,
     this.isShowButtonPressed = 0,
-  });
+    this.fields,
+  }) {
+    this.fields = [];
+  }
 
 
   void addField({AppDatabase db, String name, String value}) {

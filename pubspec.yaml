@@ -26,6 +26,7 @@ dependencies:
   flutter_colorpicker: ^0.3.4
   file_picker: ^1.13.3
   floor: ^0.19.1
+#  moor_flutter: ^1.4.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -41,7 +42,9 @@ dev_dependencies:
   pedantic: ^1.0.0
   effective_dart: ^1.0.0
   floor_generator: ^0.19.1
-  build_runner: ^1.11.1
+  build_runner: ^1.4.0
+#  moor_generator: ^1.4.0
+
 
 
 # For information on the generic Dart part of this file, see the

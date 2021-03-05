@@ -3,10 +3,11 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/BLoCs/all_accounts_bloc.dart';
+import 'package:mysimplepasswordstorage/models/DataProvider.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/models/database.dart';
 import 'package:mysimplepasswordstorage/models/field_data.dart';
-import 'package:mysimplepasswordstorage/models/sql_database.dart';
+import 'package:mysimplepasswordstorage/models/SQLprovider.dart';
 import 'package:mysimplepasswordstorage/screens/passwords_list/components/add_account_dialog/add_account_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -53,50 +54,111 @@ class _PasswordListPageState extends State<PasswordsListPage> {
   // AllAccountsBloc _allAccountsBloc = AllAccountsBloc(accounts: testAccounts);
   AllAccountsBloc _allAccountsBloc = AllAccountsBloc();
 
-
   @override
   Widget build(BuildContext context) {
     testAccounts[2].addField(
-        name: 'Notes',
-        value: "Hej. Co tam słychać? U mnie w porządku. "
-            "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-            "A co u Ciebie? "
-            "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?");
+      name: 'Notes',
+      value: "Hej. Co tam słychać? U mnie w porządku. "
+          "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
+          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+          "A co u Ciebie? "
+          "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?",
+    );
 
     testAccounts[2].addField(
-        name: 'Notes2',
-        value: "Hej. Co tam słychać? U mnie w porządku. "
-            "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-            "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-            "A co u Ciebie? "
-            "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?");
+      name: 'Notes2',
+      value: "Hej. Co tam słychać? U mnie w porządku. "
+          "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
+          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+          "A co u Ciebie? "
+          "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?",
+    );
 
     testAccounts[1].addField(name: 'Notes', value: "Haslo zwierzak");
-
+    log("passwordsListPage - build");
     return Scaffold(
       // appBar: buildAppBar(),
       // backgroundColor: Colors.white,
-      body: FutureBuilder<List<AccountDataEntity>>(
-        future: DBProvider.db.getAllAccounts(),
-        builder: (context, AsyncSnapshot<List<AccountDataEntity>> snapshot) {
-          if (snapshot.hasData) {
-            return Body(
-              accounts: snapshot.data,
-            );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(), // TODO
-            );
-          }
-        },
-      ),
+      body: Consumer<DataProvider>(
+          builder: (context, dataProvider, child) => SingleChildScrollView(
+            child: Body(
+              accounts: dataProvider.accounts,
+            ),
+          )),
       floatingActionButton: buildFloatingActionButton(),
     );
+
+    /// działające proste
+    // return Scaffold(
+    //   // appBar: buildAppBar(),
+    //   // backgroundColor: Colors.white,
+    //   body: Consumer<DataProvider>(
+    //     builder: (context, dataProvider, child) => ListView.builder(
+    //       itemCount: dataProvider.accounts.length,
+    //       itemBuilder: (context, index) => Container(
+    //         child: Text("Siema: ${dataProvider.accounts[index].accountName}"),
+    //       ),
+    //     ),
+    //   ),
+    //   floatingActionButton: buildFloatingActionButton(),
+    // );
+
+    // return Scaffold(
+    //   // appBar: buildAppBar(),
+    //   // backgroundColor: Colors.white,
+    //   body: StreamBuilder<List<AccountDataEntity>>(
+    //     stream: Provider.of<AppDatabase>(context)
+    //         .accountDao
+    //         .watchAllAccountsAsStream(),
+    //     builder: (context, AsyncSnapshot<List<AccountDataEntity>> snapshot) {
+    //       if (snapshot.hasData)
+    //         return ListView.builder(
+    //           itemCount: snapshot.data.length,
+    //           itemBuilder: (context, index) => Container(
+    //             child: Text("Siema: ${snapshot.data[index].accountName}"),
+    //           ),
+    //         );
+    //       else
+    //         return CircularProgressIndicator();
+    //     },
+    //   ),
+    //   floatingActionButton: buildFloatingActionButton(),
+    // );
+
+    // return Scaffold(
+    //   // appBar: buildAppBar(),
+    //   // backgroundColor: Colors.white,
+    //   body: FutureBuilder<Stream<List<AccountDataEntity>>>(
+    //     future: DBProvider.db.getAllAccounts(),
+    //     builder:
+    //         (context, AsyncSnapshot<Stream<List<AccountDataEntity>>> snapshot) {
+    //       if (snapshot.hasData) {
+    //         return StreamBuilder<List<AccountDataEntity>>(
+    //             stream: snapshot.data,
+    //             builder:
+    //                 (context, AsyncSnapshot<List<AccountDataEntity>> snapshot) {
+    //               if (snapshot.hasData) {
+    //                 return Body(
+    //                   accounts: snapshot.data,
+    //                 );
+    //               } else
+    //                 return Container(
+    //                   child: Text("NIC NIE MA"),
+    //                 );
+    //             });
+    //       } else {
+    //         return Center(
+    //           child: CircularProgressIndicator(), // TODO
+    //         );
+    //       }
+    //     },
+    //   ),
+    //   floatingActionButton: buildFloatingActionButton(),
+    // );
   }
 
   FloatingActionButton buildFloatingActionButton() {
@@ -104,28 +166,30 @@ class _PasswordListPageState extends State<PasswordsListPage> {
 
     return FloatingActionButton(
       onPressed: () {
-        showGeneralDialog(
-          barrierColor: Colors.black.withOpacity(0.5),
-          transitionBuilder: (context, a1, a2, widget) {
-            return Transform.scale(
-              origin: Offset(size.width / 2,
-                  size.height / 2), // TODO jak wziąć pozycje przycisku
-              scale: a1.value,
-              child: Opacity(
-                opacity: a1.value,
-                child: AddAccountDialog(
-                  currentAccounts: testAccounts,
-                  addAccountCallback: _allAccountsBloc.addAccount,
-                ),
-              ),
-            );
-          },
-          transitionDuration: Duration(milliseconds: 200),
-          barrierDismissible: false,
-          barrierLabel: '',
-          context: context,
-          pageBuilder: (context, animation1, animation2) {},
-        );
+        Provider.of<DataProvider>(context, listen: false)
+            .addAccount(AccountDataEntity(accountName: "Dodane"));
+        // showGeneralDialog(
+        //   barrierColor: Colors.black.withOpacity(0.5),
+        //   transitionBuilder: (context, a1, a2, widget) {
+        //     return Transform.scale(
+        //       origin: Offset(size.width / 2,
+        //           size.height / 2), // TODO jak wziąć pozycje przycisku
+        //       scale: a1.value,
+        //       child: Opacity(
+        //         opacity: a1.value,
+        //         child: AddAccountDialog(
+        //           currentAccounts: testAccounts,
+        //           addAccountCallback: _allAccountsBloc.addAccount,
+        //         ),
+        //       ),
+        //     );
+        //   },
+        //   transitionDuration: Duration(milliseconds: 200),
+        //   barrierDismissible: false,
+        //   barrierLabel: '',
+        //   context: context,
+        //   pageBuilder: (context, animation1, animation2) {},
+        // );
         // _allAccountsBloc.addAccount();
       },
       child: Icon(Icons.add),
