@@ -1,21 +1,24 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:mysimplepasswordstorage/models/DataProvider.dart';
 import 'package:mysimplepasswordstorage/models/account_data.dart';
+import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/constants.dart' as MyConstants;
 
 class AccountNameFieldWidget extends StatefulWidget {
   final Function onChangedCallback;
-  final List<AccountData> currentAccounts;
   final GlobalKey accountNameFormKey;
+  final BuildContext superContext;
 
-  AccountNameFieldWidget(
-      {Key key,
-      @required this.onChangedCallback,
-      @required this.currentAccounts,
-      @required this.accountNameFormKey})
-      : super(key: key);
+  AccountNameFieldWidget({
+    Key key,
+    @required this.onChangedCallback,
+    @required this.accountNameFormKey,
+    @required this.superContext,
+  }) : super(key: key);
 
   @override
   _AccountNameFieldWidgetState createState() => _AccountNameFieldWidgetState();
@@ -24,6 +27,7 @@ class AccountNameFieldWidget extends StatefulWidget {
 class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
   @override
   Widget build(BuildContext context) {
+    DataProvider dataProvider = Provider.of<DataProvider>(widget.superContext);
     return Container(
       padding: EdgeInsets.only(
           top: MyConstants.defaultPadding,
@@ -43,12 +47,11 @@ class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
                   fontWeight: FontWeight.bold)),
           readOnly: false,
           validator: (value) {
-            if (value.isEmpty) {
+            if (value.isEmpty)
               return "Name can't be empty.";
-            } else if (AccountData.isNameUsed(
-                accounts: widget.currentAccounts, name: value)) {
+            else if (dataProvider.isAccountNameUsed(name: value))
               return 'Name already exists.';
-            }
+
             return null;
           },
           onChanged: (value) {

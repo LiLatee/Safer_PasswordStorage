@@ -79,17 +79,17 @@ class _PasswordListPageState extends State<PasswordsListPage> {
     );
 
     testAccounts[1].addField(name: 'Notes', value: "Haslo zwierzak");
-    log("passwordsListPage - build");
+
+    DataProvider dataProvider = Provider.of<DataProvider>(context);
     return Scaffold(
       // appBar: buildAppBar(),
       // backgroundColor: Colors.white,
-      body: Consumer<DataProvider>(
-          builder: (context, dataProvider, child) => SingleChildScrollView(
-            child: Body(
-              accounts: dataProvider.accounts,
-            ),
-          )),
-      floatingActionButton: buildFloatingActionButton(),
+      body: SingleChildScrollView(
+        child: Body(
+          accounts: dataProvider.accounts,
+        ),
+      ),
+      floatingActionButton: AddAccountFloatingButton(),
     );
 
     /// działające proste
@@ -161,44 +161,49 @@ class _PasswordListPageState extends State<PasswordsListPage> {
     // );
   }
 
-  FloatingActionButton buildFloatingActionButton() {
-    Size size = MediaQuery.of(context).size;
-
-    return FloatingActionButton(
-      onPressed: () {
-        Provider.of<DataProvider>(context, listen: false)
-            .addAccount(AccountDataEntity(accountName: "Dodane"));
-        // showGeneralDialog(
-        //   barrierColor: Colors.black.withOpacity(0.5),
-        //   transitionBuilder: (context, a1, a2, widget) {
-        //     return Transform.scale(
-        //       origin: Offset(size.width / 2,
-        //           size.height / 2), // TODO jak wziąć pozycje przycisku
-        //       scale: a1.value,
-        //       child: Opacity(
-        //         opacity: a1.value,
-        //         child: AddAccountDialog(
-        //           currentAccounts: testAccounts,
-        //           addAccountCallback: _allAccountsBloc.addAccount,
-        //         ),
-        //       ),
-        //     );
-        //   },
-        //   transitionDuration: Duration(milliseconds: 200),
-        //   barrierDismissible: false,
-        //   barrierLabel: '',
-        //   context: context,
-        //   pageBuilder: (context, animation1, animation2) {},
-        // );
-        // _allAccountsBloc.addAccount();
-      },
-      child: Icon(Icons.add),
-    );
-  }
+  // FloatingActionButton buildFloatingActionButton() {
+  //   return AddAccountFloatingButton(context: context, context: context);
+  // }
 
   AppBar buildAppBar() {
     return AppBar(
       title: Text("My Simple Password Storage"),
+    );
+  }
+}
+
+class AddAccountFloatingButton extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext superContext) {
+    Size size = MediaQuery.of(superContext).size;
+
+    return FloatingActionButton(
+      onPressed: () {
+        // Provider.of<DataProvider>(context, listen: false)
+        //     .addAccount(AccountDataEntity(accountName: "Dodane"));
+        showGeneralDialog(
+          barrierColor: Colors.black.withOpacity(0.5),
+          transitionBuilder: (context, a1, a2, widget) {
+            return Transform.scale(
+              origin: Offset(size.width / 2,
+                  size.height / 2), // TODO jak wziąć pozycje przycisku
+              scale: a1.value,
+              child: Opacity(
+                opacity: a1.value,
+                child: AddAccountDialog(superContext: superContext),/// context required by Provider in the subtree
+              ),
+            );
+          },
+          transitionDuration: Duration(milliseconds: 200),
+          barrierDismissible: false,
+          barrierLabel: '',
+          context: superContext,
+          pageBuilder: (context, animation1, animation2) => null,
+        );
+        // _allAccountsBloc.addAccount();
+      },
+      child: Icon(Icons.add),
     );
   }
 }
