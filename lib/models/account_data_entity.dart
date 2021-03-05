@@ -37,9 +37,9 @@ class AccountDataEntity {
     this.accountName,
     this.isEditButtonPressed = 0,
     this.isShowButtonPressed = 0,
-    this.fields,
+    fields,
   }) {
-    this.fields = [];
+    this.fields =  fields ?? [];
   }
 
 

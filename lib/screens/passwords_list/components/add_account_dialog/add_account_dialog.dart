@@ -50,7 +50,7 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
         buttonName: "Add",
         onPressed: () {
           if (accountNameFormKey.currentState.validate()) {
-            widget.addAccountCallback(accountDataEntity: accountData);
+            widget.addAccountCallback(_accountDataEntity: accountData);
             Navigator.of(context).pop();
           } else {
             Scaffold.of(context).showSnackBar(SnackBar(content: Text('zle')));
