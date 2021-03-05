@@ -2,39 +2,39 @@ import 'package:flutter/material.dart';
 
 import 'package:mysimplepasswordstorage/components/account_name_field_widget.dart';
 import 'package:mysimplepasswordstorage/components/dialog_template.dart';
+import 'package:mysimplepasswordstorage/models/DataProvider.dart';
 import 'package:mysimplepasswordstorage/models/account_data.dart';
+import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
 import 'package:mysimplepasswordstorage/utils/functions.dart' as MyFunctions;
+import 'package:provider/provider.dart';
 import 'choose_icon_widget.dart';
 
 class AddAccountDialog extends StatefulWidget {
-  final Function addAccountCallback;
-  final List<AccountData> currentAccounts;
+  final BuildContext superContext;
 
-  AddAccountDialog({
-    @required this.addAccountCallback,
-    @required this.currentAccounts,
-  });
+  AddAccountDialog({this.superContext});
 
   @override
   _AddAccountDialogState createState() => _AddAccountDialogState();
 }
 
 class _AddAccountDialogState extends State<AddAccountDialog> {
-  AccountData accountData = AccountData(accountName: 'Account name');
-  final accountNameFormKey = GlobalKey<FormState>();
+  AccountDataEntity accountDataEntity = AccountDataEntity(accountName: 'Account name');
   Color currentColor = MyConstants.iconDefaultColors[0];
+  final accountNameFormKey = GlobalKey<FormState>();
+
   bool isChosenColorIcon = true;
 
   void setAccountName({String accountName}) {
     setState(() {
-      accountData.accountName = accountName;
-      if (isChosenColorIcon) {
-        accountData.icon = MyFunctions.generateRandomColorIcon(
-          name: accountData.accountName,
-          color: currentColor,
-        );
-      }
+      accountDataEntity.accountName = accountName;
+      // if (isChosenColorIcon) {
+      //   accountDataEntity.icon = MyFunctions.generateRandomColorIcon(
+      //     name: accountData.accountName,
+      //     color: currentColor,
+      //   );
+      // }
     });
   }
 
@@ -50,10 +50,11 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
         buttonName: "Add",
         onPressed: () {
           if (accountNameFormKey.currentState.validate()) {
-            widget.addAccountCallback(_accountDataEntity: accountData);
+            Provider.of<DataProvider>(widget.superContext, listen: false).addAccount(accountDataEntity);
             Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Dodano konto "${accountDataEntity.accountName}"')));
           } else {
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text('zle')));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Coś nie tak przy dodawaniu konta ;(')));
           }
         });
 
@@ -62,19 +63,19 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
       content: Column(
         children: <Widget>[
           AccountNameFieldWidget(
-            currentAccounts: widget.currentAccounts,
+            superContext: widget.superContext,
             onChangedCallback: setAccountName,
             accountNameFormKey: accountNameFormKey,
           ),
-          ChooseIconWidget(
-            accountData: accountData,
-            setAccountDataCallback: ({accountData}) =>
-                this.accountData = accountData,
-            setIsChosenColorIconCallback: ({isChosenColorIcon}) =>
-                this.isChosenColorIcon = isChosenColorIcon,
-            currentColor: currentColor,
-            setCurrentColorCallback: ({color}) => currentColor = color,
-          ),
+          // ChooseIconWidget(
+          //   accountDataEntity: accountDataEntity,
+          //   setAccountDataCallback: ({accountDataEntity}) =>
+          //       this.accountDataEntity = accountDataEntity,
+          //   setIsChosenColorIconCallback: ({isChosenColorIcon}) =>
+          //       this.isChosenColorIcon = isChosenColorIcon,
+          //   currentColor: currentColor,
+          //   setCurrentColorCallback: ({color}) => currentColor = color,
+          // ),
           // bottomButtonsSection(context)
         ],
       ),

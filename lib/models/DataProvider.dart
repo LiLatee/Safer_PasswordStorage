@@ -16,7 +16,10 @@ class DataProvider extends ChangeNotifier {
   }
 
   void initData() async {
-    // INSERT INTO FieldDataEntity (accountId, name, value, position) VALUES (1, "Moje pole2", "Taka se wartość2", 2), (1, "Moje pole1", "Taka se wartość1", 1), (2, "Moje pole11", "Taka se wartość22", 1)
+    // INSERT INTO FieldDataEntity (accountId, name, value, position)
+    // VALUES (1, "Moje pole2", "Taka se wartość2", 2),
+    // (1, "Moje pole1", "Taka se wartość1", 1),
+    // (2, "Moje pole11", "Taka se wartość22", 1)
     done = true;
     await sql_provider.addAccount(
         accountDataEntity: AccountDataEntity(accountName: "Test1"));
@@ -57,13 +60,27 @@ class DataProvider extends ChangeNotifier {
     }
   }
 
-  void deleteField(FieldDataEntity fieldDataEntity) {
-    sql_provider.deleteField(fieldDataEntity: fieldDataEntity);
-    fetchAndSetData();
+  void addAccount(AccountDataEntity accountDataEntity) {
+    sql_provider
+        .addAccount(accountDataEntity: accountDataEntity)
+        .then((value) => fetchAndSetData());
   }
 
-  void addAccount(AccountDataEntity accountDataEntity) {
-    sql_provider.addAccount(accountDataEntity: accountDataEntity);
-    fetchAndSetData();
+  bool isAccountNameUsed(
+      {@required String name}) {
+    bool isUsed = false;
+    for (var el in accounts) {
+      if (el.accountName.toLowerCase() == name.toLowerCase()) {
+        isUsed = true;
+        break;
+      }
+    }
+    return isUsed;
+  }
+
+  void deleteField(FieldDataEntity fieldDataEntity) {
+    sql_provider
+        .deleteField(fieldDataEntity: fieldDataEntity)
+        .then((value) => fetchAndSetData());
   }
 }
