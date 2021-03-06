@@ -21,7 +21,7 @@ class AddAccountDialog extends StatefulWidget {
 
 class _AddAccountDialogState extends State<AddAccountDialog> {
   AccountDataEntity accountDataEntity = AccountDataEntity(accountName: 'Account name');
-  Color currentColor = MyConstants.iconDefaultColors[0];
+  // Color currentColor = MyConstants.iconDefaultColors[0];
   final accountNameFormKey = GlobalKey<FormState>();
 
   bool isChosenColorIcon = true;
@@ -67,15 +67,17 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
             onChangedCallback: setAccountName,
             accountNameFormKey: accountNameFormKey,
           ),
-          // ChooseIconWidget(
-          //   accountDataEntity: accountDataEntity,
-          //   setAccountDataCallback: ({accountDataEntity}) =>
-          //       this.accountDataEntity = accountDataEntity,
-          //   setIsChosenColorIconCallback: ({isChosenColorIcon}) =>
-          //       this.isChosenColorIcon = isChosenColorIcon,
-          //   currentColor: currentColor,
-          //   setCurrentColorCallback: ({color}) => currentColor = color,
-          // ),
+          Provider.value(
+            value: accountDataEntity,
+            child: ChooseIconWidget(
+              // setAccountDataCallback: ({accountDataEntity}) =>
+              //     this.accountDataEntity = accountDataEntity,
+              setIsChosenColorIconCallback: ({isChosenColorIcon}) =>
+                  this.isChosenColorIcon = isChosenColorIcon,
+              // currentColor: currentColor,
+              // setCurrentColorCallback: ({color}) => currentColor = color,
+            ),
+          ),
           // bottomButtonsSection(context)
         ],
       ),
