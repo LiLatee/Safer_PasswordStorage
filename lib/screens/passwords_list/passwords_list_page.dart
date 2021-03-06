@@ -21,64 +21,64 @@ class PasswordsListPage extends StatefulWidget {
 }
 
 class _PasswordListPageState extends State<PasswordsListPage> {
-  static List<AccountData> testAccounts = [
-    AccountData(
-      accountName: "Facebook",
-      email: FieldData(name: "Email", value: "me.myself.and.i@gmail.com"),
-      password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
-      icon: CircleAvatar(
-        radius: MyConstants.defaultIconRadius,
-        backgroundImage: AssetImage('images/facebook.png'),
-        backgroundColor: Colors.transparent,
-      ),
-    ),
-    AccountData(
-      accountName: "Twitter",
-      email:
-          FieldData(name: "Email", value: "we.have_a_city_to_burn@gmail.com"),
-      password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
-      icon: CircleAvatar(
-        radius: MyConstants.defaultIconRadius,
-        backgroundImage: AssetImage('images/twitter.png'),
-        backgroundColor: Colors.transparent,
-      ),
-    ),
-    AccountData(
-      accountName: "Wooggi",
-      email: FieldData(
-          name: "Email", value: "where_are_my_cookiesLOOOOOOLLLL?@gmail.com"),
-      password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
-    ),
-  ];
+  // static List<AccountData> testAccounts = [
+  //   AccountData(
+  //     accountName: "Facebook",
+  //     email: FieldData(name: "Email", value: "me.myself.and.i@gmail.com"),
+  //     password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
+  //     icon: CircleAvatar(
+  //       radius: MyConstants.defaultIconRadius,
+  //       backgroundImage: AssetImage('images/facebook.png'),
+  //       backgroundColor: Colors.transparent,
+  //     ),
+  //   ),
+  //   AccountData(
+  //     accountName: "Twitter",
+  //     email:
+  //         FieldData(name: "Email", value: "we.have_a_city_to_burn@gmail.com"),
+  //     password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
+  //     icon: CircleAvatar(
+  //       radius: MyConstants.defaultIconRadius,
+  //       backgroundImage: AssetImage('images/twitter.png'),
+  //       backgroundColor: Colors.transparent,
+  //     ),
+  //   ),
+  //   AccountData(
+  //     accountName: "Wooggi",
+  //     email: FieldData(
+  //         name: "Email", value: "where_are_my_cookiesLOOOOOOLLLL?@gmail.com"),
+  //     password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
+  //   ),
+  // ];
 
   // AllAccountsBloc _allAccountsBloc = AllAccountsBloc(accounts: testAccounts);
-  AllAccountsBloc _allAccountsBloc = AllAccountsBloc();
+  // AllAccountsBloc _allAccountsBloc = AllAccountsBloc();
 
   @override
   Widget build(BuildContext context) {
-    testAccounts[2].addField(
-      name: 'Notes',
-      value: "Hej. Co tam słychać? U mnie w porządku. "
-          "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-          "A co u Ciebie? "
-          "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?",
-    );
-
-    testAccounts[2].addField(
-      name: 'Notes2',
-      value: "Hej. Co tam słychać? U mnie w porządku. "
-          "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-          "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-          "A co u Ciebie? "
-          "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?",
-    );
-
-    testAccounts[1].addField(name: 'Notes', value: "Haslo zwierzak");
+    // testAccounts[2].addField(
+    //   name: 'Notes',
+    //   value: "Hej. Co tam słychać? U mnie w porządku. "
+    //       "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
+    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+    //       "A co u Ciebie? "
+    //       "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?",
+    // );
+    //
+    // testAccounts[2].addField(
+    //   name: 'Notes2',
+    //   value: "Hej. Co tam słychać? U mnie w porządku. "
+    //       "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
+    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
+    //       "A co u Ciebie? "
+    //       "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?",
+    // );
+    //
+    // testAccounts[1].addField(name: 'Notes', value: "Haslo zwierzak");
 
     DataProvider dataProvider = Provider.of<DataProvider>(context);
     return Scaffold(

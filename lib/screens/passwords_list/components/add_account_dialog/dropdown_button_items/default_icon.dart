@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import '../../../../../models/account_data.dart';
 import '../../../../../utils/constants.dart' as MyConstants;
 
@@ -7,11 +8,11 @@ typedef void SetChosenDefaultIcon({AssetImage image});
 class DefaultIconDropdownMenuItem extends DropdownMenuItem {
   final SetChosenDefaultIcon setChosenDefaultIconCallback;
   final mapElement;
-  final AccountData accountData;
+  final AccountDataEntity accountDataEntity;
 
   DefaultIconDropdownMenuItem({
     Key key,
-    @required this.accountData,
+    @required this.accountDataEntity,
     this.mapElement,
     this.setChosenDefaultIconCallback,
   }) : super(

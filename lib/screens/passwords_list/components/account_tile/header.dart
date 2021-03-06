@@ -30,7 +30,7 @@ class AccountTileHeader extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            // accountData.icon, // TODO
+            accountDataEntity.iconWidget ?? Container(), // TODO
             SizedBox(
               width: MyConstants.defaultPadding,
             ),

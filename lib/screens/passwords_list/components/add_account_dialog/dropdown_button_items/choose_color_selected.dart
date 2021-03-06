@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../../models/account_data.dart';
 import '../../../../../utils/constants.dart' as MyConstants;
 
 typedef void ShowColorPicker({bool isShowNeeded});

@@ -1,5 +1,6 @@
 import 'dart:developer';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
 import 'package:flutter/cupertino.dart';
 import 'package:mysimplepasswordstorage/models/SQLprovider.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
@@ -49,25 +50,30 @@ class DataProvider extends ChangeNotifier {
 
   Future<void> fetchAndSetData() async {
     if (sql_provider.SQL_DB != null) {
-      if (done == false) await initData();
+
+      if (done == false) await initData(); // TODO
+
       accounts = await sql_provider.getAllAccounts();
       for (var acc in accounts) {
         List<FieldDataEntity> fields =
             await sql_provider.getFieldsOfAccount(accountDataEntity: acc);
         acc.fields = fields;
+        acc.setIconWidget();
       }
       notifyListeners();
     }
   }
 
-  void addAccount(AccountDataEntity accountDataEntity) {
+  void addAccount(AccountDataEntity accountDataEntity) async {
+    // var img = await ImagePicker().getImage(source: ImageSource.gallery);
+    // accountDataEntity.iconImage = await img.readAsBytes();
+
     sql_provider
         .addAccount(accountDataEntity: accountDataEntity)
         .then((value) => fetchAndSetData());
   }
 
-  bool isAccountNameUsed(
-      {@required String name}) {
+  bool isAccountNameUsed({@required String name}) {
     bool isUsed = false;
     for (var el in accounts) {
       if (el.accountName.toLowerCase() == name.toLowerCase()) {

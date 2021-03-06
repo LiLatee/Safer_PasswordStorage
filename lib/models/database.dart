@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:floor/floor.dart';
 import 'package:mysimplepasswordstorage/models/account_data_dao.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
