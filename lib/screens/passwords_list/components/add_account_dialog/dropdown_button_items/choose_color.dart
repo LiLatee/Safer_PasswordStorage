@@ -5,34 +5,15 @@ typedef void ShowColorPicker({bool isShowNeeded});
 
 class ChooseColorDropdownMenuItem extends DropdownMenuItem {
   final ShowColorPicker showColorPickerCallback;
-  final Widget chooseColorIcon;
+  final Widget chooseColorIconWidget;
 
   ChooseColorDropdownMenuItem({
     Key key,
-    @required this.chooseColorIcon,
+    @required this.chooseColorIconWidget,
     this.showColorPickerCallback,
   }) : super(
             onTap: () {
               showColorPickerCallback(isShowNeeded: true);
-              // showDialog(
-              //     barrierDismissible: false,
-              //     context: context,
-              //     child: MyDialog(
-              //       title: 'Pick a color',
-              //       content: Container(
-              //         margin: EdgeInsets.all(MyConstants.defaultPadding),
-              //         width: MediaQuery.of(context).size.width * 0.8,
-              //         child: BlockPicker(
-              //           availableColors: MyConstants.iconDefaultColors,
-              //           pickerColor: currentColor,
-              //           onColorChanged: (value) {
-              //             changeIconColor(value);
-              //             Navigator.of(context).pop();
-              //           },
-              //           // availableColors: , TODO wybrać kolory
-              //         ),
-              //       ),
-              //     ));
             },
             value: 'Choose color',
             child: Column(
@@ -43,7 +24,7 @@ class ChooseColorDropdownMenuItem extends DropdownMenuItem {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        chooseColorIcon,
+                        chooseColorIconWidget,
                         SizedBox(
                           width: MyConstants.defaultPadding,
                         ),

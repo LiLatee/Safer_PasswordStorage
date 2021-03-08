@@ -1,13 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:mysimplepasswordstorage/components/account_name_field_widget.dart';
 import 'package:mysimplepasswordstorage/components/dialog_template.dart';
 import 'package:mysimplepasswordstorage/models/DataProvider.dart';
-import 'package:mysimplepasswordstorage/models/account_data.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
+import 'package:provider/provider.dart';
 import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
 import 'package:mysimplepasswordstorage/utils/functions.dart' as MyFunctions;
-import 'package:provider/provider.dart';
 import 'choose_icon_widget.dart';
 
 class AddAccountDialog extends StatefulWidget {
@@ -21,20 +22,21 @@ class AddAccountDialog extends StatefulWidget {
 
 class _AddAccountDialogState extends State<AddAccountDialog> {
   AccountDataEntity accountDataEntity = AccountDataEntity(accountName: 'Account name');
-  // Color currentColor = MyConstants.iconDefaultColors[0];
+  Color _currentColor = MyConstants.iconDefaultColors[0];
   final accountNameFormKey = GlobalKey<FormState>();
-
   bool isChosenColorIcon = true;
 
   void setAccountName({String accountName}) {
     setState(() {
       accountDataEntity.accountName = accountName;
-      // if (isChosenColorIcon) {
-      //   accountDataEntity.icon = MyFunctions.generateRandomColorIcon(
-      //     name: accountData.accountName,
-      //     color: currentColor,
-      //   );
-      // }
+
+      /// Change letter on icon while changing account name.
+      if (isChosenColorIcon) {
+        accountDataEntity.iconWidget = MyFunctions.generateRandomColorIconAsWidget(
+          name: accountDataEntity.accountName,
+          color: _currentColor,
+        );
+      }
     });
   }
 
@@ -70,11 +72,9 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
           Provider.value(
             value: accountDataEntity,
             child: ChooseIconWidget(
-              // setAccountDataCallback: ({accountDataEntity}) =>
-              //     this.accountDataEntity = accountDataEntity,
               setIsChosenColorIconCallback: ({isChosenColorIcon}) =>
                   this.isChosenColorIcon = isChosenColorIcon,
-              // currentColor: currentColor,
+              currentColor: _currentColor,
               // setCurrentColorCallback: ({color}) => currentColor = color,
             ),
           ),
@@ -84,55 +84,4 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
       title: "Adding new account",
     );
   }
-
-// Widget bottomButtonsSection(BuildContext context) {
-//   return Container(
-//     margin: EdgeInsets.only(top: MyConstants.defaultPadding),
-//     decoration: BoxDecoration(
-//       color: Theme.of(context).accentColor,
-//       borderRadius: BorderRadius.only(
-//         bottomLeft: Radius.circular(MyConstants.defaultCircularBorderRadius),
-//         bottomRight: Radius.circular(MyConstants.defaultCircularBorderRadius),
-//       ),
-//     ),
-//     child: IntrinsicHeight(
-//       child: Row(
-//         children: <Widget>[
-//           Expanded(
-//             child: FlatButton(
-//               onPressed: () {
-//                 Navigator.of(context).pop();
-//               },
-//               child: Container(
-//                 child: Text(
-//                   "Cancel",
-//                 ),
-//               ),
-//             ),
-//           ),
-//           VerticalDivider(color: Theme.of(context).primaryColor),
-//           Expanded(
-//             child: FlatButton(
-//               onPressed: () {
-//                 if (accountNameFormKey.currentState.validate()) {
-//                   // if (chooseImageIcon == null) {
-//                   //   accountData.icon = chooseColorIcon;
-//                   // }
-//                   widget.addAccountCallback(accountData: accountData);
-//                   Navigator.of(context).pop();
-//                 } else {
-//                   // Scaffold.of(context)
-//                   //     .showSnackBar(SnackBar(content: Text('zle')));
-//                 }
-//               },
-//               child: Container(
-//                 child: Text("Add"),
-//               ),
-//             ),
-//           )
-//         ],
-//       ),
-//     ),
-//   );
-// }
 }

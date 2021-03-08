@@ -30,16 +30,6 @@ class ChooseImageDropdownMenuItem extends DropdownMenuItem {
                   ),
                 );
               });
-
-              // FilePicker.getFile(type: FileType.image).then((value) {
-              //   setIconImageCallback(
-              //     image: Image.file(
-              //       value,
-              //       width: MyConstants.defaultIconRadius * 2,
-              //       height: MyConstants.defaultIconRadius * 2,
-              //     ),
-              //   );
-              // }).catchError(print); // TODO LOG?
             },
             value: 'Choose image',
             child: Container(

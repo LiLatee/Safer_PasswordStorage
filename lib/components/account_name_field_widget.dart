@@ -38,13 +38,15 @@ class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
         autovalidate: true,
         child: TextFormField(
           decoration: InputDecoration(
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).accentColor)),
-              border: OutlineInputBorder(),
-              labelText: 'Account name',
-              labelStyle: TextStyle(
-                  color: Theme.of(context).accentColor,
-                  fontWeight: FontWeight.bold)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Theme.of(context).accentColor)),
+            border: OutlineInputBorder(),
+            labelText: 'Account name',
+            labelStyle: TextStyle(
+              color: Theme.of(context).accentColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           readOnly: false,
           validator: (value) {
             if (value.isEmpty)
