@@ -6,7 +6,7 @@ import 'package:random_color/random_color.dart';
 import 'constants.dart' as MyConstants;
 import 'functions.dart' as Functions;
 
-Widget generateRandomColorIcon(
+Widget generateRandomColorIconAsWidget(
     {String name = '',
     double radius = MyConstants.defaultIconRadius,
     Color color}) {

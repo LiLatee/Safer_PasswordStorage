@@ -76,12 +76,11 @@ class AccountDataEntity {
       );
     } else {
       this.iconColorHex ??= MyConstants
-          .iconDefaultColors[
-              Random().nextInt(MyConstants.iconDefaultColors.length)]
+          .iconDefaultColors[0]
           .value
           .toRadixString(16);
 
-      this.iconWidget = Functions.generateRandomColorIcon(
+      this.iconWidget = Functions.generateRandomColorIconAsWidget(
         name: accountName,
         color: Functions.HexColor.fromHex(this.iconColorHex),
       );

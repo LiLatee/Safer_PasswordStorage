@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import '../../../../../utils/constants.dart' as MyConstants;
+import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
+import 'package:mysimplepasswordstorage/utils/functions.dart' as MyFunctions;
 
 typedef void ShowColorPicker({bool isShowNeeded});
 
 class ChooseColorSelectedDropdownMenuItem extends DropdownMenuItem {
-  final ShowColorPicker callback;
+  final ShowColorPicker showColorPickerCallback;
   final Widget icon;
+
   ChooseColorSelectedDropdownMenuItem({
     Key key,
-    this.callback,
+    this.showColorPickerCallback,
     @required this.icon,
   }) : super(
             onTap: () {
-              callback(isShowNeeded: true);
+              showColorPickerCallback(isShowNeeded: true);
             },
             value: 'Choose color',
             child: Row(
@@ -21,6 +23,10 @@ class ChooseColorSelectedDropdownMenuItem extends DropdownMenuItem {
                   width: MyConstants.defaultPadding / 2,
                 ),
                 icon,
+                // MyFunctions.generateRandomColorIconAsWidget(
+                //   name: 'A',
+                //   color: MyConstants.iconDefaultColors[5],
+                // ),
                 Expanded(
                   child: Text(
                     'Select icon',
