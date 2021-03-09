@@ -67,6 +67,7 @@ abstract class FieldWidget extends StatelessWidget {
     this.keyboardType,
     this.onEditingComplete,
     this.textInputAction,
+    this.onFieldSubmitted,
   }) : super(key: key);
 
   final bool readOnly;
@@ -77,6 +78,7 @@ abstract class FieldWidget extends StatelessWidget {
   final int maxLines;
   final TextInputType keyboardType;
   final Function onEditingComplete;
+  final onChangeText onFieldSubmitted;
   final TextInputAction textInputAction;
 
   @override
@@ -101,7 +103,12 @@ abstract class FieldWidget extends StatelessWidget {
       onChanged: (value) {
         if (onChangedCallback != null) onChangedCallback(newText: value);
       },
-      onEditingComplete: onEditingComplete,
+      onEditingComplete: () {
+        if (onEditingComplete != null) onEditingComplete();
+      },
+      onFieldSubmitted: (value) {
+        if (onFieldSubmitted != null) onFieldSubmitted(newText: value);
+      },
       textInputAction: textInputAction,
     );
   }
@@ -114,16 +121,18 @@ class AdditionalFieldWidget extends FieldWidget {
   final onChangeText onChangedCallback;
   final Function onEditingComplete;
   final TextInputAction textInputAction;
+  final onChangeText onFieldSubmitted;
 
-  AdditionalFieldWidget({
-    Key key,
-    @required this.label,
-    this.value,
-    this.onChangedCallback,
-    this.readOnly,
-    this.onEditingComplete,
-    this.textInputAction,
-  }) : super(
+  AdditionalFieldWidget(
+      {Key key,
+      @required this.label,
+      this.value,
+      this.onChangedCallback,
+      this.readOnly,
+      this.onEditingComplete,
+      this.textInputAction,
+      this.onFieldSubmitted})
+      : super(
           key: key,
           label: label,
           value: value,
@@ -132,6 +141,7 @@ class AdditionalFieldWidget extends FieldWidget {
           maxLines: 1,
           isPassword: false,
           onEditingComplete: onEditingComplete,
+          onFieldSubmitted: onFieldSubmitted,
           textInputAction: textInputAction,
         );
 }
@@ -142,6 +152,7 @@ class PasswordFieldWidget extends FieldWidget {
   final String value;
   final bool showPassword;
   final onChangeText onChangedCallback;
+  final onChangeText onFieldSubmitted;
   final Function onEditingComplete;
 
   PasswordFieldWidget({
@@ -152,6 +163,7 @@ class PasswordFieldWidget extends FieldWidget {
     this.readOnly,
     this.showPassword = false,
     this.onEditingComplete,
+    this.onFieldSubmitted,
   }) : super(
           key: key,
           label: label,
@@ -161,6 +173,7 @@ class PasswordFieldWidget extends FieldWidget {
           maxLines: 1,
           isPassword: !showPassword,
           onEditingComplete: onEditingComplete,
+          onFieldSubmitted: onFieldSubmitted,
         );
 }
 
@@ -170,6 +183,7 @@ class EmailFieldWidget extends FieldWidget {
   final String value;
   final onChangeText onChangedCallback;
   final Function onEditingComplete;
+  final onChangeText onFieldSubmitted;
 
   EmailFieldWidget({
     Key key,
@@ -178,6 +192,7 @@ class EmailFieldWidget extends FieldWidget {
     this.onChangedCallback,
     this.readOnly = true,
     this.onEditingComplete,
+    this.onFieldSubmitted,
   }) : super(
           key: key,
           label: label,
@@ -188,5 +203,6 @@ class EmailFieldWidget extends FieldWidget {
           isPassword: false,
           keyboardType: TextInputType.emailAddress,
           onEditingComplete: onEditingComplete,
+          onFieldSubmitted: onFieldSubmitted,
         );
 }

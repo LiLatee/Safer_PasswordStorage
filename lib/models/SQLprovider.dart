@@ -61,6 +61,13 @@ class SQLprovider extends ChangeNotifier {
   Future<void> addField({FieldDataEntity fieldDataEntity}) async {
     await SQL_DB.fieldDao.insertField(fieldDataEntity);
   }
+  Future<void> updateAccount(AccountDataEntity accountDataEntity) async {
+    await SQL_DB.accountDao.updateAccount(accountDataEntity);
+  }
+
+  Future<void> updateField(FieldDataEntity fieldDataEntity) async {
+    await SQL_DB.fieldDao.updateField(fieldDataEntity);
+  }
 
   Future<void> deleteField({FieldDataEntity fieldDataEntity}) async{
     await SQL_DB.fieldDao.deleteField(fieldDataEntity);
