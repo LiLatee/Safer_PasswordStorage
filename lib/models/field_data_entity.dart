@@ -17,6 +17,8 @@ class FieldDataEntity {
   final int accountId;
   String name;
   String value;
+  bool isHidden;
+  bool isMultiline;
   int position;
 
   FieldDataEntity({
@@ -24,7 +26,8 @@ class FieldDataEntity {
     this.accountId,
     this.name,
     this.value,
+    this.isHidden = false,
+    this.isMultiline = false,
     this.position,
   });
-
 }

@@ -27,6 +27,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     _dataProvider = Provider.of<DataProvider>(context);
+
     return StreamBuilder<List<AccountDataEntity>>(
       stream: _dataProvider.accountsStream,
       builder: (context, AsyncSnapshot<List<AccountDataEntity>> snapshot) {

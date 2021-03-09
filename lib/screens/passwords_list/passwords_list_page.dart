@@ -84,9 +84,11 @@ class _PasswordListPageState extends State<PasswordsListPage> {
     return Scaffold(
       // appBar: buildAppBar(),
       // backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Body(
-          // accounts: dataProvider.accounts,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Body(
+            // accounts: dataProvider.accounts,
+          ),
         ),
       ),
       floatingActionButton: AddAccountFloatingButton(),
