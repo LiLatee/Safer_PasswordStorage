@@ -23,6 +23,13 @@ class DataProvider extends ChangeNotifier {
 
   Stream<List<AccountDataEntity>> get accountsStream => _subjectAccounts.stream;
 
+  AccountDataEntity getLocalAccountById(int id) {
+    for (var acc in accounts) if (acc.id == id) return acc;
+
+    return null;
+  }
+
+  static bool done = true;
   void initData() async {
     // INSERT INTO FieldDataEntity (accountId, name, value, position)
     // VALUES (1, "Moje pole2", "Taka se wartość2", 2),
@@ -53,7 +60,17 @@ class DataProvider extends ChangeNotifier {
             position: 1));
   }
 
-  static bool done = true;
+
+  bool isAccountNameUsed({@required String name}) {
+    bool isUsed = false;
+    for (var el in accounts) {
+      if (el.accountName.toLowerCase() == name.toLowerCase()) {
+        isUsed = true;
+        break;
+      }
+    }
+    return isUsed;
+  }
 
   Future<void> fetchAndSetData() async {
     if (sql_provider.SQL_DB != null) {
@@ -72,22 +89,19 @@ class DataProvider extends ChangeNotifier {
   }
 
   void addAccount(AccountDataEntity accountDataEntity) async {
-    // var img = await ImagePicker().getImage(source: ImageSource.gallery);
-    // accountDataEntity.iconImage = await img.readAsBytes();
-
-    sql_provider
-        .addAccount(accountDataEntity: accountDataEntity)
-        .then((value) async {
-      var acc = await sql_provider.getAccountById(value);
-      acc.fields =
-          await sql_provider.getFieldsOfAccount(accountDataEntity: acc);
-      accounts.add(acc);
-      _subjectAccounts.sink.add(accounts);
+    sql_provider.addAccount(accountDataEntity: accountDataEntity).then((value) async {
+        var acc = await sql_provider.getAccountById(value);
+        acc.fields = accountDataEntity.fields;
+        accounts.add(acc);
+        _subjectAccounts.sink.add(accounts);
     });
   }
 
   void updateAccount(AccountDataEntity accountDataEntity) {
-    sql_provider.updateAccount(accountDataEntity).then((value) => fetchAndSetData()); // TODO
+    int listIndex =
+        accounts.indexWhere((element) => element.id == accountDataEntity.id);
+    accounts[listIndex] = accountDataEntity;
+    sql_provider.updateAccount(accountDataEntity);
   }
 
   void deleteAccount(AccountDataEntity accountDataEntity) {
@@ -96,50 +110,59 @@ class DataProvider extends ChangeNotifier {
     _subjectAccounts.sink.add(accounts);
   }
 
-  bool isAccountNameUsed({@required String name}) {
-    bool isUsed = false;
-    for (var el in accounts) {
-      if (el.accountName.toLowerCase() == name.toLowerCase()) {
-        isUsed = true;
-        break;
-      }
-    }
-    return isUsed;
-  }
-
   void toggleEditButton({AccountDataEntity accountDataEntity}) {
-    var idInList = accounts.indexWhere((element) => element.id == accountDataEntity.id);
+    int listIndex =
+        accounts.indexWhere((element) => element.id == accountDataEntity.id);
     if (accountDataEntity.isEditButtonPressed == true) {
-      accounts[idInList].isEditButtonPressed = false;
-    } else
-    {
-      accounts[idInList].isEditButtonPressed = true;
+      accounts[listIndex].isEditButtonPressed = false;
+    } else {
+      accounts[listIndex].isEditButtonPressed = true;
     }
     _subjectAccounts.sink.add(accounts);
   }
 
   void toggleShowButton({AccountDataEntity accountDataEntity}) {
-    var idInList = accounts.indexWhere((element) => element.id == accountDataEntity.id);
+    int listIndex =
+        accounts.indexWhere((element) => element.id == accountDataEntity.id);
+
     if (accountDataEntity.isShowButtonPressed == true) {
-      accounts[idInList].isShowButtonPressed = false;
-    } else
-    {
-      accounts[idInList].isShowButtonPressed = true;
+      accounts[listIndex].isShowButtonPressed = false;
+    } else {
+      accounts[listIndex].isShowButtonPressed = true;
     }
     _subjectAccounts.sink.add(accounts);
   }
 
   void addField(FieldDataEntity fieldDataEntity) {
-    sql_provider.addField(fieldDataEntity: fieldDataEntity).then((value) => fetchAndSetData()); // TODO
+    int listIndex = accounts
+        .indexWhere((element) => element.id == fieldDataEntity.accountId);
+
+    accounts[listIndex].fields.add(fieldDataEntity);
+    _subjectAccounts.sink.add(accounts);
+    sql_provider.addField(fieldDataEntity: fieldDataEntity);
   }
 
   void updateField(FieldDataEntity fieldDataEntity) {
-    sql_provider.updateField(fieldDataEntity).then((value) => fetchAndSetData()); // TODO
+    int accListIndex = accounts
+        .indexWhere((element) => element.id == fieldDataEntity.accountId);
+
+    int fieldListIndex = accounts[accListIndex]
+        .fields
+        .indexWhere((element) => element.id == fieldDataEntity.id);
+
+    accounts[accListIndex].fields[fieldListIndex] = fieldDataEntity;
+
+    sql_provider
+        .updateField(fieldDataEntity);
   }
 
   void deleteField(FieldDataEntity fieldDataEntity) {
+    int accListIndex = accounts
+        .indexWhere((element) => element.id == fieldDataEntity.accountId);
+
+    accounts[accListIndex].fields.remove(fieldDataEntity);
+
     sql_provider
-        .deleteField(fieldDataEntity: fieldDataEntity)
-        .then((value) => fetchAndSetData()); // TODO
+        .deleteField(fieldDataEntity: fieldDataEntity);
   }
 }

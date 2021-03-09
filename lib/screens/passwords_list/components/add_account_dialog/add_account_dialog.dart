@@ -53,7 +53,6 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
         buttonName: "Add",
         onPressed: () {
           if (accountNameFormKey.currentState.validate()) {
-            dev.log("W ADD:  ${accountDataEntity.iconImage.toString()}");
             Provider.of<DataProvider>(widget.superContext, listen: false).addAccount(accountDataEntity);
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Dodano konto "${accountDataEntity.accountName}"')));

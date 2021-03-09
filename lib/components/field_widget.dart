@@ -64,7 +64,7 @@ abstract class FieldWidget extends StatelessWidget {
     this.onChangedCallback,
     this.readOnly = true,
     this.maxLines,
-    this.keyboardType,
+    this.textInputType,
     this.onEditingComplete,
     this.textInputAction,
     this.onFieldSubmitted,
@@ -76,7 +76,7 @@ abstract class FieldWidget extends StatelessWidget {
   final bool isPassword;
   final onChangeText onChangedCallback;
   final int maxLines;
-  final TextInputType keyboardType;
+  final TextInputType textInputType;
   final Function onEditingComplete;
   final onChangeText onFieldSubmitted;
   final TextInputAction textInputAction;
@@ -94,7 +94,7 @@ abstract class FieldWidget extends StatelessWidget {
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold)),
       readOnly: readOnly,
-      keyboardType: keyboardType ?? TextInputType.text,
+      keyboardType: textInputType ?? TextInputType.text,
       minLines: 1,
       maxLines: maxLines,
       obscureText: isPassword,
@@ -108,6 +108,7 @@ abstract class FieldWidget extends StatelessWidget {
       },
       onFieldSubmitted: (value) {
         if (onFieldSubmitted != null) onFieldSubmitted(newText: value);
+        FocusScope.of(context).unfocus();
       },
       textInputAction: textInputAction,
     );
@@ -122,27 +123,34 @@ class AdditionalFieldWidget extends FieldWidget {
   final Function onEditingComplete;
   final TextInputAction textInputAction;
   final onChangeText onFieldSubmitted;
+  final bool hiddenValue;
+  final bool multiline;
+  final TextInputType textInputType;
 
-  AdditionalFieldWidget(
-      {Key key,
-      @required this.label,
-      this.value,
-      this.onChangedCallback,
-      this.readOnly,
-      this.onEditingComplete,
-      this.textInputAction,
-      this.onFieldSubmitted})
-      : super(
+  AdditionalFieldWidget({
+    Key key,
+    @required this.label,
+    this.value,
+    this.onChangedCallback,
+    this.readOnly,
+    this.onEditingComplete,
+    this.textInputAction,
+    this.onFieldSubmitted,
+    this.hiddenValue = false,
+    this.multiline = false,
+    this.textInputType,
+  }) : super(
           key: key,
           label: label,
           value: value,
           onChangedCallback: onChangedCallback,
           readOnly: readOnly,
-          maxLines: 1,
-          isPassword: false,
+          maxLines: multiline == true ? null : 1,
+          isPassword: hiddenValue,
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           textInputAction: textInputAction,
+          textInputType: textInputType,
         );
 }
 
@@ -201,7 +209,7 @@ class EmailFieldWidget extends FieldWidget {
           readOnly: readOnly,
           maxLines: 1,
           isPassword: false,
-          keyboardType: TextInputType.emailAddress,
+          textInputType: TextInputType.emailAddress,
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
         );
