@@ -70,7 +70,13 @@ class DataProvider extends ChangeNotifier {
 
     sql_provider
         .addAccount(accountDataEntity: accountDataEntity)
-        .then((value) => fetchAndSetData());
+        .then((value) async {
+      var acc = await sql_provider.getAccountById(value);
+      acc.fields =
+      await sql_provider.getFieldsOfAccount(accountDataEntity: acc);
+      accounts.add(acc);
+      notifyListeners();
+    });
   }
 
   bool isAccountNameUsed({@required String name}) {

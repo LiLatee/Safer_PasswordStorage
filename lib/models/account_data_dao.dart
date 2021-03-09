@@ -5,7 +5,7 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 @dao
 abstract class AccountDao extends ChangeNotifier{
   @Insert(onConflict: OnConflictStrategy.rollback)
-  Future<void> insertAccount(AccountDataEntity account);
+  Future<int> insertAccount(AccountDataEntity account);
 
   @delete
   Future<void> deleteAccount(AccountDataEntity account);
@@ -21,6 +21,9 @@ abstract class AccountDao extends ChangeNotifier{
 
   @Query('SELECT * FROM AccountDataEntity')
   Future<List<AccountDataEntity>> getAllAccounts();
+
+  @Query('SELECT * FROM AccountDataEntity WHERE id = :id')
+  Future<AccountDataEntity> getAccountById(int id);
 
   // @Query('SELECT * FROM AccountDataEntity WHERE accountName = :name')
   // Future<List<AccountDataEntity>> getAccountByName(String name);
