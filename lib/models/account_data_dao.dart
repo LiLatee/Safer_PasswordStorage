@@ -31,16 +31,16 @@ abstract class AccountDao extends ChangeNotifier{
   @Query('SELECT * FROM AccountDataEntity WHERE id = :id')
   Stream<AccountDataEntity> watchAccountById(int id);
 
-  @Query("UPDATE AccountDataEntity SET isShowButtonPressed = :value WHERE id = :accountID")
-  Future<void> setShowButtonState(int value, int accountID) {
-    // notifyListeners();
-    return null;
-  }
-
-  @Query("UPDATE AccountDataEntity SET isEditButtonPressed = :value WHERE id = :accountID")
-  Future<void> setEditButtonState(int value, int accountID) {
-    // notifyListeners();
-    return null;
-  }
+  // @Query("UPDATE AccountDataEntity SET isShowButtonPressed = :value WHERE id = :accountID")
+  // Future<void> setShowButtonState(int value, int accountID) {
+  //   // notifyListeners();
+  //   return null;
+  // }
+  //
+  // @Query("UPDATE AccountDataEntity SET isEditButtonPressed = :value WHERE id = :accountID")
+  // Future<void> setEditButtonState(int value, int accountID) {
+  //   // notifyListeners();
+  //   return null;
+  // }
 
 }

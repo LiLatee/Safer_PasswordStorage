@@ -12,16 +12,16 @@ class DataProvider extends ChangeNotifier {
   final SQLprovider sql_provider;
 
   List<AccountDataEntity> accounts = [];
-  ReplaySubject<AccountDataEntity> _subjectAccounts;
+  BehaviorSubject<List<AccountDataEntity>> _subjectAccounts;
 
   DataProvider({this.sql_provider}) {
+    _subjectAccounts = BehaviorSubject<List<AccountDataEntity>>();
     if (sql_provider != null) {
       fetchAndSetData();
-      _subjectAccounts = ReplaySubject<AccountDataEntity>();
     }
   }
 
-  Stream<AccountDataEntity> get accountsStream => _subjectAccounts.stream;
+  Stream<List<AccountDataEntity>> get accountsStream => _subjectAccounts.stream;
 
   void initData() async {
     // INSERT INTO FieldDataEntity (accountId, name, value, position)
@@ -65,9 +65,9 @@ class DataProvider extends ChangeNotifier {
             await sql_provider.getFieldsOfAccount(accountDataEntity: acc);
         acc.fields = fields;
         acc.setIconWidget();
-        // _subjectAccounts.sink.add(acc);
       }
-      notifyListeners();
+      _subjectAccounts.sink.add(accounts);
+      // notifyListeners();
     }
   }
 
@@ -82,8 +82,14 @@ class DataProvider extends ChangeNotifier {
       acc.fields =
           await sql_provider.getFieldsOfAccount(accountDataEntity: acc);
       accounts.add(acc);
-      notifyListeners();
+      _subjectAccounts.sink.add(accounts);
     });
+  }
+
+  void deleteAccount(AccountDataEntity accountDataEntity) {
+    sql_provider.deleteAccount(accountDataEntity: accountDataEntity);
+    accounts.remove(accountDataEntity);
+    _subjectAccounts.sink.add(accounts);
   }
 
   bool isAccountNameUsed({@required String name}) {
@@ -97,6 +103,31 @@ class DataProvider extends ChangeNotifier {
     return isUsed;
   }
 
+  void toggleEditButton({AccountDataEntity accountDataEntity}) {
+    var idInList = accounts.indexWhere((element) => element.id == accountDataEntity.id);
+    if (accountDataEntity.isEditButtonPressed == true) {
+      accounts[idInList].isEditButtonPressed = false;
+    } else
+    {
+      accounts[idInList].isEditButtonPressed = true;
+    }
+    _subjectAccounts.sink.add(accounts);
+  }
+
+  void toggleShowButton({AccountDataEntity accountDataEntity}) {
+    var idInList = accounts.indexWhere((element) => element.id == accountDataEntity.id);
+    if (accountDataEntity.isShowButtonPressed == true) {
+      accounts[idInList].isShowButtonPressed = false;
+    } else
+    {
+      accounts[idInList].isShowButtonPressed = true;
+    }
+    _subjectAccounts.sink.add(accounts);
+  }
+
+  void addField(FieldDataEntity fieldDataEntity) {
+    sql_provider.addField(fieldDataEntity: fieldDataEntity).then((value) => fetchAndSetData());
+  }
   void deleteField(FieldDataEntity fieldDataEntity) {
     sql_provider
         .deleteField(fieldDataEntity: fieldDataEntity)

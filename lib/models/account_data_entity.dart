@@ -23,21 +23,16 @@ import 'field_data.dart';
 class AccountDataEntity {
   @PrimaryKey(autoGenerate: true)
   final int id;
-
-  // @ColumnInfo(nullable: false)
   String accountName;
-
-  int isShowButtonPressed;
-  int isEditButtonPressed;
-
-  // bool isImage;
-  @ignore
-  Widget iconWidget;
   Uint8List iconImage;
   String iconColorHex;
 
-  // String iconText;
-
+  @ignore
+  bool isShowButtonPressed;
+  @ignore
+  bool isEditButtonPressed;
+  @ignore
+  Widget iconWidget;
   @ignore
   List<FieldDataEntity> fields;
 
@@ -46,8 +41,8 @@ class AccountDataEntity {
   AccountDataEntity({
     this.id,
     this.accountName,
-    this.isEditButtonPressed = 0,
-    this.isShowButtonPressed = 0,
+    this.isEditButtonPressed = false,
+    this.isShowButtonPressed = false,
     this.iconImage,
     this.iconColorHex,
     // this.iconText,
