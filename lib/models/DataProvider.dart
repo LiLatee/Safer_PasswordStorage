@@ -1,20 +1,27 @@
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
 import 'package:flutter/cupertino.dart';
 import 'package:mysimplepasswordstorage/models/SQLprovider.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
+import 'package:rxdart/rxdart.dart';
 
 class DataProvider extends ChangeNotifier {
   final SQLprovider sql_provider;
+
   List<AccountDataEntity> accounts = [];
+  ReplaySubject<AccountDataEntity> _subjectAccounts;
 
   DataProvider({this.sql_provider}) {
     if (sql_provider != null) {
       fetchAndSetData();
+      _subjectAccounts = ReplaySubject<AccountDataEntity>();
     }
   }
+
+  Stream<AccountDataEntity> get accountsStream => _subjectAccounts.stream;
 
   void initData() async {
     // INSERT INTO FieldDataEntity (accountId, name, value, position)
@@ -50,7 +57,6 @@ class DataProvider extends ChangeNotifier {
 
   Future<void> fetchAndSetData() async {
     if (sql_provider.SQL_DB != null) {
-
       if (done == false) await initData(); // TODO
 
       accounts = await sql_provider.getAllAccounts();
@@ -59,6 +65,7 @@ class DataProvider extends ChangeNotifier {
             await sql_provider.getFieldsOfAccount(accountDataEntity: acc);
         acc.fields = fields;
         acc.setIconWidget();
+        // _subjectAccounts.sink.add(acc);
       }
       notifyListeners();
     }
@@ -70,7 +77,13 @@ class DataProvider extends ChangeNotifier {
 
     sql_provider
         .addAccount(accountDataEntity: accountDataEntity)
-        .then((value) => fetchAndSetData());
+        .then((value) async {
+      var acc = await sql_provider.getAccountById(value);
+      acc.fields =
+          await sql_provider.getFieldsOfAccount(accountDataEntity: acc);
+      accounts.add(acc);
+      notifyListeners();
+    });
   }
 
   bool isAccountNameUsed({@required String name}) {

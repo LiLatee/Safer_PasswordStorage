@@ -20,13 +20,13 @@ dependencies:
   flutter:
     sdk: flutter
   cryptography: 1.4.1
-  rxdart: ^0.24.1
   random_color: ^1.0.5
   auto_size_text: ^2.1.0
   flutter_colorpicker: ^0.3.4
 #  file_picker: ^1.13.3
   image_picker: ^0.7.2
   floor: ^0.19.1
+  rxdart: ^0.26.0
 #  moor_flutter: ^1.4.0
 
 
