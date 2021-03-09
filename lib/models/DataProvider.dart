@@ -86,6 +86,10 @@ class DataProvider extends ChangeNotifier {
     });
   }
 
+  void updateAccount(AccountDataEntity accountDataEntity) {
+    sql_provider.updateAccount(accountDataEntity).then((value) => fetchAndSetData()); // TODO
+  }
+
   void deleteAccount(AccountDataEntity accountDataEntity) {
     sql_provider.deleteAccount(accountDataEntity: accountDataEntity);
     accounts.remove(accountDataEntity);
@@ -126,11 +130,16 @@ class DataProvider extends ChangeNotifier {
   }
 
   void addField(FieldDataEntity fieldDataEntity) {
-    sql_provider.addField(fieldDataEntity: fieldDataEntity).then((value) => fetchAndSetData());
+    sql_provider.addField(fieldDataEntity: fieldDataEntity).then((value) => fetchAndSetData()); // TODO
   }
+
+  void updateField(FieldDataEntity fieldDataEntity) {
+    sql_provider.updateField(fieldDataEntity).then((value) => fetchAndSetData()); // TODO
+  }
+
   void deleteField(FieldDataEntity fieldDataEntity) {
     sql_provider
         .deleteField(fieldDataEntity: fieldDataEntity)
-        .then((value) => fetchAndSetData());
+        .then((value) => fetchAndSetData()); // TODO
   }
 }

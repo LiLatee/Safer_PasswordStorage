@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     FlutterError.onError = (FlutterErrorDetails details) {
       FlutterError.dumpErrorToConsole(details);
-      print(details);
+      // print(details);
       log(details.toString(), name: "OUPS in main.dart");
     };
     return MaterialApp(

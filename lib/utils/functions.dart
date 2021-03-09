@@ -63,10 +63,10 @@ Widget generateRandomColorIconAsWidget(
 Widget buildCircleAvatarUsingImage(
     {double radius = MyConstants.defaultIconRadius,
     @required Image imageForIcon}) {
-  log("circleAvatar-${imageForIcon.width.toString()}", name: "LOL");
-  print("circleAvatar-${imageForIcon.width.toString()}");
-  print("circleAvatar-${imageForIcon.height.toString()}");
-  print("circleAvatar-${imageForIcon.color.toString()}");
+  // log("circleAvatar-${imageForIcon.width.toString()}", name: "LOL");
+  // print("circleAvatar-${imageForIcon.width.toString()}");
+  // print("circleAvatar-${imageForIcon.height.toString()}");
+  // print("circleAvatar-${imageForIcon.color.toString()}");
 
   return Container(
     decoration: BoxDecoration(
