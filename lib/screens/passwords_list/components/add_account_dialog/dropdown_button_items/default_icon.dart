@@ -3,7 +3,7 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import '../../../../../models/account_data.dart';
 import '../../../../../utils/constants.dart' as MyConstants;
 
-typedef void SetChosenDefaultIcon({AssetImage image});
+typedef void SetChosenDefaultIcon({Image image, String iconName});
 
 class DefaultIconDropdownMenuItem extends DropdownMenuItem {
   final SetChosenDefaultIcon setChosenDefaultIconCallback;
@@ -17,7 +17,7 @@ class DefaultIconDropdownMenuItem extends DropdownMenuItem {
     this.setChosenDefaultIconCallback,
   }) : super(
           onTap: () {
-            setChosenDefaultIconCallback(image: mapElement.value.image);
+            setChosenDefaultIconCallback(image: mapElement.value, iconName: mapElement.key);
           },
           child: Padding(
             padding: EdgeInsets.only(bottom: MyConstants.defaultPadding),

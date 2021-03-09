@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mysimplepasswordstorage/models/DataProvider.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:provider/provider.dart';
 
@@ -12,28 +13,53 @@ import 'account_tile/expanded_part/account_data_expanded_part.dart';
 import 'account_tile/header.dart';
 
 class Body extends StatefulWidget {
-  final List<AccountDataEntity> accounts;
+  // final List<AccountDataEntity> accounts;
 
-  Body({@required this.accounts});
+  // Body({@required this.accounts});
 
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
+  DataProvider _dataProvider;
+
   @override
   Widget build(BuildContext context) {
-    return epn.ExpansionPanelList.radio(
-      expandedHeaderPadding:
-          EdgeInsets.only(left: MyConstants.defaultPadding * 3),
-      children: widget.accounts.map(
-        (accountDataEntity) {
-          return buildExpansionPanel(
-            accountDataEntity: accountDataEntity,
+    _dataProvider = Provider.of<DataProvider>(context);
+    return StreamBuilder<List<AccountDataEntity>>(
+      stream: _dataProvider.accountsStream,
+      builder: (context, AsyncSnapshot<List<AccountDataEntity>> snapshot) {
+        if (snapshot.hasData) {
+          return epn.ExpansionPanelList.radio(
+            expandedHeaderPadding:
+                EdgeInsets.only(left: MyConstants.defaultPadding * 3),
+            children: snapshot.data
+                .map((e) => buildExpansionPanel(accountDataEntity: e))
+                .toList(),
           );
-        },
-      ).toList(),
+        } else {
+          return epn.ExpansionPanelList.radio(
+            expandedHeaderPadding:
+                EdgeInsets.only(left: MyConstants.defaultPadding * 3),
+            children: [],
+          );
+        }
+      },
     );
+
+    /// przed rxdart
+    // return epn.ExpansionPanelList.radio(
+    //   expandedHeaderPadding:
+    //       EdgeInsets.only(left: MyConstants.defaultPadding * 3),
+    //   children: widget.accounts.map(
+    //     (accountDataEntity) {
+    //       return buildExpansionPanel(
+    //         accountDataEntity: accountDataEntity,
+    //       );
+    //     },
+    //   ).toList(),
+    // );
 
     // return ListView(
     //   scrollDirection: Axis.vertical,

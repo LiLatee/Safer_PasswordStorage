@@ -1,5 +1,10 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:provider/provider.dart';
 
@@ -117,11 +122,14 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
     );
   }
 
-  void setChosenDefaultIcon({AssetImage image}) {
+  void setChosenDefaultIconImage({Image image, String iconName}) async {
+    var temp = await rootBundle.load('images/${iconName.toLowerCase()}.png');
+    Provider.of<AccountDataEntity>(context, listen: false).iconImage = temp.buffer.asUint8List();
+
     setState(() {
       _accountDataEntity.iconWidget = CircleAvatar(
         radius: MyConstants.defaultIconRadius,
-        backgroundImage: image,
+        backgroundImage: image.image,
         backgroundColor: Colors.transparent,
       );
       widget.setIsChosenColorIconCallback(isChosenColorIcon: false);
@@ -143,8 +151,16 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
     Navigator.of(context).pop();
   }
 
-  void setIconImage({Image image}) {
-    setState(() {
+  void setIconImage({PickedFile pickedFile}) {
+    setState(() async {
+      var image = Image.file(
+        File(pickedFile.path),
+        width: MyConstants.defaultIconRadius * 2,
+        height: MyConstants.defaultIconRadius * 2,
+      );
+
+      Provider.of<AccountDataEntity>(context, listen: false).iconImage = await pickedFile.readAsBytes();
+
       _accountDataEntity.iconWidget =
           MyFunctions.buildCircleAvatarUsingImage(imageForIcon: image);
       widget.setIsChosenColorIconCallback(isChosenColorIcon: false);
@@ -158,7 +174,7 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
           (e) => DefaultIconDropdownMenuItem(
             accountDataEntity: _accountDataEntity,
             mapElement: e,
-            setChosenDefaultIconCallback: setChosenDefaultIcon,
+            setChosenDefaultIconCallback: setChosenDefaultIconImage,
           ),
         )
         .toList();

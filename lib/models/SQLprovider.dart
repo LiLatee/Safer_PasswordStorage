@@ -26,8 +26,12 @@ class SQLprovider extends ChangeNotifier {
   // }
 
   Future<int> addAccount({AccountDataEntity accountDataEntity}) async {
-    await Future.delayed(Duration(seconds: 3));
+    // await Future.delayed(Duration(seconds: 3));
     return await SQL_DB.accountDao.insertAccount(accountDataEntity);
+  }
+
+  void deleteAccount({AccountDataEntity accountDataEntity}) {
+    SQL_DB.accountDao.deleteAccount(accountDataEntity);
   }
 
   Stream<List<AccountDataEntity>> watchAllAccounts() {
@@ -46,13 +50,13 @@ class SQLprovider extends ChangeNotifier {
   //   return SQL_DB.accountDao.watchAccountById(id);
   // }
 
-  Future<void> setEditButtonState({int accountID, int value}) async {
-    await SQL_DB.accountDao.setEditButtonState(value, accountID);
-  }
-
-  Future<void> setShowButtonState({int accountID, int value}) async {
-    await SQL_DB.accountDao.setShowButtonState(value, accountID);
-  }
+  // Future<void> setEditButtonState({int accountID, int value}) async {
+  //   await SQL_DB.accountDao.setEditButtonState(value, accountID);
+  // }
+  //
+  // Future<void> setShowButtonState({int accountID, int value}) async {
+  //   await SQL_DB.accountDao.setShowButtonState(value, accountID);
+  // }
 
   Future<void> addField({FieldDataEntity fieldDataEntity}) async {
     await SQL_DB.fieldDao.insertField(fieldDataEntity);

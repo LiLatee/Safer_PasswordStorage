@@ -80,13 +80,13 @@ class _PasswordListPageState extends State<PasswordsListPage> {
     //
     // testAccounts[1].addField(name: 'Notes', value: "Haslo zwierzak");
 
-    DataProvider dataProvider = Provider.of<DataProvider>(context);
+    // DataProvider dataProvider = Provider.of<DataProvider>(context);
     return Scaffold(
       // appBar: buildAppBar(),
       // backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Body(
-          accounts: dataProvider.accounts,
+          // accounts: dataProvider.accounts,
         ),
       ),
       floatingActionButton: AddAccountFloatingButton(),
