@@ -25,9 +25,9 @@ class SQLprovider extends ChangeNotifier {
   //   return _SQL_DB;
   // }
 
-  Future<void> addAccount({AccountDataEntity accountDataEntity}) async {
+  Future<int> addAccount({AccountDataEntity accountDataEntity}) async {
     await Future.delayed(Duration(seconds: 3));
-    await SQL_DB.accountDao.insertAccount(accountDataEntity);
+    return await SQL_DB.accountDao.insertAccount(accountDataEntity);
   }
 
   Stream<List<AccountDataEntity>> watchAllAccounts() {
@@ -38,6 +38,9 @@ class SQLprovider extends ChangeNotifier {
     return await SQL_DB.accountDao.getAllAccounts();
   }
 
+  Future<AccountDataEntity> getAccountById(int id) async {
+    return await SQL_DB.accountDao.getAccountById(id);
+  }
   // Stream<AccountDataEntity> getAccountById({int id}) {
   //   return SQL_DB.accountDao.watchAccountById(id);
   // }
