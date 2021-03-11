@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'constants.dart' as MyConstants;
 
 ThemeData defaultTheme = ThemeData(
   fontFamily: 'Roboto',
@@ -17,34 +18,46 @@ ThemeData defaultTheme = ThemeData(
 );
 
 ThemeData lightTheme = ThemeData(
-  scaffoldBackgroundColor: Colors.white, // TODO jaki kolor
+  scaffoldBackgroundColor: Colors.white,
+  // TODO jaki kolor
   brightness: Brightness.light,
   // primaryColor: Color(0xFFd8b9c3),
   primaryColor: Colors.white,
   // cardColor: Colors.grey,
   cardColor: Colors.white,
-  secondaryHeaderColor:
-      Color(0xFFd6e0f0), // ButtonBar color in AccountDataExpandedPart
+  secondaryHeaderColor: Color(0xFFd6e0f0),
+  // ButtonBar color in AccountDataExpandedPart
   accentColor: Color(0xFF0f3460),
   // buttonColor: Color(0xFF5e6e80),
 
   fontFamily: 'Roboto',
   buttonTheme: ButtonThemeData(
     textTheme: ButtonTextTheme.primary,
-  ), // button text color
+  ),
+  // button text color
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      primary: Color(0xFF0f3460),
+      backgroundColor: Color(0xFFd6e0f0),
+    ),
+  ),
+  // button text col,
 
   colorScheme: ColorScheme(
-      primary: Colors.white, // FlatButton text color
+      primary: Colors.white,
+      // FlatButton text color
       primaryVariant: Colors.red,
-      secondary: Color(0xFF0f3460), // FloatingButton color
+      secondary: Color(0xFF0f3460),
+      // FloatingButton color
       secondaryVariant: Colors.red,
       surface: Colors.red,
       background: Colors.red,
       error: Colors.red,
       onPrimary: Colors.red,
-      onSecondary:
-          Colors.white, // FloatingButton child background, e.g. icon color
-      onSurface: Color(0xFF0f3460), // TextFormField border color
+      onSecondary: Colors.white,
+      // FloatingButton child background, e.g. icon color
+      onSurface: Color(0xFF0f3460),
+      // TextFormField border color
       onBackground: Colors.red,
       onError: Colors.red,
       brightness: Brightness.light),
