@@ -55,7 +55,7 @@ typedef onChangeText({String newText});
 //   }
 // }
 
-abstract class FieldWidget extends StatelessWidget {
+class FieldWidget extends StatelessWidget {
   const FieldWidget({
     Key key,
     @required this.label,
@@ -68,6 +68,8 @@ abstract class FieldWidget extends StatelessWidget {
     this.onEditingComplete,
     this.textInputAction,
     this.onFieldSubmitted,
+    this.multiline,
+    this.hiddenValue
   }) : super(key: key);
 
   final bool readOnly;
@@ -80,6 +82,8 @@ abstract class FieldWidget extends StatelessWidget {
   final Function onEditingComplete;
   final onChangeText onFieldSubmitted;
   final TextInputAction textInputAction;
+  final bool multiline;
+  final bool hiddenValue;
 
   @override
   Widget build(BuildContext context) {
@@ -96,8 +100,8 @@ abstract class FieldWidget extends StatelessWidget {
       readOnly: readOnly,
       keyboardType: textInputType ?? TextInputType.text,
       minLines: 1,
-      maxLines: maxLines,
-      obscureText: isPassword,
+      maxLines: multiline == true ? null : 1,
+      obscureText: hiddenValue,
       enableInteractiveSelection: true,
       initialValue: value ?? "",
       onChanged: (value) {
