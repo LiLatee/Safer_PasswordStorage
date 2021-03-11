@@ -77,6 +77,7 @@ class MyApp extends StatelessWidget {
       // print(details);
       log(details.toString(), name: "OUPS in main.dart");
     };
+
     return MaterialApp(
       title: 'My Simple Password Storage',
       theme: custom_themes.lightTheme,

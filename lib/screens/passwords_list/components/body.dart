@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../models/account_data.dart';
 import '../../../modified_flutter_widgets/expansion_panel.dart' as epn;
 import '../../../utils/constants.dart' as MyConstants;
-import 'account_tile/expanded_part/account_data_expanded_part.dart';
+import 'account_tile/expanded_part/AccountDataExpandedPart.dart';
 import 'account_tile/header.dart';
 
 class Body extends StatefulWidget {
