@@ -3,31 +3,35 @@ import 'dart:convert';
 import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
+import 'package:uuid/uuid.dart';
 
-@Entity(foreignKeys: [
-  ForeignKey(
-    childColumns: ['accountId'],
-    parentColumns: ['id'],
-    entity: AccountDataEntity,
-  ),
-])
+@Entity(
+  foreignKeys: [
+    ForeignKey(
+      childColumns: ['accountId'],
+      parentColumns: ['uuid'],
+      entity: AccountDataEntity,
+    ),
+  ],
+  // primaryKeys: ['uuid'],
+)
 class FieldDataEntity {
-  @PrimaryKey(autoGenerate: true)
-  final int id;
-  final int accountId;
+  @primaryKey
+  String uuid;
+
+  final String accountId;
   String name;
   String value;
   bool isHidden;
   bool isMultiline;
-  int position;
+  int? position;
 
   FieldDataEntity({
-    this.id,
-    this.accountId,
-    this.name,
-    this.value,
+    required this.accountId,
+    required this.name,
+    required this.value,
     this.isHidden = false,
     this.isMultiline = false,
     this.position,
-  });
+  }) : uuid = Uuid().v1();
 }

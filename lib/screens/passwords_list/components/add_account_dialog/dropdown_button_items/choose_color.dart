@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../../../../utils/constants.dart' as MyConstants;
 
-typedef void ShowColorPicker({bool isShowNeeded});
+typedef void ShowColorPicker({required bool isShowNeeded});
 
 class ChooseColorDropdownMenuItem extends DropdownMenuItem {
   final ShowColorPicker showColorPickerCallback;
   final Widget chooseColorIconWidget;
 
   ChooseColorDropdownMenuItem({
-    Key key,
-    @required this.chooseColorIconWidget,
-    this.showColorPickerCallback,
+    Key? key,
+    required this.chooseColorIconWidget,
+    required this.showColorPickerCallback,
   }) : super(
             onTap: () {
               showColorPickerCallback(isShowNeeded: true);

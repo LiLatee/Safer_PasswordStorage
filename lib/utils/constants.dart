@@ -10,7 +10,7 @@ const Duration animationsDuration = Duration(milliseconds: 500);
 const double heightForOneField = 75.0;
 const double maxHeightForFields = 300.0;
 enum ButtonState { pressed, unpressed }
-const List<Color> iconDefaultColors = [
+const List<Color> iconDefaultColors = const [
   Colors.red,
   Colors.pink,
   Colors.purple,

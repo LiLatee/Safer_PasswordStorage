@@ -6,12 +6,12 @@ import '../utils/constants.dart' as MyConstants;
 class MyDialog extends StatelessWidget {
   final Widget content;
   final String title;
-  final List<Widget> buttons;
+  final List<Widget>? buttons;
 
   const MyDialog({
-    Key key,
-    @required this.content,
-    @required this.title,
+    Key? key,
+    required this.content,
+    required this.title,
     this.buttons,
   }) : super(key: key);
 
@@ -29,7 +29,7 @@ class MyDialog extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: <Widget>[
-                buildDialogContent(buttons),
+                buttons != null ? buildDialogContent(buttons!) : Container(),
                 buildDialogHeader(context)
               ],
             ),
@@ -87,13 +87,13 @@ class MyDialog extends StatelessWidget {
 
 class MyDialogButton extends StatelessWidget {
   const MyDialogButton({
-    Key key,
-    this.buttonName,
+    Key? key,
+    required this.buttonName,
     this.onPressed,
   }) : super(key: key);
 
   final String buttonName;
-  final Function onPressed;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {

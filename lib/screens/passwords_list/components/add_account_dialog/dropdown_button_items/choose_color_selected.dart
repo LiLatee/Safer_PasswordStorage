@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
 import 'package:mysimplepasswordstorage/utils/functions.dart' as MyFunctions;
 
-typedef void ShowColorPicker({bool isShowNeeded});
+typedef void ShowColorPicker({required bool isShowNeeded});
 
 class ChooseColorSelectedDropdownMenuItem extends DropdownMenuItem {
   final ShowColorPicker showColorPickerCallback;
   final Widget icon;
 
   ChooseColorSelectedDropdownMenuItem({
-    Key key,
-    this.showColorPickerCallback,
-    @required this.icon,
+    Key? key,
+    required this.showColorPickerCallback,
+    required this.icon,
   }) : super(
             onTap: () {
               showColorPickerCallback(isShowNeeded: true);

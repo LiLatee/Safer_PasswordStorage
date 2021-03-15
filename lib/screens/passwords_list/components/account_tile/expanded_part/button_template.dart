@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
 
-class AccountButtonTemplate extends StatefulWidget {
+class ButtonTemplate extends StatefulWidget {
   final Function onPressed;
   final Icon icon;
   final String label;
-  Color pressedButtonColor;
+  final Color pressedButtonColor;
   final bool canBePressed;
 
-  AccountButtonTemplate({
-    Key key,
-    @required this.onPressed,
-    @required this.icon,
-    @required this.label,
+  ButtonTemplate({
+    Key? key,
+    required this.onPressed,
+    required this.icon,
+    required this.label,
     this.pressedButtonColor = Colors.transparent,
     this.canBePressed = false,
   }) : super(key: key);
 
   @override
-  _AccountButtonTemplateState createState() => _AccountButtonTemplateState();
+  _ButtonTemplateState createState() => _ButtonTemplateState();
 }
 
-class _AccountButtonTemplateState extends State<AccountButtonTemplate> {
-  Color textColor;
+class _ButtonTemplateState extends State<ButtonTemplate> {
+  Color? _textColor;
 
   @override
   Widget build(BuildContext context) {
-    textColor ??= Theme
+    _textColor ??= Theme
         .of(context)
         .accentColor;
-    widget.pressedButtonColor ??= Theme
-        .of(context)
-        .primaryColor;
+    // widget.pressedButtonColor ??= Theme
+    //     .of(context)
+    //     .primaryColor;
+
     return AnimatedContainer(
       decoration: BoxDecoration(
         borderRadius:
@@ -40,7 +41,7 @@ class _AccountButtonTemplateState extends State<AccountButtonTemplate> {
       ),
       duration: MyConstants.animationsDuration,
       child: FlatButton(
-        textColor: textColor,
+        textColor: _textColor,
         onPressed: () {
           widget.onPressed();
         },
