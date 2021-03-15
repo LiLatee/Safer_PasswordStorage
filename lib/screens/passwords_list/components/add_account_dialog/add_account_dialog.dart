@@ -15,25 +15,27 @@ import 'choose_icon_widget.dart';
 class AddAccountDialog extends StatefulWidget {
   final BuildContext superContext;
 
-  AddAccountDialog({this.superContext});
+  AddAccountDialog({required this.superContext});
 
   @override
   _AddAccountDialogState createState() => _AddAccountDialogState();
 }
 
 class _AddAccountDialogState extends State<AddAccountDialog> {
-  AccountDataEntity accountDataEntity = AccountDataEntity(accountName: 'Account name');
+  AccountDataEntity accountDataEntity =
+      AccountDataEntity(accountName: 'Account name');
   Color _currentColor = MyConstants.iconDefaultColors[0];
   final accountNameFormKey = GlobalKey<FormState>();
   bool isChosenColorIcon = true;
 
-  void setAccountName({String accountName}) {
+  void setAccountName({required String accountName}) {
     setState(() {
       accountDataEntity.accountName = accountName;
 
       /// Change letter on icon while changing account name.
       if (isChosenColorIcon) {
-        accountDataEntity.iconWidget = MyFunctions.generateRandomColorIconAsWidget(
+        accountDataEntity.iconWidget =
+            MyFunctions.generateRandomColorIconAsWidget(
           name: accountDataEntity.accountName,
           color: _currentColor,
         );
@@ -50,16 +52,24 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
         });
 
     var addButton = MyDialogButton(
-        buttonName: "Add",
-        onPressed: () {
-          if (accountNameFormKey.currentState.validate()) {
-            Provider.of<DataProvider>(widget.superContext, listen: false).addAccount(accountDataEntity);
-            Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Dodano konto "${accountDataEntity.accountName}"')));
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Coś nie tak przy dodawaniu konta ;(')));
+      buttonName: "Add",
+      onPressed: () {
+        if (accountNameFormKey.currentState != null)
+          {
+            if (accountNameFormKey.currentState!.validate()) {
+              Provider.of<DataProvider>(widget.superContext, listen: false)
+                  .addAccount(accountDataEntity);
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content:
+                  Text('Dodano konto "${accountDataEntity.accountName}"')));
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Coś nie tak przy dodawaniu konta ;(')));
+            }
           }
-        });
+      },
+    );
 
     return MyDialog(
       buttons: [cancelButton, addButton],
@@ -73,7 +83,7 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
           Provider.value(
             value: accountDataEntity,
             child: ChooseIconWidget(
-              setIsChosenColorIconCallback: ({isChosenColorIcon}) =>
+              setIsChosenColorIconCallback: ({required isChosenColorIcon}) =>
                   this.isChosenColorIcon = isChosenColorIcon,
               currentColor: _currentColor,
               // setCurrentColorCallback: ({color}) => currentColor = color,

@@ -4,8 +4,8 @@ import '../../../../../utils/constants.dart' as MyConstants;
 class ChooseImageSelectedDropdownMenuItem extends DropdownMenuItem {
   final Widget chooseImageIcon;
   ChooseImageSelectedDropdownMenuItem({
-    Key key,
-    @required this.chooseImageIcon,
+    Key? key,
+    required this.chooseImageIcon,
   }) : super(
             value: 'Choose image',
             child: Row(

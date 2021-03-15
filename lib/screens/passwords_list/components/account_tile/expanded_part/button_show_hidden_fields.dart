@@ -4,13 +4,13 @@ import 'package:mysimplepasswordstorage/models/DataProvider.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
 
-import 'AccountButtonTemplate.dart';
+import 'button_template.dart';
 
 class ButtonShowHiddenFields extends StatelessWidget {
   const ButtonShowHiddenFields({
-    Key key,
-    @required DataProvider dataProvider,
-    @required AccountDataEntity accountDataEntity,
+    Key? key,
+    required DataProvider dataProvider,
+    required AccountDataEntity accountDataEntity,
   }) : _dataProvider = dataProvider, _accountDataEntity = accountDataEntity, super(key: key);
 
   final DataProvider _dataProvider;
@@ -18,7 +18,7 @@ class ButtonShowHiddenFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AccountButtonTemplate(
+    return ButtonTemplate(
       onPressed: () {
         _dataProvider.toggleShowButton(accountDataEntity: _accountDataEntity);
       },

@@ -9,20 +9,20 @@ import 'package:provider/provider.dart';
 import '../../../models/account_data.dart';
 import '../../../modified_flutter_widgets/expansion_panel.dart' as epn;
 import '../../../utils/constants.dart' as MyConstants;
-import 'account_tile/expanded_part/AccountDataExpandedPart.dart';
+import 'account_tile/expanded_part/account_data_expanded_part.dart';
 import 'account_tile/header.dart';
 
 class Body extends StatefulWidget {
   // final List<AccountDataEntity> accounts;
 
-  // Body({@required this.accounts});
+  // Body({required this.accounts});
 
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  DataProvider _dataProvider;
+  late DataProvider _dataProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class _BodyState extends State<Body> {
           return epn.ExpansionPanelList.radio(
             expandedHeaderPadding:
                 EdgeInsets.only(left: MyConstants.defaultPadding * 3),
-            children: snapshot.data
+            children: snapshot.data!
                 .map((e) => buildExpansionPanel(accountDataEntity: e))
                 .toList(),
           );
@@ -88,10 +88,10 @@ class _BodyState extends State<Body> {
   }
 
   epn.ExpansionPanelRadio buildExpansionPanel(
-      {@required AccountDataEntity accountDataEntity}) {
+      {required AccountDataEntity accountDataEntity}) {
     return epn.ExpansionPanelRadio(
       canTapOnHeader: true,
-      value: accountDataEntity.id,
+      value: accountDataEntity.uuid,
       headerBuilder: (BuildContext context, bool isExpanded) {
         // return Text("${accountDataEntity.accountName}");
         return Provider.value(

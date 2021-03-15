@@ -18,16 +18,16 @@ import 'dropdown_button_items/choose_image_selected.dart';
 import 'dropdown_button_items/default_icon.dart';
 import 'dropdown_button_items/default_icon_selected.dart';
 
-typedef void SetIsChosenColorIcon({bool isChosenColorIcon});
+typedef void SetIsChosenColorIcon({required bool isChosenColorIcon});
 
 class ChooseIconWidget extends StatefulWidget {
-  Color currentColor;
+  final Color currentColor;
   final SetIsChosenColorIcon setIsChosenColorIconCallback;
 
   ChooseIconWidget({
-    Key key,
-    @required this.currentColor,
-    @required this.setIsChosenColorIconCallback,
+    Key? key,
+    required this.currentColor,
+    required this.setIsChosenColorIconCallback,
   }) : super(key: key);
 
   @override
@@ -35,11 +35,11 @@ class ChooseIconWidget extends StatefulWidget {
 }
 
 class _ChooseIconWidgetState extends State<ChooseIconWidget> {
-  AccountDataEntity _accountDataEntity;
+  late AccountDataEntity _accountDataEntity;
   String _valueSelectedItem = 'Choose color';
   bool isShowColorPickerNeeded = false;
   bool isChosenColorIcon = true;
-  Color _currentColor;
+  late Color _currentColor;
 
   @override
   void initState() {
@@ -72,9 +72,9 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
           selectedItemBuilder: (context) =>
               [
                 ChooseImageSelectedDropdownMenuItem(
-                    chooseImageIcon: _accountDataEntity.iconWidget),
+                    chooseImageIcon: _accountDataEntity.iconWidget!),
                 ChooseColorSelectedDropdownMenuItem(
-                    icon: _accountDataEntity.iconWidget),
+                    icon: _accountDataEntity.iconWidget!),
               ] +
               dropdownButtonsDefaultIconsSelected(context),
           items: [
@@ -83,9 +83,9 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
                   context: context,
                 ),
                 ChooseColorDropdownMenuItem(
-                  showColorPickerCallback: ({isShowNeeded}) =>
+                  showColorPickerCallback: ({required isShowNeeded}) =>
                       isShowColorPickerNeeded = isShowNeeded,
-                  chooseColorIconWidget: _accountDataEntity.iconWidget,
+                  chooseColorIconWidget: _accountDataEntity.iconWidget!,
                 ),
               ] +
               dropdownButtonsDefaultIcons(context),
@@ -122,7 +122,7 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
     );
   }
 
-  void setChosenDefaultIconImage({Image image, String iconName}) async {
+  void setChosenDefaultIconImage({required Image image, required String iconName}) async {
     var temp = await rootBundle.load('images/${iconName.toLowerCase()}.png');
     Provider.of<AccountDataEntity>(context, listen: false).iconImage = temp.buffer.asUint8List();
 
@@ -137,7 +137,7 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
     });
   }
 
-  void setIconColor({Color color}) {
+  void setIconColor({required Color color}) {
     setState(() {
       _currentColor = color;
       _accountDataEntity.iconWidget =
@@ -151,7 +151,7 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
     Navigator.of(context).pop();
   }
 
-  void setIconImage({PickedFile pickedFile}) {
+  void setIconImage({required PickedFile pickedFile}) {
     setState(() async {
       var image = Image.file(
         File(pickedFile.path),

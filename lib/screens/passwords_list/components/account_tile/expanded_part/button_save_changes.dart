@@ -3,23 +3,31 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/DataProvider.dart';
 import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
-import 'package:mysimplepasswordstorage/screens/passwords_list/components/account_tile/expanded_part/AccountDataExpandedPart.dart';
+import 'package:mysimplepasswordstorage/screens/passwords_list/components/account_tile/expanded_part/account_data_expanded_part.dart';
 import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
 import 'package:provider/provider.dart';
 
 class ButtonSaveChanges extends StatelessWidget {
   ButtonSaveChanges({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  Map<int, FieldDataEntity> _changedFieldsMap;
-  DataProvider _dataProvider;
+  late Map<int, FieldDataEntity> _changedFieldsMap;
+  late DataProvider _dataProvider;
 
   @override
   Widget build(BuildContext context) {
     _changedFieldsMap = Provider.of<Map<int, FieldDataEntity>>(context);
     _dataProvider = Provider.of<DataProvider>(context);
 
+    late ButtonStyle _buttonStyle;
+    if (Theme.of(context).textButtonTheme.style != null)
+      {
+        _buttonStyle = Theme.of(context).textButtonTheme.style!.copyWith(
+            backgroundColor:
+            TextButton.styleFrom(backgroundColor: Color(0xFFd6e0f0))
+                .backgroundColor);
+      }
     return Padding(
       padding: const EdgeInsets.only(top: MyConstants.defaultPadding),
       child: IntrinsicHeight(
@@ -27,10 +35,7 @@ class ButtonSaveChanges extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-              style: Theme.of(context).textButtonTheme.style.copyWith(
-                  backgroundColor:
-                      TextButton.styleFrom(backgroundColor: Color(0xFFd6e0f0))
-                          .backgroundColor),
+              style: _buttonStyle,
               child: Row(
                 children: [
                   Icon(

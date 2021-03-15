@@ -10,21 +10,23 @@ import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
 import '../utils/functions.dart' as Functions;
 import '../utils/constants.dart' as MyConstants;
 import 'field_data.dart';
+import 'package:uuid/uuid.dart';
 
-// @Entity(
-//   indices: [
-//     Index(
-//       value: ['accountName'],
-//       unique: true,
-//     ),
-//   ],
-// )
-@entity
+// @Entity(primaryKeys: ['uuid'])
+@Entity(
+  indices: [
+    Index(
+      value: ['accountName'],
+      unique: true,
+    ),
+  ],
+)
 class AccountDataEntity {
-  @PrimaryKey(autoGenerate: true)
-  final int id;
+  @primaryKey
+  String uuid;
+
   String accountName;
-  Uint8List iconImage;
+  Uint8List? iconImage;
   String iconColorHex;
 
   @ignore
@@ -32,23 +34,21 @@ class AccountDataEntity {
   @ignore
   bool isEditButtonPressed;
   @ignore
-  Widget iconWidget;
+  Widget? iconWidget;
   @ignore
   List<FieldDataEntity> fields;
 
   // final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   AccountDataEntity({
-    this.id,
-    this.accountName,
+    required this.accountName,
     this.isEditButtonPressed = false,
     this.isShowButtonPressed = false,
     this.iconImage,
-    this.iconColorHex,
+    this.iconColorHex = "0xffF44336",
     // this.iconText,
     fields,
-  }) {
-    this.fields = fields ?? [];
+  }) : uuid = Uuid().v1(), fields = fields ?? [] {
 
     // if (iconColorHEX is Color)
     //   this.iconColorHex = iconColorHEX.value.toRadixString(16);
@@ -64,7 +64,7 @@ class AccountDataEntity {
     if (this.iconImage != null) {
       this.iconWidget = Functions.buildCircleAvatarUsingImage(
         imageForIcon: Image.memory(
-          this.iconImage,
+          this.iconImage!,
           width: MyConstants.defaultCircularBorderRadius * 2,
           height: MyConstants.defaultCircularBorderRadius * 2,
         ),

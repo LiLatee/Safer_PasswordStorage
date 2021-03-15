@@ -9,12 +9,13 @@ import 'functions.dart' as Functions;
 Widget generateRandomColorIconAsWidget(
     {String name = '',
     double radius = MyConstants.defaultIconRadius,
-    Color color}) {
+    Color? color}) {
   color ??= RandomColor().randomColor(
       colorHue: ColorHue.multiple(
           colorHues: [ColorHue.red, ColorHue.green, ColorHue.blue]),
       colorSaturation: ColorSaturation.mediumSaturation,
-      colorBrightness: ColorBrightness.light); // TODO zupełnie losowe czy losowo z zdefiniowanych?
+      colorBrightness: ColorBrightness
+          .light); // TODO zupełnie losowe czy losowo z zdefiniowanych?
 
   return CircleAvatar(
     backgroundColor: color,
@@ -31,7 +32,7 @@ Widget generateRandomColorIconAsWidget(
 
 // Widget buildCircleAvatar(
 //     {double radius = MyConstants.defaultIconRadius,
-//     @required AccountData accountData}) {
+//     required AccountData accountData}) {
 //   Widget iconWidget;
 //
 //   if (MyConstants.availableIconsNames
@@ -62,7 +63,7 @@ Widget generateRandomColorIconAsWidget(
 
 Widget buildCircleAvatarUsingImage(
     {double radius = MyConstants.defaultIconRadius,
-    @required Image imageForIcon}) {
+    required Image imageForIcon}) {
   // log("circleAvatar-${imageForIcon.width.toString()}", name: "LOL");
   // print("circleAvatar-${imageForIcon.width.toString()}");
   // print("circleAvatar-${imageForIcon.height.toString()}");

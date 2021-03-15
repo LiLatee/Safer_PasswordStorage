@@ -4,8 +4,8 @@ import '../../../../../utils/constants.dart' as MyConstants;
 class DefaultIconSelectedDropdownMenuItem extends DropdownMenuItem {
   final MapEntry<String, Image> mapElement;
   DefaultIconSelectedDropdownMenuItem({
-    Key key,
-    this.mapElement,
+    Key? key,
+    required this.mapElement,
   }) : super(
           child: Row(
             children: <Widget>[

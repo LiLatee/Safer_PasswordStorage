@@ -14,10 +14,10 @@ class AccountNameFieldWidget extends StatefulWidget {
   final BuildContext superContext;
 
   AccountNameFieldWidget({
-    Key key,
-    @required this.onChangedCallback,
-    @required this.accountNameFormKey,
-    @required this.superContext,
+    Key? key,
+    required this.onChangedCallback,
+    required this.accountNameFormKey,
+    required this.superContext,
   }) : super(key: key);
 
   @override
@@ -49,11 +49,13 @@ class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
           ),
           readOnly: false,
           validator: (value) {
-            if (value.isEmpty)
-              return "Name can't be empty.";
-            else if (dataProvider.isAccountNameUsed(name: value))
-              return 'Name already exists.';
-
+            if (value != null)
+              {
+                if (value.isEmpty)
+                  return "Name can't be empty.";
+                else if (dataProvider.isAccountNameUsed(name: value))
+                  return 'Name already exists.';
+              }
             return null;
           },
           onChanged: (value) {

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 import '../utils/constants.dart' as Constants;
 
-typedef onChangeText({String newText});
+typedef onChangeText({required String newText});
 // class FieldWidget extends StatelessWidget {
 //   const FieldWidget({
 //     Key key,
-//     @required this.label,
+//     required this.label,
 //     this.isSingleLine = false,
 //     this.value,
 //     this.isPassword = false,
@@ -56,31 +56,31 @@ typedef onChangeText({String newText});
 // }
 
 class FieldWidget extends StatelessWidget {
-  const FieldWidget({
-    Key key,
-    @required this.label,
-    this.value,
-    this.isPassword = false,
-    this.onChangedCallback,
-    this.readOnly = true,
-    this.maxLines,
-    this.textInputType,
-    this.onEditingComplete,
-    this.textInputAction,
-    this.onFieldSubmitted,
-    this.multiline,
-    this.hiddenValue
-  }) : super(key: key);
+  const FieldWidget(
+      {Key? key,
+      required this.label,
+      this.value = "",
+      this.isPassword = false,
+      this.readOnly = true,
+      this.maxLines = 1,
+      this.textInputType = TextInputType.text,
+      this.onChangedCallback,
+      this.onEditingComplete,
+      this.textInputAction = TextInputAction.done,
+      this.onFieldSubmitted,
+      this.multiline = false,
+      this.hiddenValue = false})
+      : super(key: key);
 
   final bool readOnly;
   final String label;
   final String value;
   final bool isPassword;
-  final onChangeText onChangedCallback;
-  final int maxLines;
+  final onChangeText? onChangedCallback;
+  final int? maxLines;
   final TextInputType textInputType;
-  final Function onEditingComplete;
-  final onChangeText onFieldSubmitted;
+  final Function? onEditingComplete;
+  final onChangeText? onFieldSubmitted;
   final TextInputAction textInputAction;
   final bool multiline;
   final bool hiddenValue;
@@ -104,15 +104,13 @@ class FieldWidget extends StatelessWidget {
       obscureText: hiddenValue,
       enableInteractiveSelection: true,
       initialValue: value ?? "",
-      onChanged: (value) {
-        if (onChangedCallback != null) onChangedCallback(newText: value);
-      },
-      onEditingComplete: () {
-        if (onEditingComplete != null) onEditingComplete();
-      },
+      onChanged: onChangedCallback != null ? onChangedCallback!(newText: value) : () {},
+      onEditingComplete: onEditingComplete !=null ? onEditingComplete!():  () {},
       onFieldSubmitted: (value) {
-        if (onFieldSubmitted != null) onFieldSubmitted(newText: value);
-        FocusScope.of(context).unfocus();
+        if (onFieldSubmitted != null) {
+          onFieldSubmitted!(newText: value);
+          FocusScope.of(context).unfocus();
+        }
       },
       textInputAction: textInputAction,
     );
@@ -123,33 +121,33 @@ class AdditionalFieldWidget extends FieldWidget {
   final bool readOnly;
   final String label;
   final String value;
-  final onChangeText onChangedCallback;
-  final Function onEditingComplete;
+  final onChangeText? onChangedCallback;
+  final Function? onEditingComplete;
   final TextInputAction textInputAction;
-  final onChangeText onFieldSubmitted;
+  final onChangeText? onFieldSubmitted;
   final bool hiddenValue;
   final bool multiline;
   final TextInputType textInputType;
 
   AdditionalFieldWidget({
-    Key key,
-    @required this.label,
-    this.value,
+    Key? key,
+    required this.label,
+    this.value = "",
     this.onChangedCallback,
-    this.readOnly,
+    this.readOnly = false,
     this.onEditingComplete,
-    this.textInputAction,
+    this.textInputAction = TextInputAction.done,
     this.onFieldSubmitted,
     this.hiddenValue = false,
     this.multiline = false,
-    this.textInputType,
+    this.textInputType = TextInputType.text,
   }) : super(
           key: key,
           label: label,
           value: value,
           onChangedCallback: onChangedCallback,
           readOnly: readOnly,
-          maxLines: multiline == true ? null : 1,
+          maxLines: multiline ? null : 1,
           isPassword: hiddenValue,
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
@@ -163,16 +161,16 @@ class PasswordFieldWidget extends FieldWidget {
   final String label;
   final String value;
   final bool showPassword;
-  final onChangeText onChangedCallback;
-  final onChangeText onFieldSubmitted;
-  final Function onEditingComplete;
+  final onChangeText? onChangedCallback;
+  final onChangeText? onFieldSubmitted;
+  final Function? onEditingComplete;
 
   PasswordFieldWidget({
-    Key key,
-    @required this.label,
-    this.value,
+    Key? key,
+    required this.label,
+    this.value = '',
     this.onChangedCallback,
-    this.readOnly,
+    this.readOnly = true,
     this.showPassword = false,
     this.onEditingComplete,
     this.onFieldSubmitted,
@@ -193,14 +191,14 @@ class EmailFieldWidget extends FieldWidget {
   final bool readOnly;
   final String label;
   final String value;
-  final onChangeText onChangedCallback;
-  final Function onEditingComplete;
-  final onChangeText onFieldSubmitted;
+  final onChangeText? onChangedCallback;
+  final Function? onEditingComplete;
+  final onChangeText? onFieldSubmitted;
 
   EmailFieldWidget({
-    Key key,
-    @required this.label,
-    this.value,
+    Key? key,
+    required this.label,
+    this.value = '',
     this.onChangedCallback,
     this.readOnly = true,
     this.onEditingComplete,

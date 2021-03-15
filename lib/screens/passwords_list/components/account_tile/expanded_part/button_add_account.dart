@@ -6,27 +6,27 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
 import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
 
-import 'AccountButtonTemplate.dart';
+import 'button_template.dart';
 
 class ButtonAddAccount extends StatelessWidget {
   final AccountDataEntity _accountDataEntity;
   final DataProvider _dataProvider;
 
   ButtonAddAccount({
-    Key key,
-    @required DataProvider dataProvider,
-    @required AccountDataEntity accountDataEntity,
+    Key? key,
+    required DataProvider dataProvider,
+    required AccountDataEntity accountDataEntity,
   })  : _accountDataEntity = accountDataEntity,
         _dataProvider = dataProvider,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AccountButtonTemplate(
+    return ButtonTemplate(
         onPressed: () async {
-          if (!_accountDataEntity.isEditButtonPressed)
-            _dataProvider.toggleEditButton(
-                accountDataEntity: _accountDataEntity);
+          // if (!_accountDataEntity.isEditButtonPressed)
+          //   _dataProvider.toggleEditButton(
+          //       accountDataEntity: _accountDataEntity);
 
           var result = await showDialog(
             context: context,
@@ -52,7 +52,7 @@ class ButtonAddAccount extends StatelessWidget {
                             label: "Name",
                             readOnly: false,
                             value: "",
-                            onChangedCallback: ({newText}) => name = newText,
+                            onChangedCallback: ({required newText}) => name = newText,
                             textInputAction: TextInputAction.next,
                           ),
                         ),
@@ -60,7 +60,7 @@ class ButtonAddAccount extends StatelessWidget {
                           label: "Content",
                           readOnly: false,
                           value: "",
-                          onChangedCallback: ({newText}) => value = newText,
+                          onChangedCallback: ({required newText}) => value = newText,
                           textInputAction: isMultiline
                               ? TextInputAction.newline
                               : TextInputAction.done,
@@ -127,7 +127,7 @@ class ButtonAddAccount extends StatelessWidget {
           if (result != null)
             _dataProvider.addField(
               FieldDataEntity(
-                accountId: _accountDataEntity.id,
+                accountId: _accountDataEntity.uuid,
                 name: result['name'],
                 value: result['value'],
                 isHidden: result['isHidden'],

@@ -9,11 +9,9 @@ class FieldData {
 
   FieldData({
     uniqueKey,
-    this.name,
-    this.value,
-  }) {
-    this.uniqueKey = UniqueKey();
-  }
+    required this.name,
+    required this.value,
+  }) : this.uniqueKey = UniqueKey();
 
   Map<String, dynamic> toMap() {
     return {
@@ -24,7 +22,7 @@ class FieldData {
   }
 
   factory FieldData.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
+    // if (map == null) return null;
 
     return FieldData(
       uniqueKey: map['uniqueKey'],

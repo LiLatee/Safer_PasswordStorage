@@ -5,7 +5,7 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 @dao
 abstract class AccountDao extends ChangeNotifier{
   @Insert(onConflict: OnConflictStrategy.rollback)
-  Future<int> insertAccount(AccountDataEntity account);
+  Future<void> insertAccount(AccountDataEntity account);
 
   @delete
   Future<void> deleteAccount(AccountDataEntity account);
@@ -22,14 +22,14 @@ abstract class AccountDao extends ChangeNotifier{
   @Query('SELECT * FROM AccountDataEntity')
   Future<List<AccountDataEntity>> getAllAccounts();
 
-  @Query('SELECT * FROM AccountDataEntity WHERE id = :id')
-  Future<AccountDataEntity> getAccountById(int id);
+  @Query('SELECT * FROM AccountDataEntity WHERE uuid = :uuid')
+  Future<AccountDataEntity?> getAccountById(String uuid);
 
   // @Query('SELECT * FROM AccountDataEntity WHERE accountName = :name')
   // Future<List<AccountDataEntity>> getAccountByName(String name);
 
-  @Query('SELECT * FROM AccountDataEntity WHERE id = :id')
-  Stream<AccountDataEntity> watchAccountById(int id);
+  @Query('SELECT * FROM AccountDataEntity WHERE uuid = :uuid')
+  Stream<AccountDataEntity?> watchAccountById(String uuid);
 
   // @Query("UPDATE AccountDataEntity SET isShowButtonPressed = :value WHERE id = :accountID")
   // Future<void> setShowButtonState(int value, int accountID) {

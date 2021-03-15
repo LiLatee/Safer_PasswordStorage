@@ -10,7 +10,7 @@ class SQLprovider extends ChangeNotifier {
     init();
   }
 
-  AppDatabase SQL_DB;
+  late AppDatabase SQL_DB;
 
   void init() async {
     SQL_DB = await $FloorAppDatabase.databaseBuilder("app_database.db").build();
@@ -25,12 +25,12 @@ class SQLprovider extends ChangeNotifier {
   //   return _SQL_DB;
   // }
 
-  Future<int> addAccount({AccountDataEntity accountDataEntity}) async {
+  Future<void> addAccount({required AccountDataEntity accountDataEntity}) async {
     // await Future.delayed(Duration(seconds: 3));
     return await SQL_DB.accountDao.insertAccount(accountDataEntity);
   }
 
-  void deleteAccount({AccountDataEntity accountDataEntity}) {
+  void deleteAccount({required AccountDataEntity accountDataEntity}) {
     SQL_DB.accountDao.deleteAccount(accountDataEntity);
   }
 
@@ -42,8 +42,8 @@ class SQLprovider extends ChangeNotifier {
     return await SQL_DB.accountDao.getAllAccounts();
   }
 
-  Future<AccountDataEntity> getAccountById(int id) async {
-    return await SQL_DB.accountDao.getAccountById(id);
+  Future<AccountDataEntity?> getAccountById(String uuid) async {
+    return await SQL_DB.accountDao.getAccountById(uuid);
   }
 
   // Stream<AccountDataEntity> getAccountById({int id}) {
@@ -58,7 +58,7 @@ class SQLprovider extends ChangeNotifier {
   //   await SQL_DB.accountDao.setShowButtonState(value, accountID);
   // }
 
-  Future<void> addField({FieldDataEntity fieldDataEntity}) async {
+  Future<void> addField({required FieldDataEntity fieldDataEntity}) async {
     await SQL_DB.fieldDao.insertField(fieldDataEntity);
   }
   Future<void> updateAccount(AccountDataEntity accountDataEntity) async {
@@ -69,17 +69,17 @@ class SQLprovider extends ChangeNotifier {
     await SQL_DB.fieldDao.updateField(fieldDataEntity);
   }
 
-  Future<void> deleteField({FieldDataEntity fieldDataEntity}) async{
+  Future<void> deleteField({required FieldDataEntity fieldDataEntity}) async{
     await SQL_DB.fieldDao.deleteField(fieldDataEntity);
   }
 
-  Future<List<FieldDataEntity>> getFieldsOfAccount(
-      {AccountDataEntity accountDataEntity}) async {
-    return await SQL_DB.fieldDao.getFieldsOfAccount(accountDataEntity.id);
+  Future<List<FieldDataEntity>?> getFieldsOfAccount(
+      {required AccountDataEntity accountDataEntity}) async {
+    return await SQL_DB.fieldDao.getFieldsOfAccount(accountDataEntity.uuid);
   }
 
-  Stream<List<FieldDataEntity>> watchFieldsOfAccount(
-      {AccountDataEntity accountDataEntity}) {
-    return SQL_DB.fieldDao.watchFieldsOfAccount(accountDataEntity.id);
+  Stream<List<FieldDataEntity>?> watchFieldsOfAccount(
+      {required AccountDataEntity accountDataEntity}) {
+    return SQL_DB.fieldDao.watchFieldsOfAccount(accountDataEntity.uuid);
   }
 }

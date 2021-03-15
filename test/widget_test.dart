@@ -9,11 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:mysimplepasswordstorage/main.dart';
+import 'package:mysimplepasswordstorage/models/database.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    WidgetsFlutterBinding.ensureInitialized();
+
+    final database =
+    await $FloorAppDatabase.databaseBuilder("app_database.db").build();
+
+    await tester.pumpWidget(MyApp(database));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

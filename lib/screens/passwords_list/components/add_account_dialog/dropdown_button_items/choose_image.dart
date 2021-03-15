@@ -7,23 +7,26 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:provider/provider.dart';
 import '../../../../../utils/constants.dart' as MyConstants;
 
-typedef void SetIconImage({PickedFile pickedFile});
+typedef void SetIconImage({required PickedFile pickedFile});
 
 class ChooseImageDropdownMenuItem extends DropdownMenuItem {
   final SetIconImage setIconImageCallback;
   final BuildContext context;
 
   ChooseImageDropdownMenuItem({
-    Key key,
-    this.setIconImageCallback,
-    this.context
+    Key? key,
+    required this.setIconImageCallback,
+    required this.context
   }) : super(
             onTap: () async {
-              ImagePicker().getImage(source: ImageSource.gallery).then((PickedFile value)
+              ImagePicker().getImage(source: ImageSource.gallery).then((PickedFile? value)
               async {
-                setIconImageCallback(
-                  pickedFile: value ,
-                );
+                if (value != null)
+                  {
+                    setIconImageCallback(
+                      pickedFile: value ,
+                    );
+                  }
               });
             },
             value: 'Choose image',

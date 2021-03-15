@@ -56,7 +56,7 @@ ThemeData lightTheme = ThemeData(
       onPrimary: Colors.red,
       onSecondary: Colors.white,
       // FloatingButton child background, e.g. icon color
-      onSurface: Color(0xFF0f3460),
+      onSurface: Color(0xff0f3460),
       // TextFormField border color
       onBackground: Colors.red,
       onError: Colors.red,

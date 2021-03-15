@@ -18,7 +18,7 @@
 //   bool isEditButtonPressed = false;
 //
 //   AccountData(
-//       {@required this.accountName, this.email, this.password, this.icon}) {
+//       {required this.accountName, this.email, this.password, this.icon}) {
 //     this.email = email ?? FieldData(name: "Password", value: "");
 //     this.password = password ?? FieldData(name: "Email", value: "");
 //     allFields.addAll([this.email, this.password]);
@@ -54,7 +54,7 @@
 //
 //
 //   static bool isNameUsed(
-//       {@required List<AccountData> accounts, @required String name}) {
+//       {required List<AccountData> accounts, required String name}) {
 //     bool isUsed = false;
 //     for (var el in accounts) {
 //       if (el.accountName.toLowerCase() == name.toLowerCase()) {
