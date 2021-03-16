@@ -5,16 +5,17 @@ import 'package:mysimplepasswordstorage/utils/functions.dart' as MyFunctions;
 typedef void ShowColorPicker({required bool isShowNeeded});
 
 class ChooseColorSelectedDropdownMenuItem extends DropdownMenuItem {
-  final ShowColorPicker showColorPickerCallback;
+  final ShowColorPicker? showColorPickerCallback;
   final Widget icon;
 
   ChooseColorSelectedDropdownMenuItem({
     Key? key,
-    required this.showColorPickerCallback,
+    this.showColorPickerCallback,
     required this.icon,
   }) : super(
             onTap: () {
-              showColorPickerCallback(isShowNeeded: true);
+              if (showColorPickerCallback != null)
+                showColorPickerCallback(isShowNeeded: true);
             },
             value: 'Choose color',
             child: Row(

@@ -23,11 +23,11 @@ import 'package:uuid/uuid.dart';
 )
 class AccountDataEntity {
   @primaryKey
-  String uuid;
+  String? uuid;
 
   String accountName;
   Uint8List? iconImage;
-  String iconColorHex;
+  String? iconColorHex;
 
   @ignore
   bool isShowButtonPressed;
@@ -41,14 +41,18 @@ class AccountDataEntity {
   // final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   AccountDataEntity({
+    this.uuid,
     required this.accountName,
     this.isEditButtonPressed = false,
     this.isShowButtonPressed = false,
     this.iconImage,
-    this.iconColorHex = "0xffF44336",
+    this.iconColorHex,
     // this.iconText,
     fields,
-  }) : uuid = Uuid().v1(), fields = fields ?? [] {
+  }) : fields = fields ?? [] {
+
+    if (this.uuid == null)
+      this.uuid = Uuid().v1();
 
     // if (iconColorHEX is Color)
     //   this.iconColorHex = iconColorHEX.value.toRadixString(16);
@@ -77,7 +81,7 @@ class AccountDataEntity {
 
       this.iconWidget = Functions.generateRandomColorIconAsWidget(
         name: accountName,
-        color: Functions.HexColor.fromHex(this.iconColorHex),
+        color: Functions.HexColor.fromHex(this.iconColorHex!),
       );
     }
   }

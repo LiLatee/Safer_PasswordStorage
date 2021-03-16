@@ -39,7 +39,7 @@ class MyDialog extends StatelessWidget {
     );
   }
 
-  Widget buildDialogContent(List<Widget> buttons) {
+  Widget buildDialogContent(List<Widget>? buttons) {
     return Container(
       padding: EdgeInsets.only(top: MyConstants.defaultCircularBorderRadius),
       decoration: BoxDecoration(

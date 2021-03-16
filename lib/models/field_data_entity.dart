@@ -17,21 +17,25 @@ import 'package:uuid/uuid.dart';
 )
 class FieldDataEntity {
   @primaryKey
-  String uuid;
+  String? uuid;
 
   final String accountId;
   String name;
   String value;
   bool isHidden;
   bool isMultiline;
-  int? position;
+  int position;
 
   FieldDataEntity({
+    this.uuid,
     required this.accountId,
     required this.name,
     required this.value,
     this.isHidden = false,
     this.isMultiline = false,
-    this.position,
-  }) : uuid = Uuid().v1();
+    this.position = 0, // TODO
+  }) {
+    if (this.uuid == null)
+      this.uuid = Uuid().v1();
+  }
 }

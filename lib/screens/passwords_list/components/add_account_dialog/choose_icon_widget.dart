@@ -64,7 +64,7 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
       ),
       width: MediaQuery.of(context).size.width * 0.8,
       child: DropdownButtonHideUnderline(
-        child: DropdownButton(
+        child: DropdownButton<String>(
           isExpanded: true,
           itemHeight:
               MyConstants.defaultIconRadius * 2 + MyConstants.defaultPadding,
@@ -89,9 +89,9 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
                 ),
               ] +
               dropdownButtonsDefaultIcons(context),
-          onChanged: (value) {
+          onChanged: (String? newValue) {
             setState(() {
-              _valueSelectedItem = value;
+              _valueSelectedItem = newValue!;
 
               if (isShowColorPickerNeeded) {
                 showDialog(

@@ -13,11 +13,7 @@ class ChooseImageSelectedDropdownMenuItem extends DropdownMenuItem {
                 SizedBox(
                   width: MyConstants.defaultPadding / 2,
                 ),
-                chooseImageIcon ??
-                    Icon(
-                      Icons.image,
-                      size: MyConstants.defaultIconRadius * 2,
-                    ),
+                chooseImageIcon,
                 Expanded(
                     child: Text(
                   'Choose icon',

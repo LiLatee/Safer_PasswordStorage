@@ -98,14 +98,20 @@ class FieldWidget extends StatelessWidget {
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold)),
       readOnly: readOnly,
-      keyboardType: textInputType ?? TextInputType.text,
+      keyboardType: textInputType,
       minLines: 1,
       maxLines: multiline == true ? null : 1,
       obscureText: hiddenValue,
       enableInteractiveSelection: true,
-      initialValue: value ?? "",
-      onChanged: onChangedCallback != null ? onChangedCallback!(newText: value) : () {},
-      onEditingComplete: onEditingComplete !=null ? onEditingComplete!():  () {},
+      initialValue: value,
+      onChanged: (value) {
+        if (onChangedCallback != null)
+          onChangedCallback!(newText: value);
+      },
+      onEditingComplete: () {
+        if (onEditingComplete != null)
+          onEditingComplete!();
+      },
       onFieldSubmitted: (value) {
         if (onFieldSubmitted != null) {
           onFieldSubmitted!(newText: value);
