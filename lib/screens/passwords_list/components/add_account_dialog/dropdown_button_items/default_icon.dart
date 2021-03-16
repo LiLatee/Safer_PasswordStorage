@@ -5,7 +5,7 @@ import '../../../../../utils/constants.dart' as MyConstants;
 
 typedef void SetChosenDefaultIcon({required Image image, required String iconName});
 
-class DefaultIconDropdownMenuItem extends DropdownMenuItem {
+class DefaultIconDropdownMenuItem extends DropdownMenuItem<String> {
   final SetChosenDefaultIcon setChosenDefaultIconCallback;
   final mapElement;
   final AccountDataEntity accountDataEntity;

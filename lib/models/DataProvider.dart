@@ -14,7 +14,8 @@ class DataProvider extends ChangeNotifier {
   List<AccountDataEntity> accounts = [];
   BehaviorSubject<List<AccountDataEntity>> _subjectAccounts;
 
-  DataProvider({required this.sql_provider}) : _subjectAccounts = BehaviorSubject<List<AccountDataEntity>>(){
+  DataProvider({required this.sql_provider})
+      : _subjectAccounts = BehaviorSubject<List<AccountDataEntity>>() {
     ;
     if (sql_provider != null) {
       fetchAndSetData();
@@ -24,7 +25,8 @@ class DataProvider extends ChangeNotifier {
   Stream<List<AccountDataEntity>> get accountsStream => _subjectAccounts.stream;
 
   AccountDataEntity? getLocalAccountById(int id) {
-    for (var acc in accounts) if (acc.uuid == id) return acc;
+    for (var acc in accounts)
+      if (acc.uuid == id) return acc;
     return null;
   }
 
@@ -41,12 +43,11 @@ class DataProvider extends ChangeNotifier {
 
   Future<void> fetchAndSetData() async {
     if (sql_provider.SQL_DB != null) {
-
       accounts = await sql_provider.getAllAccounts();
       for (var acc in accounts) {
-        List<FieldDataEntity> fields =
-            await sql_provider.getFieldsOfAccount(accountDataEntity: acc);
-        acc.fields = fields;
+        List<FieldDataEntity>? fields =
+        await sql_provider.getFieldsOfAccount(accountDataEntity: acc);
+        acc.fields = fields ?? [];
         acc.setIconWidget();
       }
       _subjectAccounts.sink.add(accounts);
@@ -55,17 +56,24 @@ class DataProvider extends ChangeNotifier {
   }
 
   void addAccount(AccountDataEntity accountDataEntity) async {
-    sql_provider.addAccount(accountDataEntity: accountDataEntity).then((value) async {
-        var acc = await sql_provider.getAccountById(value);
-        acc.fields = accountDataEntity.fields;
-        accounts.add(acc);
-        _subjectAccounts.sink.add(accounts);
+    await sql_provider.addAccount(accountDataEntity: accountDataEntity);
+    //     .then((value) async {
+    //     var acc = await sql_provider.getAccountById(value);
+    //     acc.fields = accountDataEntity.fields;
+    //     accounts.add(acc);
+    //     _subjectAccounts.sink.add(accounts);
+    // });
+    sql_provider.getAccountById(accountDataEntity.uuid!).then((
+        AccountDataEntity? addedAcc) {
+      addedAcc!.fields = accountDataEntity.fields;
+      accounts.add(addedAcc);
+      _subjectAccounts.sink.add(accounts);
     });
   }
 
   void updateAccount(AccountDataEntity accountDataEntity) {
     int listIndex =
-        accounts.indexWhere((element) => element.uuid == accountDataEntity.uuid);
+    accounts.indexWhere((element) => element.uuid == accountDataEntity.uuid);
     accounts[listIndex] = accountDataEntity;
     sql_provider.updateAccount(accountDataEntity);
   }
@@ -78,7 +86,7 @@ class DataProvider extends ChangeNotifier {
 
   void toggleEditButton({required AccountDataEntity accountDataEntity}) {
     int listIndex =
-        accounts.indexWhere((element) => element.uuid == accountDataEntity.uuid);
+    accounts.indexWhere((element) => element.uuid == accountDataEntity.uuid);
     if (accountDataEntity.isEditButtonPressed == true) {
       accounts[listIndex].isEditButtonPressed = false;
     } else {
@@ -89,7 +97,7 @@ class DataProvider extends ChangeNotifier {
 
   void toggleShowButton({required AccountDataEntity accountDataEntity}) {
     int listIndex =
-        accounts.indexWhere((element) => element.uuid == accountDataEntity.uuid);
+    accounts.indexWhere((element) => element.uuid == accountDataEntity.uuid);
 
     if (accountDataEntity.isShowButtonPressed == true) {
       accounts[listIndex].isShowButtonPressed = false;

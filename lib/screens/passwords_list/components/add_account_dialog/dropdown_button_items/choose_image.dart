@@ -9,7 +9,7 @@ import '../../../../../utils/constants.dart' as MyConstants;
 
 typedef void SetIconImage({required PickedFile pickedFile});
 
-class ChooseImageDropdownMenuItem extends DropdownMenuItem {
+class ChooseImageDropdownMenuItem extends DropdownMenuItem<String> {
   final SetIconImage setIconImageCallback;
   final BuildContext context;
 
@@ -19,6 +19,7 @@ class ChooseImageDropdownMenuItem extends DropdownMenuItem {
     required this.context
   }) : super(
             onTap: () async {
+
               ImagePicker().getImage(source: ImageSource.gallery).then((PickedFile? value)
               async {
                 if (value != null)

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/components/dialog_template.dart';
 import 'package:mysimplepasswordstorage/components/field_widget.dart';
@@ -8,11 +10,11 @@ import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
 
 import 'button_template.dart';
 
-class ButtonAddAccount extends StatelessWidget {
+class ButtonAddField extends StatelessWidget {
   final AccountDataEntity _accountDataEntity;
   final DataProvider _dataProvider;
 
-  ButtonAddAccount({
+  ButtonAddField({
     Key? key,
     required DataProvider dataProvider,
     required AccountDataEntity accountDataEntity,
@@ -22,6 +24,9 @@ class ButtonAddAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // log("="*100);
+    // log("${_accountDataEntity.accountName} , ${_accountDataEntity.uuid}");
+    // log("+"*100);
     return ButtonTemplate(
         onPressed: () async {
           // if (!_accountDataEntity.isEditButtonPressed)
@@ -127,7 +132,7 @@ class ButtonAddAccount extends StatelessWidget {
           if (result != null)
             _dataProvider.addField(
               FieldDataEntity(
-                accountId: _accountDataEntity.uuid,
+                accountId: _accountDataEntity.uuid!,
                 name: result['name'],
                 value: result['value'],
                 isHidden: result['isHidden'],

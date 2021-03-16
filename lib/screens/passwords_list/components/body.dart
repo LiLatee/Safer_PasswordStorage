@@ -32,6 +32,10 @@ class _BodyState extends State<Body> {
       stream: _dataProvider.accountsStream,
       builder: (context, AsyncSnapshot<List<AccountDataEntity>> snapshot) {
         if (snapshot.hasData) {
+          for (var acc in snapshot.data!)
+          {
+            log("${acc.accountName} , ${acc.uuid}");
+          }
           return epn.ExpansionPanelList.radio(
             expandedHeaderPadding:
                 EdgeInsets.only(left: MyConstants.defaultPadding * 3),
@@ -91,7 +95,7 @@ class _BodyState extends State<Body> {
       {required AccountDataEntity accountDataEntity}) {
     return epn.ExpansionPanelRadio(
       canTapOnHeader: true,
-      value: accountDataEntity.uuid,
+      value: accountDataEntity.uuid!,
       headerBuilder: (BuildContext context, bool isExpanded) {
         // return Text("${accountDataEntity.accountName}");
         return Provider.value(

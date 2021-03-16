@@ -3,7 +3,7 @@ import '../../../../../utils/constants.dart' as MyConstants;
 
 typedef void ShowColorPicker({required bool isShowNeeded});
 
-class ChooseColorDropdownMenuItem extends DropdownMenuItem {
+class ChooseColorDropdownMenuItem extends DropdownMenuItem<String> {
   final ShowColorPicker showColorPickerCallback;
   final Widget chooseColorIconWidget;
 

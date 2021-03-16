@@ -21,74 +21,17 @@ class PasswordsListPage extends StatefulWidget {
 }
 
 class _PasswordListPageState extends State<PasswordsListPage> {
-  // static List<AccountData> testAccounts = [
-  //   AccountData(
-  //     accountName: "Facebook",
-  //     email: FieldData(name: "Email", value: "me.myself.and.i@gmail.com"),
-  //     password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
-  //     icon: CircleAvatar(
-  //       radius: MyConstants.defaultIconRadius,
-  //       backgroundImage: AssetImage('images/facebook.png'),
-  //       backgroundColor: Colors.transparent,
-  //     ),
-  //   ),
-  //   AccountData(
-  //     accountName: "Twitter",
-  //     email:
-  //         FieldData(name: "Email", value: "we.have_a_city_to_burn@gmail.com"),
-  //     password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
-  //     icon: CircleAvatar(
-  //       radius: MyConstants.defaultIconRadius,
-  //       backgroundImage: AssetImage('images/twitter.png'),
-  //       backgroundColor: Colors.transparent,
-  //     ),
-  //   ),
-  //   AccountData(
-  //     accountName: "Wooggi",
-  //     email: FieldData(
-  //         name: "Email", value: "where_are_my_cookiesLOOOOOOLLLL?@gmail.com"),
-  //     password: FieldData(name: "Password", value: "sdnfuimejbgdn39032fnw v"),
-  //   ),
-  // ];
-
-  // AllAccountsBloc _allAccountsBloc = AllAccountsBloc(accounts: testAccounts);
-  // AllAccountsBloc _allAccountsBloc = AllAccountsBloc();
-
   @override
   Widget build(BuildContext context) {
-    // testAccounts[2].addField(
-    //   name: 'Notes',
-    //   value: "Hej. Co tam słychać? U mnie w porządku. "
-    //       "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //       "A co u Ciebie? "
-    //       "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?",
-    // );
-    //
-    // testAccounts[2].addField(
-    //   name: 'Notes2',
-    //   value: "Hej. Co tam słychać? U mnie w porządku. "
-    //       "A co u Ciebie?  Hej. Co tam słychać? U mnie w porządku. "
-    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //       "A co u Ciebie?Hej. Co tam słychać? U mnie w porządku. "
-    //       "A co u Ciebie? "
-    //       "Hej. Co tam słychać? U mnie w porządku. A co u Ciebie?",
-    // );
-    //
-    // testAccounts[1].addField(name: 'Notes', value: "Haslo zwierzak");
 
-    // DataProvider dataProvider = Provider.of<DataProvider>(context);
     return Scaffold(
       // appBar: buildAppBar(),
       // backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Body(
-            // accounts: dataProvider.accounts,
-          ),
+              // accounts: dataProvider.accounts,
+              ),
         ),
       ),
       floatingActionButton: AddAccountFloatingButton(),
@@ -175,7 +118,6 @@ class _PasswordListPageState extends State<PasswordsListPage> {
 }
 
 class AddAccountFloatingButton extends StatelessWidget {
-
   @override
   Widget build(BuildContext superContext) {
     Size size = MediaQuery.of(superContext).size;
@@ -186,22 +128,23 @@ class AddAccountFloatingButton extends StatelessWidget {
         //     .addAccount(AccountDataEntity(accountName: "Dodane"));
         showGeneralDialog(
           barrierColor: Colors.black.withOpacity(0.5),
-          transitionBuilder: (context, a1, a2, widget) {
-            return Transform.scale(
-              origin: Offset(size.width / 2,
-                  size.height / 2), // TODO jak wziąć pozycje przycisku
-              scale: a1.value,
-              child: Opacity(
-                opacity: a1.value,
-                child: AddAccountDialog(superContext: superContext),/// context required by Provider in the subtree
-              ),
-            );
-          },
+          // transitionBuilder: (context, a1, a2, widget) {
+          // return Transform.scale(
+          //   origin: Offset(size.width / 2,
+          //       size.height / 2), // TODO jak wziąć pozycje przycisku
+          //   scale: a1.value,
+          //   child: Opacity(
+          //     opacity: a1.value,
+          //     child: AddAccountDialog(superContext: superContext),/// context required by Provider in the subtree
+          //   ),
+          // );
+          // },
           transitionDuration: Duration(milliseconds: 200),
           barrierDismissible: false,
           barrierLabel: '',
           context: superContext,
-          pageBuilder: (context, animation1, animation2) => null,
+          pageBuilder: (context, animation1, animation2) =>
+              AddAccountDialog(superContext: superContext),
         );
         // _allAccountsBloc.addAccount();
       },

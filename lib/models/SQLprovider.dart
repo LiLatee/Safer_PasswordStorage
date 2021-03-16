@@ -75,11 +75,11 @@ class SQLprovider extends ChangeNotifier {
 
   Future<List<FieldDataEntity>?> getFieldsOfAccount(
       {required AccountDataEntity accountDataEntity}) async {
-    return await SQL_DB.fieldDao.getFieldsOfAccount(accountDataEntity.uuid);
+    return await SQL_DB.fieldDao.getFieldsOfAccount(accountDataEntity.uuid!);
   }
 
   Stream<List<FieldDataEntity>?> watchFieldsOfAccount(
       {required AccountDataEntity accountDataEntity}) {
-    return SQL_DB.fieldDao.watchFieldsOfAccount(accountDataEntity.uuid);
+    return SQL_DB.fieldDao.watchFieldsOfAccount(accountDataEntity.uuid!);
   }
 }
