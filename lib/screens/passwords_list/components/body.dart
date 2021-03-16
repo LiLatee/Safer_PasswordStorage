@@ -13,29 +13,19 @@ import 'account_tile/expanded_part/account_data_expanded_part.dart';
 import 'account_tile/header.dart';
 
 class Body extends StatefulWidget {
-  // final List<AccountDataEntity> accounts;
-
-  // Body({required this.accounts});
-
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  late DataProvider _dataProvider;
 
   @override
   Widget build(BuildContext context) {
-    _dataProvider = Provider.of<DataProvider>(context);
 
     return StreamBuilder<List<AccountDataEntity>>(
-      stream: _dataProvider.accountsStream,
+      stream: DataProvider.accountsStream,
       builder: (context, AsyncSnapshot<List<AccountDataEntity>> snapshot) {
         if (snapshot.hasData) {
-          for (var acc in snapshot.data!)
-          {
-            log("${acc.accountName} , ${acc.uuid}");
-          }
           return epn.ExpansionPanelList.radio(
             expandedHeaderPadding:
                 EdgeInsets.only(left: MyConstants.defaultPadding * 3),

@@ -13,21 +13,18 @@ class ButtonSaveChanges extends StatelessWidget {
   }) : super(key: key);
 
   late Map<int, FieldDataEntity> _changedFieldsMap;
-  late DataProvider _dataProvider;
 
   @override
   Widget build(BuildContext context) {
     _changedFieldsMap = Provider.of<Map<int, FieldDataEntity>>(context);
-    _dataProvider = Provider.of<DataProvider>(context);
 
     late ButtonStyle _buttonStyle;
-    if (Theme.of(context).textButtonTheme.style != null)
-      {
-        _buttonStyle = Theme.of(context).textButtonTheme.style!.copyWith(
-            backgroundColor:
-            TextButton.styleFrom(backgroundColor: Color(0xFFd6e0f0))
-                .backgroundColor);
-      }
+    if (Theme.of(context).textButtonTheme.style != null) {
+      _buttonStyle = Theme.of(context).textButtonTheme.style!.copyWith(
+          backgroundColor:
+              TextButton.styleFrom(backgroundColor: Color(0xFFd6e0f0))
+                  .backgroundColor);
+    }
     return Padding(
       padding: const EdgeInsets.only(top: MyConstants.defaultPadding),
       child: IntrinsicHeight(
@@ -48,11 +45,13 @@ class ButtonSaveChanges extends StatelessWidget {
               ),
               onPressed: () {
                 _changedFieldsMap.forEach((key, value) {
-                  _dataProvider.updateField(value);
+                  DataProvider.updateField(value);
                 });
                 _changedFieldsMap.clear();
-                Provider.of<IsFieldChanged>(context, listen: false).isFieldChanged = false;
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Changes saved. :)")));
+                Provider.of<IsFieldChanged>(context, listen: false)
+                    .isFieldChanged = false;
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text("Changes saved. :)")));
               },
             ),
           ],

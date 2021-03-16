@@ -12,21 +12,16 @@ import 'button_template.dart';
 
 class ButtonAddField extends StatelessWidget {
   final AccountDataEntity _accountDataEntity;
-  final DataProvider _dataProvider;
 
   ButtonAddField({
     Key? key,
-    required DataProvider dataProvider,
     required AccountDataEntity accountDataEntity,
-  })  : _accountDataEntity = accountDataEntity,
-        _dataProvider = dataProvider,
+  })   : _accountDataEntity = accountDataEntity,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // log("="*100);
-    // log("${_accountDataEntity.accountName} , ${_accountDataEntity.uuid}");
-    // log("+"*100);
+
     return ButtonTemplate(
         onPressed: () async {
           // if (!_accountDataEntity.isEditButtonPressed)
@@ -57,7 +52,8 @@ class ButtonAddField extends StatelessWidget {
                             label: "Name",
                             readOnly: false,
                             value: "",
-                            onChangedCallback: ({required newText}) => name = newText,
+                            onChangedCallback: ({required newText}) =>
+                                name = newText,
                             textInputAction: TextInputAction.next,
                           ),
                         ),
@@ -65,7 +61,8 @@ class ButtonAddField extends StatelessWidget {
                           label: "Content",
                           readOnly: false,
                           value: "",
-                          onChangedCallback: ({required newText}) => value = newText,
+                          onChangedCallback: ({required newText}) =>
+                              value = newText,
                           textInputAction: isMultiline
                               ? TextInputAction.newline
                               : TextInputAction.done,
@@ -130,7 +127,7 @@ class ButtonAddField extends StatelessWidget {
           );
 
           if (result != null)
-            _dataProvider.addField(
+            DataProvider.addField(
               FieldDataEntity(
                 accountId: _accountDataEntity.uuid!,
                 name: result['name'],

@@ -8,21 +8,27 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
 import 'package:rxdart/rxdart.dart';
 
+
+
 class DataProvider extends ChangeNotifier {
-  final SQLprovider sql_provider;
+  static final DataProvider _instance = DataProvider._internal();
+  static final dp = DataProvider();
 
-  List<AccountDataEntity> accounts = [];
-  BehaviorSubject<List<AccountDataEntity>> _subjectAccounts;
-
-  DataProvider({required this.sql_provider})
-      : _subjectAccounts = BehaviorSubject<List<AccountDataEntity>>() {
-    ;
-    if (sql_provider != null) {
-      fetchAndSetData();
-    }
+  factory DataProvider() {
+    return _instance;
   }
 
-  Stream<List<AccountDataEntity>> get accountsStream => _subjectAccounts.stream;
+  DataProvider._internal();
+
+  initDataProvider() async {
+    await SQLprovider.db.initDB();
+    fetchAndSetData();
+  }
+
+  static List<AccountDataEntity> accounts = [];
+  static BehaviorSubject<List<AccountDataEntity>> _subjectAccounts = BehaviorSubject<List<AccountDataEntity>>();
+
+  static Stream<List<AccountDataEntity>> get accountsStream => _subjectAccounts.stream;
 
   AccountDataEntity? getLocalAccountById(int id) {
     for (var acc in accounts)
@@ -30,7 +36,7 @@ class DataProvider extends ChangeNotifier {
     return null;
   }
 
-  bool isAccountNameUsed({required String name}) {
+  static bool isAccountNameUsed({required String name}) {
     bool isUsed = false;
     for (var el in accounts) {
       if (el.accountName.toLowerCase() == name.toLowerCase()) {
@@ -41,29 +47,28 @@ class DataProvider extends ChangeNotifier {
     return isUsed;
   }
 
-  Future<void> fetchAndSetData() async {
-    if (sql_provider.SQL_DB != null) {
-      accounts = await sql_provider.getAllAccounts();
+  static Future<void> fetchAndSetData() async {
+      accounts = await SQLprovider.getAllAccounts();
       for (var acc in accounts) {
         List<FieldDataEntity>? fields =
-        await sql_provider.getFieldsOfAccount(accountDataEntity: acc);
+        await SQLprovider.getFieldsOfAccount(accountDataEntity: acc);
         acc.fields = fields ?? [];
         acc.setIconWidget();
       }
       _subjectAccounts.sink.add(accounts);
       // notifyListeners();
-    }
+
   }
 
-  void addAccount(AccountDataEntity accountDataEntity) async {
-    await sql_provider.addAccount(accountDataEntity: accountDataEntity);
+  static void addAccount(AccountDataEntity accountDataEntity) async {
+    await SQLprovider.addAccount(accountDataEntity: accountDataEntity);
     //     .then((value) async {
     //     var acc = await sql_provider.getAccountById(value);
     //     acc.fields = accountDataEntity.fields;
     //     accounts.add(acc);
     //     _subjectAccounts.sink.add(accounts);
     // });
-    sql_provider.getAccountById(accountDataEntity.uuid!).then((
+    SQLprovider.getAccountById(accountDataEntity.uuid!).then((
         AccountDataEntity? addedAcc) {
       addedAcc!.fields = accountDataEntity.fields;
       accounts.add(addedAcc);
@@ -71,20 +76,20 @@ class DataProvider extends ChangeNotifier {
     });
   }
 
-  void updateAccount(AccountDataEntity accountDataEntity) {
+  static void updateAccount(AccountDataEntity accountDataEntity) {
     int listIndex =
     accounts.indexWhere((element) => element.uuid == accountDataEntity.uuid);
     accounts[listIndex] = accountDataEntity;
-    sql_provider.updateAccount(accountDataEntity);
+    SQLprovider.updateAccount(accountDataEntity);
   }
 
-  void deleteAccount(AccountDataEntity accountDataEntity) {
-    sql_provider.deleteAccount(accountDataEntity: accountDataEntity);
+  static void deleteAccount(AccountDataEntity accountDataEntity) {
+    SQLprovider.deleteAccount(accountDataEntity: accountDataEntity);
     accounts.remove(accountDataEntity);
     _subjectAccounts.sink.add(accounts);
   }
 
-  void toggleEditButton({required AccountDataEntity accountDataEntity}) {
+  static void toggleEditButton({required AccountDataEntity accountDataEntity}) {
     int listIndex =
     accounts.indexWhere((element) => element.uuid == accountDataEntity.uuid);
     if (accountDataEntity.isEditButtonPressed == true) {
@@ -95,7 +100,7 @@ class DataProvider extends ChangeNotifier {
     _subjectAccounts.sink.add(accounts);
   }
 
-  void toggleShowButton({required AccountDataEntity accountDataEntity}) {
+  static void toggleShowButton({required AccountDataEntity accountDataEntity}) {
     int listIndex =
     accounts.indexWhere((element) => element.uuid == accountDataEntity.uuid);
 
@@ -107,16 +112,16 @@ class DataProvider extends ChangeNotifier {
     _subjectAccounts.sink.add(accounts);
   }
 
-  void addField(FieldDataEntity fieldDataEntity) {
+  static void addField(FieldDataEntity fieldDataEntity) {
     int listIndex = accounts
         .indexWhere((element) => element.uuid == fieldDataEntity.accountId);
 
     accounts[listIndex].fields.add(fieldDataEntity);
     _subjectAccounts.sink.add(accounts);
-    sql_provider.addField(fieldDataEntity: fieldDataEntity);
+    SQLprovider.addField(fieldDataEntity: fieldDataEntity);
   }
 
-  void updateField(FieldDataEntity fieldDataEntity) {
+  static void updateField(FieldDataEntity fieldDataEntity) {
     int accListIndex = accounts
         .indexWhere((element) => element.uuid == fieldDataEntity.accountId);
 
@@ -126,17 +131,17 @@ class DataProvider extends ChangeNotifier {
 
     accounts[accListIndex].fields[fieldListIndex] = fieldDataEntity;
 
-    sql_provider
+    SQLprovider
         .updateField(fieldDataEntity);
   }
 
-  void deleteField(FieldDataEntity fieldDataEntity) {
+  static void deleteField(FieldDataEntity fieldDataEntity) {
     int accListIndex = accounts
         .indexWhere((element) => element.uuid == fieldDataEntity.accountId);
 
     accounts[accListIndex].fields.remove(fieldDataEntity);
 
-    sql_provider
+    SQLprovider
         .deleteField(fieldDataEntity: fieldDataEntity);
   }
 }

@@ -27,7 +27,7 @@ class AccountNameFieldWidget extends StatefulWidget {
 class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
   @override
   Widget build(BuildContext context) {
-    DataProvider dataProvider = Provider.of<DataProvider>(widget.superContext);
+    // DataProvider dataProvider = Provider.of<DataProvider>(widget.superContext);
     return Container(
       padding: EdgeInsets.only(
           top: MyConstants.defaultPadding,
@@ -53,7 +53,7 @@ class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
               {
                 if (value.isEmpty)
                   return "Name can't be empty.";
-                else if (dataProvider.isAccountNameUsed(name: value))
+                else if (DataProvider.isAccountNameUsed(name: value))
                   return 'Name already exists.';
               }
             return null;
