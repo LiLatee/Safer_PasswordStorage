@@ -54,20 +54,18 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
     var addButton = MyDialogButton(
       buttonName: "Add",
       onPressed: () {
-        if (accountNameFormKey.currentState != null)
-          {
-            if (accountNameFormKey.currentState!.validate()) {
-              Provider.of<DataProvider>(widget.superContext, listen: false)
-                  .addAccount(accountDataEntity);
-              Navigator.of(context).pop();
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content:
-                  Text('Dodano konto "${accountDataEntity.accountName}"')));
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Coś nie tak przy dodawaniu konta ;(')));
-            }
+        if (accountNameFormKey.currentState != null) {
+          if (accountNameFormKey.currentState!.validate()) {
+            DataProvider.addAccount(accountDataEntity);
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content:
+                    Text('Dodano konto "${accountDataEntity.accountName}"')));
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Coś nie tak przy dodawaniu konta ;(')));
           }
+        }
       },
     );
 

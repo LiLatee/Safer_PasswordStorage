@@ -9,14 +9,10 @@ import 'button_template.dart';
 class ButtonRemoveAccount extends StatelessWidget {
   const ButtonRemoveAccount({
     Key? key,
-    required DataProvider dataProvider,
     required AccountDataEntity accountDataEntity,
-  })
-      : _dataProvider = dataProvider,
-        _accountDataEntity = accountDataEntity,
+  })   : _accountDataEntity = accountDataEntity,
         super(key: key);
 
-  final DataProvider _dataProvider;
   final AccountDataEntity _accountDataEntity;
 
   @override
@@ -25,29 +21,28 @@ class ButtonRemoveAccount extends StatelessWidget {
       onPressed: () {
         showDialog(
           context: context,
-          builder: (context) =>
-              MyDialog(
-                title: "Confirmation",
-                content: Container(
-                  child: Text("Do You want to remove this account data?"),
-                  padding: EdgeInsets.only(top: MyConstants.defaultPadding),
-                ),
-                buttons: [
-                  MyDialogButton(
-                    buttonName: "Remove",
-                    onPressed: () {
-                      _dataProvider.deleteAccount(_accountDataEntity);
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  MyDialogButton(
-                    buttonName: "Cancel",
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
+          builder: (context) => MyDialog(
+            title: "Confirmation",
+            content: Container(
+              child: Text("Do You want to remove this account data?"),
+              padding: EdgeInsets.only(top: MyConstants.defaultPadding),
+            ),
+            buttons: [
+              MyDialogButton(
+                buttonName: "Remove",
+                onPressed: () {
+                  DataProvider.deleteAccount(_accountDataEntity);
+                  Navigator.of(context).pop();
+                },
               ),
+              MyDialogButton(
+                buttonName: "Cancel",
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
         );
       },
       icon: Icon(Icons.delete_forever),

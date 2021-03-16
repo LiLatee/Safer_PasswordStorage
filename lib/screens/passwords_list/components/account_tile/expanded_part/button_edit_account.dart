@@ -8,18 +8,17 @@ import 'button_template.dart';
 class ButtonEditAccount extends StatelessWidget {
   const ButtonEditAccount({
     Key? key,
-    required DataProvider dataProvider,
     required AccountDataEntity accountDataEntity,
-  }) : _dataProvider = dataProvider, _accountDataEntity = accountDataEntity, super(key: key);
+  })   : _accountDataEntity = accountDataEntity,
+        super(key: key);
 
-  final DataProvider _dataProvider;
   final AccountDataEntity _accountDataEntity;
 
   @override
   Widget build(BuildContext context) {
     return ButtonTemplate(
       onPressed: () {
-        _dataProvider.toggleEditButton(accountDataEntity: _accountDataEntity);
+        DataProvider.toggleEditButton(accountDataEntity: _accountDataEntity);
       },
       icon: Icon(Icons.edit),
       label: 'Edit',
