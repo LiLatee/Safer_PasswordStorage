@@ -1,10 +1,11 @@
 import 'dart:developer';
 
+import 'package:floor/floor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/models/database.dart';
 import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
-
+import 'package:sqflite/sqflite.dart' as sqflite;
 class SQLprovider extends ChangeNotifier {
   static final SQLprovider _instance = SQLprovider._internal();
   static final db = SQLprovider();
@@ -18,6 +19,15 @@ class SQLprovider extends ChangeNotifier {
   static late AppDatabase _SQL_DB;
   initDB() async {
     _SQL_DB = await $FloorAppDatabase.databaseBuilder("app_database.db").build();
+  }
+
+  static String getDatabasePath() {
+    if (_SQL_DB.getDatabaseObject() is sqflite.Database) {
+      var f = _SQL_DB.getDatabaseObject();
+      return (f as sqflite.Database).path.toString();
+    }
+    return "niema"; // TODO
+
   }
 
 
@@ -46,8 +56,8 @@ class SQLprovider extends ChangeNotifier {
     return await _SQL_DB.accountDao.insertAccount(accountDataEntity);
   }
 
-  static void deleteAccount({required AccountDataEntity accountDataEntity}) {
-    _SQL_DB.accountDao.deleteAccount(accountDataEntity);
+  static Future<void> deleteAccount({required AccountDataEntity accountDataEntity}) async {
+    await _SQL_DB.accountDao.deleteAccount(accountDataEntity);
   }
 
   static Stream<List<AccountDataEntity>> watchAllAccounts() {

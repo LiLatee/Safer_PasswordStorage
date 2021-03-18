@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mysimplepasswordstorage/models/account_data.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:provider/provider.dart';
 
