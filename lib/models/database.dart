@@ -16,6 +16,8 @@ part 'database.g.dart';
 abstract class AppDatabase extends FloorDatabase {
   AccountDao get accountDao;
   FieldDataDao get fieldDao;
+
+  sqflite.DatabaseExecutor getDatabaseObject() => this.database;
   // SimpleDao get simpleDao;
 }
 

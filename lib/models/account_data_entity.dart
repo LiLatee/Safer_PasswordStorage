@@ -12,15 +12,15 @@ import '../utils/constants.dart' as MyConstants;
 import 'field_data.dart';
 import 'package:uuid/uuid.dart';
 
-// @Entity(primaryKeys: ['uuid'])
-@Entity(
-  indices: [
-    Index(
-      value: ['accountName'],
-      unique: true,
-    ),
-  ],
-)
+// @Entity(
+//   indices: [
+//     Index(
+//       value: ['accountName'],
+//       unique: true,
+//     ),
+//   ],
+// )
+@entity
 class AccountDataEntity {
   @primaryKey
   String? uuid;
@@ -61,6 +61,15 @@ class AccountDataEntity {
 
     /// Setting [icon] widget. Generate widget with [iconColorHex] or with random color.
     if (iconWidget == null) setIconWidget();
+  }
+
+  int getNextFieldPosition() {
+    int currentMaxPosition = -1;
+    for (var field in fields) {
+      if (field.position > currentMaxPosition)
+        currentMaxPosition = field.position;
+    }
+    return currentMaxPosition + 1;
   }
 
   void setIconWidget() {

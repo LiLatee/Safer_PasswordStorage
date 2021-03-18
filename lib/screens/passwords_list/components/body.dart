@@ -6,7 +6,6 @@ import 'package:mysimplepasswordstorage/models/DataProvider.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/account_data.dart';
 import '../../../modified_flutter_widgets/expansion_panel.dart' as epn;
 import '../../../utils/constants.dart' as MyConstants;
 import 'account_tile/expanded_part/account_data_expanded_part.dart';

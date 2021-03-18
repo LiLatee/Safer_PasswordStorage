@@ -152,14 +152,16 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
   }
 
   void setIconImage({required PickedFile pickedFile}) {
-    setState(() async {
+    setState(()  {
       var image = Image.file(
         File(pickedFile.path),
         width: MyConstants.defaultIconRadius * 2,
         height: MyConstants.defaultIconRadius * 2,
       );
 
-      Provider.of<AccountDataEntity>(context, listen: false).iconImage = await pickedFile.readAsBytes();
+      /// I am not sure it is a safe solution. In theory, this might be not done yet and user is able to save account without iconImage.
+      pickedFile.readAsBytes().then((value) => Provider.of<AccountDataEntity>(context, listen: false).iconImage = value);
+      // Provider.of<AccountDataEntity>(context, listen: false).iconImage = await pickedFile.readAsBytes();
 
       _accountDataEntity.iconWidget =
           MyFunctions.buildCircleAvatarUsingImage(imageForIcon: image);

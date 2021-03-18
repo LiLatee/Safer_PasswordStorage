@@ -12,11 +12,11 @@ class ButtonSaveChanges extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  late Map<int, FieldDataEntity> _changedFieldsMap;
+  late Map<String, FieldDataEntity> _changedFieldsMap;
 
   @override
   Widget build(BuildContext context) {
-    _changedFieldsMap = Provider.of<Map<int, FieldDataEntity>>(context);
+    _changedFieldsMap = Provider.of<Map<String, FieldDataEntity>>(context);
 
     late ButtonStyle _buttonStyle;
     if (Theme.of(context).textButtonTheme.style != null) {

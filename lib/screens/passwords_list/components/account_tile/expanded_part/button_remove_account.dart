@@ -33,6 +33,7 @@ class ButtonRemoveAccount extends StatelessWidget {
                 onPressed: () {
                   DataProvider.deleteAccount(_accountDataEntity);
                   Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Removed "${_accountDataEntity.accountName}" account. ')));
                 },
               ),
               MyDialogButton(

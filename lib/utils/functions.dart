@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:mysimplepasswordstorage/models/account_data.dart';
 import 'package:random_color/random_color.dart';
 import 'constants.dart' as MyConstants;
 import 'functions.dart' as Functions;

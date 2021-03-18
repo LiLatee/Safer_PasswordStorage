@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:aes_crypt/aes_crypt.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/BLoCs/all_accounts_bloc.dart';
@@ -9,9 +11,9 @@ import 'package:mysimplepasswordstorage/models/database.dart';
 import 'package:mysimplepasswordstorage/models/field_data.dart';
 import 'package:mysimplepasswordstorage/models/SQLprovider.dart';
 import 'package:mysimplepasswordstorage/screens/passwords_list/components/add_account_dialog/add_account_dialog.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-
-import '../../models/account_data.dart';
+import 'package:path_provider/path_provider.dart';
 import 'components/body.dart';
 import '../../utils/constants.dart' as MyConstants;
 
@@ -23,15 +25,21 @@ class PasswordsListPage extends StatefulWidget {
 class _PasswordListPageState extends State<PasswordsListPage> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       // appBar: buildAppBar(),
       // backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Body(
-              // accounts: dataProvider.accounts,
-              ),
+          child: Column(
+            children: [
+              TextButton(
+                  onPressed: () => DataProvider.exportEncryptedDatabase(secretKey: "HASELKO"),
+                  child: Container(color: Colors.red, child: Text("siema"))),
+              Body(
+                  // accounts: dataProvider.accounts,
+                  ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: AddAccountFloatingButton(),
@@ -124,6 +132,7 @@ class AddAccountFloatingButton extends StatelessWidget {
 
     return FloatingActionButton(
       onPressed: () {
+        // log(SQLprovider.TEMP_DB.database.toString());
         // Provider.of<DataProvider>(context, listen: false)
         //     .addAccount(AccountDataEntity(accountName: "Dodane"));
         showGeneralDialog(

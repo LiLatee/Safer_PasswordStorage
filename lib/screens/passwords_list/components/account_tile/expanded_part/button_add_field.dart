@@ -34,7 +34,7 @@ class ButtonAddField extends StatelessWidget {
               bool isHidden = false;
               bool isMultiline = false;
               var name;
-              var value;
+              var value = "";
               return StatefulBuilder(
                 builder: (context, setState) => MyDialog(
                   title: "Add new field",

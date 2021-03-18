@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +12,13 @@ import 'package:uuid/uuid.dart';
       childColumns: ['accountId'],
       parentColumns: ['uuid'],
       entity: AccountDataEntity,
+      onDelete: ForeignKeyAction.cascade,
     ),
   ],
   // primaryKeys: ['uuid'],
 )
 class FieldDataEntity {
-  @primaryKey
+  @PrimaryKey()
   String? uuid;
 
   final String accountId;
@@ -25,6 +27,9 @@ class FieldDataEntity {
   bool isHidden;
   bool isMultiline;
   int position;
+
+  @ignore
+  static List<FieldDataEntity> allFields = <FieldDataEntity>[];
 
   FieldDataEntity({
     this.uuid,
@@ -35,7 +40,7 @@ class FieldDataEntity {
     this.isMultiline = false,
     this.position = 0, // TODO
   }) {
-    if (this.uuid == null)
-      this.uuid = Uuid().v1();
+    if (this.uuid == null) this.uuid = Uuid().v1();
   }
+
 }
