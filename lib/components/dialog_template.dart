@@ -10,8 +10,8 @@ class MyDialog extends StatelessWidget {
 
   const MyDialog({
     Key? key,
-    required content,
     required title,
+    required content,
     buttons,
   })  : _content = content,
         _title = title,

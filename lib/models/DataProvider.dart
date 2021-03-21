@@ -49,7 +49,8 @@ class DataProvider extends ChangeNotifier {
             TextFormField(
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Theme.of(context).accentColor)),
+                    borderSide:
+                        BorderSide(color: Theme.of(context).accentColor)),
                 border: OutlineInputBorder(),
                 labelText: "Secret Key",
                 labelStyle: TextStyle(
@@ -94,7 +95,10 @@ class DataProvider extends ChangeNotifier {
             databasePath,
             path,
           );
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Your data has been saved in $result."), duration: Duration(seconds: 5),));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Your data has been saved in $result."),
+            duration: Duration(seconds: 5),
+          ));
           log("Backup saved: $path");
         } else
           throw ("SQLDatabase not found.");
@@ -102,19 +106,149 @@ class DataProvider extends ChangeNotifier {
     }
   }
 
-  static importEncyptedDatabase({required BuildContext context}) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    String secretKey = 'haslo';
-
+  static Future<AsyncSnapshot<String>> importEncryptedDatabase2({required String secretKey, required String filepath}) async {
     String? databasePath = SQLprovider.getDatabasePath();
-    if(result != null && databasePath != null) {
+
+    if (databasePath != null) {
       var crypt = AesCrypt(secretKey);
-      crypt.decryptFileSync(result.files.single.path, databasePath);
+      crypt.setOverwriteMode(AesCryptOwMode.on);
+
+      try {
+        // await Future.delayed(Duration(seconds: 2));
+        crypt.decryptFileSync(filepath, databasePath);
+      } on Exception {
+        return AsyncSnapshot.withError(ConnectionState.done,
+            "Decryption failed. Did you choose right file and entered correct password?");
+      }
+
+      fetchAndSetData();
+      return AsyncSnapshot.withData(ConnectionState.done, "Data has been correctly imported.");
     } else {
       // User canceled the picker
+      return AsyncSnapshot.withError(
+          ConnectionState.done, "Error: cannot find path to database.");
     }
-
   }
+
+  static importEncyptedDatabase(
+      {required BuildContext context}) async {
+    String? secretKey;
+    String? filepath = 'Choose file with data...';
+    final _formKey = GlobalKey<FormState>();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) => MyDialog(
+            title: "Importing data",
+            content: Padding(
+              padding: const EdgeInsets.only(
+                top: MyConstants.defaultPadding,
+                left: MyConstants.defaultPadding,
+                right: MyConstants.defaultPadding,
+              ),
+              child: Column(
+                children: [
+                  Form(
+                    key: _formKey,
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Theme.of(context).accentColor)),
+                        border: OutlineInputBorder(),
+                        labelText: "Secret Key",
+                        labelStyle: TextStyle(
+                            color: Theme.of(context).accentColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      onChanged: (value) => secretKey = value,
+                      validator: (value) {
+                        if (value != null)
+                        {
+                          if (value.isEmpty)
+                            return "Secret key can't be empty.";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: MyConstants.defaultPadding),
+                        child: TextButton(
+                            onPressed: () async {
+                              FilePickerResult? result =
+                                  await FilePicker.platform.pickFiles(
+                                allowMultiple: false,
+                                type: FileType.custom,
+                                allowedExtensions: ['bin'],
+                              );
+                              if (result != null) {
+                                setState(
+                                    () => filepath = result.files.single.path);
+                              }
+                            },
+                            child: Icon(Icons.file_upload)),
+                      ),
+                      Expanded(
+                          child: SingleChildScrollView(
+                        child: Text(
+                          filepath ?? "Choose file with data",
+                        ),
+                        scrollDirection: Axis.horizontal,
+                      )),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            buttons: [
+              MyDialogButton(
+                buttonName: "Cancel",
+                onPressed: () => Navigator.of(context).pop(AsyncSnapshot.nothing()),
+              ),
+              MyDialogButton(
+                buttonName: "Import",
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    showDialog(
+                        context: context,
+                        builder: (context) =>
+                            Center(child: CircularProgressIndicator()),
+                        barrierDismissible: false);
+
+                    importEncryptedDatabase2(
+                            secretKey: secretKey!, filepath: filepath!)
+                        .then((AsyncSnapshot<String> value) {
+                      if (value.hasData) {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text(value.data!)));
+                      } else {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(value.error.toString())));
+                      }
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    // return result;
+  }
+
   AccountDataEntity? getLocalAccountById(int id) {
     for (var acc in accounts) if (acc.uuid == id) return acc;
     return null;

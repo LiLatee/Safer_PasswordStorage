@@ -32,10 +32,31 @@ class _PasswordListPageState extends State<PasswordsListPage> {
           child: Column(
             children: [
               TextButton(
-                  onPressed: () => DataProvider.exportEncryptedDatabase(context: context),
+                  onPressed: () =>
+                      DataProvider.exportEncryptedDatabase(context: context),
                   child: Container(color: Colors.red, child: Text("Export"))),
               TextButton(
-                  onPressed: () => DataProvider.importEncyptedDatabase(context: context),
+                  onPressed: () {
+                    DataProvider.importEncyptedDatabase(context: context);
+                    //     .then((AsyncSnapshot value) {
+                    //   setState(() {
+                    //     if (value.hasData) {
+                    //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //           content:
+                    //               Text("Data has been imported correctly.")));
+                    //     } else if (value.hasError) {
+                    //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //           content: Text(value.error.toString())));
+                    //     }
+                    //   });
+                    //   // Navigator.of(context).pop();
+                    // });
+                    // showDialog(
+                    //     context: context,
+                    //     builder: (context) =>
+                    //         Center(child: CircularProgressIndicator()),
+                    //     barrierDismissible: false);
+                  },
                   child: Container(color: Colors.red, child: Text("Import"))),
               Body(
                   // accounts: dataProvider.accounts,
