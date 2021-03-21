@@ -18,6 +18,12 @@ ThemeData defaultTheme = ThemeData(
 );
 
 ThemeData lightTheme = ThemeData(
+  bottomAppBarTheme: BottomAppBarTheme(
+    color: Color(0xffd6e0f0),
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: Color(0xFF0f3460),
+  ),
   scaffoldBackgroundColor: Colors.white,
   // TODO jaki kolor
   brightness: Brightness.light,
@@ -25,7 +31,7 @@ ThemeData lightTheme = ThemeData(
   primaryColor: Colors.white,
   // cardColor: Colors.grey,
   cardColor: Colors.white,
-  secondaryHeaderColor: Color(0xFFd6e0f0),
+  secondaryHeaderColor: Color(0xffd6e0f0),
   // ButtonBar color in AccountDataExpandedPart
   accentColor: Color(0xFF0f3460),
   // buttonColor: Color(0xFF5e6e80),
