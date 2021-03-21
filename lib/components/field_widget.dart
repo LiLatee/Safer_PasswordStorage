@@ -90,13 +90,13 @@ class FieldWidget extends StatelessWidget {
     return TextFormField(
       key: ObjectKey(label),
       decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).accentColor)),
-          border: OutlineInputBorder(),
-          labelText: label,
-          labelStyle: TextStyle(
-              color: Theme.of(context).accentColor,
-              fontWeight: FontWeight.bold)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Theme.of(context).accentColor)),
+        border: OutlineInputBorder(),
+        labelText: label,
+        labelStyle: TextStyle(
+            color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
+      ),
       readOnly: readOnly,
       keyboardType: textInputType,
       minLines: 1,
@@ -105,12 +105,10 @@ class FieldWidget extends StatelessWidget {
       enableInteractiveSelection: true,
       initialValue: value,
       onChanged: (value) {
-        if (onChangedCallback != null)
-          onChangedCallback!(newText: value);
+        if (onChangedCallback != null) onChangedCallback!(newText: value);
       },
       onEditingComplete: () {
-        if (onEditingComplete != null)
-          onEditingComplete!();
+        if (onEditingComplete != null) onEditingComplete!();
       },
       onFieldSubmitted: (value) {
         if (onFieldSubmitted != null) {
