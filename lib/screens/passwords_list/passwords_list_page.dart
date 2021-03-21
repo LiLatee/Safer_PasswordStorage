@@ -25,47 +25,61 @@ class _PasswordListPageState extends State<PasswordsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: buildAppBar(),
-      // backgroundColor: Colors.white,
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        child: Row(
+          children: [
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {},
+            ),
+            Spacer(),
+            IconButton(icon: Icon(Icons.search), onPressed: () {}),
+            PopupMenuButton(
+              onSelected: (value) {
+                if (value == "import")
+                  DataProvider.importEncyptedDatabase(context: context);
+                else if (value == 'export')
+                  DataProvider.exportEncryptedDatabase(context: context);
+              },
+              icon: Icon(Icons.more_vert),
+              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                PopupMenuItem(
+                  value: "import",
+                  child: ListTile(
+                    leading: Icon(Icons.arrow_downward),
+                    title: Text('Import data'),
+                  ),
+
+                ),
+                PopupMenuItem(
+                  value: "export",
+                  child: ListTile(
+                    leading: Icon(Icons.arrow_upward),
+                    title: Text('Export data'),
+                  ),
+                ),
+                const PopupMenuItem(
+                  child: ListTile(
+                    leading: Icon(Icons.article),
+                    title: Text('Item 3'),
+                  ),
+                ),
+                const PopupMenuDivider(),
+                const PopupMenuItem(child: Text('Item A')),
+                const PopupMenuItem(child: Text('Item B')),
+              ],
+            ),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextButton(
-                  onPressed: () =>
-                      DataProvider.exportEncryptedDatabase(context: context),
-                  child: Container(color: Colors.red, child: Text("Export"))),
-              TextButton(
-                  onPressed: () {
-                    DataProvider.importEncyptedDatabase(context: context);
-                    //     .then((AsyncSnapshot value) {
-                    //   setState(() {
-                    //     if (value.hasData) {
-                    //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    //           content:
-                    //               Text("Data has been imported correctly.")));
-                    //     } else if (value.hasError) {
-                    //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    //           content: Text(value.error.toString())));
-                    //     }
-                    //   });
-                    //   // Navigator.of(context).pop();
-                    // });
-                    // showDialog(
-                    //     context: context,
-                    //     builder: (context) =>
-                    //         Center(child: CircularProgressIndicator()),
-                    //     barrierDismissible: false);
-                  },
-                  child: Container(color: Colors.red, child: Text("Import"))),
-              Body(
-                  // accounts: dataProvider.accounts,
-                  ),
-            ],
-          ),
+          child: Body(),
         ),
       ),
       floatingActionButton: AddAccountFloatingButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
 
     /// działające proste
