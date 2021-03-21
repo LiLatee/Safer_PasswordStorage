@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 import '../utils/constants.dart' as MyConstants;
 
 class MyDialog extends StatelessWidget {
-  final Widget content;
-  final String title;
-  final List<Widget>? buttons;
+  final Widget _content;
+  final String _title;
+  final List<Widget>? _buttons;
 
   const MyDialog({
     Key? key,
-    required this.content,
-    required this.title,
-    this.buttons,
-  }) : super(key: key);
+    required content,
+    required title,
+    buttons,
+  })  : _content = content,
+        _title = title,
+        _buttons = buttons,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class MyDialog extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: <Widget>[
-                buttons != null ? buildDialogContent(buttons!) : Container(),
+                _buttons != null ? buildDialogContent(_buttons!) : Container(),
                 buildDialogHeader(context)
               ],
             ),
@@ -50,7 +53,7 @@ class MyDialog extends StatelessWidget {
       margin: EdgeInsets.only(top: MyConstants.defaultCircularBorderRadius),
       child: Column(
         children: [
-          content,
+          _content,
           ButtonBar(
             children: buttons ?? [],
           ),
@@ -73,7 +76,7 @@ class MyDialog extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(MyConstants.defaultPadding / 4),
             child: AutoSizeText(
-              title,
+              _title,
               style: Theme.of(context).textTheme.headline2,
               maxLines: 2,
               textAlign: TextAlign.center,

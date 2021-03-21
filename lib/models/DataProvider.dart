@@ -1,7 +1,10 @@
 import 'dart:developer';
 import 'package:aes_crypt/aes_crypt.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mysimplepasswordstorage/components/dialog_template.dart';
 import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
 import 'package:flutter/cupertino.dart';
 import 'package:mysimplepasswordstorage/models/SQLprovider.dart';
@@ -32,21 +35,86 @@ class DataProvider extends ChangeNotifier {
   static Stream<List<AccountDataEntity>> get accountsStream =>
       _subjectAccounts.stream;
 
-  static exportEncryptedDatabase({required String secretKey}) async {
-    if (await Permission.storage.request().isGranted) {
-      DateTime now = DateTime.now();
-      String filename =
-          "MySimplePasswordStorage Backup ${now.year}-${now.month}-${now.day} ${now.hour}-${now.minute}-${now.second}.aes";
-      String path = "/storage/emulated/0/Download/" + filename;
-      var crypt = AesCrypt(secretKey);
-      crypt.encryptFileSync(
-        SQLprovider.getDatabasePath(),
-        path,
-      );
-      log("Backup saved: $path");
+  static exportEncryptedDatabase({required BuildContext context}) async {
+    String secretKey = '';
+    var dialog = MyDialog(
+      content: Padding(
+        padding: const EdgeInsets.only(
+          top: MyConstants.defaultPadding,
+          left: MyConstants.defaultPadding,
+          right: MyConstants.defaultPadding,
+        ),
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Theme.of(context).accentColor)),
+                border: OutlineInputBorder(),
+                labelText: "Secret Key",
+                labelStyle: TextStyle(
+                    color: Theme.of(context).accentColor,
+                    fontWeight: FontWeight.bold),
+              ),
+              onChanged: (value) => secretKey = value,
+            ),
+          ],
+        ),
+      ),
+      title: "Exporting data",
+      buttons: [
+        MyDialogButton(
+          buttonName: "Cancel",
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        MyDialogButton(
+          buttonName: "Export",
+          onPressed: () => Navigator.of(context).pop({"secretKey": secretKey}),
+        ),
+      ],
+    );
+
+    Map<String, dynamic>? resultDict = await showDialog(
+      context: context,
+      builder: (context) => dialog,
+    );
+
+    if (resultDict != null) {
+      if (await Permission.storage.request().isGranted) {
+        DateTime now = DateTime.now();
+        String filename =
+            "MySimplePasswordStorage Backup ${now.year}-${now.month}-${now.day} ${now.hour}-${now.minute}-${now.second}.aes";
+        String path = "/storage/emulated/0/Download/" + filename;
+
+        var crypt = AesCrypt(resultDict["secretKey"]);
+        String? databasePath = SQLprovider.getDatabasePath();
+
+        if (databasePath != null) {
+          var result = crypt.encryptFileSync(
+            databasePath,
+            path,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Your data has been saved in $result."), duration: Duration(seconds: 5),));
+          log("Backup saved: $path");
+        } else
+          throw ("SQLDatabase not found.");
+      }
     }
   }
 
+  static importEncyptedDatabase({required BuildContext context}) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    String secretKey = 'haslo';
+
+    String? databasePath = SQLprovider.getDatabasePath();
+    if(result != null && databasePath != null) {
+      var crypt = AesCrypt(secretKey);
+      crypt.decryptFileSync(result.files.single.path, databasePath);
+    } else {
+      // User canceled the picker
+    }
+
+  }
   AccountDataEntity? getLocalAccountById(int id) {
     for (var acc in accounts) if (acc.uuid == id) return acc;
     return null;

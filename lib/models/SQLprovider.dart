@@ -21,12 +21,12 @@ class SQLprovider extends ChangeNotifier {
     _SQL_DB = await $FloorAppDatabase.databaseBuilder("app_database.db").build();
   }
 
-  static String getDatabasePath() {
+  static String? getDatabasePath() {
     if (_SQL_DB.getDatabaseObject() is sqflite.Database) {
       var f = _SQL_DB.getDatabaseObject();
       return (f as sqflite.Database).path.toString();
     }
-    return "niema"; // TODO
+    return null; // TODO
 
   }
 

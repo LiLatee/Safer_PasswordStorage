@@ -13,7 +13,6 @@ import 'package:mysimplepasswordstorage/models/SQLprovider.dart';
 import 'package:mysimplepasswordstorage/screens/passwords_list/components/add_account_dialog/add_account_dialog.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:path_provider/path_provider.dart';
 import 'components/body.dart';
 import '../../utils/constants.dart' as MyConstants;
 
@@ -33,8 +32,11 @@ class _PasswordListPageState extends State<PasswordsListPage> {
           child: Column(
             children: [
               TextButton(
-                  onPressed: () => DataProvider.exportEncryptedDatabase(secretKey: "HASELKO"),
-                  child: Container(color: Colors.red, child: Text("siema"))),
+                  onPressed: () => DataProvider.exportEncryptedDatabase(context: context),
+                  child: Container(color: Colors.red, child: Text("Export"))),
+              TextButton(
+                  onPressed: () => DataProvider.importEncyptedDatabase(context: context),
+                  child: Container(color: Colors.red, child: Text("Import"))),
               Body(
                   // accounts: dataProvider.accounts,
                   ),
