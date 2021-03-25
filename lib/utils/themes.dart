@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'constants.dart' as MyConstants;
+import 'AppConstants.dart' as MyConstants;
 
 ThemeData defaultTheme = ThemeData(
   fontFamily: 'Roboto',

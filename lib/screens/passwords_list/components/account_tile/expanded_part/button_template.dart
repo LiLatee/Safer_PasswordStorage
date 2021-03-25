@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
+import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 
 class ButtonTemplate extends StatefulWidget {
   final Function onPressed;

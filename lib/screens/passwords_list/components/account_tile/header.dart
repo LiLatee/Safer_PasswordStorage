@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../utils/constants.dart' as MyConstants;
+import '../../../../utils/AppConstants.dart' as MyConstants;
 
 class AccountTileHeader extends StatelessWidget {
   const AccountTileHeader({

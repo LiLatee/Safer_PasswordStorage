@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:provider/provider.dart';
-import '../../../../../utils/constants.dart' as MyConstants;
+import '../../../../../utils/AppConstants.dart' as MyConstants;
 
 typedef void SetIconImage({required PickedFile pickedFile});
 

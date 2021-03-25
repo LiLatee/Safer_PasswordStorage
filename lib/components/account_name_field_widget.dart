@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/DataProvider.dart';
 
-import '../utils/constants.dart' as MyConstants;
+import '../utils/AppConstants.dart' as MyConstants;
 
 class AccountNameFieldWidget extends StatefulWidget {
   final Function onChangedCallback;

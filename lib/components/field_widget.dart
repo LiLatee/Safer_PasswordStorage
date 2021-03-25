@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import '../utils/constants.dart' as Constants;
+import '../utils/AppConstants.dart' as Constants;
 
 typedef onChangeText({required String newText});
 // class FieldWidget extends StatelessWidget {

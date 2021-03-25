@@ -8,7 +8,7 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
 import 'package:mysimplepasswordstorage/screens/passwords_list/components/account_tile/expanded_part/account_data_expanded_part.dart';
 import 'package:provider/provider.dart';
-import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
+import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 import 'package:mysimplepasswordstorage/components/field_widget.dart';
 import 'field_edit_section.dart';
 
