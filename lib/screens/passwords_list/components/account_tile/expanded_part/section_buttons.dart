@@ -7,7 +7,7 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
+import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 
 import 'account_data_expanded_part.dart';
 import 'button_add_field.dart';

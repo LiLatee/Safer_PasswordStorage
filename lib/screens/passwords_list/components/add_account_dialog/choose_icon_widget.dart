@@ -9,7 +9,7 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mysimplepasswordstorage/components/dialog_template.dart';
-import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
+import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 import 'package:mysimplepasswordstorage/utils/functions.dart' as MyFunctions;
 import 'dropdown_button_items/choose_color.dart';
 import 'dropdown_button_items/choose_color_selected.dart';

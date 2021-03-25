@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/database.dart';
 import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
 import '../utils/functions.dart' as Functions;
-import '../utils/constants.dart' as MyConstants;
+import '../utils/AppConstants.dart' as MyConstants;
 import 'field_data.dart';
 import 'package:uuid/uuid.dart';
 

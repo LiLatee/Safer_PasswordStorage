@@ -6,7 +6,7 @@
 // import 'package:provider/provider.dart';
 //
 // import 'package:mysimplepasswordstorage/models/account_data.dart';
-// import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
+// import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 // import 'field_edit_section.dart';
 //
 // class FieldRowWithButtons extends StatelessWidget {

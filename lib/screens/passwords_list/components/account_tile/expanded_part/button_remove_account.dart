@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/components/dialog_template.dart';
 import 'package:mysimplepasswordstorage/models/DataProvider.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
-import 'package:mysimplepasswordstorage/utils/constants.dart' as MyConstants;
+import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 
 import 'button_template.dart';
 
