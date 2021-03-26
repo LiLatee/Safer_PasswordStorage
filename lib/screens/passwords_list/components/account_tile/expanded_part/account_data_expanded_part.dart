@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 import 'section_buttons.dart';
 import 'section_fields.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class IsFieldChanged with ChangeNotifier {
   bool _isFieldChanged;

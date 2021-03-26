@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/DataProvider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../utils/AppConstants.dart' as MyConstants;
 
@@ -38,7 +39,7 @@ class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).accentColor)),
             border: OutlineInputBorder(),
-            labelText: 'Account name',
+            labelText: AppLocalizations.of(context)!.accountName,
             labelStyle: TextStyle(
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold,
@@ -49,9 +50,9 @@ class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
             if (value != null)
               {
                 if (value.isEmpty)
-                  return "Name can't be empty.";
+                  return AppLocalizations.of(context)!.emptyAccountNameValidator;
                 else if (DataProvider.isAccountNameUsed(name: value))
-                  return 'Name already exists.';
+                  return AppLocalizations.of(context)!.existAccountNameValidator;
               }
             return null;
           },

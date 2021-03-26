@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 import 'package:mysimplepasswordstorage/components/field_widget.dart';
 import 'field_edit_section.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SectionFields extends StatefulWidget {
   SectionFields({
@@ -185,7 +186,7 @@ class SectionFieldsState extends State<SectionFields>
         onDismissed: (direction) {
           DataProvider.deleteField(fieldDataEntity);
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Field '${fieldDataEntity.name}' removed.")),
+            SnackBar(content: Text(AppLocalizations.of(context)!.fieldRemovedSnackbar(fieldDataEntity.name))),
           );
         },
         background: Container(color: MyConstants.dismissColor),
@@ -198,16 +199,16 @@ class SectionFieldsState extends State<SectionFields>
                   padding:
                       const EdgeInsets.only(top: MyConstants.defaultPadding),
                   child: Text(
-                    "Do you want to remove '${fieldDataEntity.name}' field?",
+                    AppLocalizations.of(context)!.removeFieldConfirmationMessage(fieldDataEntity.name),
                   ),
                 ),
-                title: "Confirmation",
+                title: AppLocalizations.of(context)!.removeFieldConfirmationTitle,
                 buttons: [
                   MyDialogButton(
-                      buttonName: "Cancel",
+                      buttonName: AppLocalizations.of(context)!.cancel,
                       onPressed: () => Navigator.of(context).pop(false)),
                   MyDialogButton(
-                    buttonName: "Remove",
+                    buttonName: AppLocalizations.of(context)!.remove,
                     onPressed: () => Navigator.of(context).pop(true),
                   )
                 ],

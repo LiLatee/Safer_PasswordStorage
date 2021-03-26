@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../../../../utils/AppConstants.dart' as MyConstants;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DefaultIconSelectedDropdownMenuItem extends DropdownMenuItem {
   final MapEntry<String, Image> mapElement;
+  final BuildContext context;
+
   DefaultIconSelectedDropdownMenuItem({
     Key? key,
     required this.mapElement,
+    required this.context,
   }) : super(
           child: Row(
             children: <Widget>[
@@ -19,7 +23,7 @@ class DefaultIconSelectedDropdownMenuItem extends DropdownMenuItem {
               ),
               Expanded(
                   child: Text(
-                'Choose icon',
+                    AppLocalizations.of(context)!.selectIcon,
                 textAlign: TextAlign.center,
               )),
             ],

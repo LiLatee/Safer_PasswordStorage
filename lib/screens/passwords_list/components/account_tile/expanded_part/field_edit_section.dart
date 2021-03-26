@@ -5,6 +5,7 @@ import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorder
 import 'package:provider/provider.dart';
 
 import '../../../../../utils/AppConstants.dart' as MyConstants;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FieldEditSection extends StatelessWidget {
   const FieldEditSection({

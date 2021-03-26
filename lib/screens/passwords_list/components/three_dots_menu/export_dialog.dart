@@ -3,6 +3,7 @@ import 'package:mysimplepasswordstorage/components/dialog_template.dart';
 import 'package:mysimplepasswordstorage/models/DataProvider.dart';
 import 'package:mysimplepasswordstorage/utils/AppConstants.dart'
     as AppConstants;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExportDialog extends StatelessWidget {
   String _secretKey = '';
@@ -27,7 +28,7 @@ class ExportDialog extends StatelessWidget {
                       borderSide:
                           BorderSide(color: Theme.of(context).accentColor)),
                   border: OutlineInputBorder(),
-                  labelText: "Secret Key",
+                  labelText: AppLocalizations.of(context)!.secretKey,
                   labelStyle: TextStyle(
                     color: Theme.of(context).accentColor,
                     fontWeight: FontWeight.bold,
@@ -36,7 +37,7 @@ class ExportDialog extends StatelessWidget {
                 onChanged: (value) => _secretKey = value,
                 validator: (value) {
                   if (value != null) {
-                    if (value.isEmpty) return "Secret key can't be empty.";
+                    if (value.isEmpty) return AppLocalizations.of(context)!.emptySecretKeySnackbar;
                   }
                   return null;
                 },
@@ -45,7 +46,7 @@ class ExportDialog extends StatelessWidget {
           ],
         ),
       ),
-      title: "Exporting data",
+      title: AppLocalizations.of(context)!.exportDataDialogTitle,
       buttons: [
         buildCancelButton(context),
         buildExportButton(context, _formKey),
@@ -55,7 +56,7 @@ class ExportDialog extends StatelessWidget {
 
   MyDialogButton buildCancelButton(BuildContext context) {
     return MyDialogButton(
-      buttonName: "Cancel",
+      buttonName: AppLocalizations.of(context)!.cancel,
       onPressed: () => Navigator.of(context).pop(),
     );
   }
@@ -63,7 +64,7 @@ class ExportDialog extends StatelessWidget {
   MyDialogButton buildExportButton(
       BuildContext context, GlobalKey<FormState> formKey) {
     return MyDialogButton(
-      buttonName: "Export",
+      buttonName: AppLocalizations.of(context)!.exportData,
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
           await DataProvider.exportEncryptedDatabase(_secretKey, context)
