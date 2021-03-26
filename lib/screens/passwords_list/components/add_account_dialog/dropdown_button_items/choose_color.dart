@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import '../../../../../utils/AppConstants.dart' as MyConstants;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 typedef void ShowColorPicker({required bool isShowNeeded});
 
 class ChooseColorDropdownMenuItem extends DropdownMenuItem<String> {
   final ShowColorPicker showColorPickerCallback;
   final Widget chooseColorIconWidget;
+  final BuildContext context;
 
   ChooseColorDropdownMenuItem({
     Key? key,
     required this.chooseColorIconWidget,
     required this.showColorPickerCallback,
+    required this.context
   }) : super(
             onTap: () {
               showColorPickerCallback(isShowNeeded: true);
             },
-            value: 'Choose color',
+            value: "Choose color",
             child: Column(
               children: <Widget>[
                 Padding(
@@ -31,7 +34,7 @@ class ChooseColorDropdownMenuItem extends DropdownMenuItem<String> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Choose color',
+                            AppLocalizations.of(context)!.chooseColor,
                           ),
                         ),
                       ],

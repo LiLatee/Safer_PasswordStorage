@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 import 'package:mysimplepasswordstorage/utils/functions.dart' as MyFunctions;
 import 'choose_icon_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddAccountDialog extends StatefulWidget {
   final BuildContext superContext;
@@ -23,7 +24,7 @@ class AddAccountDialog extends StatefulWidget {
 
 class _AddAccountDialogState extends State<AddAccountDialog> {
   AccountDataEntity accountDataEntity =
-      AccountDataEntity(accountName: 'Account name');
+      AccountDataEntity(accountName: '?????'); // TODO
   Color _currentColor = MyConstants.iconDefaultColors[0];
   final accountNameFormKey = GlobalKey<FormState>();
   bool isChosenColorIcon = true;
@@ -46,13 +47,13 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
   @override
   Widget build(BuildContext context) {
     var cancelButton = MyDialogButton(
-        buttonName: "Cancel",
+        buttonName: AppLocalizations.of(context)!.cancel,
         onPressed: () {
           Navigator.of(context).pop();
         });
 
     var addButton = MyDialogButton(
-      buttonName: "Add",
+      buttonName: AppLocalizations.of(context)!.add,
       onPressed: () {
         if (accountNameFormKey.currentState != null) {
           if (accountNameFormKey.currentState!.validate()) {
@@ -60,7 +61,7 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content:
-                    Text('Dodano konto "${accountDataEntity.accountName}"')));
+                    Text(AppLocalizations.of(context)!.addedAccountSnackbar(accountDataEntity.accountName))));
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Coś nie tak przy dodawaniu konta ;(')));
@@ -84,13 +85,14 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
               setIsChosenColorIconCallback: ({required isChosenColorIcon}) =>
                   this.isChosenColorIcon = isChosenColorIcon,
               currentColor: _currentColor,
+              context: context,
               // setCurrentColorCallback: ({color}) => currentColor = color,
             ),
           ),
           // bottomButtonsSection(context)
         ],
       ),
-      title: "Adding new account",
+      title: AppLocalizations.of(context)!.addNewAccountTitle,
     );
   }
 }

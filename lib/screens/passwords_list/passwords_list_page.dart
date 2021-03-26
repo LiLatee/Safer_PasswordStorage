@@ -8,6 +8,7 @@ import 'components/add_account_floating_button.dart';
 import 'components/body.dart';
 import './components/three_dots_menu/import_dialog.dart';
 import './components/three_dots_menu/export_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PasswordsListPage extends StatefulWidget {
   @override
@@ -17,57 +18,63 @@ class PasswordsListPage extends StatefulWidget {
 class _PasswordListPageState extends State<PasswordsListPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        child: Row(
-          children: [
-            IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: menuIconOnPressed,
-            ),
-            Spacer(),
-            IconButton(
-                icon: Icon(Icons.search), onPressed: searchIconOnPressed),
-            PopupMenuButton(
-              onSelected: popupMenuOnSelected,
-              icon: Icon(Icons.more_vert),
-              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                PopupMenuItem(
-                  value: "export",
-                  child: ListTile(
-                    leading: Icon(Icons.arrow_upward),
-                    title: Text('Export data'),
+    return Localizations.override(
+      context: context,
+      locale: const Locale('pl'),
+      child: Scaffold(
+        bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          child: Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: menuIconOnPressed,
+              ),
+              Spacer(),
+              IconButton(
+                  icon: Icon(Icons.search), onPressed: searchIconOnPressed),
+              PopupMenuButton(
+                onSelected: popupMenuOnSelected,
+                icon: Icon(Icons.more_vert),
+                itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                  PopupMenuItem(
+                    value: "export",
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(Icons.arrow_upward),
+                      title: Text(AppLocalizations.of(context)!.exportData),
+                    ),
                   ),
-                ),
-                PopupMenuItem(
-                  value: "import",
-                  child: ListTile(
-                    leading: Icon(Icons.arrow_downward),
-                    title: Text('Import data'),
+                  PopupMenuItem(
+                    value: "import",
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(Icons.arrow_downward),
+                      title: Text(AppLocalizations.of(context)!.importData),
+                    ),
                   ),
-                ),
-                // const PopupMenuItem(
-                //   child: ListTile(
-                //     leading: Icon(Icons.article),
-                //     title: Text('Item 3'),
-                //   ),
-                // ),
-                // const PopupMenuDivider(),
-                // const PopupMenuItem(child: Text('Item A')),
-                // const PopupMenuItem(child: Text('Item B')),
-              ],
-            ),
-          ],
+                  // const PopupMenuItem(
+                  //   child: ListTile(
+                  //     leading: Icon(Icons.article),
+                  //     title: Text('Item 3'),
+                  //   ),
+                  // ),
+                  // const PopupMenuDivider(),
+                  // const PopupMenuItem(child: Text('Item A')),
+                  // const PopupMenuItem(child: Text('Item B')),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Body(),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Body(),
+          ),
         ),
+        floatingActionButton: AddAccountFloatingButton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
-      floatingActionButton: AddAccountFloatingButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 

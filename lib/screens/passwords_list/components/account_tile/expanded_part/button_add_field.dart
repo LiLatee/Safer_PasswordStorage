@@ -9,6 +9,7 @@ import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
 import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 
 import 'button_template.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ButtonAddField extends StatelessWidget {
   final AccountDataEntity _accountDataEntity;
@@ -37,7 +38,7 @@ class ButtonAddField extends StatelessWidget {
               var value = "";
               return StatefulBuilder(
                 builder: (context, setState) => MyDialog(
-                  title: "Add new field",
+                  title: AppLocalizations.of(context)!.addNewFieldTitle,
                   content: Padding(
                     padding: const EdgeInsets.only(
                         top: MyConstants.defaultPadding,
@@ -49,7 +50,7 @@ class ButtonAddField extends StatelessWidget {
                           padding: const EdgeInsets.only(
                               bottom: MyConstants.defaultPadding),
                           child: AdditionalFieldWidget(
-                            label: "Name",
+                            label: AppLocalizations.of(context)!.name,
                             readOnly: false,
                             value: "",
                             onChangedCallback: ({required newText}) =>
@@ -58,7 +59,7 @@ class ButtonAddField extends StatelessWidget {
                           ),
                         ),
                         AdditionalFieldWidget(
-                          label: "Content",
+                          label: AppLocalizations.of(context)!.content,
                           readOnly: false,
                           value: "",
                           onChangedCallback: ({required newText}) =>
@@ -74,7 +75,7 @@ class ButtonAddField extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text("Hide the value of field?"),
+                            Text(AppLocalizations.of(context)!.makeHiddenFieldQuestion),
                             Switch(
                               value: isHidden,
                               onChanged: (value) {
@@ -88,7 +89,7 @@ class ButtonAddField extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text("Multiline?"),
+                            Text(AppLocalizations.of(context)!.makeMultilineFieldQuestion),
                             Switch(
                               value: isMultiline,
                               onChanged: (value) {
@@ -105,13 +106,13 @@ class ButtonAddField extends StatelessWidget {
                   ),
                   buttons: [
                     MyDialogButton(
-                        buttonName: "Cancel",
+                        buttonName: AppLocalizations.of(context)!.cancel,
                         onPressed: () => Navigator.of(context).pop(null)),
                     MyDialogButton(
-                      buttonName: "Add",
+                      buttonName: AppLocalizations.of(context)!.add,
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Added field \"${name}\"")));
+                            SnackBar(content: Text(AppLocalizations.of(context)!.addedFieldSnackbar(name))));
                         Navigator.of(context).pop({
                           "name": name,
                           "value": value,
@@ -142,6 +143,6 @@ class ButtonAddField extends StatelessWidget {
           //     duration: MyConstants.animationsDuration);
         },
         icon: Icon(Icons.add),
-        label: 'Add field');
+        label: AppLocalizations.of(context)!.addField);
   }
 }

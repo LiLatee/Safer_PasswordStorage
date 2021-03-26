@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:provider/provider.dart';
 import '../../../../../utils/AppConstants.dart' as MyConstants;
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 typedef void SetIconImage({required PickedFile pickedFile});
 
 class ChooseImageDropdownMenuItem extends DropdownMenuItem<String> {
@@ -16,7 +16,7 @@ class ChooseImageDropdownMenuItem extends DropdownMenuItem<String> {
   ChooseImageDropdownMenuItem({
     Key? key,
     required this.setIconImageCallback,
-    required this.context
+    required this.context,
   }) : super(
             onTap: () async {
 
@@ -43,7 +43,7 @@ class ChooseImageDropdownMenuItem extends DropdownMenuItem<String> {
                     SizedBox(
                       width: MyConstants.defaultPadding,
                     ),
-                    Text('Choose image'),
+                    Text(AppLocalizations.of(context)!.chooseImage),
                   ],
                 ),
               ),

@@ -15,7 +15,7 @@ class MyDialog extends StatelessWidget {
     buttons,
   })  : _content = content,
         _title = title,
-        _buttons = buttons,
+        _buttons = buttons ?? const <Widget>[],
         super(key: key);
 
   @override

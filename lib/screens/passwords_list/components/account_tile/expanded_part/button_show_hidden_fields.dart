@@ -4,6 +4,7 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 
 import 'button_template.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ButtonShowHiddenFields extends StatelessWidget {
   const ButtonShowHiddenFields({
@@ -21,7 +22,7 @@ class ButtonShowHiddenFields extends StatelessWidget {
         DataProvider.toggleShowButton(accountDataEntity: _accountDataEntity);
       },
       icon: Icon(Icons.remove_red_eye),
-      label: 'Show',
+      label: AppLocalizations.of(context)!.showHiddenFields,
       pressedButtonColor: _accountDataEntity.isShowButtonPressed
           ? MyConstants.pressedButtonColor
           : Colors.transparent,

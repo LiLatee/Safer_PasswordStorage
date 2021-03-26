@@ -5,6 +5,7 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 
 import 'button_template.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ButtonRemoveAccount extends StatelessWidget {
   const ButtonRemoveAccount({
@@ -22,14 +23,14 @@ class ButtonRemoveAccount extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) => MyDialog(
-            title: "Confirmation",
+            title: AppLocalizations.of(context)!.removeAccountConfirmationTitle,
             content: Container(
-              child: Text("Do You want to remove this account data?"),
+              child: Text(AppLocalizations.of(context)!.removeAccountConfirmationMessage),
               padding: EdgeInsets.only(top: MyConstants.defaultPadding),
             ),
             buttons: [
               MyDialogButton(
-                buttonName: "Remove",
+                buttonName: AppLocalizations.of(context)!.remove,
                 onPressed: () {
                   DataProvider.deleteAccount(_accountDataEntity);
                   Navigator.of(context).pop();
@@ -37,7 +38,7 @@ class ButtonRemoveAccount extends StatelessWidget {
                 },
               ),
               MyDialogButton(
-                buttonName: "Cancel",
+                buttonName: AppLocalizations.of(context)!.cancel,
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -47,7 +48,7 @@ class ButtonRemoveAccount extends StatelessWidget {
         );
       },
       icon: Icon(Icons.delete_forever),
-      label: 'Remove',
+      label: AppLocalizations.of(context)!.remove,
     );
   }
 }

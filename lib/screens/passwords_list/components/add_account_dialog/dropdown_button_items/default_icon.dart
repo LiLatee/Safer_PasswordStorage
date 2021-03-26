@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import '../../../../../utils/AppConstants.dart' as MyConstants;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 typedef void SetChosenDefaultIcon({required Image image, required String iconName});
 

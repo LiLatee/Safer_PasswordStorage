@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'screens/passwords_list/passwords_list_page.dart';
 import 'utils/themes.dart' as custom_themes;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -95,6 +96,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'My Simple Password Storage',
       theme: custom_themes.lightTheme,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       home: PasswordsListPage(),
     );
   }

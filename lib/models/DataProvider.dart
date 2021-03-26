@@ -11,6 +11,7 @@ import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
 import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DataProvider extends ChangeNotifier {
   static final DataProvider _instance = DataProvider._internal();
@@ -170,21 +171,21 @@ class DataProvider extends ChangeNotifier {
           path,
         );
         log("Backup saved: $path");
-        return AsyncSnapshot.withData(ConnectionState.done, "Your data has been saved in $result.");
+        return AsyncSnapshot.withData(ConnectionState.done, AppLocalizations.of(context)!.dataExported(result));
         // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         //   content: Text("Your data has been saved in $result."),
         //   duration: Duration(seconds: 5),
         // ));
 
       } else
-        return AsyncSnapshot.withError(ConnectionState.done, "SQLDatabase not found.");
+        return AsyncSnapshot.withError(ConnectionState.done, AppLocalizations.of(context)!.sqlNotFound);
         // throw ("SQLDatabase not found.");
     }
-    return AsyncSnapshot.withError(ConnectionState.done, "Required permissions not granted.");
+    return AsyncSnapshot.withError(ConnectionState.done, AppLocalizations.of(context)!.noRequiredPermissions);
   }
 
   static Future<AsyncSnapshot<String>> importEncryptedDatabase(
-      {required String secretKey, required String filepath}) async {
+      {required BuildContext context, required String secretKey, required String filepath}) async {
     String? databasePath = SQLprovider.getDatabasePath();
 
     if (databasePath != null) {
@@ -196,16 +197,16 @@ class DataProvider extends ChangeNotifier {
         crypt.decryptFileSync(filepath, databasePath);
       } on Exception {
         return AsyncSnapshot.withError(ConnectionState.done,
-            "Decryption failed. Did you choose right file and entered correct password?");
+            AppLocalizations.of(context)!.decryptionFailed);
       }
 
       fetchAndSetData();
       return AsyncSnapshot.withData(
-          ConnectionState.done, "Data has been correctly imported.");
+          ConnectionState.done, AppLocalizations.of(context)!.importSuccess);
     } else {
       // User canceled the picker
       return AsyncSnapshot.withError(
-          ConnectionState.done, "Error: cannot find path to database.");
+          ConnectionState.done, "WHEN is it shown?"); // TODO
     }
   }
 }

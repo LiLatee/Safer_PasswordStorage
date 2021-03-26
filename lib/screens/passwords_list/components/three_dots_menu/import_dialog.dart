@@ -4,6 +4,7 @@ import 'package:mysimplepasswordstorage/components/dialog_template.dart';
 import 'package:mysimplepasswordstorage/models/DataProvider.dart';
 import 'package:mysimplepasswordstorage/utils/AppConstants.dart'
     as AppConstants;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ImportDialog extends StatefulWidget {
   @override
@@ -12,37 +13,38 @@ class ImportDialog extends StatefulWidget {
 
 class _ImportDialogState extends State<ImportDialog> {
   String? _secretKey;
-  String? _filepath = 'Choose file with data...';
+  String? _filepath;
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    _filepath = AppLocalizations.of(context)!.chooseEncryptedFile;
 
     return MyDialog(
-        title: "Importing data",
-        content: Padding(
-          padding: const EdgeInsets.only(
-            top: AppConstants.defaultPadding,
-            left: AppConstants.defaultPadding,
-            right: AppConstants.defaultPadding,
-          ),
-          child: Column(
-            children: [
-              buildSecretKeyForm(_formKey, context),
-              buildChooseEncryptedFile(setState),
-            ],
-          ),
+      title: AppLocalizations.of(context)!.importDataDialogTitle,
+      content: Padding(
+        padding: const EdgeInsets.only(
+          top: AppConstants.defaultPadding,
+          left: AppConstants.defaultPadding,
+          right: AppConstants.defaultPadding,
         ),
-        buttons: [
-          buildCancelButton(context),
-          buildImportButton(_formKey, context),
-        ],
+        child: Column(
+          children: [
+            buildSecretKeyForm(_formKey, context),
+            buildChooseEncryptedFile(setState),
+          ],
+        ),
+      ),
+      buttons: [
+        buildCancelButton(context),
+        buildImportButton(_formKey, context),
+      ],
     );
   }
 
   MyDialogButton buildCancelButton(BuildContext context) {
     return MyDialogButton(
-      buttonName: "Cancel",
+      buttonName: AppLocalizations.of(context)!.cancel,
       onPressed: () => Navigator.of(context).pop(AsyncSnapshot.nothing()),
     );
   }
@@ -50,7 +52,7 @@ class _ImportDialogState extends State<ImportDialog> {
   MyDialogButton buildImportButton(
       GlobalKey<FormState> _formKey, BuildContext context) {
     return MyDialogButton(
-      buttonName: "Import",
+      buttonName: AppLocalizations.of(context)!.import,
       onPressed: () {
         if (_formKey.currentState!.validate()) {
           showDialog(
@@ -59,7 +61,9 @@ class _ImportDialogState extends State<ImportDialog> {
               barrierDismissible: false);
 
           DataProvider.importEncryptedDatabase(
-                  secretKey: _secretKey!, filepath: _filepath!)
+                  context: context,
+                  secretKey: _secretKey!,
+                  filepath: _filepath!)
               .then((AsyncSnapshot<String> value) {
             if (value.hasData) {
               Navigator.of(context).pop();
@@ -99,7 +103,7 @@ class _ImportDialogState extends State<ImportDialog> {
         Expanded(
             child: SingleChildScrollView(
           child: Text(
-            _filepath ?? "Choose file with data",
+            _filepath ?? AppLocalizations.of(context)!.chooseEncryptedFile,
           ),
           scrollDirection: Axis.horizontal,
         )),
@@ -116,7 +120,7 @@ class _ImportDialogState extends State<ImportDialog> {
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Theme.of(context).accentColor)),
           border: OutlineInputBorder(),
-          labelText: "Secret Key",
+          labelText: AppLocalizations.of(context)!.secretKey,
           labelStyle: TextStyle(
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold),
@@ -124,7 +128,8 @@ class _ImportDialogState extends State<ImportDialog> {
         onChanged: (value) => _secretKey = value,
         validator: (value) {
           if (value != null) {
-            if (value.isEmpty) return "Secret key can't be empty.";
+            if (value.isEmpty)
+              return AppLocalizations.of(context)!.emptySecretKeySnackbar;
           }
           return null;
         },

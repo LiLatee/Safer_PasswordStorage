@@ -15,6 +15,7 @@ import 'button_edit_account.dart';
 import 'button_remove_account.dart';
 import 'button_save_changes.dart';
 import 'button_show_hidden_fields.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SectionButtons extends StatefulWidget {
   SectionButtons({Key? key}) : super(key: key);

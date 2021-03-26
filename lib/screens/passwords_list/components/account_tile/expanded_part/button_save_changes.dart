@@ -6,6 +6,7 @@ import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
 import 'package:mysimplepasswordstorage/screens/passwords_list/components/account_tile/expanded_part/account_data_expanded_part.dart';
 import 'package:mysimplepasswordstorage/utils/AppConstants.dart' as MyConstants;
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ButtonSaveChanges extends StatelessWidget {
   ButtonSaveChanges({
@@ -40,7 +41,7 @@ class ButtonSaveChanges extends StatelessWidget {
                     color: MyConstants.dismissColor,
                   ),
                   VerticalDivider(color: Colors.black),
-                  Text("Save changes"),
+                  Text(AppLocalizations.of(context)!.saveChangedFields),
                 ],
               ),
               onPressed: () {
@@ -51,7 +52,7 @@ class ButtonSaveChanges extends StatelessWidget {
                 Provider.of<IsFieldChanged>(context, listen: false)
                     .isFieldChanged = false;
                 ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("Changes saved. :)")));
+                    .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.saveChangedFieldsSnackbar)));
               },
             ),
           ],
