@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:mysimplepasswordstorage/components/dialog_template.dart';
@@ -18,7 +20,7 @@ class _ImportDialogState extends State<ImportDialog> {
 
   @override
   Widget build(BuildContext context) {
-    _filepath = AppLocalizations.of(context)!.chooseEncryptedFile;
+    _filepath ??= AppLocalizations.of(context)!.chooseEncryptedFile;
 
     return MyDialog(
       title: AppLocalizations.of(context)!.importDataDialogTitle,
@@ -95,6 +97,7 @@ class _ImportDialogState extends State<ImportDialog> {
                   allowedExtensions: ['bin'],
                 );
                 if (result != null) {
+                  log(result.files.single.path!);
                   setState(() => _filepath = result.files.single.path);
                 }
               },
