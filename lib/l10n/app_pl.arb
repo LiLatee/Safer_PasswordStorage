@@ -68,7 +68,7 @@
   "dataExported": "Twoje dane zostały zapisane w {path}",
   "sqlNotFound": "SQLDatabase nie znaleziono.",
   "noRequiredPermissions": "Nie nadano wymaganych uprawnień.",
-  "decryptionFailed": "Błą odszyfrowywania. Czy na pewno wybrałeś odpowiedni plik oraz podałeś właściwy klucz?",
+  "decryptionFailed": "Błąd odszyfrowywania. Czy na pewno wybrałeś odpowiedni plik oraz podałeś właściwy klucz?",
   "importSuccess": "Dane zostały prawdiłowo załadowane.",
 
 
