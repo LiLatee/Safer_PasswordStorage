@@ -109,10 +109,14 @@ class AccountDataEntity extends Equatable {
       isShowButtonPressed: isShowButtonPressed ?? this.isShowButtonPressed,
       isEditButtonPressed: isEditButtonPressed ?? this.isEditButtonPressed,
       // iconWidget: iconWidget ?? this.iconWidget,
-      fields: fields ?? this.fields,
+      fields: fields ?? <FieldDataEntity>[],
     );
 
     temp.iconWidget = this.iconWidget;
+    if (fields == null)
+      for (var field in this.fields)
+        temp.fields.add(field.copyWith());
+
     return temp;
   }
 

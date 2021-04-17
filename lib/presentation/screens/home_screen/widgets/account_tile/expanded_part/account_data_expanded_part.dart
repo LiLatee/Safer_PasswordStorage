@@ -12,68 +12,41 @@ import 'section_buttons.dart';
 import 'section_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class IsFieldChanged with ChangeNotifier {
-  bool _isFieldChanged;
-
-  IsFieldChanged(this._isFieldChanged);
-
-  bool get isFieldChanged => _isFieldChanged;
-
-  set isFieldChanged(bool value) {
-    _isFieldChanged = value;
-    notifyListeners();
-  }
-}
-
 class AccountDataExpandedPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AccountDataEntity accountDataEntity =
         BlocProvider.of<SingleAccountCubit>(context).state.accountDataEntity;
 
-    return MultiProvider(
-      providers: [
-        Provider<Map<String, FieldDataEntity>>(create: (context) => {}),
-        ChangeNotifierProvider<IsFieldChanged>(
-            create: (context) => IsFieldChanged(false)),
-      ],
-      child: BlocBuilder<SingleAccountCubit, SingleAccountState>(
-        builder: (context, state) {
-          var nOfFields = state.accountDataEntity.fields.length;
-          var height = nOfFields * MyConstants.heightForOneField >
-                  MyConstants.maxHeightForFields
-              ? MyConstants.maxHeightForFields
-              : nOfFields * MyConstants.heightForOneField;
+    return BlocBuilder<SingleAccountCubit, SingleAccountState>(
+      builder: (context, state) {
+        var nOfFields = state.accountDataEntity.fields.length;
+        var height = nOfFields * MyConstants.heightForOneField >
+                MyConstants.maxHeightForFields
+            ? MyConstants.maxHeightForFields
+            : nOfFields * MyConstants.heightForOneField;
+        var currentAccount;
+        if (state is SingleAccountStateEditing)
+          currentAccount = state.accountDataEntityChanged.copyWith();
+        else if (state is SingleAccountStateReading)
+          currentAccount = state.accountDataEntity.copyWith();
 
-          var temp = AccountDataEntity(
-            accountName: state.accountDataEntity.accountName,
-            fields: state.accountDataEntity.fields,
-            iconColorHex: state.accountDataEntity.iconColorHex,
-            iconImage: state.accountDataEntity.iconImage,
-            isEditButtonPressed: state.accountDataEntity.isEditButtonPressed,
-            isShowButtonPressed: state.accountDataEntity.isShowButtonPressed,
-            uuid: state.accountDataEntity.uuid,
-          );
-
-          // log(temp.hashCode.toString());
-          // log(state.accountDataEntity.hashCode.toString());
-          return Column(
-            children: [
-              Container(
-                height: height,
-                child: Provider<AccountDataEntity>.value(
-                  value: temp,
-                  child: SectionFields(),
-                ),
+        return Column(
+          children: [
+            Container(
+              height: height,
+              child: Provider<AccountDataEntity>.value(
+                value: currentAccount,
+                child: SectionFields(),
               ),
-              Provider<AccountDataEntity>.value(
-                value: temp,
-                child: SectionButtons(),
-              ),
-            ],
-          );
-        },
-      ),
+            ),
+            Provider<AccountDataEntity>.value(
+              value: currentAccount,
+              child: SectionButtons(),
+            ),
+          ],
+        );
+      },
     );
   }
 }

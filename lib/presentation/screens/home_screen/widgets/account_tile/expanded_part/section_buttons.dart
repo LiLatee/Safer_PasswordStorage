@@ -15,6 +15,7 @@ import 'button_add_field.dart';
 import 'button_edit_account.dart';
 import 'button_remove_account.dart';
 import 'button_save_changes.dart';
+import 'button_undo_changes.dart';
 import 'button_show_hidden_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -27,20 +28,28 @@ class SectionButtons extends StatefulWidget {
 
 class _SectionButtonsState extends State<SectionButtons> {
   late AccountDataEntity _accountDataEntity;
-  late IsFieldChanged _isFieldChanged;
 
   @override
   Widget build(BuildContext context) {
     _accountDataEntity = Provider.of<AccountDataEntity>(context);
-    _isFieldChanged = Provider.of<IsFieldChanged>(context);
+    var cubit = BlocProvider.of<SingleAccountCubit>(context);
 
     return Column(
       children: [
         Divider(
           color: Colors.black,
         ), // TODO?
-        _isFieldChanged.isFieldChanged && _accountDataEntity.isEditButtonPressed
-            ? ButtonSaveChanges()
+
+        cubit.state is SingleAccountStateEditing &&
+                _accountDataEntity.isEditButtonPressed
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ButtonSaveChanges(),
+                  VerticalDivider(color: Colors.black),
+                  ButtonUndoChanges(),
+                ],
+              )
             : Container(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
