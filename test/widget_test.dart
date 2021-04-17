@@ -7,17 +7,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:my_simple_password_storage_clean/data/data_providers/SQLprovider.dart';
+import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository.dart';
 
-import 'package:mysimplepasswordstorage/main.dart';
-import 'package:mysimplepasswordstorage/models/database.dart';
+import 'package:my_simple_password_storage_clean/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigge
-    // r a frame.
-    WidgetsFlutterBinding.ensureInitialized();
+    await SQLprovider.db.initDB();
 
-    await tester.pumpWidget(MyApp());
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(MyApp(
+        accountsRepository: AccountsRepository(sqlProvider: SQLprovider())));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
