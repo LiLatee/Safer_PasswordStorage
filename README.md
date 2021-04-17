@@ -1,6 +1,6 @@
-# MySimplePasswordStorage
+# my_simple_password_storage_clean
 
-Attempt to create a simple app to store passwords that is secure and user is able to choose storing data locally or in cloud.
+A new Flutter project.
 
 ## Getting Started
 

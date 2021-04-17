@@ -1,11 +1,11 @@
 {
-    "name": "mysimplepasswordstorage",
-    "short_name": "mysimplepasswordstorage",
+    "name": "my_simple_password_storage_clean",
+    "short_name": "my_simple_password_storage_clean",
     "start_url": ".",
-    "display": "minimal-ui",
+    "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter application.",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
