@@ -27,14 +27,14 @@ class SectionFields extends StatefulWidget {
 class SectionFieldsState extends State<SectionFields> {
   List<Widget> fieldsWidgets = [];
   late AccountDataEntity _accountDataEntity;
-  late Map<String, FieldDataEntity> _changedFields;
-  late IsFieldChanged _isFieldChanged;
+  Map<String, TextEditingController> _textEditingControllerMap = <String, TextEditingController>{};
 
   @override
   Widget build(BuildContext context) {
     _accountDataEntity = Provider.of<AccountDataEntity>(context);
-    _changedFields = Provider.of<Map<String, FieldDataEntity>>(context);
-    _isFieldChanged = Provider.of<IsFieldChanged>(context);
+    for (var field in _accountDataEntity.fields)
+      if (!_textEditingControllerMap.containsKey(field.uuid))
+        _textEditingControllerMap[field.uuid] = TextEditingController();
 
     fieldsWidgets = buildFieldsWidgets(
       context: context,
@@ -81,21 +81,16 @@ class SectionFieldsState extends State<SectionFields> {
   }
 
   Widget createProperWidget({required FieldDataEntity fieldDataEntity}) {
+    _textEditingControllerMap[fieldDataEntity.uuid]!.text = fieldDataEntity.value;
+    _textEditingControllerMap[fieldDataEntity.uuid]!.selection = TextSelection.fromPosition(TextPosition(offset: _textEditingControllerMap[fieldDataEntity.uuid]!.text.length));
     return FieldWidget(
+      controller: _textEditingControllerMap[fieldDataEntity.uuid]!,
       label: fieldDataEntity.name,
       value: fieldDataEntity.value,
       onChangedCallback: ({required newText}) {
-        _isFieldChanged.isFieldChanged = true;
-        fieldDataEntity.value = newText;
-        _changedFields[fieldDataEntity.uuid!] = fieldDataEntity;
-
-        /// Saving after each letter change.
-        // var index = _accountDataEntity.fields
-        //     .indexWhere((element) => element.uuid == fieldDataEntity.uuid);
-        // _accountDataEntity.fields[index].value = newText;
-
-        // BlocProvider.of<SingleAccountCubit>(context)
-        //     .updateAccount(accountDataEntity: _accountDataEntity);
+        // fieldDataEntity.value = newText;
+        BlocProvider.of<SingleAccountCubit>(context).changeField(
+            fieldDataEntity: fieldDataEntity.copyWith(value: newText));
       },
       readOnly: !_accountDataEntity.isEditButtonPressed,
       hiddenValue:

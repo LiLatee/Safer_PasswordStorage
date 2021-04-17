@@ -1,16 +1,14 @@
 part of 'single_account_cubit.dart';
 
-class SingleAccountState extends Equatable {
-//   final AccountDataEntity accountDataEntity;
+@immutable
+abstract class SingleAccountState {
+  get accountDataEntity => accountDataEntity;
+}
 
-//   SingleAccountState(this.accountDataEntity);
-// }
-
-// class SingleAccountInitial extends SingleAccountState {
-//
+class SingleAccountStateReading extends SingleAccountState with EquatableMixin {
   final AccountDataEntity accountDataEntity;
 
-  SingleAccountState({required this.accountDataEntity});
+  SingleAccountStateReading({required this.accountDataEntity});
 
   @override
   String toString() {
@@ -20,4 +18,22 @@ class SingleAccountState extends Equatable {
   @override
   // TODO: implement props
   List<Object?> get props => [accountDataEntity];
+}
+
+class SingleAccountStateEditing extends SingleAccountState with EquatableMixin {
+  final AccountDataEntity accountDataEntity;
+  final AccountDataEntity accountDataEntityChanged;
+
+  SingleAccountStateEditing(
+      {required this.accountDataEntity,
+      required this.accountDataEntityChanged});
+
+  // @override
+  // String toString() {
+  //   return accountDataEntity.toString();
+  // }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [accountDataEntity, accountDataEntityChanged];
 }

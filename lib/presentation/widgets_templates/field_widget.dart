@@ -69,7 +69,8 @@ class FieldWidget extends StatelessWidget {
       this.textInputAction = TextInputAction.done,
       this.onFieldSubmitted,
       this.multiline = false,
-      this.hiddenValue = false})
+      this.hiddenValue = false,
+      this.controller})
       : super(key: key);
 
   final bool readOnly;
@@ -84,11 +85,13 @@ class FieldWidget extends StatelessWidget {
   final TextInputAction textInputAction;
   final bool multiline;
   final bool hiddenValue;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       key: ObjectKey(label),
+      controller: controller,
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Theme.of(context).accentColor)),
@@ -103,7 +106,7 @@ class FieldWidget extends StatelessWidget {
       maxLines: multiline == true ? null : 1,
       obscureText: hiddenValue,
       enableInteractiveSelection: true,
-      initialValue: value,
+      // initialValue: value,
       onChanged: (value) {
         if (onChangedCallback != null) onChangedCallback!(newText: value);
       },

@@ -14,6 +14,7 @@
   "import": "Importuj",
   "importData": "Importuj dane",
   "saveChangedFields": "Zapisz zmiany",
+  "undoChangedFields": "Cofnij zmiany",
 
   "dialogs___": "___DIALOGS_________________________________",
   "removeFieldConfirmationTitle": "Potwierdzenie",
