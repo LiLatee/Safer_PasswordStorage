@@ -97,5 +97,7 @@
 
   "others___": "___OTHERS_________________________________",
   "secretKey": "Secret Key",
-  "chooseEncryptedFile": "Choose file with data..."
+  "chooseEncryptedFile": "Choose file with data...",
+  "darkTheme": "Dark theme",
+  "lightTheme": "Light theme"
 }

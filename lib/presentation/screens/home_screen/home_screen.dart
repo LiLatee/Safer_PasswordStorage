@@ -1,8 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_simple_password_storage_clean/core/themes/app_theme.dart';
+import 'package:provider/provider.dart';
 
 import 'widgets/add_account_floating_button.dart';
 import 'widgets/list_of_accounts.dart';
@@ -17,6 +17,9 @@ class HomeScreen extends StatefulWidget {
 class _PasswordListPageState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    ThemeType themeType =
+        Provider.of<ThemeModel>(context, listen: false).themeType;
+
     return Localizations.override(
       context: context,
       locale: const Locale('pl'),
@@ -50,6 +53,23 @@ class _PasswordListPageState extends State<HomeScreen> {
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.arrow_downward),
                       title: Text(AppLocalizations.of(context)!.importData),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: "theme",
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(
+                        Icons.circle,
+                        color: themeType == ThemeType.Light
+                            ? Colors.black45
+                            : Colors.white70,
+                      ),
+                      title: Text(
+                        themeType == ThemeType.Light
+                            ? AppLocalizations.of(context)!.darkTheme
+                            : AppLocalizations.of(context)!.lightTheme,
+                      ),
                     ),
                   ),
                   // const PopupMenuItem(
@@ -96,6 +116,8 @@ class _PasswordListPageState extends State<HomeScreen> {
         context: context,
         builder: (context) => ImportDialog(),
       );
+    else if (value == 'theme')
+      Provider.of<ThemeModel>(context, listen: false).toggleTheme();
   }
 
   // AppBar buildAppBar() {

@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/accounts_cubit.dart';
-import 'package:my_simple_password_storage_clean/presentation/widgets_templates/dialog_template.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../../core/constants/AppConstants.dart' as AppConstants;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../../logic/cubit/accounts_cubit.dart';
+import '../../../../widgets_templates/dialog_template.dart';
 
 class ImportDialog extends StatefulWidget {
   @override

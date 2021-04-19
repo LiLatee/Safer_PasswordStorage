@@ -37,7 +37,7 @@ class MaterialSlice extends MergeableMaterialItem {
   const MaterialSlice({
     required LocalKey key,
     required this.child,
-  })  : assert(key != null),
+  })   : assert(key != null),
         super(key);
 
   /// The contents of this slice.
@@ -591,7 +591,7 @@ class _MergeableMaterialState extends State<MergeableMaterial>
       widgets.add(
         Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
+            color: Theme.of(context).scaffoldBackgroundColor, // CHANGE
             borderRadius: _borderRadius(i - 1, widgets.isEmpty, true),
             shape: BoxShape.rectangle,
           ),

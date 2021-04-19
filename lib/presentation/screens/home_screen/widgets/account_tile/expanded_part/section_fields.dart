@@ -3,14 +3,14 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/data/models/field_data_entity.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/accounts_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/single_account_cubit.dart';
-import 'package:my_simple_password_storage_clean/presentation/widgets_templates/dialog_template.dart';
-import 'package:my_simple_password_storage_clean/presentation/widgets_templates/field_widget.dart';
+import '../../../../../../data/models/account_data_entity.dart';
+import '../../../../../../data/models/field_data_entity.dart';
+import '../../../../../../logic/cubit/accounts_cubit.dart';
+import '../../../../../../logic/cubit/single_account_cubit.dart';
+import '../../../../../widgets_templates/dialog_template.dart';
+import '../../../../../widgets_templates/field_widget.dart';
 import 'package:provider/provider.dart';
-import '../../../../../../core/constants/AppConstants.dart' as MyConstants;
+import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 import 'account_data_expanded_part.dart';
 import 'field_edit_section.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -27,7 +27,8 @@ class SectionFields extends StatefulWidget {
 class SectionFieldsState extends State<SectionFields> {
   List<Widget> fieldsWidgets = [];
   late AccountDataEntity _accountDataEntity;
-  Map<String, TextEditingController> _textEditingControllerMap = <String, TextEditingController>{};
+  Map<String, TextEditingController> _textEditingControllerMap =
+      <String, TextEditingController>{};
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +82,12 @@ class SectionFieldsState extends State<SectionFields> {
   }
 
   Widget createProperWidget({required FieldDataEntity fieldDataEntity}) {
-    _textEditingControllerMap[fieldDataEntity.uuid]!.text = fieldDataEntity.value;
-    _textEditingControllerMap[fieldDataEntity.uuid]!.selection = TextSelection.fromPosition(TextPosition(offset: _textEditingControllerMap[fieldDataEntity.uuid]!.text.length));
+    _textEditingControllerMap[fieldDataEntity.uuid]!.text =
+        fieldDataEntity.value;
+    _textEditingControllerMap[fieldDataEntity.uuid]!.selection =
+        TextSelection.fromPosition(TextPosition(
+            offset:
+                _textEditingControllerMap[fieldDataEntity.uuid]!.text.length));
     return FieldWidget(
       controller: _textEditingControllerMap[fieldDataEntity.uuid]!,
       label: fieldDataEntity.name,
@@ -130,29 +135,29 @@ class SectionFieldsState extends State<SectionFields> {
       required Widget fieldWidget}) {
     Size size = MediaQuery.of(context).size;
     double _width = size.width;
-    double _right = -3 * MyConstants.defaultIconRadius * 1.5;
+    double _right = -3 * AppConstants.defaultIconRadius * 1.5;
     Curve curve = Curves.easeInOutBack;
 
     /// Do not show edit actions IF edit button is not pressed.
     if (!_accountDataEntity.isEditButtonPressed) {
       // curve = Curves.easeInBack;
-      _right = -1 * MyConstants.defaultIconRadius * 1.5;
+      _right = -1 * AppConstants.defaultIconRadius * 1.5;
       _width = size.width;
     } else if (_accountDataEntity.isEditButtonPressed) {
       // curve = Curves.easeOutBack;
       _right = 0;
       _width = size.width -
-          MyConstants.defaultIconRadius * 1.5 * 1 -
-          MyConstants.defaultPadding * 2;
+          AppConstants.defaultIconRadius * 1.5 * 1 -
+          AppConstants.defaultPadding * 2;
     }
 
     /// Do not allow swipe to dismiss IF edit button is not pressed.
-    final Duration _duration = MyConstants.animationsDuration * 2;
+    final Duration _duration = AppConstants.animationsDuration * 2;
     var withoutDismissible = Container(
       padding: const EdgeInsets.only(
-        top: MyConstants.defaultPadding,
-        left: MyConstants.defaultPadding,
-        right: MyConstants.defaultPadding,
+        top: AppConstants.defaultPadding,
+        left: AppConstants.defaultPadding,
+        right: AppConstants.defaultPadding,
       ),
       child: Row(
         children: [
@@ -202,7 +207,7 @@ class SectionFieldsState extends State<SectionFields> {
                     .fieldRemovedSnackbar(fieldDataEntity.name))),
           );
         },
-        background: Container(color: MyConstants.dismissColor),
+        background: Container(color: AppConstants.dismissColor),
         confirmDismiss: (direction) async {
           return await showDialog(
             context: context,
@@ -210,7 +215,7 @@ class SectionFieldsState extends State<SectionFields> {
               return MyDialog(
                 content: Padding(
                   padding:
-                      const EdgeInsets.only(top: MyConstants.defaultPadding),
+                      const EdgeInsets.only(top: AppConstants.defaultPadding),
                   child: Text(
                     AppLocalizations.of(context)!
                         .removeFieldConfirmationMessage(fieldDataEntity.name),

@@ -1,10 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../../../core/constants/AppConstants.dart' as MyConstants;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 
 class FieldEditSection extends StatelessWidget {
   const FieldEditSection({
@@ -38,7 +34,7 @@ class FieldEditSection extends StatelessWidget {
           // buildIconButton(
           //   context: context,
           //   iconData: Icons.delete_forever_outlined,
-          //   color: MyConstants.pressedButtonColor,
+          //   color: AppConstants.pressedButtonColor,
           //   onPressed: () => onPressedRemove(accountData),
           // ),
           buildIconButton(
@@ -57,7 +53,7 @@ class FieldEditSection extends StatelessWidget {
   //       index,
   //       (context, animation) =>
   //           buildItem(context, itemToRemove, animation, itemIndex: index),
-  //       duration: MyConstants.animationsDuration);
+  //       duration: AppConstants.animationsDuration);
   //
   //   accountData.removeFieldAt(index);
   // }
@@ -71,13 +67,13 @@ class FieldEditSection extends StatelessWidget {
     return IconButton(
       padding: EdgeInsets.all(0.0),
       constraints: BoxConstraints(
-          minHeight: MyConstants.defaultIconRadius * 1.5,
-          minWidth: MyConstants.defaultIconRadius * 1.5,
-          maxHeight: MyConstants.defaultIconRadius * 1.5,
-          maxWidth: MyConstants.defaultIconRadius * 1.5),
+          minHeight: AppConstants.defaultIconRadius * 1.5,
+          minWidth: AppConstants.defaultIconRadius * 1.5,
+          maxHeight: AppConstants.defaultIconRadius * 1.5,
+          maxWidth: AppConstants.defaultIconRadius * 1.5),
       icon: Icon(
         iconData,
-        size: MyConstants.defaultIconRadius * 1.5,
+        size: AppConstants.defaultIconRadius * 1.5,
         color: color,
       ),
       onPressed: onPressed,

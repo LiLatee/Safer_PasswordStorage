@@ -2,15 +2,13 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:aes_crypt/aes_crypt.dart';
-import 'package:floor/floor.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:my_simple_password_storage_clean/data/data_providers/SQLprovider.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/data/models/field_data_entity.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../data_providers/SQLprovider.dart';
 import '../models/account_data_entity.dart';
 import '../models/field_data_entity.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AccountsRepository {
   final SQLprovider sqlProvider;

@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer' as dev;
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:equatable/equatable.dart';
@@ -9,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../core/constants/AppConstants.dart' as AppConstants;
-import '../../core/constants/functions.dart' as Functions;
+import '../../core/constants/AppFunctions.dart' as AppFunctions;
 import 'field_data_entity.dart';
 
 // @Entity(
@@ -73,7 +70,7 @@ class AccountDataEntity extends Equatable {
   void setIconWidget() {
     /// Prefer using [iconImage] than [iconColorHex].
     if (this.iconImage != null) {
-      this.iconWidget = Functions.buildCircleAvatarUsingImage(
+      this.iconWidget = AppFunctions.buildCircleAvatarUsingImage(
         imageForIcon: Image.memory(
           this.iconImage!,
           width: AppConstants.defaultCircularBorderRadius * 2,
@@ -84,9 +81,9 @@ class AccountDataEntity extends Equatable {
       this.iconColorHex ??=
           AppConstants.iconDefaultColors[0].value.toRadixString(16);
 
-      this.iconWidget = Functions.generateRandomColorIconAsWidget(
+      this.iconWidget = AppFunctions.generateRandomColorIconAsWidget(
         name: accountName,
-        color: Functions.HexColor.fromHex(this.iconColorHex!),
+        color: AppFunctions.HexColor.fromHex(this.iconColorHex!),
       );
     }
   }
@@ -114,8 +111,7 @@ class AccountDataEntity extends Equatable {
 
     temp.iconWidget = this.iconWidget;
     if (fields == null)
-      for (var field in this.fields)
-        temp.fields.add(field.copyWith());
+      for (var field in this.fields) temp.fields.add(field.copyWith());
 
     return temp;
   }

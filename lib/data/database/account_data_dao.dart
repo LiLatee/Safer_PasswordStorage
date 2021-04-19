@@ -1,6 +1,7 @@
 import 'package:floor/floor.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
+
+import '../models/account_data_entity.dart';
 
 @dao
 abstract class AccountDao extends ChangeNotifier {

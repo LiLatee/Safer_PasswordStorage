@@ -1,16 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/accounts_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/single_account_cubit.dart';
-
 import 'package:provider/provider.dart';
 
+import '../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../data/models/account_data_entity.dart';
+import '../../../../logic/cubit/accounts_cubit.dart';
+import '../../../../logic/cubit/single_account_cubit.dart';
 import '../modified_flutter_widgets/expansion_panel.dart' as epn;
-import '../../../../core/constants/AppConstants.dart' as MyConstants;
 // import 'account_tile/expanded_part/account_data_expanded_part.dart';
 import 'account_tile/expanded_part/account_data_expanded_part.dart';
 import 'account_tile/header.dart';
@@ -31,7 +28,7 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
         return SingleChildScrollView(
           child: epn.ExpansionPanelList.radio(
             expandedHeaderPadding:
-                EdgeInsets.only(left: MyConstants.defaultPadding * 3),
+                EdgeInsets.only(left: AppConstants.defaultPadding * 3),
             children: state.accountDataList
                 .map((e) => buildExpansionPanel(accountDataEntity: e))
                 .toList(),

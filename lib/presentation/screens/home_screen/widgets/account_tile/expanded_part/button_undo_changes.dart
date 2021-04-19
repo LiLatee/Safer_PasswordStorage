@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../logic/cubit/single_account_cubit.dart';
+import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
-import '../../../../../../logic/cubit/single_account_cubit.dart';
-
-class ButtonSaveChanges extends StatelessWidget {
-  ButtonSaveChanges({
+class ButtonUndoChanges extends StatelessWidget {
+  ButtonUndoChanges({
     Key? key,
   }) : super(key: key);
 
@@ -30,22 +29,15 @@ class ButtonSaveChanges extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    Icons.save,
+                    Icons.undo,
                     color: AppConstants.dismissColor,
                   ),
                   VerticalDivider(color: Colors.black),
-                  Text(AppLocalizations.of(context)!.saveChangedFields),
+                  Text(AppLocalizations.of(context)!.undoChangedFields),
                 ],
               ),
-              onPressed: () {
-                BlocProvider.of<SingleAccountCubit>(context).updateAccount();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(AppLocalizations.of(context)!
-                        .saveChangedFieldsSnackbar),
-                  ),
-                );
-              },
+              onPressed: () =>
+                  BlocProvider.of<SingleAccountCubit>(context).undoChanges(),
             ),
           ],
         ),

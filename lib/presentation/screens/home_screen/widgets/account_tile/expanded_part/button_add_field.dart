@@ -1,18 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/data/models/field_data_entity.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/accounts_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/single_account_cubit.dart';
-import 'package:my_simple_password_storage_clean/presentation/widgets_templates/dialog_template.dart';
-import 'package:my_simple_password_storage_clean/presentation/widgets_templates/field_widget.dart';
-
-import '../../../../../../core/constants/AppConstants.dart' as MyConstants;
-
-import 'button_template.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../../../data/models/account_data_entity.dart';
+import '../../../../../../data/models/field_data_entity.dart';
+import '../../../../../../logic/cubit/single_account_cubit.dart';
+import '../../../../../widgets_templates/dialog_template.dart';
+import '../../../../../widgets_templates/field_widget.dart';
+import 'button_template.dart';
 
 class ButtonAddField extends StatelessWidget {
   final AccountDataEntity _accountDataEntity;
@@ -43,14 +39,14 @@ class ButtonAddField extends StatelessWidget {
                   title: AppLocalizations.of(context)!.addNewFieldTitle,
                   content: Padding(
                     padding: const EdgeInsets.only(
-                        top: MyConstants.defaultPadding,
-                        left: MyConstants.defaultPadding,
-                        right: MyConstants.defaultPadding),
+                        top: AppConstants.defaultPadding,
+                        left: AppConstants.defaultPadding,
+                        right: AppConstants.defaultPadding),
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(
-                              bottom: MyConstants.defaultPadding),
+                              bottom: AppConstants.defaultPadding),
                           child: AdditionalFieldWidget(
                             label: AppLocalizations.of(context)!.name,
                             readOnly: false,
@@ -154,7 +150,7 @@ class ButtonAddField extends StatelessWidget {
 
           /// If using AnimatedList instead of ReorderableListView
           // account.listKey.currentState.insertItem(account.getNumberOfFields - 1,
-          //     duration: MyConstants.animationsDuration);
+          //     duration: AppConstants.animationsDuration);
         },
         icon: Icon(Icons.add),
         label: AppLocalizations.of(context)!.addField);

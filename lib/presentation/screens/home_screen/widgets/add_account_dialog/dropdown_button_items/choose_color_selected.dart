@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
-import '../../../../../../core/constants/functions.dart' as AppFunctions;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 
 typedef void ShowColorPicker({required bool isShowNeeded});
 
@@ -27,9 +27,9 @@ class ChooseColorSelectedDropdownMenuItem extends DropdownMenuItem {
                   width: AppConstants.defaultPadding / 2,
                 ),
                 icon,
-                // MyFunctions.generateRandomColorIconAsWidget(
+                // MyAppFunctions.generateRandomColorIconAsWidget(
                 //   name: 'A',
-                //   color: MyConstants.iconDefaultColors[5],
+                //   color: AppConstants.iconDefaultColors[5],
                 // ),
                 Expanded(
                   child: Text(

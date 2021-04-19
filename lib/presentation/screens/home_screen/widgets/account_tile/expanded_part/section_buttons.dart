@@ -1,23 +1,17 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/single_account_cubit.dart';
-
 import 'package:provider/provider.dart';
 
-import '../../../../../../core/constants/AppConstants.dart' as MyConstants;
-
-import 'account_data_expanded_part.dart';
+import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../../../data/models/account_data_entity.dart';
+import '../../../../../../logic/cubit/single_account_cubit.dart';
 import 'button_add_field.dart';
 import 'button_edit_account.dart';
 import 'button_remove_account.dart';
 import 'button_save_changes.dart';
-import 'button_undo_changes.dart';
 import 'button_show_hidden_fields.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'button_undo_changes.dart';
 
 class SectionButtons extends StatefulWidget {
   SectionButtons({Key? key}) : super(key: key);
@@ -56,10 +50,10 @@ class _SectionButtonsState extends State<SectionButtons> {
           children: <Widget>[
             Expanded(
               child: Container(
-                margin: EdgeInsets.all(MyConstants.defaultPadding),
+                margin: EdgeInsets.all(AppConstants.defaultPadding),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
-                      MyConstants.defaultCircularBorderRadius),
+                      AppConstants.defaultCircularBorderRadius),
                   color: Theme.of(context).secondaryHeaderColor,
                 ), // TODO
                 child: ButtonBar(

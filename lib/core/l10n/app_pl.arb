@@ -80,5 +80,7 @@
 
   "others___": "___OTHERS_________________________________",
   "secretKey": "Klucz",
-  "chooseEncryptedFile": "Wybierz plik z danymi..."
+  "chooseEncryptedFile": "Wybierz plik z danymi...",
+  "darkTheme": "Ciemny motyw",
+  "lightTheme": "Jasny motyw"
 }
