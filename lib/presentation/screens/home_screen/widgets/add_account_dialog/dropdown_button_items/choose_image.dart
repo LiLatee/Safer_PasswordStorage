@@ -1,11 +1,8 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 
 typedef void SetIconImage({required PickedFile pickedFile});
 

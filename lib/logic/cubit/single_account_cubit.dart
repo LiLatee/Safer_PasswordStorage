@@ -1,12 +1,12 @@
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/data/models/field_data_entity.dart';
-import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository.dart';
+
+import '../../data/models/account_data_entity.dart';
+import '../../data/models/field_data_entity.dart';
+import '../../data/repositories/accounts_repository.dart';
 
 part 'single_account_state.dart';
 

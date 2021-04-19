@@ -1,13 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
-import 'AppConstants.dart' as MyConstants;
-import 'functions.dart' as Functions;
+
+import 'AppConstants.dart' as AppConstants;
 
 Widget generateRandomColorIconAsWidget(
     {String name = '',
-    double radius = MyConstants.defaultIconRadius,
+    double radius = AppConstants.defaultIconRadius,
     Color? color}) {
   color ??= RandomColor().randomColor(
       colorHue: ColorHue.multiple(
@@ -21,7 +19,7 @@ Widget generateRandomColorIconAsWidget(
     radius: radius,
     child: Center(
       child: Text(
-        name.length > 0 ? name[0].toUpperCase() : 'A',
+        name.length > 0 ? name[0].toUpperCase() : '?',
         style: TextStyle(
             fontWeight: FontWeight.bold, fontSize: 22, color: Colors.white),
       ),
@@ -30,11 +28,11 @@ Widget generateRandomColorIconAsWidget(
 }
 
 // Widget buildCircleAvatar(
-//     {double radius = MyConstants.defaultIconRadius,
+//     {double radius = AppConstants.defaultIconRadius,
 //     required AccountData accountData}) {
 //   Widget iconWidget;
 //
-//   if (MyConstants.availableIconsNames
+//   if (AppConstants.availableIconsNames
 //       .contains(accountData.accountName.toLowerCase())) {
 //     var icon =
 //         AssetImage('images/${accountData.accountName.toLowerCase()}.png');
@@ -48,7 +46,7 @@ Widget generateRandomColorIconAsWidget(
 //
 //   iconWidget = Container(
 //     decoration: BoxDecoration(
-//       borderRadius: BorderRadius.circular(MyConstants.defaultIconRadius),
+//       borderRadius: BorderRadius.circular(AppConstants.defaultIconRadius),
 //       color: Colors.white,
 //       boxShadow: [
 //         BoxShadow(blurRadius: 5, offset: Offset(0, 0), color: Colors.grey)
@@ -61,23 +59,18 @@ Widget generateRandomColorIconAsWidget(
 // }
 
 Widget buildCircleAvatarUsingImage(
-    {double radius = MyConstants.defaultIconRadius,
+    {double radius = AppConstants.defaultIconRadius,
     required Image imageForIcon}) {
-  // log("circleAvatar-${imageForIcon.width.toString()}", name: "LOL");
-  // print("circleAvatar-${imageForIcon.width.toString()}");
-  // print("circleAvatar-${imageForIcon.height.toString()}");
-  // print("circleAvatar-${imageForIcon.color.toString()}");
-
   return Container(
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(MyConstants.defaultIconRadius),
+      borderRadius: BorderRadius.circular(AppConstants.defaultIconRadius),
       color: Colors.white,
       boxShadow: [
         BoxShadow(blurRadius: 5, offset: Offset(0, 0), color: Colors.grey)
       ],
     ),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(MyConstants.defaultIconRadius),
+      borderRadius: BorderRadius.circular(AppConstants.defaultIconRadius),
       child: imageForIcon,
     ),
   );

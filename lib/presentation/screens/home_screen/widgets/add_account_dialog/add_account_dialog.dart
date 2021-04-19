@@ -1,18 +1,15 @@
-import 'dart:developer' as dev;
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/accounts_cubit.dart';
-import 'package:my_simple_password_storage_clean/presentation/widgets_templates/account_name_field_widget.dart';
-import 'package:my_simple_password_storage_clean/presentation/widgets_templates/dialog_template.dart';
-
-import 'package:provider/provider.dart';
-import '../../../../../core/constants/AppConstants.dart' as AppConstants;
-import '../../../../../core/constants/functions.dart' as Functions;
-import 'choose_icon_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../../core/constants/AppFunctions.dart' as AppFunctions;
+import '../../../../../data/models/account_data_entity.dart';
+import '../../../../../logic/cubit/accounts_cubit.dart';
+import '../../../../widgets_templates/account_name_field_widget.dart';
+import '../../../../widgets_templates/dialog_template.dart';
+import 'choose_icon_widget.dart';
 
 class AddAccountDialog extends StatefulWidget {
   final BuildContext superContext;
@@ -36,7 +33,7 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
 
       /// Change letter on icon while changing account name.
       if (isChosenColorIcon) {
-        accountData.iconWidget = Functions.generateRandomColorIconAsWidget(
+        accountData.iconWidget = AppFunctions.generateRandomColorIconAsWidget(
           name: accountData.accountName,
           color: _currentColor,
         );

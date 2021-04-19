@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/constants/AppConstants.dart' as MyConstants;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 
 class ButtonTemplate extends StatefulWidget {
   final Function onPressed;
@@ -35,10 +35,10 @@ class _ButtonTemplateState extends State<ButtonTemplate> {
     return AnimatedContainer(
       decoration: BoxDecoration(
         borderRadius:
-            BorderRadius.circular(MyConstants.defaultCircularBorderRadius),
+            BorderRadius.circular(AppConstants.defaultCircularBorderRadius),
         color: widget.pressedButtonColor,
       ),
-      duration: MyConstants.animationsDuration,
+      duration: AppConstants.animationsDuration,
       child: FlatButton(
         textColor: _textColor,
         onPressed: () {

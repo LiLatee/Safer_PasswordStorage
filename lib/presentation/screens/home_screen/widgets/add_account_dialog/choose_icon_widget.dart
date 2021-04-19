@@ -5,20 +5,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/presentation/widgets_templates/dialog_template.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../core/constants/AppConstants.dart' as MyConstants;
-import '../../../../../core/constants/functions.dart' as MyFunctions;
+import '../../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../../core/constants/AppFunctions.dart' as AppFunctions;
+import '../../../../../data/models/account_data_entity.dart';
+import '../../../../widgets_templates/dialog_template.dart';
 import 'dropdown_button_items/choose_color.dart';
 import 'dropdown_button_items/choose_color_selected.dart';
 import 'dropdown_button_items/choose_image.dart';
 import 'dropdown_button_items/choose_image_selected.dart';
 import 'dropdown_button_items/default_icon.dart';
 import 'dropdown_button_items/default_icon_selected.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 typedef void SetIsChosenColorIcon({required bool isChosenColorIcon});
 
@@ -58,12 +58,12 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
 
     return Container(
       margin: EdgeInsets.only(
-        left: MyConstants.defaultPadding,
-        right: MyConstants.defaultPadding,
-        top: MyConstants.defaultPadding,
+        left: AppConstants.defaultPadding,
+        right: AppConstants.defaultPadding,
+        top: AppConstants.defaultPadding,
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(MyConstants.defaultIconRadius),
+        borderRadius: BorderRadius.circular(AppConstants.defaultIconRadius),
         border: Border.all(color: Colors.grey),
       ),
       width: MediaQuery.of(context).size.width * 0.8,
@@ -71,7 +71,7 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
         child: DropdownButton<String>(
           isExpanded: true,
           itemHeight:
-              MyConstants.defaultIconRadius * 2 + MyConstants.defaultPadding,
+              AppConstants.defaultIconRadius * 2 + AppConstants.defaultPadding,
           value: _valueSelectedItem,
           selectedItemBuilder: (context) =>
               [
@@ -108,10 +108,10 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
                   builder: (context) => MyDialog(
                     title: "Pick a color",
                     content: Container(
-                      // margin: EdgeInsets.all(MyConstants.defaultPadding),
+                      // margin: EdgeInsets.all(AppConstants.defaultPadding),
                       // width: MediaQuery.of(context).size.width * 0.8,
                       child: BlockPicker(
-                        availableColors: MyConstants.iconDefaultColors,
+                        availableColors: AppConstants.iconDefaultColors,
                         pickerColor: _currentColor,
                         onColorChanged: (value) {
                           setIconColor(color: value);
@@ -140,7 +140,7 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
 
     setState(() {
       _accountDataEntity.iconWidget = CircleAvatar(
-        radius: MyConstants.defaultIconRadius,
+        radius: AppConstants.defaultIconRadius,
         backgroundImage: image.image,
         backgroundColor: Colors.transparent,
       );
@@ -153,7 +153,7 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
     setState(() {
       _currentColor = color;
       _accountDataEntity.iconWidget =
-          MyFunctions.generateRandomColorIconAsWidget(
+          AppFunctions.generateRandomColorIconAsWidget(
         name: _accountDataEntity.accountName,
         color: color,
       );
@@ -167,8 +167,8 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
     setState(() {
       var image = Image.file(
         File(pickedFile.path),
-        width: MyConstants.defaultIconRadius * 2,
-        height: MyConstants.defaultIconRadius * 2,
+        width: AppConstants.defaultIconRadius * 2,
+        height: AppConstants.defaultIconRadius * 2,
       );
 
       /// I am not sure it is a safe solution. In theory, this might be not done yet and user is able to save account without iconImage.
@@ -178,14 +178,14 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
       // Provider.of<AccountDataEntity>(context, listen: false).iconImage = await pickedFile.readAsBytes();
 
       _accountDataEntity.iconWidget =
-          MyFunctions.buildCircleAvatarUsingImage(imageForIcon: image);
+          AppFunctions.buildCircleAvatarUsingImage(imageForIcon: image);
       widget.setIsChosenColorIconCallback(isChosenColorIcon: false);
     });
   }
 
   List<DefaultIconDropdownMenuItem> dropdownButtonsDefaultIcons(
       BuildContext context) {
-    return MyConstants.defaultIconsMap.entries
+    return AppConstants.defaultIconsMap.entries
         .map(
           (e) => DefaultIconDropdownMenuItem(
             accountDataEntity: _accountDataEntity,
@@ -198,7 +198,7 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
 
   List<DefaultIconSelectedDropdownMenuItem> dropdownButtonsDefaultIconsSelected(
       BuildContext context) {
-    return MyConstants.defaultIconsMap.entries
+    return AppConstants.defaultIconsMap.entries
         .map(
           (e) => DefaultIconSelectedDropdownMenuItem(
             mapElement: e,

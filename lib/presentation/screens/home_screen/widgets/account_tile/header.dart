@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/constants/AppConstants.dart' as AppConstants;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../../data/models/account_data_entity.dart';
 
 class AccountTileHeader extends StatelessWidget {
   const AccountTileHeader({
@@ -24,7 +23,7 @@ class AccountTileHeader extends StatelessWidget {
             BoxShadow(
               blurRadius: 8,
               offset: Offset(5, 5),
-              color: Colors.grey,
+              color: Theme.of(context).shadowColor,
             )
           ],
         ),

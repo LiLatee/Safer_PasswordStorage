@@ -1,14 +1,11 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:floor/floor.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/data/models/field_data_entity.dart';
-
 import 'package:sqflite/sqflite.dart' as sqflite;
-import 'dart:async';
 
-import 'package:uuid/uuid.dart';
-
+import '../models/account_data_entity.dart';
+import '../models/field_data_entity.dart';
 import 'account_data_dao.dart';
 import 'field_data_dao.dart';
 

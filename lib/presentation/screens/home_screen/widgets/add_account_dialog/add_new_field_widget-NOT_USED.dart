@@ -1,7 +1,7 @@
 // import 'dart:developer';
 //
 // import 'package:flutter/material.dart';
-// import '../../../../utils/AppConstants.dart' as MyConstants;
+// import '../../../../utils/AppConstants.dart' as AppConstants;
 //
 // class AddFieldWidget extends StatefulWidget {
 //   const AddFieldWidget({
@@ -28,9 +28,9 @@
 //     initialValue = widget.value;
 //     return Container(
 //       padding: EdgeInsets.only(
-//           top: MyConstants.defaultPadding,
-//           left: MyConstants.defaultPadding,
-//           right: MyConstants.defaultPadding),
+//           top: AppConstants.defaultPadding,
+//           left: AppConstants.defaultPadding,
+//           right: AppConstants.defaultPadding),
 //       child: TextFormField(
 //         decoration: InputDecoration(
 //             focusedBorder: OutlineInputBorder(

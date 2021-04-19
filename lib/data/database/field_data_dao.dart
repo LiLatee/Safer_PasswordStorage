@@ -1,5 +1,6 @@
 import 'package:floor/floor.dart';
-import 'package:my_simple_password_storage_clean/data/models/field_data_entity.dart';
+
+import '../models/field_data_entity.dart';
 
 @dao
 abstract class FieldDataDao {

@@ -1,22 +1,25 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:my_simple_password_storage_clean/core/themes/app_theme.dart';
-import 'package:my_simple_password_storage_clean/data/data_providers/SQLprovider.dart';
-import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/accounts_cubit.dart';
-import 'package:my_simple_password_storage_clean/presentation/screens/home_screen/home_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+
+import 'core/themes/app_theme.dart';
+import 'data/data_providers/SQLprovider.dart';
+import 'data/repositories/accounts_repository.dart';
+import 'logic/cubit/accounts_cubit.dart';
+import 'presentation/screens/home_screen/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SQLprovider.db.initDB();
 
-  runApp(MyApp(
-      accountsRepository: AccountsRepository(sqlProvider: SQLprovider())));
+  runApp(ChangeNotifierProvider(
+    create: (context) => ThemeModel(),
+    child: MyApp(
+        accountsRepository: AccountsRepository(sqlProvider: SQLprovider())),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -43,7 +46,7 @@ class MyApp extends StatelessWidget {
         title: 'My Simple Password Storage',
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        theme: AppTheme.lightTheme,
+        theme: Provider.of<ThemeModel>(context).currentTheme,
         home: HomeScreen(),
       ),
     );
