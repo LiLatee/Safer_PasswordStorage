@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 import '../../../../../../data/models/account_data_entity.dart';
 import '../../../../../../logic/cubit/single_account_cubit.dart';
 import 'button_template.dart';
@@ -20,14 +19,13 @@ class ButtonShowHiddenFields extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonTemplate(
       onPressed: () {
-        // DataProvider.toggleShowButton(accountDataEntity: _accountDataEntity);
         BlocProvider.of<SingleAccountCubit>(context)
             .toggleShowButton(accountDataEntity: _accountDataEntity);
       },
-      icon: Icon(Icons.remove_red_eye),
+      icon: Icons.remove_red_eye,
       label: AppLocalizations.of(context)!.showHiddenFields,
       pressedButtonColor: _accountDataEntity.isShowButtonPressed
-          ? AppConstants.pressedButtonColor
+          ? Theme.of(context).colorScheme.secondary
           : Colors.transparent,
       canBePressed: true,
     );

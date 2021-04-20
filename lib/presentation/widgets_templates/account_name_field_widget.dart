@@ -34,11 +34,13 @@ class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
         child: TextFormField(
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).accentColor)),
+                borderSide: BorderSide(
+                    // color: Theme.of(context).accentColor,
+                    )),
             border: OutlineInputBorder(),
             labelText: AppLocalizations.of(context)!.accountName,
             labelStyle: TextStyle(
-              color: Theme.of(context).accentColor,
+              // color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold,
             ),
           ),

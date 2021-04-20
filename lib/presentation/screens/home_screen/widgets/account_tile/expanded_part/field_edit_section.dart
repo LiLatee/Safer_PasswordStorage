@@ -63,7 +63,7 @@ class FieldEditSection extends StatelessWidget {
       required IconData iconData,
       required Function() onPressed,
       Color? color}) {
-    color ??= Theme.of(context).accentColor;
+    // color ??= Theme.of(context).accentColor;
     return IconButton(
       padding: EdgeInsets.all(0.0),
       constraints: BoxConstraints(
@@ -74,7 +74,7 @@ class FieldEditSection extends StatelessWidget {
       icon: Icon(
         iconData,
         size: AppConstants.defaultIconRadius * 1.5,
-        color: color,
+        // color: color,
       ),
       onPressed: onPressed,
     );

@@ -62,6 +62,8 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
         right: AppConstants.defaultPadding,
         top: AppConstants.defaultPadding,
       ),
+
+      /// TODO is it even needed?
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppConstants.defaultIconRadius),
         border: Border.all(color: Colors.grey),

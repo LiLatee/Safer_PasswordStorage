@@ -43,21 +43,27 @@ class MyDialog extends StatelessWidget {
   }
 
   Widget buildDialogContent(List<Widget>? buttons) {
-    return Container(
-      padding: EdgeInsets.only(top: AppConstants.defaultCircularBorderRadius),
-      decoration: BoxDecoration(
+    return Card(
+      shape: RoundedRectangleBorder(
         borderRadius:
             BorderRadius.circular(AppConstants.defaultCircularBorderRadius),
-        color: Colors.white,
       ),
+      // decoration: BoxDecoration(
+      //   borderRadius:
+      //       BorderRadius.circular(AppConstants.defaultCircularBorderRadius),
+      //   color: Colors.white,
+      // ),
       margin: EdgeInsets.only(top: AppConstants.defaultCircularBorderRadius),
-      child: Column(
-        children: [
-          _content,
-          ButtonBar(
-            children: buttons ?? [],
-          ),
-        ],
+      child: Padding(
+        padding: EdgeInsets.only(top: AppConstants.defaultCircularBorderRadius),
+        child: Column(
+          children: [
+            _content,
+            ButtonBar(
+              children: buttons ?? [],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -69,7 +75,7 @@ class MyDialog extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50.0),
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).colorScheme.primary,
         ),
         height: 50,
         child: Center(
@@ -77,7 +83,10 @@ class MyDialog extends StatelessWidget {
             padding: const EdgeInsets.all(AppConstants.defaultPadding / 4),
             child: AutoSizeText(
               _title,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .copyWith(color: Theme.of(context).colorScheme.onPrimary),
               maxLines: 2,
               textAlign: TextAlign.center,
             ),
@@ -102,11 +111,11 @@ class MyDialogButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: onPressed,
-      splashColor: AppConstants.pressedButtonColor,
+      splashColor: Theme.of(context).colorScheme.secondary,
       child: Container(
         child: Text(
           buttonName,
-          style: TextStyle(color: Theme.of(context).accentColor),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
         ),
       ),
     );

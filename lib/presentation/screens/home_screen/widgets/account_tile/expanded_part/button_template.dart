@@ -4,7 +4,7 @@ import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 
 class ButtonTemplate extends StatefulWidget {
   final Function onPressed;
-  final Icon icon;
+  final IconData icon;
   final String label;
   final Color pressedButtonColor;
   final bool canBePressed;
@@ -23,11 +23,11 @@ class ButtonTemplate extends StatefulWidget {
 }
 
 class _ButtonTemplateState extends State<ButtonTemplate> {
-  Color? _textColor;
+  // Color? _textColor;
 
   @override
   Widget build(BuildContext context) {
-    _textColor ??= Theme.of(context).accentColor;
+    // _textColor ??= Theme.of(context).accentColor;
     // widget.pressedButtonColor ??= Theme
     //     .of(context)
     //     .primaryColor;
@@ -40,7 +40,7 @@ class _ButtonTemplateState extends State<ButtonTemplate> {
       ),
       duration: AppConstants.animationsDuration,
       child: FlatButton(
-        textColor: _textColor,
+        // textColor: _textColor,
         onPressed: () {
           widget.onPressed();
         },
@@ -48,7 +48,17 @@ class _ButtonTemplateState extends State<ButtonTemplate> {
           children: <Widget>[
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[widget.icon, Text(widget.label)],
+              children: <Widget>[
+                Icon(
+                  widget.icon,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                Text(
+                  widget.label,
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                )
+              ],
             ),
           ],
         ),

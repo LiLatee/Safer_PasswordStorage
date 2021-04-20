@@ -522,7 +522,7 @@ class _MergeableMaterialState extends State<MergeableMaterial>
         widgets.add(
           Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
+              // color: Theme.of(context).cardColor,
               borderRadius: _borderRadius(i - 1, widgets.isEmpty, false),
               shape: BoxShape.rectangle,
             ),
@@ -591,7 +591,7 @@ class _MergeableMaterialState extends State<MergeableMaterial>
       widgets.add(
         Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor, // CHANGE
+            // color: Theme.of(context).scaffoldBackgroundColor, // CHANGE
             borderRadius: _borderRadius(i - 1, widgets.isEmpty, true),
             shape: BoxShape.rectangle,
           ),

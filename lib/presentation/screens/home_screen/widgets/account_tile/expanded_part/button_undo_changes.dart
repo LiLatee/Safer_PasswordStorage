@@ -11,13 +11,13 @@ class ButtonUndoChanges extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late ButtonStyle _buttonStyle;
-    if (Theme.of(context).textButtonTheme.style != null) {
-      _buttonStyle = Theme.of(context).textButtonTheme.style!.copyWith(
-          backgroundColor:
-              TextButton.styleFrom(backgroundColor: Color(0xFFd6e0f0))
-                  .backgroundColor);
-    }
+    // late ButtonStyle _buttonStyle;
+    // if (Theme.of(context).textButtonTheme.style != null) {
+    //   _buttonStyle = Theme.of(context).textButtonTheme.style!.copyWith(
+    //       backgroundColor:
+    //           TextButton.styleFrom(backgroundColor: Color(0xFFd6e0f0))
+    //               .backgroundColor);
+    // }
     return Padding(
       padding: const EdgeInsets.only(top: AppConstants.defaultPadding),
       child: IntrinsicHeight(
@@ -25,14 +25,14 @@ class ButtonUndoChanges extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-              style: _buttonStyle,
+              // style: _buttonStyle,
               child: Row(
                 children: [
                   Icon(
                     Icons.undo,
-                    color: AppConstants.dismissColor,
+                    // color: AppConstants.dismissColor,
                   ),
-                  VerticalDivider(color: Colors.black),
+                  // VerticalDivider(color: Colors.black),
                   Text(AppLocalizations.of(context)!.undoChangedFields),
                 ],
               ),
