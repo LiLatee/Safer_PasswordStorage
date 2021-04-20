@@ -142,6 +142,27 @@ class AppTheme {
   );
 
   static final darkTheme = ThemeData.from(colorScheme: darkColorScheme);
+
+  // static final darkTheme = ThemeData(
+  //   colorScheme: darkColorScheme,
+  //   applyElevationOverlayColor: true,
+  //   brightness: darkColorScheme.brightness,
+  // primaryColor: primarySurfaceColor,
+  // primaryColorBrightness: ThemeData.estimateBrightnessForColor(primarySurfaceColor),
+  // canvasColor: darkColorScheme.background,
+  // accentColor: darkColorScheme.secondary,
+  // accentColorBrightness:
+  //     ThemeData.estimateBrightnessForColor(darkColorScheme.secondary),
+  // scaffoldBackgroundColor: darkColorScheme.background,
+  // bottomAppBarColor: darkColorScheme.surface,
+  // cardColor: darkColorScheme.surface,
+  // dividerColor: darkColorScheme.onSurface.withOpacity(0.12),
+  // backgroundColor: darkColorScheme.background,
+  // dialogBackgroundColor: darkColorScheme.background,
+  // errorColor: darkColorScheme.error,
+  // textTheme: textTheme,
+  // indicatorColor: onPrimarySurfaceColor,
+  // );
   // static final darkTheme = ThemeData(
   //   applyElevationOverlayColor: true,
   //   // bottomAppBarTheme: BottomAppBarTheme(
