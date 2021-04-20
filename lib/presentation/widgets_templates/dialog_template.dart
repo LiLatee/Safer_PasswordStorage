@@ -24,7 +24,7 @@ class MyDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppConstants.defaultPadding),
       ),
-      elevation: 10.0,
+      // elevation: .0,
       backgroundColor: Colors.transparent,
       child: SingleChildScrollView(
         child: Column(
@@ -53,6 +53,8 @@ class MyDialog extends StatelessWidget {
       //       BorderRadius.circular(AppConstants.defaultCircularBorderRadius),
       //   color: Colors.white,
       // ),
+      // color: Colors.transparent,
+      elevation: 24,
       margin: EdgeInsets.only(top: AppConstants.defaultCircularBorderRadius),
       child: Padding(
         padding: EdgeInsets.only(top: AppConstants.defaultCircularBorderRadius),

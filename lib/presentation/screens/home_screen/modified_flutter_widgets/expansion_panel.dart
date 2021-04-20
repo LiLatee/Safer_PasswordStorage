@@ -372,7 +372,6 @@ class _ExpansionPanelListState extends State<ExpansionPanelList> {
         _currentOpenPanel = searchPanelByValue(
             widget.children.cast<ExpansionPanelRadio>(),
             widget.initialOpenPanelValue);
-
       }
     }
   }
