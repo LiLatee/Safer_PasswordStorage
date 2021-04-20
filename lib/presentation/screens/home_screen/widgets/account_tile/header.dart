@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_simple_password_storage_clean/core/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/constants/AppConstants.dart' as AppConstants;
@@ -13,20 +14,28 @@ class AccountTileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     AccountDataEntity accountDataEntity =
         Provider.of<AccountDataEntity>(context);
-    return Container(
+    return Card(
         margin: EdgeInsets.all(AppConstants.defaultPadding),
-        decoration: BoxDecoration(
-          // border: Border.all(color: Colors.grey),
+        color: Theme.of(context).colorScheme.surface,
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.defaultIconRadius),
-          color: Theme.of(context).cardColor,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 8,
-              offset: Offset(5, 5),
-              color: Theme.of(context).shadowColor,
-            )
-          ],
         ),
+        // shadowColor: Colors.black,
+        // decoration: BoxDecoration(
+        //   // border: Provider.of<ThemeModel>(context).themeType == ThemeType.Dark
+        //   //     ? Border.all()
+        //   //     : null,
+        //   borderRadius: BorderRadius.circular(AppConstants.defaultIconRadius),
+        //   color: Theme.of(context).colorScheme.surface,
+        //   // boxShadow: kElevationToShadow[4],
+        //   // boxShadow: [
+        //   //   BoxShadow(
+        //   //     blurRadius: 8,
+        //   //     offset: Offset(5, 5),
+        //   //     color: Theme.of(context).shadowColor,
+        //   //   )
+        //   // ],
+        // ),
         child: Row(
           children: <Widget>[
             accountDataEntity.iconWidget ?? Container(), // TODO

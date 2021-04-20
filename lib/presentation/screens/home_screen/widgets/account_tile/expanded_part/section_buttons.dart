@@ -31,7 +31,7 @@ class _SectionButtonsState extends State<SectionButtons> {
     return Column(
       children: [
         Divider(
-          color: Colors.black,
+          color: Theme.of(context).colorScheme.onBackground,
         ), // TODO?
 
         cubit.state is SingleAccountStateEditing &&
@@ -40,7 +40,8 @@ class _SectionButtonsState extends State<SectionButtons> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ButtonSaveChanges(),
-                  VerticalDivider(color: Colors.black),
+                  VerticalDivider(
+                      color: Theme.of(context).colorScheme.onBackground),
                   ButtonUndoChanges(),
                 ],
               )
@@ -53,8 +54,9 @@ class _SectionButtonsState extends State<SectionButtons> {
                 margin: EdgeInsets.all(AppConstants.defaultPadding),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
-                      AppConstants.defaultCircularBorderRadius),
-                  color: Theme.of(context).secondaryHeaderColor,
+                    AppConstants.defaultCircularBorderRadius,
+                  ),
+                  color: Theme.of(context).colorScheme.primary,
                 ), // TODO
                 child: ButtonBar(
                   alignment: MainAxisAlignment.center,

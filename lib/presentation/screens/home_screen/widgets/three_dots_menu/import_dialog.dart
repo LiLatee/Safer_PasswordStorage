@@ -142,11 +142,13 @@ class _ImportDialogState extends State<ImportDialog> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).accentColor)),
+              borderSide: BorderSide(
+                  // color: Theme.of(context).accentColor,
+                  )),
           border: OutlineInputBorder(),
           labelText: AppLocalizations.of(context)!.secretKey,
           labelStyle: TextStyle(
-              color: Theme.of(context).accentColor,
+              // color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold),
         ),
         onChanged: (value) => _secretKey = value,

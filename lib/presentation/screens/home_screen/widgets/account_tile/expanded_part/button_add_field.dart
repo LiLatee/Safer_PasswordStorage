@@ -152,7 +152,7 @@ class ButtonAddField extends StatelessWidget {
           // account.listKey.currentState.insertItem(account.getNumberOfFields - 1,
           //     duration: AppConstants.animationsDuration);
         },
-        icon: Icon(Icons.add),
+        icon: Icons.add,
         label: AppLocalizations.of(context)!.addField);
   }
 }

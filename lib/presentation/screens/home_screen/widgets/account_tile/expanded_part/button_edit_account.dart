@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 import '../../../../../../data/models/account_data_entity.dart';
 import '../../../../../../logic/cubit/single_account_cubit.dart';
 import 'button_template.dart';
@@ -22,12 +21,11 @@ class ButtonEditAccount extends StatelessWidget {
       onPressed: () {
         BlocProvider.of<SingleAccountCubit>(context)
             .toggleEditButton(accountDataEntity: _accountDataEntity);
-        // DataProvider.toggleEditButton(accountDataEntity: _accountDataEntity);
       },
-      icon: Icon(Icons.edit),
+      icon: Icons.edit,
       label: AppLocalizations.of(context)!.editFields,
       pressedButtonColor: _accountDataEntity.isEditButtonPressed
-          ? AppConstants.pressedButtonColor
+          ? Theme.of(context).colorScheme.secondary
           : Colors.transparent,
       canBePressed: true,
     );

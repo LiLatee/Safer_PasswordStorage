@@ -25,19 +25,30 @@ class _PasswordListPageState extends State<HomeScreen> {
       locale: const Locale('pl'),
       child: Scaffold(
         bottomNavigationBar: BottomAppBar(
+          color: Theme.of(context).colorScheme.primary,
           shape: CircularNotchedRectangle(),
           child: Row(
             children: [
               IconButton(
-                icon: Icon(Icons.menu),
+                icon: Icon(
+                  Icons.menu,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
                 onPressed: menuIconOnPressed,
               ),
               Spacer(),
               IconButton(
-                  icon: Icon(Icons.search), onPressed: searchIconOnPressed),
+                  icon: Icon(
+                    Icons.search,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  onPressed: searchIconOnPressed),
               PopupMenuButton(
                 onSelected: popupMenuOnSelected,
-                icon: Icon(Icons.more_vert),
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
                 itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                   PopupMenuItem(
                     value: "export",
@@ -61,9 +72,9 @@ class _PasswordListPageState extends State<HomeScreen> {
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(
                         Icons.circle,
-                        color: themeType == ThemeType.Light
-                            ? Colors.black45
-                            : Colors.white70,
+                        // color: themeType == ThemeType.Light
+                        //     ? Colors.black45
+                        //     : Colors.white70,
                       ),
                       title: Text(
                         themeType == ThemeType.Light
