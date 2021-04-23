@@ -13,7 +13,7 @@ class AddAccountFloatingButton extends StatelessWidget {
         // Provider.of<DataProvider>(context, listen: false)
         //     .addAccount(AccountDataEntity(accountName: "Dodane"));
         showGeneralDialog(
-          barrierColor: Colors.black.withOpacity(0.5),
+          // barrierColor: Colors.black.withOpacity(0.5),
           // transitionBuilder: (context, a1, a2, widget) {
           // return Transform.scale(
           //   origin: Offset(size.width / 2,

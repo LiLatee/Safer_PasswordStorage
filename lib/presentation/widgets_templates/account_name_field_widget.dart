@@ -22,25 +22,20 @@ class AccountNameFieldWidget extends StatefulWidget {
 class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
   @override
   Widget build(BuildContext context) {
-    // DataProvider dataProvider = Provider.of<DataProvider>(widget.superContext);
     return Container(
       padding: EdgeInsets.only(
-          top: AppConstants.defaultPadding,
-          left: AppConstants.defaultPadding,
-          right: AppConstants.defaultPadding),
+        top: AppConstants.defaultPadding,
+        left: AppConstants.defaultPadding,
+        right: AppConstants.defaultPadding,
+      ),
       child: Form(
         key: widget.accountNameFormKey,
         autovalidate: true,
         child: TextFormField(
           decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    // color: Theme.of(context).accentColor,
-                    )),
             border: OutlineInputBorder(),
             labelText: AppLocalizations.of(context)!.accountName,
             labelStyle: TextStyle(
-              // color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold,
             ),
           ),
