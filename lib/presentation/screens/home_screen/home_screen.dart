@@ -25,14 +25,14 @@ class _PasswordListPageState extends State<HomeScreen> {
       locale: const Locale('pl'),
       child: Scaffold(
         bottomNavigationBar: BottomAppBar(
-          color: Theme.of(context).colorScheme.primary,
+          // color: Theme.of(context).colorScheme.primary,
           shape: CircularNotchedRectangle(),
           child: Row(
             children: [
               IconButton(
                 icon: Icon(
                   Icons.menu,
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  // color: Theme.of(context).colorScheme.onPrimary,
                 ),
                 onPressed: menuIconOnPressed,
               ),
@@ -40,14 +40,14 @@ class _PasswordListPageState extends State<HomeScreen> {
               IconButton(
                   icon: Icon(
                     Icons.search,
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    // color: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: searchIconOnPressed),
               PopupMenuButton(
                 onSelected: popupMenuOnSelected,
                 icon: Icon(
                   Icons.more_vert,
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  // color: Theme.of(context).colorScheme.onPrimary,
                 ),
                 itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                   PopupMenuItem(

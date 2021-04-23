@@ -73,8 +73,8 @@ class AccountDataEntity extends Equatable {
       this.iconWidget = AppFunctions.buildCircleAvatarUsingImage(
         imageForIcon: Image.memory(
           this.iconImage!,
-          width: AppConstants.defaultCircularBorderRadius * 2,
-          height: AppConstants.defaultCircularBorderRadius * 2,
+          width: AppConstants.defaultIconRadius * 2,
+          height: AppConstants.defaultIconRadius * 2,
         ),
       );
     } else {

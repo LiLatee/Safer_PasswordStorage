@@ -45,7 +45,7 @@ class ChooseColorDropdownMenuItem extends DropdownMenuItem<String> {
                 Padding(
                   padding: EdgeInsets.only(bottom: AppConstants.defaultPadding),
                   child: Divider(
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onSurface,
                     height: 1,
                   ),
                 ),

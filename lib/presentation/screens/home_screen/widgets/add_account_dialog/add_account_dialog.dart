@@ -43,33 +43,11 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var cancelButton = MyDialogButton(
-        buttonName: AppLocalizations.of(context)!.cancel,
-        onPressed: () {
-          Navigator.of(context).pop();
-        });
-
-    var addButton = MyDialogButton(
-      buttonName: AppLocalizations.of(context)!.add,
-      onPressed: () {
-        if (accountNameFormKey.currentState != null) {
-          if (accountNameFormKey.currentState!.validate()) {
-            BlocProvider.of<AccountsCubit>(context)
-                .addAccount(accountData: accountData);
-            Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(AppLocalizations.of(context)!
-                    .addedAccountSnackbar(accountData.accountName))));
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Coś nie tak przy dodawaniu konta ;(')));
-          }
-        }
-      },
-    );
-
     return MyDialog(
-      buttons: [cancelButton, addButton],
+      buttons: [
+        buildCancelButton(context),
+        buildAddButton(context),
+      ],
       content: Column(
         children: <Widget>[
           AccountNameFieldWidget(
@@ -92,5 +70,34 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
       ),
       title: AppLocalizations.of(context)!.addNewAccountTitle,
     );
+  }
+
+  MyDialogButton buildAddButton(BuildContext context) {
+    return MyDialogButton(
+      buttonName: AppLocalizations.of(context)!.add,
+      onPressed: () {
+        if (accountNameFormKey.currentState != null) {
+          if (accountNameFormKey.currentState!.validate()) {
+            BlocProvider.of<AccountsCubit>(context)
+                .addAccount(accountData: accountData);
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(AppLocalizations.of(context)!
+                    .addedAccountSnackbar(accountData.accountName))));
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Coś nie tak przy dodawaniu konta ;(')));
+          }
+        }
+      },
+    );
+  }
+
+  MyDialogButton buildCancelButton(BuildContext context) {
+    return MyDialogButton(
+        buttonName: AppLocalizations.of(context)!.cancel,
+        onPressed: () {
+          Navigator.of(context).pop();
+        });
   }
 }

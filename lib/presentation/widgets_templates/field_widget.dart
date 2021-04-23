@@ -89,16 +89,17 @@ class FieldWidget extends StatelessWidget {
       key: ObjectKey(label),
       controller: controller,
       decoration: InputDecoration(
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                // color: Theme.of(context).accentColor,
-                )),
+        // focusedBorder: OutlineInputBorder(
+        //   borderSide: BorderSide(
+        //       // color: Theme.of(context).accentColor,
+        //       ),
+        // ),
         border: OutlineInputBorder(),
         labelText: label,
-        labelStyle: TextStyle(
-          // color: Theme.of(context).accentColor,
-          fontWeight: FontWeight.bold,
-        ),
+        // labelStyle: TextStyle(
+        //   // color: Theme.of(context).accentColor,
+        //   fontWeight: FontWeight.bold,
+        // ),
       ),
       readOnly: readOnly,
       keyboardType: textInputType,

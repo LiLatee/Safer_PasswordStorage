@@ -87,7 +87,7 @@ class MyDialog extends StatelessWidget {
               _title,
               style: Theme.of(context)
                   .textTheme
-                  .headline5!
+                  .headline6!
                   .copyWith(color: Theme.of(context).colorScheme.onPrimary),
               maxLines: 2,
               textAlign: TextAlign.center,
@@ -111,14 +111,12 @@ class MyDialogButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       onPressed: onPressed,
-      splashColor: Theme.of(context).colorScheme.secondary,
-      child: Container(
-        child: Text(
-          buttonName,
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-        ),
+      // splashColor: Theme.of(context).colorScheme.secondary,
+      child: Text(
+        buttonName.toUpperCase(),
+        // style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
       ),
     );
   }
