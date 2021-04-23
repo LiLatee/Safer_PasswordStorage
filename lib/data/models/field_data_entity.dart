@@ -16,7 +16,7 @@ import 'account_data_entity.dart';
 )
 class FieldDataEntity extends Equatable {
   @PrimaryKey()
-  late String uuid;
+  String? uuid;
 
   final String accountId;
   String name;
@@ -26,16 +26,15 @@ class FieldDataEntity extends Equatable {
   int position;
 
   FieldDataEntity({
-    uuid,
+    this.uuid,
     required this.accountId,
     required this.name,
     required this.value,
     this.isHidden = false,
     this.isMultiline = false,
-    this.position = 0, // TODO
+    this.position = 0,
   }) {
-    this.uuid = uuid ?? Uuid().v1();
-    // if (this.uuid == null) this.uuid = Uuid().v1();
+    if (this.uuid == null) this.uuid = Uuid().v1();
   }
 
   @override
@@ -48,7 +47,6 @@ class FieldDataEntity extends Equatable {
   }
 
   @override
-  // TODO: implement props
   List<Object?> get props =>
       [uuid, accountId, name, value, isHidden, isMultiline, position];
 

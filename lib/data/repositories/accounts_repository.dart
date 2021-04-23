@@ -20,13 +20,15 @@ class AccountsRepository {
     return await sqlProvider.addAccount(accountData: accountData);
   }
 
+  Future<void> updateAccount(AccountDataEntity accountData) async {
+    for (var field in accountData.fields) sqlProvider.updateField(field);
+
+    await sqlProvider.updateAccount(accountData);
+  }
+
   Future<void> deleteAccount({required AccountDataEntity accountData}) async {
     await sqlProvider.deleteAccount(accountData: accountData);
   }
-
-  // Stream<List<AccountDataEntity>> watchAllAccounts() {
-  //   return sqlProvider.watchAllAccounts();
-  // }
 
   Future<List<AccountDataEntity>> getAllAccounts() async {
     // await Future.delayed(Duration(seconds: 2)); // TODO
@@ -54,12 +56,6 @@ class AccountsRepository {
     await sqlProvider.addField(fieldData: fieldData);
   }
 
-  Future<void> updateAccount(AccountDataEntity accountData) async {
-    for (var field in accountData.fields) sqlProvider.updateField(field);
-
-    await sqlProvider.updateAccount(accountData);
-  }
-
   Future<void> updateField(FieldDataEntity fieldData) async {
     await sqlProvider.updateField(fieldData);
   }
@@ -73,11 +69,6 @@ class AccountsRepository {
     return await sqlProvider.getFieldsOfAccount(accountData: accountData);
   }
 
-  Stream<List<FieldDataEntity>?> watchFieldsOfAccount(
-      {required AccountDataEntity accountData}) {
-    return sqlProvider.watchFieldsOfAccount(accountData: accountData);
-  }
-
   Future<AsyncSnapshot<String>> exportEncryptedDatabase(
       String secretKey, BuildContext context) async {
     if (await Permission.storage.request().isGranted) {
@@ -87,7 +78,7 @@ class AccountsRepository {
       String path = "/storage/emulated/0/Download/" + filename;
 
       var crypt = AesCrypt(secretKey);
-      String? databasePath = sqlProvider.getDatabasePath();
+      String databasePath = sqlProvider.getDatabasePath();
 
       if (databasePath != null) {
         var result;
@@ -97,7 +88,6 @@ class AccountsRepository {
             path,
           );
         } on FileSystemException catch (e, stack) {
-          // TODO error handling
           print(AesCryptFsException(
               'Failed to open file $path for writing.', e.path, e.osError));
           print(stack);
@@ -121,7 +111,7 @@ class AccountsRepository {
       {required BuildContext context,
       required String secretKey,
       required String filepath}) async {
-    String? databasePath = sqlProvider.getDatabasePath();
+    String databasePath = sqlProvider.getDatabasePath();
 
     if (databasePath != null) {
       var crypt = AesCrypt(secretKey);

@@ -105,7 +105,7 @@ class _$AppDatabase extends AppDatabase {
 
 class _$AccountDao extends AccountDao {
   _$AccountDao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database, changeListener),
+      : _queryAdapter = QueryAdapter(database),
         _accountDataEntityInsertionAdapter = InsertionAdapter(
             database,
             'AccountDataEntity',
@@ -114,8 +114,7 @@ class _$AccountDao extends AccountDao {
                   'accountName': item.accountName,
                   'iconImage': item.iconImage,
                   'iconColorHex': item.iconColorHex
-                },
-            changeListener),
+                }),
         _accountDataEntityUpdateAdapter = UpdateAdapter(
             database,
             'AccountDataEntity',
@@ -125,8 +124,7 @@ class _$AccountDao extends AccountDao {
                   'accountName': item.accountName,
                   'iconImage': item.iconImage,
                   'iconColorHex': item.iconColorHex
-                },
-            changeListener),
+                }),
         _accountDataEntityDeletionAdapter = DeletionAdapter(
             database,
             'AccountDataEntity',
@@ -136,8 +134,7 @@ class _$AccountDao extends AccountDao {
                   'accountName': item.accountName,
                   'iconImage': item.iconImage,
                   'iconColorHex': item.iconColorHex
-                },
-            changeListener);
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -150,18 +147,6 @@ class _$AccountDao extends AccountDao {
   final UpdateAdapter<AccountDataEntity> _accountDataEntityUpdateAdapter;
 
   final DeletionAdapter<AccountDataEntity> _accountDataEntityDeletionAdapter;
-
-  @override
-  Stream<List<AccountDataEntity>> watchAllAccountsAsStream() {
-    return _queryAdapter.queryListStream('SELECT * FROM AccountDataEntity',
-        mapper: (Map<String, Object?> row) => AccountDataEntity(
-            uuid: row['uuid'] as String?,
-            accountName: row['accountName'] as String,
-            iconImage: row['iconImage'] as Uint8List?,
-            iconColorHex: row['iconColorHex'] as String?),
-        queryableName: 'AccountDataEntity',
-        isView: false);
-  }
 
   @override
   Future<List<AccountDataEntity>> getAllAccounts() async {
@@ -186,21 +171,7 @@ class _$AccountDao extends AccountDao {
   }
 
   @override
-  Stream<AccountDataEntity?> watchAccountById(String uuid) {
-    return _queryAdapter.queryStream(
-        'SELECT * FROM AccountDataEntity WHERE uuid = ?1',
-        mapper: (Map<String, Object?> row) => AccountDataEntity(
-            uuid: row['uuid'] as String?,
-            accountName: row['accountName'] as String,
-            iconImage: row['iconImage'] as Uint8List?,
-            iconColorHex: row['iconColorHex'] as String?),
-        arguments: [uuid],
-        queryableName: 'AccountDataEntity',
-        isView: false);
-  }
-
-  @override
-  Future<void> insertAccount(AccountDataEntity account) async {
+  Future<void> addAccount(AccountDataEntity account) async {
     await _accountDataEntityInsertionAdapter.insert(
         account, OnConflictStrategy.rollback);
   }
@@ -219,7 +190,7 @@ class _$AccountDao extends AccountDao {
 
 class _$FieldDataDao extends FieldDataDao {
   _$FieldDataDao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database, changeListener),
+      : _queryAdapter = QueryAdapter(database),
         _fieldDataEntityInsertionAdapter = InsertionAdapter(
             database,
             'FieldDataEntity',
@@ -231,8 +202,7 @@ class _$FieldDataDao extends FieldDataDao {
                   'isHidden': item.isHidden ? 1 : 0,
                   'isMultiline': item.isMultiline ? 1 : 0,
                   'position': item.position
-                },
-            changeListener),
+                }),
         _fieldDataEntityUpdateAdapter = UpdateAdapter(
             database,
             'FieldDataEntity',
@@ -245,8 +215,7 @@ class _$FieldDataDao extends FieldDataDao {
                   'isHidden': item.isHidden ? 1 : 0,
                   'isMultiline': item.isMultiline ? 1 : 0,
                   'position': item.position
-                },
-            changeListener),
+                }),
         _fieldDataEntityDeletionAdapter = DeletionAdapter(
             database,
             'FieldDataEntity',
@@ -259,8 +228,7 @@ class _$FieldDataDao extends FieldDataDao {
                   'isHidden': item.isHidden ? 1 : 0,
                   'isMultiline': item.isMultiline ? 1 : 0,
                   'position': item.position
-                },
-            changeListener);
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -273,23 +241,6 @@ class _$FieldDataDao extends FieldDataDao {
   final UpdateAdapter<FieldDataEntity> _fieldDataEntityUpdateAdapter;
 
   final DeletionAdapter<FieldDataEntity> _fieldDataEntityDeletionAdapter;
-
-  @override
-  Stream<List<FieldDataEntity>?> watchFieldsOfAccount(String accountId) {
-    return _queryAdapter.queryListStream(
-        'SELECT * FROM FieldDataEntity WHERE accountId = ?1',
-        mapper: (Map<String, Object?> row) => FieldDataEntity(
-            uuid: row['uuid'] as String?,
-            accountId: row['accountId'] as String,
-            name: row['name'] as String,
-            value: row['value'] as String,
-            isHidden: (row['isHidden'] as int) != 0,
-            isMultiline: (row['isMultiline'] as int) != 0,
-            position: row['position'] as int),
-        arguments: [accountId],
-        queryableName: 'FieldDataEntity',
-        isView: false);
-  }
 
   @override
   Future<List<FieldDataEntity>?> getFieldsOfAccount(String accountId) async {

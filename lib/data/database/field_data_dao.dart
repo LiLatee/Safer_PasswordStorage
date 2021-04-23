@@ -14,15 +14,5 @@ abstract class FieldDataDao {
   Future<void> updateField(FieldDataEntity field);
 
   @Query('SELECT * FROM FieldDataEntity WHERE accountId = :accountId')
-  Stream<List<FieldDataEntity>?> watchFieldsOfAccount(String accountId);
-
-  @Query('SELECT * FROM FieldDataEntity WHERE accountId = :accountId')
   Future<List<FieldDataEntity>?> getFieldsOfAccount(String accountId);
-
-  // @Query("SELECT COUNT(*) FROM FieldDataEntity WHERE id = :accountId")
-  // Future<int> getNumberOfFieldsOfAccountId({int accountId});
-
-  // @Query('DELETE FROM FieldDataEntity WHERE id = :id')
-  // Future<void> removeFieldAt(int id);
-
 }

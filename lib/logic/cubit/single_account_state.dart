@@ -16,7 +16,6 @@ class SingleAccountStateReading extends SingleAccountState with EquatableMixin {
   }
 
   @override
-  // TODO: implement props
   List<Object?> get props => [accountDataEntity];
 }
 
@@ -28,12 +27,6 @@ class SingleAccountStateEditing extends SingleAccountState with EquatableMixin {
       {required this.accountDataEntity,
       required this.accountDataEntityChanged});
 
-  // @override
-  // String toString() {
-  //   return accountDataEntity.toString();
-  // }
-
   @override
-  // TODO: implement props
   List<Object?> get props => [accountDataEntity, accountDataEntityChanged];
 }
