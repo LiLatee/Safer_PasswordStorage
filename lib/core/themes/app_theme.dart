@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 enum ThemeType { Light, Dark }
 
 class ThemeModel extends ChangeNotifier {
   ThemeData currentTheme = AppTheme.darkTheme;
   ThemeType themeType = ThemeType.Dark;
+
+  // ThemeModel() {
+  //   if (SchedulerBinding.instance != null) {
+  //     var brightness = SchedulerBinding.instance!.window.platformBrightness;
+  //     currentTheme = brightness == Brightness.light ? AppTheme.lightTheme : AppTheme.darkTheme;
+  //     themeType = brightness == Brightness.light ? ThemeType.Light : ThemeType.Dark;
+  //   }
+  // }
 
   toggleTheme() {
     if (themeType == ThemeType.Dark) {
@@ -23,22 +32,6 @@ class ThemeModel extends ChangeNotifier {
 
 class AppTheme {
   const AppTheme._();
-
-  // static final defaultTheme = ThemeData(
-  //   fontFamily: 'Roboto',
-  //   textTheme: TextTheme(
-  //     headline1: TextStyle(
-  //       fontSize: 24.0,
-  //       fontWeight: FontWeight.bold,
-  //       color: Colors.black,
-  //     ),
-  //     headline2: TextStyle(
-  //       fontSize: 24.0,
-  //       fontWeight: FontWeight.bold,
-  //       color: Colors.white,
-  //     ),
-  //   ),
-  // );
 
   static final lightColorScheme = ColorScheme(
     surface: Color(0xffFFFFFF),

@@ -15,38 +15,14 @@ class AccountsLoading extends AccountsState {
 class AccountsLoaded extends AccountsState {
   AccountsLoaded({required accountDataList})
       : super(accountDataList: accountDataList);
-
-  AccountsLoaded copyWith({
-    List<AccountDataEntity>? accountDataList,
-  }) {
-    return AccountsLoaded(
-      accountDataList: accountDataList ?? this.accountDataList,
-    );
-  }
 }
 
 class AccountsImported extends AccountsState {
   AccountsImported({required accountDataList})
       : super(accountDataList: accountDataList);
-
-  AccountsLoaded copyWith({
-    List<AccountDataEntity>? accountDataList,
-  }) {
-    return AccountsLoaded(
-      accountDataList: accountDataList ?? this.accountDataList,
-    );
-  }
 }
 
 class AccountsExported extends AccountsState {
   AccountsExported({required accountDataList})
       : super(accountDataList: accountDataList);
-
-  AccountsLoaded copyWith({
-    List<AccountDataEntity>? accountDataList,
-  }) {
-    return AccountsLoaded(
-      accountDataList: accountDataList ?? this.accountDataList,
-    );
-  }
 }

@@ -9,6 +9,7 @@ import 'core/themes/app_theme.dart';
 import 'data/data_providers/SQLprovider.dart';
 import 'data/repositories/accounts_repository.dart';
 import 'logic/cubit/accounts_cubit.dart';
+import 'presentation/router/app_router.dart';
 import 'presentation/screens/home_screen/home_screen.dart';
 
 void main() async {
@@ -18,14 +19,21 @@ void main() async {
   runApp(ChangeNotifierProvider(
     create: (context) => ThemeModel(),
     child: MyApp(
-        accountsRepository: AccountsRepository(sqlProvider: SQLprovider())),
+      accountsRepository: AccountsRepository(sqlProvider: SQLprovider()),
+      appRouter: AppRouter(),
+    ),
   ));
 }
 
 class MyApp extends StatelessWidget {
   final AccountsRepository accountsRepository;
+  final AppRouter appRouter;
 
-  const MyApp({Key? key, required this.accountsRepository}) : super(key: key);
+  const MyApp({
+    Key? key,
+    required this.accountsRepository,
+    required this.appRouter,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +55,8 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         theme: Provider.of<ThemeModel>(context).currentTheme,
-        // darkTheme: Provider.of<ThemeModel>(context).currentTheme,
-        home: HomeScreen(),
+        darkTheme: Provider.of<ThemeModel>(context).currentTheme,
+        onGenerateRoute: appRouter.onGenerateRoute,
       ),
     );
   }

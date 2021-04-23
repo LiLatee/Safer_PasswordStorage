@@ -17,7 +17,6 @@ class AccountsCubit extends Cubit<AccountsState> {
   }
 
   Future<void> addAccount({required AccountDataEntity accountData}) async {
-    // state.accountDataList.add(accountData);
     await accountsRepository.addAccount(accountData: accountData);
     emit(AccountsLoaded(
         accountDataList: await accountsRepository.getAllAccounts()));
@@ -26,8 +25,8 @@ class AccountsCubit extends Cubit<AccountsState> {
   Future<void> deleteAccount(
       {required AccountDataEntity accountDataEntity}) async {
     await accountsRepository.deleteAccount(accountData: accountDataEntity);
-    var accounts = await accountsRepository.getAllAccounts();
-    emit(AccountsLoaded(accountDataList: accounts));
+    emit(AccountsLoaded(
+        accountDataList: await accountsRepository.getAllAccounts()));
   }
 
   Future<AsyncSnapshot<String>> exportData(
@@ -47,8 +46,8 @@ class AccountsCubit extends Cubit<AccountsState> {
         await accountsRepository.importEncryptedDatabase(
             context: context, secretKey: secretKey, filepath: filepath);
 
-    var importedAccountsList = await accountsRepository.getAllAccounts();
-    emit(AccountsImported(accountDataList: importedAccountsList));
+    emit(AccountsImported(
+        accountDataList: await accountsRepository.getAllAccounts()));
     return result;
   }
 

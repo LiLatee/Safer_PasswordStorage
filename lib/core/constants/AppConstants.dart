@@ -5,7 +5,6 @@ const double defaultIconRadius = kMinInteractiveDimension / 2;
 const double defaultCircularBorderRadius = 25.0;
 const Color pressedButtonColor = Color(0xFFe94560);
 const Color dismissColor = Color(0xFFac0d0d);
-// const List<String> availableIconsNames = ['facebook', 'twitter'];
 const Duration animationsDuration = Duration(milliseconds: 500);
 const double heightForOneField = 75.0;
 const double maxHeightForFields = 300.0;

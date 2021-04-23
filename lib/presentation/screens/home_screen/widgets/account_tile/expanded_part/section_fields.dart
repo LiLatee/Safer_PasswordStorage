@@ -35,7 +35,7 @@ class SectionFieldsState extends State<SectionFields> {
     _accountDataEntity = Provider.of<AccountDataEntity>(context);
     for (var field in _accountDataEntity.fields)
       if (!_textEditingControllerMap.containsKey(field.uuid))
-        _textEditingControllerMap[field.uuid] = TextEditingController();
+        _textEditingControllerMap[field.uuid!] = TextEditingController();
 
     fieldsWidgets = buildFieldsWidgets(
       context: context,
