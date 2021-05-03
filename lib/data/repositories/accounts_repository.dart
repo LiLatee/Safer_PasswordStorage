@@ -12,6 +12,7 @@ import '../models/field_data_entity.dart';
 
 class AccountsRepository {
   final SQLprovider sqlProvider;
+  late final String key;
 
   AccountsRepository({required this.sqlProvider});
 

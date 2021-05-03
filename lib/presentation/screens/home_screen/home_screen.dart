@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_simple_password_storage_clean/core/themes/app_theme.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/preferences_cubit.dart';
 import 'package:provider/provider.dart';
 
 import 'widgets/add_account_floating_button.dart';
@@ -11,16 +13,31 @@ import 'widgets/three_dots_menu/import_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _PasswordListPageState();
+  State<StatefulWidget> createState() => _HomeScreenState();
 }
 
-class _PasswordListPageState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     ThemeType themeType =
         Provider.of<ThemeModel>(context, listen: false).themeType;
+    return buildHomeScreen(context, themeType);
+    // return BlocBuilder<PreferencesCubit, PreferencesState>(
+    //   builder: (context, state) {
+    //     if (state is PreferencesLoaded && state.keyExists)
+    //       return buildHomeScreen(context, themeType);
+    //     else if (state is PreferencesLoaded && !state.keyExists)
+    //       Future.microtask(
+    //           () => Navigator.pushNamed(context, '/keyIsNeededDialog'));
 
+    //     return Center(child: CircularProgressIndicator());
+    //   },
+    // );
+  }
+
+  Localizations buildHomeScreen(BuildContext context, ThemeType themeType) {
     return Localizations.override(
+      // TODO remove Localizations.override
       context: context,
       locale: const Locale('pl'),
       child: Scaffold(

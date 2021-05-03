@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:uuid/uuid.dart';
+import 'package:encrypt/encrypt.dart' as enc;
 
 import '../../core/constants/AppConstants.dart' as AppConstants;
 import '../../core/constants/AppFunctions.dart' as AppFunctions;
@@ -40,6 +41,36 @@ class AccountDataEntity extends Equatable {
 
     /// Setting [icon] widget. Generate widget with [iconColorHex] or with random color.
     if (iconWidget == null) setIconWidget();
+  }
+
+  AccountDataEntity encrypt({required String key}) {
+    final aesKey = enc.Key.fromUtf8(key);
+    // final iv = enc.IV.fromLength(16);
+    enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
+
+    List<FieldDataEntity> encryptedFields =
+        this.fields.map((e) => e.encrypt(key: key)).toList();
+
+    return this.copyWith(
+      accountName: encrypter.encrypt(this.accountName).toString(),
+      // iconImage:
+      fields: encryptedFields,
+    );
+  }
+
+  AccountDataEntity decrypt({required String key}) {
+    final aesKey = enc.Key.fromUtf8(key);
+    // final iv = enc.IV.fromLength(16);
+    enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
+
+    List<FieldDataEntity> encryptedFields =
+        this.fields.map((e) => e.decrypt(key: key)).toList();
+
+    return this.copyWith(
+      accountName: encrypter.decrypt(enc.Encrypted.fromUtf8(this.accountName)),
+      // iconImage:
+      fields: encryptedFields,
+    );
   }
 
   void setIconWidget() {
