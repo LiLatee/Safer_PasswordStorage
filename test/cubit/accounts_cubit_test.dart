@@ -1,6 +1,6 @@
 import 'package:my_simple_password_storage_clean/data/data_providers/SQLprovider.dart';
 import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository.dart';
+import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository_impl.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/accounts_cubit.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:test/test.dart';
@@ -11,8 +11,8 @@ void main() {
 
     setUp(() async {
       await SQLprovider.db.initDB();
-      AccountsRepository accountsRepository =
-          AccountsRepository(sqlProvider: SQLprovider());
+      AccountsRepositoryImlp accountsRepository =
+          AccountsRepositoryImlp(sqlProvider: SQLprovider());
       accountsCubit = AccountsCubit(accountsRepository: accountsRepository);
     });
 

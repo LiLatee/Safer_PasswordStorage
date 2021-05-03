@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/themes/app_theme.dart';
 import 'data/data_providers/SQLprovider.dart';
-import 'data/repositories/accounts_repository.dart';
+import 'data/repositories/accounts_repository_impl.dart';
 import 'logic/cubit/accounts_cubit.dart';
 import 'logic/cubit/preferences_cubit.dart';
 import 'presentation/router/app_router.dart';
@@ -22,7 +22,7 @@ void main() async {
   runApp(ChangeNotifierProvider(
     create: (context) => ThemeModel(),
     child: MyApp(
-      accountsRepository: AccountsRepository(sqlProvider: SQLprovider()),
+      accountsRepository: AccountsRepositoryImlp(sqlProvider: SQLprovider()),
       appRouter: AppRouter(),
       // prefs: prefs,
     ),
@@ -30,7 +30,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final AccountsRepository accountsRepository;
+  final AccountsRepositoryImlp accountsRepository;
   final AppRouter appRouter;
 
   // final SharedPreferences prefs;

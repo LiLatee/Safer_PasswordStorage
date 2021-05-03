@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/preferences_cubit.dart';
 
 import '../../data/models/account_data_entity.dart';
-import '../../data/repositories/accounts_repository.dart';
+import '../../data/repositories/accounts_repository_impl.dart';
 
 part 'accounts_state.dart';
 
 class AccountsCubit extends Cubit<AccountsState> {
-  final AccountsRepository accountsRepository;
+  final AccountsRepositoryImlp accountsRepository;
   // final PreferencesCubit preferencesCubit;
   late StreamSubscription keyStreamSubscription;
 
@@ -19,9 +19,20 @@ class AccountsCubit extends Cubit<AccountsState> {
     required this.accountsRepository,
     //  required this.preferencesCubit,
   }) : super(AccountsLoading(accountDataList: <AccountDataEntity>[])) {
-    accountsRepository
-        .getAllAccounts()
-        .then((value) => emit(AccountsLoaded(accountDataList: value)));
+    accountsRepository.getAllAccounts().then(
+      (failureOrAccountsList) {
+        failureOrAccountsList.fold(
+          (failure) {
+            return null; // TODO
+          },
+          (accountsList) {
+            emit(
+              AccountsLoaded(accountDataList: accountsList),
+            );
+          },
+        );
+      },
+    );
   }
 
   // StreamSubscription<PreferencesState> monitorKey() {
@@ -34,38 +45,61 @@ class AccountsCubit extends Cubit<AccountsState> {
   // }
 
   Future<void> addAccount({required AccountDataEntity accountData}) async {
-    await accountsRepository.addAccount(accountData: accountData);
-    emit(AccountsLoaded(
-        accountDataList: await accountsRepository.getAllAccounts()));
+    var failureOrSuccess =
+        await accountsRepository.addAccount(accountData: accountData);
+
+    failureOrSuccess.fold(
+      (failure) => null,
+      (success) async {
+        var failureOrAllAccounts = await accountsRepository.getAllAccounts();
+
+        failureOrAllAccounts.fold(
+          (failure) => null,
+          (allAccounts) => emit(
+            AccountsLoaded(accountDataList: allAccounts),
+          ),
+        );
+      },
+    );
   }
 
   Future<void> deleteAccount(
       {required AccountDataEntity accountDataEntity}) async {
-    await accountsRepository.deleteAccount(accountData: accountDataEntity);
-    emit(AccountsLoaded(
-        accountDataList: await accountsRepository.getAllAccounts()));
+    var failureOrSuccess =
+        await accountsRepository.deleteAccount(accountData: accountDataEntity);
+
+    failureOrSuccess.fold(
+      (failure) => null,
+      (success) async {
+        var failureOrAllAccounts = await accountsRepository.getAllAccounts();
+        failureOrAllAccounts.fold(
+          (failure) => null,
+          (allAccounts) => emit(AccountsLoaded(accountDataList: allAccounts)),
+        );
+      },
+    );
   }
 
-  Future<AsyncSnapshot<String>> exportData(
+  Future<void> exportData(
       {required String secretKey, required BuildContext context}) async {
-    AsyncSnapshot<String> result =
-        await accountsRepository.exportEncryptedDatabase(secretKey, context);
+    // AsyncSnapshot<String> result =
+    //     await accountsRepository.exportEncryptedDatabase(secretKey, context);
 
     emit(AccountsExported(accountDataList: state.accountDataList));
-    return result;
+    // return result;
   }
 
-  Future<AsyncSnapshot<String>> importData(
+  Future<void> importData(
       {required String secretKey,
       required BuildContext context,
       required String filepath}) async {
-    AsyncSnapshot<String> result =
-        await accountsRepository.importEncryptedDatabase(
-            context: context, secretKey: secretKey, filepath: filepath);
+    // AsyncSnapshot<String> result =
+    //     await accountsRepository.importEncryptedDatabase(
+    //         context: context, secretKey: secretKey, filepath: filepath);
 
     emit(AccountsImported(
         accountDataList: await accountsRepository.getAllAccounts()));
-    return result;
+    // return result;
   }
 
   // @override

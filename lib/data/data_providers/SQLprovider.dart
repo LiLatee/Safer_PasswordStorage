@@ -3,8 +3,9 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 import '../database/database.dart';
 import '../models/account_data_entity.dart';
 import '../models/field_data_entity.dart';
+import 'base_data_provider.dart';
 
-class SQLprovider {
+class SQLprovider implements BaseDataProvider {
   static final SQLprovider _instance = SQLprovider._internal();
   static final db = SQLprovider();
 
@@ -30,11 +31,11 @@ class SQLprovider {
   }
 
   Future<void> deleteAccount({required AccountDataEntity accountData}) async {
-    await _SQL_DB.accountDao.deleteAccount(accountData);
+    return await _SQL_DB.accountDao.deleteAccount(accountData);
   }
 
-  Future<void> updateAccount(AccountDataEntity accountData) async {
-    await _SQL_DB.accountDao.updateAccount(accountData);
+  Future<void> updateAccount({required AccountDataEntity accountData}) async {
+    return await _SQL_DB.accountDao.updateAccount(accountData);
   }
 
   Future<AccountDataEntity?> getAccountById(String uuid) async {
@@ -46,15 +47,15 @@ class SQLprovider {
   }
 
   Future<void> addField({required FieldDataEntity fieldData}) async {
-    await _SQL_DB.fieldDao.insertField(fieldData);
+    return await _SQL_DB.fieldDao.insertField(fieldData);
   }
 
-  Future<void> updateField(FieldDataEntity fieldData) async {
-    await _SQL_DB.fieldDao.updateField(fieldData);
+  Future<void> updateField({required FieldDataEntity fieldData}) async {
+    return await _SQL_DB.fieldDao.updateField(fieldData);
   }
 
   Future<void> deleteField({required FieldDataEntity fieldData}) async {
-    await _SQL_DB.fieldDao.deleteField(fieldData);
+    return await _SQL_DB.fieldDao.deleteField(fieldData);
   }
 
   Future<List<FieldDataEntity>?> getFieldsOfAccount(

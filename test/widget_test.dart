@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_simple_password_storage_clean/data/data_providers/SQLprovider.dart';
-import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository.dart';
+import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository_impl.dart';
 
 import 'package:my_simple_password_storage_clean/main.dart';
 
@@ -18,7 +18,8 @@ void main() {
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp(
-        accountsRepository: AccountsRepository(sqlProvider: SQLprovider())));
+        accountsRepository:
+            AccountsRepositoryImlp(sqlProvider: SQLprovider())));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
