@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
 import 'package:uuid/uuid.dart';
+import 'package:encrypt/encrypt.dart' as enc;
 
 import 'account_data_entity.dart';
 
@@ -35,6 +36,28 @@ class FieldDataEntity extends Equatable {
     this.position = 0,
   }) {
     if (this.uuid == null) this.uuid = Uuid().v1();
+  }
+
+  FieldDataEntity encrypt({required String key}) {
+    final aesKey = enc.Key.fromUtf8(key);
+    // final iv = enc.IV.fromLength(16);
+    enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
+
+    return this.copyWith(
+      name: encrypter.encrypt(this.name).toString(),
+      value: encrypter.encrypt(this.value).toString(),
+    );
+  }
+
+  FieldDataEntity decrypt({required String key}) {
+    final aesKey = enc.Key.fromUtf8(key);
+    // final iv = enc.IV.fromLength(16);
+    enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
+
+    return this.copyWith(
+      name: encrypter.decrypt(enc.Encrypted.fromUtf8(this.name)),
+      value: encrypter.decrypt(enc.Encrypted.fromUtf8(this.value)),
+    );
   }
 
   @override

@@ -4,8 +4,8 @@ import 'package:flutter/scheduler.dart';
 enum ThemeType { Light, Dark }
 
 class ThemeModel extends ChangeNotifier {
-  ThemeData currentTheme = AppTheme.darkTheme;
-  ThemeType themeType = ThemeType.Dark;
+  ThemeData currentTheme = AppTheme.lightTheme;
+  ThemeType themeType = ThemeType.Light;
 
   // ThemeModel() {
   //   if (SchedulerBinding.instance != null) {
