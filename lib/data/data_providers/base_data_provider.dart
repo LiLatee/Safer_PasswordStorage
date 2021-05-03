@@ -1,29 +1,26 @@
-// import 'package:sqflite/sqflite.dart' as sqflite;
+import '../models/account_data_entity.dart';
+import '../models/field_data_entity.dart';
 
-// import '../database/database.dart';
-// import '../models/account_data_entity.dart';
-// import '../models/field_data_entity.dart';
+abstract class BaseDataProvider {
+  Future<void> addAccount({required AccountDataEntity accountData});
 
-// abstract class BaseDataProvider {
-//   AccountDataEntity addAccount({required AccountDataEntity accountData});
+  Future<void> deleteAccount({required AccountDataEntity accountData});
 
-//   AccountDataEntity deleteAccount({required AccountDataEntity accountData});
+  Future<void> updateAccount({required AccountDataEntity accountData});
 
-//   AccountDataEntity updateAccount(AccountDataEntity accountData);
+  Future<AccountDataEntity?> getAccountById(String uuid);
 
-//   List<AccountDataEntity?> getAccountById(String uuid);
+  Future<List<AccountDataEntity>> getAllAccounts();
 
-//   List<AccountDataEntity> getAllAccounts();
+  Future<void> addField({required FieldDataEntity fieldData});
 
-//   AccountDataEntity addField({required FieldDataEntity fieldData});
+  Future<void> updateField({required FieldDataEntity fieldData});
 
-//   AccountDataEntity updateField(FieldDataEntity fieldData);
+  Future<void> deleteField({required FieldDataEntity fieldData});
 
-//   Future<void> deleteField({required FieldDataEntity fieldData});
-
-//   List<FieldDataEntity>? getFieldsOfAccount(
-//       {required AccountDataEntity accountData});
-// }
+  Future<List<FieldDataEntity>?> getFieldsOfAccount(
+      {required AccountDataEntity accountData});
+}
 
 // import 'package:sqflite/sqflite.dart' as sqflite;
 

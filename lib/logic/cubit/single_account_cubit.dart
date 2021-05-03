@@ -6,12 +6,12 @@ import 'package:meta/meta.dart';
 
 import '../../data/models/account_data_entity.dart';
 import '../../data/models/field_data_entity.dart';
-import '../../data/repositories/accounts_repository.dart';
+import '../../data/repositories/accounts_repository_impl.dart';
 
 part 'single_account_state.dart';
 
 class SingleAccountCubit extends Cubit<SingleAccountState> {
-  final AccountsRepository accountsRepository;
+  final AccountsRepositoryImlp accountsRepository;
 
   SingleAccountCubit({
     required accountDataEntity,
@@ -22,26 +22,41 @@ class SingleAccountCubit extends Cubit<SingleAccountState> {
     log("addField");
     await accountsRepository.addField(fieldData: fieldDataEntity);
 
-    AccountDataEntity modifiedAccountData =
-        (await accountsRepository.getAccountById(fieldDataEntity.accountId))!;
+    var failureOrModifiedAccountData =
+        (await accountsRepository.getAccountById(fieldDataEntity.accountId));
 
-    emit(SingleAccountStateReading(accountDataEntity: modifiedAccountData));
+    failureOrModifiedAccountData.fold(
+      (failure) {
+        return null; // TODO
+      },
+      (modifiedAccountData) {
+        emit(
+            SingleAccountStateReading(accountDataEntity: modifiedAccountData!));
+      },
+    );
   }
 
   Future<void> deleteField({required FieldDataEntity fieldDataEntity}) async {
     log("deleteField");
     await accountsRepository.deleteField(fieldData: fieldDataEntity);
 
-    AccountDataEntity modifiedAccountData =
-        (await accountsRepository.getAccountById(fieldDataEntity.accountId))!;
+    var failureOrModifiedAccountData =
+        (await accountsRepository.getAccountById(fieldDataEntity.accountId));
 
-    modifiedAccountData.isEditButtonPressed =
-        state.accountDataEntity.isEditButtonPressed;
+    failureOrModifiedAccountData.fold(
+      (failure) {
+        return null; // TODO
+      },
+      (modifiedAccountData) {
+        modifiedAccountData!.isEditButtonPressed =
+            state.accountDataEntity.isEditButtonPressed;
 
-    modifiedAccountData.isShowButtonPressed =
-        state.accountDataEntity.isShowButtonPressed;
+        modifiedAccountData.isShowButtonPressed =
+            state.accountDataEntity.isShowButtonPressed;
 
-    emit(SingleAccountStateReading(accountDataEntity: modifiedAccountData));
+        emit(SingleAccountStateReading(accountDataEntity: modifiedAccountData));
+      },
+    );
   }
 
   Future<void> toggleEditButton(
@@ -104,16 +119,23 @@ class SingleAccountCubit extends Cubit<SingleAccountState> {
     await accountsRepository.updateAccount(
         (state as SingleAccountStateEditing).accountDataEntityChanged);
 
-    var modifiedAccountData =
+    var failureOrModifiedAccountData =
         await accountsRepository.getAccountById(state.accountDataEntity.uuid);
 
-    modifiedAccountData!.isEditButtonPressed =
-        state.accountDataEntity.isEditButtonPressed;
+    failureOrModifiedAccountData.fold(
+      (failure) {
+        return null; // TODO
+      },
+      (modifiedAccountData) {
+        modifiedAccountData!.isEditButtonPressed =
+            state.accountDataEntity.isEditButtonPressed;
 
-    modifiedAccountData.isShowButtonPressed =
-        state.accountDataEntity.isShowButtonPressed;
+        modifiedAccountData.isShowButtonPressed =
+            state.accountDataEntity.isShowButtonPressed;
 
-    emit(SingleAccountStateReading(accountDataEntity: modifiedAccountData));
+        emit(SingleAccountStateReading(accountDataEntity: modifiedAccountData));
+      },
+    );
   }
 
   Future<void> undoChanges() async {

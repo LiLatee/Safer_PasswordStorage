@@ -1,10 +1,8 @@
 import 'package:floor/floor.dart';
-import 'package:flutter/cupertino.dart';
-
 import '../models/account_data_entity.dart';
 
 @dao
-abstract class AccountDao extends ChangeNotifier {
+abstract class AccountDao {
   @Insert(onConflict: OnConflictStrategy.rollback)
   Future<void> addAccount(AccountDataEntity account);
 
