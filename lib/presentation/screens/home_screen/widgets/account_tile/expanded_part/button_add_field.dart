@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/add_field_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/single_account_cubit.dart';
 
 import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 import '../../../../../../data/models/account_data_entity.dart';
 import '../../../../../../data/models/field_data_entity.dart';
-import '../../../../../../logic/cubit/single_account_cubit.dart';
 import '../../../../../widgets_templates/dialog_template.dart';
 import '../../../../../widgets_templates/field_widget.dart';
 import 'button_template.dart';
@@ -129,7 +130,7 @@ class ButtonAddField extends StatelessWidget {
           );
 
           if (result != null)
-            BlocProvider.of<SingleAccountCubit>(context).addField(
+            BlocProvider.of<AddFieldCubit>(context).addField(
                 fieldDataEntity: FieldDataEntity(
               accountId: _accountDataEntity.uuid!,
               name: result['name'],

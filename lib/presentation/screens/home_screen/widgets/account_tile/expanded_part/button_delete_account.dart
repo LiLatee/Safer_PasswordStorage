@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/delete_account_cubit.dart';
 
 import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 import '../../../../../../data/models/account_data_entity.dart';
-import '../../../../../../logic/cubit/accounts_cubit.dart';
 import '../../../../../widgets_templates/dialog_template.dart';
 import 'button_template.dart';
 
-class ButtonRemoveAccount extends StatelessWidget {
-  const ButtonRemoveAccount({
+class ButtonDeleteAccount extends StatelessWidget {
+  const ButtonDeleteAccount({
     Key? key,
     required AccountDataEntity accountDataEntity,
   })   : _accountDataEntity = accountDataEntity,
@@ -18,11 +18,11 @@ class ButtonRemoveAccount extends StatelessWidget {
   final AccountDataEntity _accountDataEntity;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext superContext) {
     return ButtonTemplate(
       onPressed: () {
         showDialog(
-          context: context,
+          context: superContext,
           builder: (context) => MyDialog(
             title: AppLocalizations.of(context)!.removeAccountConfirmationTitle,
             content: Container(
@@ -34,9 +34,9 @@ class ButtonRemoveAccount extends StatelessWidget {
               MyDialogButton(
                 buttonName: AppLocalizations.of(context)!.remove,
                 onPressed: () {
-                  // DataProvider.deleteAccount(_accountDataEntity);
-                  BlocProvider.of<AccountsCubit>(context)
+                  BlocProvider.of<DeleteAccountCubit>(superContext)
                       .deleteAccount(accountDataEntity: _accountDataEntity);
+
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
@@ -54,7 +54,7 @@ class ButtonRemoveAccount extends StatelessWidget {
         );
       },
       icon: Icons.delete_forever,
-      label: AppLocalizations.of(context)!.remove,
+      label: AppLocalizations.of(superContext)!.remove,
     );
   }
 }
