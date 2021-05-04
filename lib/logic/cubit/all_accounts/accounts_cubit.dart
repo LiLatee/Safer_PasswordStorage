@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,10 @@ class AccountsCubit extends Cubit<AccountsState> {
     required this.accountsRepository,
     //  required this.preferencesCubit,
   }) : super(AccountsLoading(accountDataList: <AccountDataEntity>[])) {
+    fetchData();
+  }
+
+  void fetchData() {
     accountsRepository.getAllAccounts().then(
       (failureOrAccountsList) {
         failureOrAccountsList.fold(
@@ -34,20 +39,16 @@ class AccountsCubit extends Cubit<AccountsState> {
 
   void addAccount({required AccountDataEntity accountData}) {
     final currentState = state;
-    if (currentState is AccountsLoaded) {
-      final accountsList = currentState.accountDataList;
-      accountsList.add(accountData);
-      emit(AccountsLoaded(accountDataList: accountsList));
-    }
+    final accountsList = currentState.accountDataList;
+    accountsList.add(accountData);
+    emit(AccountsLoaded(accountDataList: accountsList));
   }
 
   void deleteAccount({required AccountDataEntity accountData}) {
     final currentState = state;
-    if (currentState is AccountsLoaded) {
-      final accountsList = currentState.accountDataList;
-      accountsList..remove(accountData);
-      emit(AccountsLoaded(accountDataList: accountsList));
-    }
+    final accountsList = currentState.accountDataList;
+    accountsList.remove(accountData);
+    emit(AccountsLoaded(accountDataList: accountsList));
   }
 
   // StreamSubscription<PreferencesState> monitorKey() {
@@ -59,27 +60,27 @@ class AccountsCubit extends Cubit<AccountsState> {
   //   });
   // }
 
-  Future<void> exportData(
-      {required String secretKey, required BuildContext context}) async {
-    // AsyncSnapshot<String> result =
-    //     await accountsRepository.exportEncryptedDatabase(secretKey, context);
+  // Future<void> exportData(
+  //     {required String secretKey, required BuildContext context}) async {
+  //   // AsyncSnapshot<String> result =
+  //   //     await accountsRepository.exportEncryptedDatabase(secretKey, context);
 
-    emit(AccountsExported(accountDataList: state.accountDataList));
-    // return result;
-  }
+  //   emit(AccountsExported(accountDataList: state.accountDataList));
+  //   // return result;
+  // }
 
-  Future<void> importData(
-      {required String secretKey,
-      required BuildContext context,
-      required String filepath}) async {
-    // AsyncSnapshot<String> result =
-    //     await accountsRepository.importEncryptedDatabase(
-    //         context: context, secretKey: secretKey, filepath: filepath);
+  // Future<void> importData(
+  //     {required String secretKey,
+  //     required BuildContext context,
+  //     required String filepath}) async {
+  //   // AsyncSnapshot<String> result =
+  //   //     await accountsRepository.importEncryptedDatabase(
+  //   //         context: context, secretKey: secretKey, filepath: filepath);
 
-    emit(AccountsImported(
-        accountDataList: await accountsRepository.getAllAccounts()));
-    // return result;
-  }
+  //   emit(AccountsImported(
+  //       accountDataList: await accountsRepository.getAllAccounts()));
+  //   // return result;
+  // }
 
   // @override
   // Future<void> close() {

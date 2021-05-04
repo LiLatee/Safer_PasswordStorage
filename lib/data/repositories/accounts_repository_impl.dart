@@ -6,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_simple_password_storage_clean/core/errors/failures.dart';
+import 'package:my_simple_password_storage_clean/data/data_providers/base_data_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../data_providers/SQLprovider.dart';
@@ -14,7 +15,7 @@ import '../models/field_data_entity.dart';
 import 'accounts_repository.dart';
 
 class AccountsRepositoryImlp implements AccountsRepository {
-  final SQLprovider sqlProvider;
+  final BaseDataProvider sqlProvider;
 
   AccountsRepositoryImlp({required this.sqlProvider});
 
@@ -97,10 +98,8 @@ class AccountsRepositoryImlp implements AccountsRepository {
 
   @override
   Future<Either<Failure, void>> importEncryptedDatabase(
-      {required BuildContext context,
-      required String secretKey,
-      required String filepath}) async {
-    String databasePath = sqlProvider.getDatabasePath();
+      {required String secretKey, required String filepath}) async {
+    String databasePath = (sqlProvider as SQLprovider).getDatabasePath();
 
     if (databasePath == null)
       return Left(SqlLiteFailure());
@@ -119,7 +118,7 @@ class AccountsRepositoryImlp implements AccountsRepository {
 
   @override
   Future<Either<Failure, void>> exportEncryptedDatabase(
-      String secretKey, BuildContext context) async {
+      {required String secretKey}) async {
     if (await Permission.storage.request().isGranted) {
       DateTime now = DateTime.now();
       String filename =
@@ -127,7 +126,7 @@ class AccountsRepositoryImlp implements AccountsRepository {
       String path = "/storage/emulated/0/Download/" + filename;
 
       var crypt = AesCrypt(secretKey);
-      String databasePath = sqlProvider.getDatabasePath();
+      String databasePath = (sqlProvider as SQLprovider).getDatabasePath();
 
       if (databasePath == null)
         return Left(SqlLiteFailure());

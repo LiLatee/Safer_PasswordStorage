@@ -29,10 +29,8 @@ abstract class AccountsRepository {
       {required AccountDataEntity accountData});
 
   Future<Either<Failure, void>> exportEncryptedDatabase(
-      String secretKey, BuildContext context);
+      {required String secretKey});
 
   Future<Either<Failure, void>> importEncryptedDatabase(
-      {required BuildContext context,
-      required String secretKey,
-      required String filepath});
+      {required String secretKey, required String filepath});
 }
