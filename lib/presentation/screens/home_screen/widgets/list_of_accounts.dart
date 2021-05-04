@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/accounts_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/add_field_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/delete_field_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/edit_single_account_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/single_account_cubit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/constants/AppConstants.dart' as AppConstants;
 import '../../../../data/models/account_data_entity.dart';
-import '../../../../logic/cubit/accounts_cubit.dart';
-import '../../../../logic/cubit/single_account_cubit.dart';
 import '../modified_flutter_widgets/expansion_panel.dart' as epn;
 // import 'account_tile/expanded_part/account_data_expanded_part.dart';
 import 'account_tile/expanded_part/account_data_expanded_part.dart';
@@ -41,6 +44,29 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
 
   epn.ExpansionPanelRadio buildExpansionPanel(
       {required AccountDataEntity accountDataEntity}) {
+    var singleAccountCubit = SingleAccountCubit(
+      accountsRepository:
+          BlocProvider.of<AccountsCubit>(context).accountsRepository,
+      accountDataEntity: accountDataEntity,
+    );
+
+    var addFieldCubit = AddFieldCubit(
+      accountsRepository:
+          BlocProvider.of<AccountsCubit>(context).accountsRepository,
+      singleAccountCubit: singleAccountCubit,
+    );
+
+    var deleteFieldCubit = DeleteFieldCubit(
+      accountsRepository:
+          BlocProvider.of<AccountsCubit>(context).accountsRepository,
+      singleAccountCubit: singleAccountCubit,
+    );
+
+    var editSingleAccountCubit = EditSingleAccountCubit(
+      accountsRepository:
+          BlocProvider.of<AccountsCubit>(context).accountsRepository,
+      singleAccountCubit: singleAccountCubit,
+    );
     return epn.ExpansionPanelRadio(
       canTapOnHeader: true,
       value: accountDataEntity.uuid!,
@@ -51,26 +77,23 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
           child: AccountTileHeader(),
         );
       },
-      body: BlocProvider(
-        create: (context) => SingleAccountCubit(
-          accountsRepository:
-              BlocProvider.of<AccountsCubit>(context).accountsRepository,
-          accountDataEntity: accountDataEntity,
-        ),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<SingleAccountCubit>.value(
+            value: singleAccountCubit,
+          ),
+          BlocProvider<AddFieldCubit>.value(
+            value: addFieldCubit,
+          ),
+          BlocProvider<DeleteFieldCubit>.value(
+            value: deleteFieldCubit,
+          ),
+          BlocProvider<EditSingleAccountCubit>.value(
+            value: editSingleAccountCubit,
+          ),
+        ],
         child: AccountDataExpandedPart(),
       ),
-      // body: BlocProvider(
-      //   create: (context) => SingleAccountCubit(
-      //     accountsRepository:
-      //         BlocProvider.of<AccountsCubit>(context).accountsRepository,
-      //     accountDataEntity: accountDataEntity,
-      //   ),
-      //   child: AccountDataExpandedPart(),
-      // ),
-      // body: Provider.value(
-      //   value: accountDataEntity,
-      //   child: AccountDataExpandedPart(),
-      // ),
     );
   }
 }

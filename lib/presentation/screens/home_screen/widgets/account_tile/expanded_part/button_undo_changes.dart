@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../../logic/cubit/single_account_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/edit_single_account_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/single_account_cubit.dart';
 import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -36,8 +37,8 @@ class ButtonUndoChanges extends StatelessWidget {
                   Text(AppLocalizations.of(context)!.undoChangedFields),
                 ],
               ),
-              onPressed: () =>
-                  BlocProvider.of<SingleAccountCubit>(context).undoChanges(),
+              onPressed: () => BlocProvider.of<EditSingleAccountCubit>(context)
+                  .undoChanges(),
             ),
           ],
         ),

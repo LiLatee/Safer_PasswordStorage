@@ -1,17 +1,14 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/preferences_cubit.dart';
-
-import '../../data/models/account_data_entity.dart';
-import '../../data/repositories/accounts_repository_impl.dart';
+import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
+import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository.dart';
 
 part 'accounts_state.dart';
 
 class AccountsCubit extends Cubit<AccountsState> {
-  final AccountsRepositoryImlp accountsRepository;
+  final AccountsRepository accountsRepository;
   // final PreferencesCubit preferencesCubit;
   late StreamSubscription keyStreamSubscription;
 
@@ -35,6 +32,24 @@ class AccountsCubit extends Cubit<AccountsState> {
     );
   }
 
+  void addAccount({required AccountDataEntity accountData}) {
+    final currentState = state;
+    if (currentState is AccountsLoaded) {
+      final accountsList = currentState.accountDataList;
+      accountsList.add(accountData);
+      emit(AccountsLoaded(accountDataList: accountsList));
+    }
+  }
+
+  void deleteAccount({required AccountDataEntity accountData}) {
+    final currentState = state;
+    if (currentState is AccountsLoaded) {
+      final accountsList = currentState.accountDataList;
+      accountsList..remove(accountData);
+      emit(AccountsLoaded(accountDataList: accountsList));
+    }
+  }
+
   // StreamSubscription<PreferencesState> monitorKey() {
   //   return keyStreamSubscription = preferencesCubit.stream.listen((keyState) {
   //     if (keyState is PreferencesLoaded) {
@@ -43,42 +58,6 @@ class AccountsCubit extends Cubit<AccountsState> {
   //     }
   //   });
   // }
-
-  Future<void> addAccount({required AccountDataEntity accountData}) async {
-    var failureOrSuccess =
-        await accountsRepository.addAccount(accountData: accountData);
-
-    failureOrSuccess.fold(
-      (failure) => null,
-      (success) async {
-        var failureOrAllAccounts = await accountsRepository.getAllAccounts();
-
-        failureOrAllAccounts.fold(
-          (failure) => null,
-          (allAccounts) => emit(
-            AccountsLoaded(accountDataList: allAccounts),
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> deleteAccount(
-      {required AccountDataEntity accountDataEntity}) async {
-    var failureOrSuccess =
-        await accountsRepository.deleteAccount(accountData: accountDataEntity);
-
-    failureOrSuccess.fold(
-      (failure) => null,
-      (success) async {
-        var failureOrAllAccounts = await accountsRepository.getAllAccounts();
-        failureOrAllAccounts.fold(
-          (failure) => null,
-          (allAccounts) => emit(AccountsLoaded(accountDataList: allAccounts)),
-        );
-      },
-    );
-  }
 
   Future<void> exportData(
       {required String secretKey, required BuildContext context}) async {

@@ -3,10 +3,13 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/accounts_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/delete_account_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/delete_field_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/edit_single_account_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/single_account_cubit.dart';
 import '../../../../../../data/models/account_data_entity.dart';
 import '../../../../../../data/models/field_data_entity.dart';
-import '../../../../../../logic/cubit/accounts_cubit.dart';
-import '../../../../../../logic/cubit/single_account_cubit.dart';
 import '../../../../../widgets_templates/dialog_template.dart';
 import '../../../../../widgets_templates/field_widget.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +44,9 @@ class SectionFieldsState extends State<SectionFields> {
       context: context,
       fieldsDataEntity: _accountDataEntity.fields,
     );
+
+    // log("AccountData w section_fields");
+    // log(_accountDataEntity.toString());
 
     /// TODO: That has to be changed. There is no a proper way to disable reorder in ReorderableListView,
     /// so it has to be used another reorderable widget to make it possible.
@@ -94,8 +100,10 @@ class SectionFieldsState extends State<SectionFields> {
       value: fieldDataEntity.value,
       onChangedCallback: ({required newText}) {
         // fieldDataEntity.value = newText;
-        BlocProvider.of<SingleAccountCubit>(context).changeField(
-            fieldDataEntity: fieldDataEntity.copyWith(value: newText));
+        if (newText != fieldDataEntity.value) {
+          BlocProvider.of<EditSingleAccountCubit>(context).changeField(
+              fieldDataEntity: fieldDataEntity.copyWith(value: newText));
+        }
       },
       readOnly: !_accountDataEntity.isEditButtonPressed,
       hiddenValue:
@@ -198,13 +206,15 @@ class SectionFieldsState extends State<SectionFields> {
         direction: DismissDirection.horizontal,
         key: ValueKey(fieldDataEntity.uuid),
         onDismissed: (direction) {
-          // DataProvider.deleteField(fieldDataEntity);
-          BlocProvider.of<SingleAccountCubit>(context)
+          BlocProvider.of<DeleteFieldCubit>(context)
               .deleteField(fieldDataEntity: fieldDataEntity);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                content: Text(AppLocalizations.of(context)!
-                    .fieldRemovedSnackbar(fieldDataEntity.name))),
+              content: Text(
+                AppLocalizations.of(context)!
+                    .fieldRemovedSnackbar(fieldDataEntity.name),
+              ),
+            ),
           );
         },
         background: Container(color: AppConstants.dismissColor),

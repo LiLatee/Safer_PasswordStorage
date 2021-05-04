@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/edit_single_account_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/single_account/single_account_cubit.dart';
 
 import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
-import '../../../../../../logic/cubit/single_account_cubit.dart';
 
 class ButtonSaveChanges extends StatelessWidget {
   ButtonSaveChanges({
@@ -38,7 +39,8 @@ class ButtonSaveChanges extends StatelessWidget {
                 ],
               ),
               onPressed: () {
-                BlocProvider.of<SingleAccountCubit>(context).updateAccount();
+                BlocProvider.of<EditSingleAccountCubit>(context)
+                    .updateAccount();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(AppLocalizations.of(context)!
