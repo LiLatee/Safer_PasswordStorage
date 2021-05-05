@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/app_key_cubit.dart';
 import 'package:my_simple_password_storage_clean/presentation/widgets_templates/field_widget.dart';
 
 class FirstLaunchScreen extends StatelessWidget {
@@ -29,12 +31,15 @@ class FirstLaunchScreen extends StatelessWidget {
             ),
             FieldWidget(
               label: 'Your Key',
+              readOnly: false,
               controller: controller,
             ),
             TextButton(
               onPressed: () {
-                log("HALO");
-                // BlocProvider.of<PreferencesCubit>(context).setKey(key: key);
+                BlocProvider.of<AppKeyCubit>(context)
+                    .setKey(key: controller.text);
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text("Hasło ustawione")));
               },
               child: Text("START"),
             ),
