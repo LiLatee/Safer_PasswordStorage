@@ -1,15 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/preferences_cubit.dart';
 import 'package:my_simple_password_storage_clean/presentation/widgets_templates/field_widget.dart';
 
-class KeyIsNeededDialog extends StatelessWidget {
+class FirstLaunchScreen extends StatelessWidget {
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    String key = '';
-
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -31,12 +29,12 @@ class KeyIsNeededDialog extends StatelessWidget {
             ),
             FieldWidget(
               label: 'Your Key',
-              onChangedCallback: ({required newText}) => key = newText,
+              controller: controller,
             ),
             TextButton(
               onPressed: () {
                 log("HALO");
-                BlocProvider.of<PreferencesCubit>(context).setKey(key: key);
+                // BlocProvider.of<PreferencesCubit>(context).setKey(key: key);
               },
               child: Text("START"),
             ),

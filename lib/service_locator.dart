@@ -41,7 +41,7 @@ Future<void> init() async {
   );
 
   final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => PreferencesCubit(prefs: sharedPreferences));
+  sl.registerLazySingleton(() => sharedPreferences);
 
   //* Factories
   sl.registerFactoryParam<SingleAccountCubit, AccountDataEntity, void>(
