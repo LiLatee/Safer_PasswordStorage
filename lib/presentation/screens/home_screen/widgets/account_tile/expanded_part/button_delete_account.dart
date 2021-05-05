@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/delete_account_cubit.dart';
 
 import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 import '../../../../../../data/models/account_data_entity.dart';
+import '../../../../../../logic/cubit/all_accounts/delete_account_cubit.dart';
 import '../../../../../widgets_templates/dialog_template.dart';
 import 'button_template.dart';
 

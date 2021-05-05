@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:my_simple_password_storage_clean/core/errors/failures.dart';
+import '../../core/errors/failures.dart';
 
 import '../models/account_data_entity.dart';
 import '../models/field_data_entity.dart';

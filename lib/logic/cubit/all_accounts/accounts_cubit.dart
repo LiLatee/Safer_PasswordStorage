@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository.dart';
+
+import '../../../data/models/account_data_entity.dart';
+import '../../../data/repositories/accounts_repository.dart';
 
 part 'accounts_state.dart';
 

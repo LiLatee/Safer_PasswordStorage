@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/data/models/field_data_entity.dart';
-import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/single_account/single_account_cubit.dart';
+import '../../../data/models/account_data_entity.dart';
+import '../../../data/models/field_data_entity.dart';
+import '../../../data/repositories/accounts_repository.dart';
+import 'single_account_cubit.dart';
 
 part 'edit_single_account_state.dart';
 

@@ -5,8 +5,8 @@ import 'package:aes_crypt/aes_crypt.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_simple_password_storage_clean/core/errors/failures.dart';
-import 'package:my_simple_password_storage_clean/data/data_providers/base_data_provider.dart';
+import '../../core/errors/failures.dart';
+import '../data_providers/base_data_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../data_providers/SQLprovider.dart';

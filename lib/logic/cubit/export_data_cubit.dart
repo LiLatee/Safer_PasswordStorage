@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository.dart';
+import '../../data/repositories/accounts_repository.dart';
 
 part 'export_data_state.dart';
 

@@ -1,4 +1,5 @@
 import 'package:floor/floor.dart';
+
 import '../models/account_data_entity.dart';
 
 @dao

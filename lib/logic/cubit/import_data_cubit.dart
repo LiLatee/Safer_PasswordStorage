@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/accounts_cubit.dart';
+import '../../data/repositories/accounts_repository.dart';
+import 'all_accounts/accounts_cubit.dart';
 
 part 'import_data_state.dart';
 
