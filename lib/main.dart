@@ -3,21 +3,19 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/accounts_cubit.dart';
-import 'package:my_simple_password_storage_clean/presentation/screens/first_launch/key_is_needed_dialog.dart';
-import 'package:my_simple_password_storage_clean/presentation/screens/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/themes/app_theme.dart';
-import 'data/data_providers/SQLprovider.dart';
-import 'logic/cubit/app_key_cubit.dart';
-import 'service_locator.dart';
+import 'logic/cubit/all_accounts/accounts_cubit.dart';
 import 'logic/cubit/all_accounts/add_account_cubit.dart';
 import 'logic/cubit/all_accounts/delete_account_cubit.dart';
+import 'logic/cubit/app_key_cubit.dart';
 import 'logic/cubit/export_data_cubit.dart';
 import 'logic/cubit/import_data_cubit.dart';
 import 'presentation/router/app_router.dart';
+import 'presentation/screens/first_launch/key_is_needed_dialog.dart';
+import 'presentation/screens/home_screen/home_screen.dart';
+import 'service_locator.dart';
 import 'service_locator.dart' as di;
 
 void main() async {

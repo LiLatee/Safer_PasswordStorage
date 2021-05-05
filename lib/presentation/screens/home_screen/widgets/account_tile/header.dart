@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_simple_password_storage_clean/core/themes/app_theme.dart';
+import '../../../../../core/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/constants/AppConstants.dart' as AppConstants;

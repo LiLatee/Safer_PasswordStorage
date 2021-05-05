@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/app_key_cubit.dart';
-import 'package:my_simple_password_storage_clean/presentation/widgets_templates/field_widget.dart';
+import '../../../logic/cubit/app_key_cubit.dart';
+import '../../widgets_templates/field_widget.dart';
 
 class FirstLaunchScreen extends StatelessWidget {
   TextEditingController controller = TextEditingController();

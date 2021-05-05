@@ -1,16 +1,15 @@
 import 'package:get_it/get_it.dart';
-import 'package:my_simple_password_storage_clean/data/data_providers/base_data_provider.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
-import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository.dart';
-import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository_impl.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/accounts_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/add_account_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/delete_account_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/export_data_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/preferences_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/single_account/add_field_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/single_account/single_account_cubit.dart';
-import 'package:my_simple_password_storage_clean/presentation/router/app_router.dart';
+import 'data/data_providers/base_data_provider.dart';
+import 'data/models/account_data_entity.dart';
+import 'data/repositories/accounts_repository.dart';
+import 'data/repositories/accounts_repository_impl.dart';
+import 'logic/cubit/all_accounts/accounts_cubit.dart';
+import 'logic/cubit/all_accounts/add_account_cubit.dart';
+import 'logic/cubit/all_accounts/delete_account_cubit.dart';
+import 'logic/cubit/export_data_cubit.dart';
+import 'logic/cubit/single_account/add_field_cubit.dart';
+import 'logic/cubit/single_account/single_account_cubit.dart';
+import 'presentation/router/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/data_providers/SQLprovider.dart';
