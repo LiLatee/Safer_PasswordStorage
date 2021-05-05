@@ -1,14 +1,16 @@
-part of 'preferences_cubit.dart';
+// part of 'preferences_cubit.dart';
 
-abstract class PreferencesState extends Equatable {
-  const PreferencesState();
+// abstract class PreferencesState extends Equatable {
+//   const PreferencesState();
 
-  @override
-  List<Object> get props => [];
-}
+//   @override
+//   List<Object> get props => [];
+// }
 
-class PreferencesLoaded extends PreferencesState {
-  final bool keyExists;
+// class PreferencesInitialState extends PreferencesState {}
 
-  PreferencesLoaded({required this.keyExists});
-}
+// class PreferencesLoaded extends PreferencesState {
+//   final bool keyExists;
+
+//   PreferencesLoaded({required this.keyExists});
+// }

@@ -11,7 +11,7 @@ import '../../logic/cubit/all_accounts/add_account_cubit.dart';
 import '../../logic/cubit/all_accounts/accounts_cubit.dart';
 import '../../logic/cubit/all_accounts/delete_account_cubit.dart';
 import '../screens/home_screen/home_screen.dart';
-import '../screens/home_screen/widgets/key_is_needed_dialog.dart';
+import '../screens/first_launch/key_is_needed_dialog.dart';
 
 class AppRouter {
   late AccountsRepositoryImlp _accountsRepository;
@@ -29,9 +29,9 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => HomeScreen(),
         );
-      case '/keyIsNeededDialog':
+      case '/firstLaunchPage':
         return MaterialPageRoute(
-          builder: (context) => KeyIsNeededDialog(),
+          builder: (context) => FirstLaunchScreen(),
           fullscreenDialog: true,
         );
     }

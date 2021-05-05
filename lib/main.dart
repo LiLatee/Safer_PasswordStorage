@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/accounts_cubit.dart';
+import 'package:my_simple_password_storage_clean/presentation/screens/first_launch/key_is_needed_dialog.dart';
+import 'package:my_simple_password_storage_clean/presentation/screens/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/themes/app_theme.dart';
 import 'data/data_providers/SQLprovider.dart';
@@ -18,34 +21,18 @@ import 'service_locator.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await SQLprovider.db.initDB();
-  // var prefs = await SharedPreferences.getInstance();
   await di.init();
 
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeModel(),
-      child: MyApp(
-          // accountsRepository: AccountsRepositoryImlp(sqlProvider: SQLprovider()),
-          // appRouter: AppRouter(sqLProvider: SQLprovider()),
-          // prefs: prefs,
-          ),
+      child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  // final AccountsRepositoryImlp accountsRepository;
-  // final AppRouter appRouter;
-
-  // final SharedPreferences prefs;
-
-  const MyApp({
-    Key? key,
-    // required this.accountsRepository,
-    // required this.appRouter,
-    // required this.prefs,
-  }) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,38 +42,6 @@ class MyApp extends StatelessWidget {
       log(details.toString(), name: "OUPS in main.dart");
     };
 
-// MultiBlocProvider(
-//             providers: [
-//               BlocProvider.value(
-//                 value: _accountsCubit,
-//               ),
-//               BlocProvider<AddAccountCubit>(
-//                 create: (_) => AddAccountCubit(
-//                   accountsRepository: _accountsRepository,
-//                   accountsCubit: _accountsCubit,
-//                 ),
-//               ),
-//               BlocProvider<DeleteAccountCubit>(
-//                 create: (_) => DeleteAccountCubit(
-//                   accountsRepository: _accountsRepository,
-//                   accountsCubit: _accountsCubit,
-//                 ),
-//               ),
-//               BlocProvider<ExportDataCubit>(
-//                 create: (_) => ExportDataCubit(
-//                   accountsRepository: _accountsRepository,
-//                 ),
-//               ),
-//               BlocProvider<ImportDataCubit>(
-//                 create: (_) => ImportDataCubit(
-//                   accountsRepository: _accountsRepository,
-//                 ),
-//               ),
-//             ],
-//             child: HomeScreen(),
-//           ),
-
-    // var prefsCubit = PreferencesCubit(prefs: prefs);
     return MultiBlocProvider(
       providers: [
         BlocProvider<AccountsCubit>(
@@ -112,7 +67,16 @@ class MyApp extends StatelessWidget {
         theme: Provider.of<ThemeModel>(context).currentTheme,
         darkTheme: Provider.of<ThemeModel>(context).currentTheme,
         onGenerateRoute: sl<AppRouter>().onGenerateRoute,
+        home: _getStartScreen(),
       ),
     );
+  }
+
+  Widget _getStartScreen() {
+    var prefs = sl<SharedPreferences>();
+    if (prefs.containsKey('key'))
+      return HomeScreen();
+    else
+      return FirstLaunchScreen();
   }
 }
