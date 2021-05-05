@@ -15,52 +15,11 @@ class SingleAccountCubit extends Cubit<SingleAccountState> {
   SingleAccountCubit({
     required accountDataEntity,
     required this.accountsRepository,
-  }) : super(SingleAccountStateReading(accountDataEntity: accountDataEntity));
-
-  // Future<void> addField({required FieldDataEntity fieldDataEntity}) async {
-  //   log("addField");
-  //   await accountsRepository.addField(fieldData: fieldDataEntity);
-
-  //   var failureOrModifiedAccountData =
-  //       (await accountsRepository.getAccountById(fieldDataEntity.accountId));
-
-  //   failureOrModifiedAccountData.fold(
-  //     (failure) {
-  //       return null; // TODO
-  //     },
-  //     (modifiedAccountData) {
-  //       emit(
-  //           SingleAccountStateReading(accountDataEntity: modifiedAccountData!));
-  //     },
-  //   );
-  // }
-
-  // Future<void> deleteField({required FieldDataEntity fieldDataEntity}) async {
-  //   log("deleteField");
-  //   await accountsRepository.deleteField(fieldData: fieldDataEntity);
-
-  //   var failureOrModifiedAccountData =
-  //       (await accountsRepository.getAccountById(fieldDataEntity.accountId));
-
-  //   failureOrModifiedAccountData.fold(
-  //     (failure) {
-  //       return null; // TODO
-  //     },
-  //     (modifiedAccountData) {
-  //       modifiedAccountData!.isEditButtonPressed =
-  //           state.accountDataEntity.isEditButtonPressed;
-
-  //       modifiedAccountData.isShowButtonPressed =
-  //           state.accountDataEntity.isShowButtonPressed;
-
-  //       emit(SingleAccountStateReading(accountDataEntity: modifiedAccountData));
-  //     },
-  //   );
-  // }
+  }) : super(SingleAccountReadingState(accountDataEntity: accountDataEntity));
 
   Future<void> toggleEditButton(
       {required AccountDataEntity accountDataEntity}) async {
-    log("toggleEditButton");
+    log("SingleAccountCubit - toggleEditButton");
     AccountDataEntity newAccountData;
 
     if (accountDataEntity.isEditButtonPressed == true)
@@ -68,79 +27,20 @@ class SingleAccountCubit extends Cubit<SingleAccountState> {
     else
       newAccountData = accountDataEntity.copyWith(isEditButtonPressed: true);
 
-    emit(SingleAccountStateReading(accountDataEntity: newAccountData));
+    emit(SingleAccountReadingState(accountDataEntity: newAccountData));
   }
 
   Future<void> toggleShowButton(
       {required AccountDataEntity accountDataEntity}) async {
-    log("toggleShowButton");
+    log("SingleAccountCubit - toggleShowButton");
     AccountDataEntity newAccountData;
     if (accountDataEntity.isShowButtonPressed == true)
       newAccountData = accountDataEntity.copyWith(isShowButtonPressed: false);
     else
       newAccountData = accountDataEntity.copyWith(isShowButtonPressed: true);
 
-    emit(SingleAccountStateReading(accountDataEntity: newAccountData));
+    emit(SingleAccountReadingState(accountDataEntity: newAccountData));
   }
-
-  // void channgeField({required FieldDataEntity fieldDataEntity}) {
-  //   log("changeField");
-  //   // log(state.accountDataEntity.toString());
-  //   // if (state is SingleAccountStateEditing)
-  //   //   log((state as SingleAccountStateEditing)
-  //   //       .accountDataEntityChanged
-  //   //       .toString());
-
-  //   var modifiedAccountData;
-
-  //   /// When you change first character.
-  //   if (state is SingleAccountStateReading)
-  //     modifiedAccountData = state.accountDataEntity.copyWith();
-
-  //   /// When you change next characters.
-  //   else if (state is SingleAccountStateEditing)
-  //     modifiedAccountData = (state as SingleAccountStateEditing)
-  //         .accountDataEntityChanged
-  //         .copyWith();
-
-  //   var index = state.accountDataEntity.fields
-  //       .indexWhere((element) => element.uuid == fieldDataEntity.uuid);
-
-  //   modifiedAccountData.fields[index] = fieldDataEntity.copyWith();
-
-  //   emit(SingleAccountStateEditing(
-  //       accountDataEntity: state.accountDataEntity,
-  //       accountDataEntityChanged: modifiedAccountData));
-  // }
-
-  // Future<void> updateAccount() async {
-  //   log("updateAccount");
-  //   await accountsRepository.updateAccount(
-  //       (state as SingleAccountStateEditing).accountDataEntityChanged);
-
-  //   var failureOrModifiedAccountData =
-  //       await accountsRepository.getAccountById(state.accountDataEntity.uuid);
-
-  //   failureOrModifiedAccountData.fold(
-  //     (failure) {
-  //       return null; // TODO
-  //     },
-  //     (modifiedAccountData) {
-  //       modifiedAccountData!.isEditButtonPressed =
-  //           state.accountDataEntity.isEditButtonPressed;
-
-  //       modifiedAccountData.isShowButtonPressed =
-  //           state.accountDataEntity.isShowButtonPressed;
-
-  //       emit(SingleAccountStateReading(accountDataEntity: modifiedAccountData));
-  //     },
-  //   );
-  // }
-
-  // Future<void> undoChanges() async {
-  //   log("undoChanges");
-  //   emit(SingleAccountStateReading(accountDataEntity: state.accountDataEntity));
-  // }
 
   @override
   void onChange(Change<SingleAccountState> change) {
@@ -207,16 +107,16 @@ class SingleAccountCubit extends Cubit<SingleAccountState> {
 
   void addField({required FieldDataEntity fieldData}) {
     final currentState = state;
-    if (currentState is SingleAccountStateReading) {
+    if (currentState is SingleAccountReadingState) {
       final accountData = currentState.accountDataEntity.copyWith();
       accountData.fields.add(fieldData);
-      emit(SingleAccountStateReading(accountDataEntity: accountData));
+      emit(SingleAccountReadingState(accountDataEntity: accountData));
     }
   }
 
   void deleteField({required FieldDataEntity fieldData}) {
     final currentState = state;
-    if (currentState is SingleAccountStateReading) {
+    if (currentState is SingleAccountReadingState) {
       final accountData = currentState.accountDataEntity.copyWith();
       accountData.fields.remove(fieldData);
 
@@ -226,20 +126,20 @@ class SingleAccountCubit extends Cubit<SingleAccountState> {
       accountData.isShowButtonPressed =
           state.accountDataEntity.isShowButtonPressed;
 
-      emit(SingleAccountStateReading(accountDataEntity: accountData));
+      emit(SingleAccountReadingState(accountDataEntity: accountData));
     }
   }
 
   void updateAccount({required AccountDataEntity newAccountData}) {
     final currentState = state;
-    if (currentState is SingleAccountStateReading) {
+    if (currentState is SingleAccountReadingState) {
       newAccountData.isEditButtonPressed =
           currentState.accountDataEntity.isEditButtonPressed;
 
       newAccountData.isShowButtonPressed =
           currentState.accountDataEntity.isShowButtonPressed;
 
-      emit(SingleAccountStateReading(accountDataEntity: newAccountData));
+      emit(SingleAccountReadingState(accountDataEntity: newAccountData));
     }
   }
 }

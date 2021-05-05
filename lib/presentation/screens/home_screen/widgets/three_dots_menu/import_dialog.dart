@@ -7,7 +7,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/import_data_cubit.dart';
 
 import '../../../../../core/constants/AppConstants.dart' as AppConstants;
-import '../../../../../logic/cubit/all_accounts/accounts_cubit.dart';
 import '../../../../widgets_templates/dialog_template.dart';
 
 class ImportDialog extends StatefulWidget {
@@ -34,14 +33,14 @@ class _ImportDialogState extends State<ImportDialog> {
         ),
         child: Column(
           children: [
-            buildSecretKeyForm(_formKey, context),
-            buildChooseEncryptedFile(setState),
+            buildSecretKeyForm(context),
+            buildChooseEncryptedFile(),
           ],
         ),
       ),
       buttons: [
         buildCancelButton(context),
-        buildImportButton(_formKey, context),
+        buildImportButton(context),
       ],
     );
   }
@@ -49,36 +48,21 @@ class _ImportDialogState extends State<ImportDialog> {
   MyDialogButton buildCancelButton(BuildContext context) {
     return MyDialogButton(
       buttonName: AppLocalizations.of(context)!.cancel,
-      onPressed: () => Navigator.of(context).pop(AsyncSnapshot.nothing()),
+      onPressed: () => Navigator.of(context).pop(),
     );
   }
 
-  // if (state is ImportedData) {
-  //   Navigator.of(context).pop();
-  //   Navigator.of(context).pop();
-  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //       content:
-  //           Text(AppLocalizations.of(context)!.importSuccess)));
-  // } else if (state is ImportError) {
-  //   Navigator.of(context).pop();
-  //   Navigator.of(context).pop();
-  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //       content:
-  //           Text(AppLocalizations.of(context)!.decryptionFailed)));
-  // }
-
-  Widget buildImportButton(
-      GlobalKey<FormState> _formKey, BuildContext context) {
+  Widget buildImportButton(BuildContext context) {
     return BlocConsumer<ImportDataCubit, ImportDataState>(
       listener: (context, state) {
         if (state is ImportedData) {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(); // Close loading screen.
+          Navigator.of(context).pop(); // Back to HomeScreen.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(AppLocalizations.of(context)!.importSuccess)));
         } else if (state is ImportError) {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(); // Close loading screen.
+          Navigator.of(context).pop(); // Back to HomeScreen.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(AppLocalizations.of(context)!.decryptionFailed)));
         }
@@ -88,11 +72,7 @@ class _ImportDialogState extends State<ImportDialog> {
           buttonName: AppLocalizations.of(context)!.import,
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              // TODO
-              BlocProvider.of<ImportDataCubit>(context).importData(
-                secretKey: _secretKey!,
-                filepath: _filepath!,
-              );
+              // Loading screen.
               showDialog(
                 context: context,
                 builder: (context) =>
@@ -100,37 +80,10 @@ class _ImportDialogState extends State<ImportDialog> {
                 barrierDismissible: false,
               );
 
-              //     .then((AsyncSnapshot<String> value) {
-              //   if (value.hasData) {
-              //     Navigator.of(context).pop();
-              //     Navigator.of(context).pop();
-              //     ScaffoldMessenger.of(context)
-              //         .showSnackBar(SnackBar(content: Text(value.data!)));
-              //   } else {
-              //     Navigator.of(context).pop();
-              //     Navigator.of(context).pop();
-              //     ScaffoldMessenger.of(context).showSnackBar(
-              //         SnackBar(content: Text(value.error.toString())));
-              //   }
-              // });
-
-              // DataProvider.importEncryptedDatabase(
-              //         context: context,
-              //         secretKey: _secretKey!,
-              //         filepath: _filepath!)
-              //     .then((AsyncSnapshot<String> value) {
-              //   if (value.hasData) {
-              //     Navigator.of(context).pop();
-              //     Navigator.of(context).pop();
-              //     ScaffoldMessenger.of(context)
-              //         .showSnackBar(SnackBar(content: Text(value.data!)));
-              //   } else {
-              //     Navigator.of(context).pop();
-              //     Navigator.of(context).pop();
-              //     ScaffoldMessenger.of(context).showSnackBar(
-              //         SnackBar(content: Text(value.error.toString())));
-              //   }
-              // });
+              BlocProvider.of<ImportDataCubit>(context).importData(
+                secretKey: _secretKey!,
+                filepath: _filepath!,
+              );
             }
           },
         );
@@ -138,7 +91,7 @@ class _ImportDialogState extends State<ImportDialog> {
     );
   }
 
-  Row buildChooseEncryptedFile(StateSetter setState) {
+  Row buildChooseEncryptedFile() {
     return Row(
       children: [
         Padding(
@@ -168,16 +121,17 @@ class _ImportDialogState extends State<ImportDialog> {
     );
   }
 
-  Form buildSecretKeyForm(GlobalKey<FormState> _formKey, BuildContext context) {
+  Form buildSecretKeyForm(BuildContext context) {
     return Form(
       key: _formKey,
       child: TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  // color: Theme.of(context).accentColor,
-                  )),
+            borderSide: BorderSide(
+                // color: Theme.of(context).accentColor,
+                ),
+          ),
           border: OutlineInputBorder(),
           labelText: AppLocalizations.of(context)!.secretKey,
           labelStyle: TextStyle(

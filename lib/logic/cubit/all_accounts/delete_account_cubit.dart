@@ -24,13 +24,13 @@ class DeleteAccountCubit extends Cubit<DeleteAccountCubitState> {
         await accountsRepository.deleteAccount(accountData: accountDataEntity);
 
     failureOrSuccess.fold(
-      (failure) => null,
+      (failure) => null, // TODO
       (success) async {
         accountsCubit.deleteAccount(accountData: accountDataEntity);
 
         var failureOrAllAccounts = await accountsRepository.getAllAccounts();
         failureOrAllAccounts.fold(
-          (failure) => null,
+          (failure) => null, // TODO
           (allAccounts) => emit(DeletedAccount()),
         );
       },

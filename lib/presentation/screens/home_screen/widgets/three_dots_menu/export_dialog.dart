@@ -24,32 +24,7 @@ class ExportDialog extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Form(
-              key: _formKey,
-              child: TextFormField(
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          // color: Theme.of(context).accentColor,
-                          )),
-                  border: OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)!.secretKey,
-                  labelStyle: TextStyle(
-                    // color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onChanged: (value) => _secretKey = value,
-                validator: (value) {
-                  if (value != null) {
-                    if (value.isEmpty)
-                      return AppLocalizations.of(context)!
-                          .emptySecretKeySnackbar;
-                  }
-                  return null;
-                },
-              ),
-            ),
+            secretKeyForm(context: context),
           ],
         ),
       ),
@@ -68,49 +43,102 @@ class ExportDialog extends StatelessWidget {
     );
   }
 
-  MyDialogButton buildExportButton(
-      BuildContext context, GlobalKey<FormState> formKey) {
-    return MyDialogButton(
-      buttonName: AppLocalizations.of(context)!.exportData,
-      onPressed: () async {
-        if (_formKey.currentState!.validate()) {
-          BlocProvider.of<ExportDataCubit>(superContext)
-              .exportData(secretKey: _secretKey);
-          //     .then((AsyncSnapshot<String> value) {
-          //   if (value.hasData) {
-          //     ScaffoldMessenger.of(context)
-          //         .showSnackBar(SnackBar(content: Text(value.data!)));
-          //   } else {
-          //     ScaffoldMessenger.of(context).showSnackBar(
-          //         SnackBar(content: Text(value.error.toString())));
-          //   }
-          // });
-
-          // await DataProvider.exportEncryptedDatabase(_secretKey, context)
-          //     .then((AsyncSnapshot<String> value) {
-          //   if (value.hasData) {
-          //     ScaffoldMessenger.of(context)
-          //         .showSnackBar(SnackBar(content: Text(value.data!)));
-          //   } else {
-          //     ScaffoldMessenger.of(context).showSnackBar(
-          //         SnackBar(content: Text(value.error.toString())));
-          //   }
-          // });
-          Navigator.of(context).pop(); // TODO
-
-          // await DataProvider.exportEncryptedDatabase(_secretKey, context)
-          //     .then((AsyncSnapshot<String> value) {
-          //   if (value.hasData) {
-          //     ScaffoldMessenger.of(context)
-          //         .showSnackBar(SnackBar(content: Text(value.data!)));
-          //   } else {
-          //     ScaffoldMessenger.of(context).showSnackBar(
-          //         SnackBar(content: Text(value.error.toString())));
-          //   }
-          // });
-          // Navigator.of(context).pop(); // TODO
+  Widget buildExportButton(BuildContext context, GlobalKey<FormState> formKey) {
+    return BlocConsumer<ExportDataCubit, ExportDataState>(
+      listener: (context, state) {
+        if (state is ExportedData) {
+          Navigator.of(context).pop(); // Close loading screen.
+          Navigator.of(context).pop(); // Back to HomeScreen.
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(AppLocalizations.of(context)!
+                  .exportSuccess(state.exportedDataLocation))));
+        } else if (state is ExportError) {
+          Navigator.of(context).pop(); // Close loading screen.
+          Navigator.of(context).pop(); // Back to HomeScreen.
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(AppLocalizations.of(context)!.encryptionError)));
         }
       },
+      builder: (context, state) {
+        return MyDialogButton(
+          buttonName: AppLocalizations.of(context)!.exportData,
+          onPressed: () async {
+            if (_formKey.currentState!.validate()) {
+              // Loading screen.
+              showDialog(
+                context: context,
+                builder: (context) =>
+                    Center(child: CircularProgressIndicator()),
+                barrierDismissible: false,
+              );
+
+              BlocProvider.of<ExportDataCubit>(superContext)
+                  .exportData(secretKey: _secretKey);
+
+              //     .then((AsyncSnapshot<String> value) {
+              //   if (value.hasData) {
+              //     ScaffoldMessenger.of(context)
+              //         .showSnackBar(SnackBar(content: Text(value.data!)));
+              //   } else {
+              //     ScaffoldMessenger.of(context).showSnackBar(
+              //         SnackBar(content: Text(value.error.toString())));
+              //   }
+              // });
+
+              // await DataProvider.exportEncryptedDatabase(_secretKey, context)
+              //     .then((AsyncSnapshot<String> value) {
+              //   if (value.hasData) {
+              //     ScaffoldMessenger.of(context)
+              //         .showSnackBar(SnackBar(content: Text(value.data!)));
+              //   } else {
+              //     ScaffoldMessenger.of(context).showSnackBar(
+              //         SnackBar(content: Text(value.error.toString())));
+              //   }
+              // });
+
+              // await DataProvider.exportEncryptedDatabase(_secretKey, context)
+              //     .then((AsyncSnapshot<String> value) {
+              //   if (value.hasData) {
+              //     ScaffoldMessenger.of(context)
+              //         .showSnackBar(SnackBar(content: Text(value.data!)));
+              //   } else {
+              //     ScaffoldMessenger.of(context).showSnackBar(
+              //         SnackBar(content: Text(value.error.toString())));
+              //   }
+              // });
+              // Navigator.of(context).pop(); // TODO
+            }
+          },
+        );
+      },
+    );
+  }
+
+  Widget secretKeyForm({required BuildContext context}) {
+    return Form(
+      key: _formKey,
+      child: TextFormField(
+        decoration: InputDecoration(
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  // color: Theme.of(context).accentColor,
+                  )),
+          border: OutlineInputBorder(),
+          labelText: AppLocalizations.of(context)!.secretKey,
+          labelStyle: TextStyle(
+            // color: Theme.of(context).accentColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        onChanged: (value) => _secretKey = value,
+        validator: (value) {
+          if (value != null) {
+            if (value.isEmpty)
+              return AppLocalizations.of(context)!.emptySecretKeySnackbar;
+          }
+          return null;
+        },
+      ),
     );
   }
 }

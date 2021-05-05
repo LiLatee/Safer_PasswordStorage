@@ -17,7 +17,7 @@ class ExportDataCubit extends Cubit<ExportDataState> {
 
     failureOrSuccess.fold(
       (failure) => emit(ExportError()),
-      (success) => emit(ExportedData()),
+      (success) => emit(ExportedData(exportedDataLocation: success)),
     );
   }
 }

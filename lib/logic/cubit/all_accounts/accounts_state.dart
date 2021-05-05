@@ -16,13 +16,3 @@ class AccountsLoaded extends AccountsState {
   AccountsLoaded({required accountDataList})
       : super(accountDataList: accountDataList);
 }
-
-class AccountsImported extends AccountsState {
-  AccountsImported({required accountDataList})
-      : super(accountDataList: accountDataList);
-}
-
-class AccountsExported extends AccountsState {
-  AccountsExported({required accountDataList})
-      : super(accountDataList: accountDataList);
-}
