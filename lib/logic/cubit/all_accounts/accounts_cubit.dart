@@ -24,14 +24,8 @@ class AccountsCubit extends Cubit<AccountsState> {
     accountsRepository.getAllAccounts().then(
       (failureOrAccountsList) {
         failureOrAccountsList.fold(
-          (failure) {
-            return null; // TODO
-          },
-          (accountsList) {
-            emit(
-              AccountsLoaded(accountDataList: accountsList),
-            );
-          },
+          (failure) => null,
+          (accountsList) => emit(AccountsLoaded(accountDataList: accountsList)),
         );
       },
     );

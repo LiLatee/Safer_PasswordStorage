@@ -9,6 +9,6 @@ abstract class AddAccountState extends Equatable {
 
 class AddAccountInitial extends AddAccountState {}
 
-class Adding extends AddAccountState {}
+class AddingAccount extends AddAccountState {}
 
 class AddedAccount extends AddAccountState {}

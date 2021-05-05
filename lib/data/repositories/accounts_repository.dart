@@ -28,7 +28,7 @@ abstract class AccountsRepository {
   Future<Either<Failure, List<FieldDataEntity>?>> getFieldsOfAccount(
       {required AccountDataEntity accountData});
 
-  Future<Either<Failure, void>> exportEncryptedDatabase(
+  Future<Either<Failure, String>> exportEncryptedDatabase(
       {required String secretKey});
 
   Future<Either<Failure, void>> importEncryptedDatabase(

@@ -18,23 +18,10 @@ class AddFieldCubit extends Cubit<AddFieldState> {
   }) : super(AddFieldInitial());
 
   Future<void> addField({required FieldDataEntity fieldDataEntity}) async {
-    log("addField");
+    log("AddFieldCubit");
     emit(AddingField());
     await accountsRepository.addField(fieldData: fieldDataEntity);
     singleAccountCubit.addField(fieldData: fieldDataEntity);
     emit(AddedField());
-
-    // var failureOrModifiedAccountData =
-    //     (await accountsRepository.getAccountById(fieldDataEntity.accountId));
-
-    // failureOrModifiedAccountData.fold(
-    //   (failure) {
-    //     return null; // TODO
-    //   },
-    //   (modifiedAccountData) {
-    //     singleAccountCubit.addField(fieldData: fieldDataEntity);
-    //     emit(AddedField());
-    //   },
-    // );
   }
 }

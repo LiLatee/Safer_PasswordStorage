@@ -11,6 +11,10 @@ class ExportDataInitial extends ExportDataState {}
 
 class ExportingData extends ExportDataState {}
 
-class ExportedData extends ExportDataState {}
+class ExportedData extends ExportDataState {
+  final String exportedDataLocation;
+
+  ExportedData({required this.exportedDataLocation});
+}
 
 class ExportError extends ExportDataState {}

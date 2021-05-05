@@ -28,11 +28,8 @@ class AccountDataExpandedPart extends StatelessWidget {
         AccountDataEntity currentAccount;
 
         currentAccount = state.accountDataEntity.copyWith();
-        if (editCubitState is EditedSingleAccount ||
-            editCubitState is SavingChangesSingleAccount) {
-          currentAccount = (editCubitState as EditedSingleAccountState)
-              .editedAccountDataEntity
-              .copyWith();
+        if (editCubitState is EditedSingleAccountState) {
+          currentAccount = editCubitState.editedAccountDataEntity.copyWith();
         }
 
         return Column(

@@ -19,25 +19,17 @@ class EditSingleAccountCubit extends Cubit<EditSingleAccountState> {
   }) : super(EditSingleAccountInitial());
 
   void changeField({required FieldDataEntity fieldDataEntity}) {
-    log("changeField");
-    // log(state.accountDataEntity.toString());
-    // if (state is SingleAccountStateEditing)
-    //   log((state as SingleAccountStateEditing)
-    //       .accountDataEntityChanged
-    //       .toString());
-
+    log("EditSingleAccountCubit - changeField");
     var modifiedAccountData;
 
     /// When changed first character.
     if (state is EditSingleAccountInitial) {
-      log("PIERWSZA ZMIANA");
       modifiedAccountData =
           singleAccountCubit.state.accountDataEntity.copyWith();
     }
 
     /// When changed next characters.
     else if (state is EditedSingleAccount) {
-      log("KOLEJNA ZMIANA");
       modifiedAccountData =
           (state as EditedSingleAccount).editedAccountDataEntity.copyWith();
     }
@@ -51,7 +43,7 @@ class EditSingleAccountCubit extends Cubit<EditSingleAccountState> {
   }
 
   Future<void> updateAccount() async {
-    log("updateAccount");
+    log("EditSingleAccountCubit -updateAccount");
 
     var accToUpdate =
         (state as EditedSingleAccount).editedAccountDataEntity.copyWith();
@@ -65,7 +57,7 @@ class EditSingleAccountCubit extends Cubit<EditSingleAccountState> {
   }
 
   Future<void> undoChanges() async {
-    log("undoChanges");
+    log("EditSingleAccountCubit - undoChanges");
     emit(EditSingleAccountInitial());
   }
 }

@@ -5,10 +5,10 @@ abstract class SingleAccountState extends Equatable {
   get accountDataEntity => accountDataEntity;
 }
 
-class SingleAccountStateReading extends SingleAccountState {
+class SingleAccountReadingState extends SingleAccountState {
   final AccountDataEntity accountDataEntity;
 
-  SingleAccountStateReading({required this.accountDataEntity});
+  SingleAccountReadingState({required this.accountDataEntity});
 
   @override
   String toString() {
@@ -18,15 +18,3 @@ class SingleAccountStateReading extends SingleAccountState {
   @override
   List<Object?> get props => [accountDataEntity];
 }
-
-// class SingleAccountStateEditing extends SingleAccountState {
-//   final AccountDataEntity accountDataEntity;
-//   final AccountDataEntity accountDataEntityChanged;
-
-//   SingleAccountStateEditing(
-//       {required this.accountDataEntity,
-//       required this.accountDataEntityChanged});
-
-//   @override
-//   List<Object?> get props => [accountDataEntity, accountDataEntityChanged];
-// }

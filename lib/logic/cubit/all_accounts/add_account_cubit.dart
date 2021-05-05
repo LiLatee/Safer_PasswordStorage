@@ -17,19 +17,19 @@ class AddAccountCubit extends Cubit<AddAccountState> {
   }) : super(AddAccountInitial());
 
   Future<void> addAccount({required AccountDataEntity accountData}) async {
-    emit(Adding());
+    emit(AddingAccount());
 
     var failureOrSuccess =
         await accountsRepository.addAccount(accountData: accountData);
 
     failureOrSuccess.fold(
-      (failure) => null,
+      (failure) => null, // TODO
       (success) async {
         accountsCubit.addAccount(accountData: accountData);
         var failureOrAllAccounts = await accountsRepository.getAllAccounts();
 
         failureOrAllAccounts.fold(
-          (failure) => null,
+          (failure) => null, // TODO
           (allAccounts) => emit(AddedAccount()),
         );
       },

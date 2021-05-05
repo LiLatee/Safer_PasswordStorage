@@ -117,7 +117,7 @@ class AccountsRepositoryImlp implements AccountsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> exportEncryptedDatabase(
+  Future<Either<Failure, String>> exportEncryptedDatabase(
       {required String secretKey}) async {
     if (await Permission.storage.request().isGranted) {
       DateTime now = DateTime.now();
@@ -127,12 +127,12 @@ class AccountsRepositoryImlp implements AccountsRepository {
 
       var crypt = AesCrypt(secretKey);
       String databasePath = (sqlProvider as SQLprovider).getDatabasePath();
-
+      String exportedDataPath;
       if (databasePath == null)
         return Left(SqlLiteFailure());
       else {
         try {
-          crypt.encryptFileSync(
+          exportedDataPath = crypt.encryptFileSync(
             databasePath,
             path,
           );
@@ -140,7 +140,7 @@ class AccountsRepositoryImlp implements AccountsRepository {
           return Left(BackupEncryptionFailure());
         }
         log("Backup saved: $path");
-        return Right(null);
+        return Right(exportedDataPath);
       }
     } else
       return Left(ReadWritePermissionNotGrantedFailure());

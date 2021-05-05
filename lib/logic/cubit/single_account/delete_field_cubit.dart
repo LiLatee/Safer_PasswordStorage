@@ -18,24 +18,11 @@ class DeleteFieldCubit extends Cubit<DeleteFieldState> {
   }) : super(DeleteFieldInitial());
 
   Future<void> deleteField({required FieldDataEntity fieldDataEntity}) async {
-    log("deleteField");
+    log("DeleteFieldCubit");
     emit(DeletingField());
     await accountsRepository.deleteField(fieldData: fieldDataEntity);
 
     singleAccountCubit.deleteField(fieldData: fieldDataEntity);
     emit(DeletedField());
-
-    // var failureOrModifiedAccountData =
-    //     (await accountsRepository.getAccountById(fieldDataEntity.accountId));
-
-    // failureOrModifiedAccountData.fold(
-    //   (failure) {
-    //     return null; // TODO
-    //   },
-    //   (modifiedAccountData) {
-    //     singleAccountCubit.deleteField(fieldData: fieldDataEntity);
-    //     emit(DeletedField());
-    //   },
-    // );
   }
 }
