@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/constants/AppConstants.dart' as AppConstants;
 import '../../../../data/models/account_data_entity.dart';
+import '../../../../service_locator.dart';
 import '../modified_flutter_widgets/expansion_panel.dart' as epn;
 // import 'account_tile/expanded_part/account_data_expanded_part.dart';
 import 'account_tile/expanded_part/account_data_expanded_part.dart';
@@ -44,29 +45,9 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
 
   epn.ExpansionPanelRadio buildExpansionPanel(
       {required AccountDataEntity accountDataEntity}) {
-    var singleAccountCubit = SingleAccountCubit(
-      accountsRepository:
-          BlocProvider.of<AccountsCubit>(context).accountsRepository,
-      accountDataEntity: accountDataEntity,
-    );
+    var singleAccountCubit =
+        sl<SingleAccountCubit>(param1: accountDataEntity, param2: null);
 
-    var addFieldCubit = AddFieldCubit(
-      accountsRepository:
-          BlocProvider.of<AccountsCubit>(context).accountsRepository,
-      singleAccountCubit: singleAccountCubit,
-    );
-
-    var deleteFieldCubit = DeleteFieldCubit(
-      accountsRepository:
-          BlocProvider.of<AccountsCubit>(context).accountsRepository,
-      singleAccountCubit: singleAccountCubit,
-    );
-
-    var editSingleAccountCubit = EditSingleAccountCubit(
-      accountsRepository:
-          BlocProvider.of<AccountsCubit>(context).accountsRepository,
-      singleAccountCubit: singleAccountCubit,
-    );
     return epn.ExpansionPanelRadio(
       canTapOnHeader: true,
       value: accountDataEntity.uuid!,
@@ -82,14 +63,17 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
           BlocProvider<SingleAccountCubit>.value(
             value: singleAccountCubit,
           ),
-          BlocProvider<AddFieldCubit>.value(
-            value: addFieldCubit,
+          BlocProvider<AddFieldCubit>(
+            create: (_) =>
+                sl<AddFieldCubit>(param1: singleAccountCubit, param2: null),
           ),
-          BlocProvider<DeleteFieldCubit>.value(
-            value: deleteFieldCubit,
+          BlocProvider<DeleteFieldCubit>(
+            create: (_) =>
+                sl<DeleteFieldCubit>(param1: singleAccountCubit, param2: null),
           ),
-          BlocProvider<EditSingleAccountCubit>.value(
-            value: editSingleAccountCubit,
+          BlocProvider<EditSingleAccountCubit>(
+            create: (_) => sl<EditSingleAccountCubit>(
+                param1: singleAccountCubit, param2: null),
           ),
         ],
         child: AccountDataExpandedPart(),

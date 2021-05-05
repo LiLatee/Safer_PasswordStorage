@@ -8,13 +8,13 @@ import 'package:provider/provider.dart';
 
 import 'core/themes/app_theme.dart';
 import 'data/data_providers/SQLprovider.dart';
-import 'injection_container.dart';
+import 'service_locator.dart';
 import 'logic/cubit/all_accounts/add_account_cubit.dart';
 import 'logic/cubit/all_accounts/delete_account_cubit.dart';
 import 'logic/cubit/export_data_cubit.dart';
 import 'logic/cubit/import_data_cubit.dart';
 import 'presentation/router/app_router.dart';
-import 'injection_container.dart' as di;
+import 'service_locator.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

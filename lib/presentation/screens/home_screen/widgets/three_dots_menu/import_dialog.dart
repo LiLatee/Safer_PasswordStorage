@@ -89,8 +89,10 @@ class _ImportDialogState extends State<ImportDialog> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               // TODO
-              BlocProvider.of<ImportDataCubit>(context)
-                  .importData(secretKey: _secretKey!, filepath: _filepath!);
+              BlocProvider.of<ImportDataCubit>(context).importData(
+                secretKey: _secretKey!,
+                filepath: _filepath!,
+              );
               showDialog(
                 context: context,
                 builder: (context) =>
