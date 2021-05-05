@@ -14,6 +14,7 @@ import 'package:my_simple_password_storage_clean/presentation/router/app_router.
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/data_providers/SQLprovider.dart';
+import 'logic/cubit/app_key_cubit.dart';
 import 'logic/cubit/import_data_cubit.dart';
 import 'logic/cubit/single_account/delete_field_cubit.dart';
 import 'logic/cubit/single_account/edit_single_account_cubit.dart';
@@ -41,7 +42,8 @@ Future<void> init() async {
   );
 
   final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => sharedPreferences);
+  // sl.registerLazySingleton(() => sharedPreferences);
+  sl.registerLazySingleton(() => AppKeyCubit(prefs: sharedPreferences));
 
   //* Factories
   sl.registerFactoryParam<SingleAccountCubit, AccountDataEntity, void>(
