@@ -13,7 +13,7 @@ import 'logic/cubit/app_key_cubit.dart';
 import 'logic/cubit/export_data_cubit.dart';
 import 'logic/cubit/import_data_cubit.dart';
 import 'presentation/router/app_router.dart';
-import 'presentation/screens/first_launch/key_is_needed_dialog.dart';
+import 'presentation/screens/first_launch/first_launch_screen.dart';
 import 'presentation/screens/home_screen/home_screen.dart';
 import 'service_locator.dart';
 import 'service_locator.dart' as di;

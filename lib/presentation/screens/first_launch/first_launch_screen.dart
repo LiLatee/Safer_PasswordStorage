@@ -29,17 +29,17 @@ class FirstLaunchScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText1,
               softWrap: true,
             ),
-            FieldWidget(
-              label: 'Your Key',
-              readOnly: false,
-              controller: controller,
-            ),
+            // FieldWidget(
+            //   label: 'Your Key',
+            //   readOnly: false,
+            //   controller: controller,
+            // ),
             TextButton(
               onPressed: () {
                 BlocProvider.of<AppKeyCubit>(context)
                     .setKey(key: controller.text);
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("Hasło ustawione")));
+                // ScaffoldMessenger.of(context)
+                //     .showSnackBar(SnackBar(content: Text("Hasło ustawione")));
               },
               child: Text("START"),
             ),

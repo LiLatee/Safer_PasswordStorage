@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'dart:typed_data';
+import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
@@ -44,31 +46,32 @@ class AccountDataEntity extends Equatable {
   }
 
   AccountDataEntity encrypt({required String key}) {
-    final aesKey = enc.Key.fromUtf8(key);
-    // final iv = enc.IV.fromLength(16);
+    final aesKey = enc.Key.fromBase64(key);
+    final iv = enc.IV.fromLength(16);
     enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
 
     List<FieldDataEntity> encryptedFields =
         this.fields.map((e) => e.encrypt(key: key)).toList();
 
     return this.copyWith(
-      accountName: encrypter.encrypt(this.accountName).toString(),
-      // iconImage:
+      accountName: encrypter.encrypt(this.accountName, iv: iv).base64,
+      // iconImage: encrypter.encryptBytes(this.iconImage!, iv: iv).bytes,
       fields: encryptedFields,
     );
   }
 
   AccountDataEntity decrypt({required String key}) {
-    final aesKey = enc.Key.fromUtf8(key);
-    // final iv = enc.IV.fromLength(16);
+    final aesKey = enc.Key.fromBase64(key);
+    final iv = enc.IV.fromLength(16);
     enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
 
     List<FieldDataEntity> encryptedFields =
         this.fields.map((e) => e.decrypt(key: key)).toList();
 
     return this.copyWith(
-      accountName: encrypter.decrypt(enc.Encrypted.fromUtf8(this.accountName)),
-      // iconImage:
+      accountName:
+          encrypter.decrypt(enc.Encrypted.fromBase64(this.accountName), iv: iv),
+      // iconImage: encrypter.decryptBytes(enc.Encrypted.fromUtf8(Utf8Decoder().convert(this.iconImage!)), iv: iv),
       fields: encryptedFields,
     );
   }

@@ -9,6 +9,11 @@ const Duration animationsDuration = Duration(milliseconds: 500);
 const double heightForOneField = 75.0;
 const double maxHeightForFields = 300.0;
 
+//! SharedPreferences Keys
+class SPKeys {
+  static const appKey = 'key';
+}
+
 const List<Color> iconDefaultColors = const [
   Colors.red,
   Colors.pink,

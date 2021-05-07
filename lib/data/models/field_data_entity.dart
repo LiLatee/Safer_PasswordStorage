@@ -39,24 +39,24 @@ class FieldDataEntity extends Equatable {
   }
 
   FieldDataEntity encrypt({required String key}) {
-    final aesKey = enc.Key.fromUtf8(key);
-    // final iv = enc.IV.fromLength(16);
+    final aesKey = enc.Key.fromBase64(key);
+    final iv = enc.IV.fromLength(16);
     enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
 
     return this.copyWith(
-      name: encrypter.encrypt(this.name).toString(),
-      value: encrypter.encrypt(this.value).toString(),
+      name: encrypter.encrypt(this.name, iv: iv).base64,
+      value: encrypter.encrypt(this.value, iv: iv).base64,
     );
   }
 
   FieldDataEntity decrypt({required String key}) {
-    final aesKey = enc.Key.fromUtf8(key);
-    // final iv = enc.IV.fromLength(16);
+    final aesKey = enc.Key.fromBase64(key);
+    final iv = enc.IV.fromLength(16);
     enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
 
     return this.copyWith(
-      name: encrypter.decrypt(enc.Encrypted.fromUtf8(this.name)),
-      value: encrypter.decrypt(enc.Encrypted.fromUtf8(this.value)),
+      name: encrypter.decrypt(enc.Encrypted.fromBase64(this.name), iv: iv),
+      value: encrypter.decrypt(enc.Encrypted.fromBase64(this.value), iv: iv),
     );
   }
 
