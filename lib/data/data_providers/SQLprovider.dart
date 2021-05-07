@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:my_simple_password_storage_clean/data/models/app_secret_key_entity.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import '../database/database.dart';
@@ -69,5 +70,19 @@ class SQLprovider implements BaseDataProvider {
   Future<List<FieldDataEntity>?> getFieldsOfAccount(
       {required AccountDataEntity accountData}) async {
     return await _SQL_DB.fieldDao.getFieldsOfAccount(accountData.uuid!);
+  }
+
+  //! AppSecretKey
+  Future<void> saveAppSecretKey(
+      {required AppSecretKeyEntity appSecretKeyEntity}) async {
+    return await _SQL_DB.appSecretKeyDao.insert(appSecretKeyEntity);
+  }
+
+  Future<void> deleteAppSecretKeyFromSQL() async {
+    return await _SQL_DB.appSecretKeyDao.delete();
+  }
+
+  Future<AppSecretKeyEntity?> getAppSecretKeyEntity() async {
+    return await _SQL_DB.appSecretKeyDao.getAppSecretKeyEntity();
   }
 }

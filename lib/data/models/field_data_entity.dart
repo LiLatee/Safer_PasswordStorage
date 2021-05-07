@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
 import 'package:uuid/uuid.dart';
@@ -43,9 +45,13 @@ class FieldDataEntity extends Equatable {
     final iv = enc.IV.fromLength(16);
     enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
 
+    log("encrypt");
+    log('name: ${this.name}');
+    log('value: ${this.value}');
     return this.copyWith(
       name: encrypter.encrypt(this.name, iv: iv).base64,
-      value: encrypter.encrypt(this.value, iv: iv).base64,
+      value:
+          this.value != '' ? encrypter.encrypt(this.value, iv: iv).base64 : '',
     );
   }
 
@@ -54,9 +60,14 @@ class FieldDataEntity extends Equatable {
     final iv = enc.IV.fromLength(16);
     enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
 
+    log("decrypt");
+    log('name: ${this.name}');
+    log('value: ${this.value}');
     return this.copyWith(
       name: encrypter.decrypt(enc.Encrypted.fromBase64(this.name), iv: iv),
-      value: encrypter.decrypt(enc.Encrypted.fromBase64(this.value), iv: iv),
+      value: this.value != ''
+          ? encrypter.decrypt(enc.Encrypted.fromBase64(this.value), iv: iv)
+          : '',
     );
   }
 

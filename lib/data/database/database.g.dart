@@ -64,6 +64,8 @@ class _$AppDatabase extends AppDatabase {
 
   FieldDataDao? _fieldDaoInstance;
 
+  AppSecretKeyDao? _appSecretKeyDaoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback? callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -85,6 +87,8 @@ class _$AppDatabase extends AppDatabase {
             'CREATE TABLE IF NOT EXISTS `AccountDataEntity` (`uuid` TEXT, `accountName` TEXT NOT NULL, `iconImage` BLOB, `iconColorHex` TEXT, PRIMARY KEY (`uuid`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `FieldDataEntity` (`uuid` TEXT, `accountId` TEXT NOT NULL, `name` TEXT NOT NULL, `value` TEXT NOT NULL, `isHidden` INTEGER NOT NULL, `isMultiline` INTEGER NOT NULL, `position` INTEGER NOT NULL, FOREIGN KEY (`accountId`) REFERENCES `AccountDataEntity` (`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE, PRIMARY KEY (`uuid`))');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `AppSecretKeyEntity` (`key` TEXT NOT NULL, PRIMARY KEY (`key`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -100,6 +104,12 @@ class _$AppDatabase extends AppDatabase {
   @override
   FieldDataDao get fieldDao {
     return _fieldDaoInstance ??= _$FieldDataDao(database, changeListener);
+  }
+
+  @override
+  AppSecretKeyDao get appSecretKeyDao {
+    return _appSecretKeyDaoInstance ??=
+        _$AppSecretKeyDao(database, changeListener);
   }
 }
 
@@ -271,5 +281,40 @@ class _$FieldDataDao extends FieldDataDao {
   @override
   Future<void> deleteField(FieldDataEntity field) async {
     await _fieldDataEntityDeletionAdapter.delete(field);
+  }
+}
+
+class _$AppSecretKeyDao extends AppSecretKeyDao {
+  _$AppSecretKeyDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database),
+        _appSecretKeyEntityInsertionAdapter = InsertionAdapter(
+            database,
+            'AppSecretKeyEntity',
+            (AppSecretKeyEntity item) => <String, Object?>{'key': item.key});
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<AppSecretKeyEntity>
+      _appSecretKeyEntityInsertionAdapter;
+
+  @override
+  Future<void> delete() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM AppSecretKeyEntity');
+  }
+
+  @override
+  Future<AppSecretKeyEntity?> getAppSecretKeyEntity() async {
+    return _queryAdapter.query('SELECT * FROM AppSecretKeyEntity LIMIT 1',
+        mapper: (Map<String, Object?> row) => AppSecretKeyEntity());
+  }
+
+  @override
+  Future<void> insert(AppSecretKeyEntity field) async {
+    await _appSecretKeyEntityInsertionAdapter.insert(
+        field, OnConflictStrategy.rollback);
   }
 }
