@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import '../database/database.dart';
@@ -6,14 +8,16 @@ import '../models/field_data_entity.dart';
 import 'base_data_provider.dart';
 
 class SQLprovider implements BaseDataProvider {
-  static final SQLprovider _instance = SQLprovider._internal();
-  static final db = SQLprovider();
+  SQLprovider._();
+  static SQLprovider get instance => SQLprovider._();
+  // static final SQLprovider _instance = SQLprovider._internal();
+  // static final db = SQLprovider();
 
-  factory SQLprovider() {
-    return _instance;
-  }
+  // factory SQLprovider() {
+  //   return _instance;
+  // }
 
-  SQLprovider._internal();
+  // SQLprovider._internal();
 
   static late AppDatabase _SQL_DB;
   initDB() async {
