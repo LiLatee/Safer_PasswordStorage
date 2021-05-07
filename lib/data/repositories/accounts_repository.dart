@@ -72,4 +72,6 @@ abstract class AccountsRepository {
 
   Future<Either<Failure, void>> importEncryptedDatabase(
       {required String secretKey, required String filepath});
+
+  // Future<Either<Failure, void>> saveAppSecretKey();
 }

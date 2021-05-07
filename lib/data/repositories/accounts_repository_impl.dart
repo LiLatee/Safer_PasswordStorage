@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:aes_crypt/aes_crypt.dart';
 import 'package:dartz/dartz.dart';
+import 'package:my_simple_password_storage_clean/data/models/app_secret_key_entity.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../core/errors/failures.dart';
@@ -25,6 +26,7 @@ class AccountsRepositoryImlp extends AccountsRepository {
   @override
   Future<Either<Failure, void>> addAccountLogic(
       {required AccountDataEntity accountData}) async {
+    // saveAppSecretKey();
     return Right(await sqlProvider.addAccount(accountData: accountData));
   }
 
@@ -112,6 +114,10 @@ class AccountsRepositoryImlp extends AccountsRepository {
       } on Exception {
         return Left(BackupDecryptionFailure());
       }
+      // AppSecretKeyEntity? importedAppSecretKey =
+      await (sqlProvider as SQLprovider).getAppSecretKeyEntity();
+      // AppSecretKeyEntity(key: importedAppSecretKey!.key);
+      (sqlProvider as SQLprovider).deleteAppSecretKeyFromSQL();
       return Right(null);
     }
   }
@@ -132,10 +138,13 @@ class AccountsRepositoryImlp extends AccountsRepository {
         return Left(SqlLiteFailure());
       else {
         try {
+          (sqlProvider as SQLprovider)
+              .saveAppSecretKey(appSecretKeyEntity: AppSecretKeyEntity());
           exportedDataPath = crypt.encryptFileSync(
             databasePath,
             path,
           );
+          (sqlProvider as SQLprovider).deleteAppSecretKeyFromSQL();
         } on FileSystemException {
           return Left(BackupEncryptionFailure());
         }
@@ -145,4 +154,11 @@ class AccountsRepositoryImlp extends AccountsRepository {
     } else
       return Left(ReadWritePermissionNotGrantedFailure());
   }
+
+  // @override
+  // Future<Either<Failure, void>> saveAppSecretKey() async {
+  //   await (sqlProvider as SQLprovider)
+  //       .saveAppSecretKey(appSecretKeyEntity: AppSecretKeyEntity());
+  //   return Right(null);
+  // }
 }

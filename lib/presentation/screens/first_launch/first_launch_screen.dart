@@ -6,8 +6,6 @@ import '../../../logic/cubit/app_key_cubit.dart';
 import '../../widgets_templates/field_widget.dart';
 
 class FirstLaunchScreen extends StatelessWidget {
-  TextEditingController controller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,8 +34,7 @@ class FirstLaunchScreen extends StatelessWidget {
             // ),
             TextButton(
               onPressed: () {
-                BlocProvider.of<AppKeyCubit>(context)
-                    .setKey(key: controller.text);
+                BlocProvider.of<AppKeyCubit>(context).generateKey();
                 // ScaffoldMessenger.of(context)
                 //     .showSnackBar(SnackBar(content: Text("Hasło ustawione")));
               },

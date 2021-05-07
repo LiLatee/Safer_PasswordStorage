@@ -138,20 +138,6 @@ class ButtonAddField extends StatelessWidget {
               isHidden: result['isHidden'],
               isMultiline: result['isMultiline'],
             ));
-
-          // DataProvider.addField(
-          //   FieldDataEntity(
-          //     accountId: _accountDataEntity.uuid!,
-          //     name: result['name'],
-          //     value: result['value'],
-          //     isHidden: result['isHidden'],
-          //     isMultiline: result['isMultiline'],
-          //   ),
-          // );
-
-          /// If using AnimatedList instead of ReorderableListView
-          // account.listKey.currentState.insertItem(account.getNumberOfFields - 1,
-          //     duration: AppConstants.animationsDuration);
         },
         icon: Icons.add,
         label: AppLocalizations.of(context)!.addField);
