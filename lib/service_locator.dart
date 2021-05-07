@@ -78,6 +78,6 @@ Future<void> init() async {
       () => AccountsRepositoryImlp(sqlProvider: sl()));
 
   //! Data source
-  await SQLprovider.db.initDB();
-  sl.registerLazySingleton<BaseDataProvider>(() => SQLprovider());
+  await SQLprovider.instance.initDB();
+  sl.registerLazySingleton<BaseDataProvider>(() => SQLprovider.instance);
 }
