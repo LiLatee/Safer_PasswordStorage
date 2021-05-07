@@ -10,7 +10,7 @@ void main() {
     late AccountsCubit accountsCubit;
 
     setUp(() async {
-      await SQLprovider.db.initDB();
+      await SQLprovider().initDB();
       AccountsRepositoryImlp accountsRepository =
           AccountsRepositoryImlp(sqlProvider: SQLprovider());
       accountsCubit = AccountsCubit(accountsRepository: accountsRepository);
