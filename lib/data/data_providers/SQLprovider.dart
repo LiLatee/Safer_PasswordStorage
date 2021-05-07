@@ -9,7 +9,11 @@ import 'base_data_provider.dart';
 
 class SQLprovider implements BaseDataProvider {
   SQLprovider._();
-  static SQLprovider get instance => SQLprovider._();
+  static final SQLprovider _instance = SQLprovider._internal();
+
+  SQLprovider._internal();
+  factory SQLprovider() => _instance;
+
   // static final SQLprovider _instance = SQLprovider._internal();
   // static final db = SQLprovider();
 

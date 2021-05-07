@@ -49,15 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.menu,
                   // color: Theme.of(context).colorScheme.onPrimary,
                 ),
-                onPressed: menuIconOnPressed,
+                onPressed: null,
               ),
               Spacer(),
               IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    // color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                  onPressed: searchIconOnPressed),
+                icon: Icon(
+                  Icons.search,
+                  // color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: null,
+              ),
               PopupMenuButton(
                 onSelected: popupMenuOnSelected,
                 icon: Icon(
