@@ -3,18 +3,16 @@ import 'dart:io';
 
 import 'package:aes_crypt/aes_crypt.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../core/errors/failures.dart';
-import '../data_providers/base_data_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../core/errors/failures.dart';
 import '../data_providers/SQLprovider.dart';
+import '../data_providers/base_data_provider.dart';
 import '../models/account_data_entity.dart';
 import '../models/field_data_entity.dart';
 import 'accounts_repository.dart';
 
-class AccountsRepositoryImlp implements AccountsRepository {
+class AccountsRepositoryImlp extends AccountsRepository {
   final BaseDataProvider sqlProvider;
 
   AccountsRepositoryImlp({required this.sqlProvider});
@@ -23,8 +21,9 @@ class AccountsRepositoryImlp implements AccountsRepository {
   ///
   ///
 
+  //! Accounts
   @override
-  Future<Either<Failure, void>> addAccount(
+  Future<Either<Failure, void>> addAccountLogic(
       {required AccountDataEntity accountData}) async {
     return Right(await sqlProvider.addAccount(accountData: accountData));
   }
@@ -56,11 +55,13 @@ class AccountsRepositoryImlp implements AccountsRepository {
   }
 
   @override
-  Future<Either<Failure, List<AccountDataEntity>>> getAllAccounts() async {
+  Future<Either<Failure, List<AccountDataEntity>>> getAllAccountsLogic() async {
     var accounts = await sqlProvider.getAllAccounts();
+
     for (var acc in accounts) {
       List<FieldDataEntity>? fields =
           await sqlProvider.getFieldsOfAccount(accountData: acc);
+
       acc.fields = fields ?? [];
       acc.fields.sort((a, b) => a.position.compareTo(b.position));
       acc.setIconWidget();
@@ -68,12 +69,10 @@ class AccountsRepositoryImlp implements AccountsRepository {
     return Right(accounts);
   }
 
-  /// Fields methods.
-  ///
-  ///
+  //! Single Account operations.
 
   @override
-  Future<Either<Failure, void>> addField(
+  Future<Either<Failure, void>> addFieldLogic(
       {required FieldDataEntity fieldData}) async {
     return Right(await sqlProvider.addField(fieldData: fieldData));
   }
@@ -96,6 +95,7 @@ class AccountsRepositoryImlp implements AccountsRepository {
         await sqlProvider.getFieldsOfAccount(accountData: accountData));
   }
 
+  //! Import/Export
   @override
   Future<Either<Failure, void>> importEncryptedDatabase(
       {required String secretKey, required String filepath}) async {

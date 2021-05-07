@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:encrypt/encrypt.dart';
 import 'package:equatable/equatable.dart';
+import 'package:my_simple_password_storage_clean/core/constants/AppConstants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app_key_state.dart';
@@ -16,7 +18,7 @@ class AppKeyCubit extends Cubit<AppKeyState> {
   void checkIfKeyExists() async {
     // prefs.remove('key'); // TODO, remove!!! Just for testing purposes.
     log("AppKeyCubit - checkIfKeyExists");
-    if (prefs.containsKey("key"))
+    if (prefs.containsKey(SPKeys.appKey))
       emit(AppKeyPresent());
     else
       emit(AppKeyAbsent());
@@ -24,7 +26,10 @@ class AppKeyCubit extends Cubit<AppKeyState> {
 
   void setKey({required String key}) {
     log("AppKeyCubit - setKey");
-    prefs.setString('key', key);
+    Key key = Key.fromSecureRandom(32);
+    prefs.setString(SPKeys.appKey, key.base64);
     emit(AppKeyPresent());
   }
+
+  String getKey() => prefs.getString(SPKeys.appKey)!;
 }

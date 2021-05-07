@@ -10,12 +10,10 @@ part 'accounts_state.dart';
 
 class AccountsCubit extends Cubit<AccountsState> {
   final AccountsRepository accountsRepository;
-  // final PreferencesCubit preferencesCubit;
   late StreamSubscription keyStreamSubscription;
 
   AccountsCubit({
     required this.accountsRepository,
-    //  required this.preferencesCubit,
   }) : super(AccountsLoading(accountDataList: <AccountDataEntity>[])) {
     fetchData();
   }
@@ -44,43 +42,6 @@ class AccountsCubit extends Cubit<AccountsState> {
     accountsList.remove(accountData);
     emit(AccountsLoaded(accountDataList: accountsList));
   }
-
-  // StreamSubscription<PreferencesState> monitorKey() {
-  //   return keyStreamSubscription = preferencesCubit.stream.listen((keyState) {
-  //     if (keyState is PreferencesLoaded) {
-  //       accountsRepository.key = preferencesCubit.prefs.getString('key')!;
-  //       log("nowy klucz");
-  //     }
-  //   });
-  // }
-
-  // Future<void> exportData(
-  //     {required String secretKey, required BuildContext context}) async {
-  //   // AsyncSnapshot<String> result =
-  //   //     await accountsRepository.exportEncryptedDatabase(secretKey, context);
-
-  //   emit(AccountsExported(accountDataList: state.accountDataList));
-  //   // return result;
-  // }
-
-  // Future<void> importData(
-  //     {required String secretKey,
-  //     required BuildContext context,
-  //     required String filepath}) async {
-  //   // AsyncSnapshot<String> result =
-  //   //     await accountsRepository.importEncryptedDatabase(
-  //   //         context: context, secretKey: secretKey, filepath: filepath);
-
-  //   emit(AccountsImported(
-  //       accountDataList: await accountsRepository.getAllAccounts()));
-  //   // return result;
-  // }
-
-  // @override
-  // Future<void> close() {
-  //   keyStreamSubscription.cancel();
-  //   return super.close();
-  // }
 
   @override
   void onChange(Change<AccountsState> change) {
