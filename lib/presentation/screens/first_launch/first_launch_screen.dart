@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../logic/cubit/app_key_cubit.dart';
-import '../../widgets_templates/field_widget.dart';
 
 class FirstLaunchScreen extends StatelessWidget {
   @override

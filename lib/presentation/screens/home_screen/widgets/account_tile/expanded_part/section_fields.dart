@@ -11,7 +11,6 @@ import '../../../../../../logic/cubit/single_account/single_account_cubit.dart';
 import '../../../../../../data/models/account_data_entity.dart';
 import '../../../../../../data/models/field_data_entity.dart';
 import '../../../../../widgets_templates/dialog_template.dart';
-import '../../../../../widgets_templates/field_widget.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 import 'account_data_expanded_part.dart';
