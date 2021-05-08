@@ -21,7 +21,16 @@ abstract class AccountsRepository {
   Future<Either<Failure, void>> addAccountLogic(
       {required AccountDataEntity accountData});
 
-  Future<Either<Failure, void>> updateAccount(AccountDataEntity accountData);
+  @nonVirtual
+  Future<Either<Failure, void>> updateAccount(
+      {required AccountDataEntity accountData}) {
+    var accountDataEncrypted =
+        accountData.encrypt(key: sl<AppKeyCubit>().getKey());
+    return updateAccountLogic(accountData: accountDataEncrypted);
+  }
+
+  Future<Either<Failure, void>> updateAccountLogic(
+      {required AccountDataEntity accountData});
 
   Future<Either<Failure, void>> deleteAccount(
       {required AccountDataEntity accountData});
@@ -46,7 +55,7 @@ abstract class AccountsRepository {
 
   Future<Either<Failure, List<AccountDataEntity>>> getAllAccountsLogic();
 
-  Future<Either<Failure, AccountDataEntity?>> getAccountById(String uuid);
+  // Future<Either<Failure, AccountDataEntity?>> getAccountById(String uuid);
 
   //! Single account operations
   @nonVirtual
@@ -58,13 +67,13 @@ abstract class AccountsRepository {
   Future<Either<Failure, void>> addFieldLogic(
       {required FieldDataEntity fieldData});
 
-  Future<Either<Failure, void>> updateField(FieldDataEntity fieldData);
+  // Future<Either<Failure, void>> updateField(FieldDataEntity fieldData);
 
   Future<Either<Failure, void>> deleteField(
       {required FieldDataEntity fieldData});
 
-  Future<Either<Failure, List<FieldDataEntity>?>> getFieldsOfAccount(
-      {required AccountDataEntity accountData});
+  // Future<Either<Failure, List<FieldDataEntity>?>> getFieldsOfAccount(
+  //     {required AccountDataEntity accountData});
 
   //! Import/Export
   Future<Either<Failure, String>> exportEncryptedDatabase(

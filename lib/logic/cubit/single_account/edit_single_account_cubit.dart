@@ -50,7 +50,7 @@ class EditSingleAccountCubit extends Cubit<EditSingleAccountState> {
 
     emit(SavingChangesSingleAccount(editedAccountDataEntity: accToUpdate));
 
-    await accountsRepository.updateAccount(accToUpdate);
+    await accountsRepository.updateAccount(accountData: accToUpdate);
 
     singleAccountCubit.updateAccount(newAccountData: accToUpdate);
     emit(EditSingleAccountInitial());

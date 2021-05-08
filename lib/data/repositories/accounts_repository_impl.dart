@@ -37,24 +37,24 @@ class AccountsRepositoryImlp extends AccountsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updateAccount(
-      AccountDataEntity accountData) async {
+  Future<Either<Failure, void>> updateAccountLogic(
+      {required AccountDataEntity accountData}) async {
     for (var field in accountData.fields)
       await sqlProvider.updateField(fieldData: field);
 
     return Right(await sqlProvider.updateAccount(accountData: accountData));
   }
 
-  @override
-  Future<Either<Failure, AccountDataEntity?>> getAccountById(
-      String uuid) async {
-    var account = await sqlProvider.getAccountById(uuid);
-    if (account != null)
-      account.fields =
-          (await sqlProvider.getFieldsOfAccount(accountData: account))!;
+  // @override
+  // Future<Either<Failure, AccountDataEntity?>> getAccountById(
+  //     String uuid) async {
+  //   var account = await sqlProvider.getAccountById(uuid);
+  //   if (account != null)
+  //     account.fields =
+  //         (await sqlProvider.getFieldsOfAccount(accountData: account))!;
 
-    return Right(account);
-  }
+  //   return Right(account);
+  // }
 
   @override
   Future<Either<Failure, List<AccountDataEntity>>> getAllAccountsLogic() async {
@@ -85,17 +85,17 @@ class AccountsRepositoryImlp extends AccountsRepository {
     return Right(await sqlProvider.deleteField(fieldData: fieldData));
   }
 
-  @override
-  Future<Either<Failure, void>> updateField(FieldDataEntity fieldData) async {
-    return Right(await sqlProvider.updateField(fieldData: fieldData));
-  }
+  // @override
+  // Future<Either<Failure, void>> updateField(FieldDataEntity fieldData) async {
+  //   return Right(await sqlProvider.updateField(fieldData: fieldData));
+  // }
 
-  @override
-  Future<Either<Failure, List<FieldDataEntity>?>> getFieldsOfAccount(
-      {required AccountDataEntity accountData}) async {
-    return Right(
-        await sqlProvider.getFieldsOfAccount(accountData: accountData));
-  }
+  // @override
+  // Future<Either<Failure, List<FieldDataEntity>?>> getFieldsOfAccount(
+  //     {required AccountDataEntity accountData}) async {
+  //   return Right(
+  //       await sqlProvider.getFieldsOfAccount(accountData: accountData));
+  // }
 
   //! Import/Export
   @override
@@ -154,11 +154,4 @@ class AccountsRepositoryImlp extends AccountsRepository {
     } else
       return Left(ReadWritePermissionNotGrantedFailure());
   }
-
-  // @override
-  // Future<Either<Failure, void>> saveAppSecretKey() async {
-  //   await (sqlProvider as SQLprovider)
-  //       .saveAppSecretKey(appSecretKeyEntity: AppSecretKeyEntity());
-  //   return Right(null);
-  // }
 }

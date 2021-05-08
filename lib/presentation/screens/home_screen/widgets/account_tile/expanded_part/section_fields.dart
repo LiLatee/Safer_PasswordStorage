@@ -79,10 +79,9 @@ class SectionFieldsState extends State<SectionFields> {
         /// Set all new indices.
         for (var i = 0; i < _accountDataEntity.fields.length; i++)
           _accountDataEntity.fields[i].position = i;
-        // DataProvider.updateAccount(_accountDataEntity);
         BlocProvider.of<AccountsCubit>(context)
             .accountsRepository
-            .updateAccount(_accountDataEntity);
+            .updateAccount(accountData: _accountDataEntity);
       },
     );
   }
@@ -94,29 +93,112 @@ class SectionFieldsState extends State<SectionFields> {
         TextSelection.fromPosition(TextPosition(
             offset:
                 _textEditingControllerMap[fieldDataEntity.uuid]!.text.length));
-    return FieldWidget(
-      controller: _textEditingControllerMap[fieldDataEntity.uuid]!,
-      label: fieldDataEntity.name,
-      value: fieldDataEntity.value,
-      onChangedCallback: ({required newText}) {
-        // fieldDataEntity.value = newText;
-        if (newText != fieldDataEntity.value) {
-          BlocProvider.of<EditSingleAccountCubit>(context).changeField(
-              fieldDataEntity: fieldDataEntity.copyWith(value: newText));
-        }
-      },
-      readOnly: !_accountDataEntity.isEditButtonPressed,
-      hiddenValue:
-          fieldDataEntity.isHidden && !_accountDataEntity.isShowButtonPressed,
-      multiline: fieldDataEntity.isMultiline,
-      textInputAction: fieldDataEntity.isMultiline
-          ? TextInputAction.newline
-          : TextInputAction.done,
-      textInputType: fieldDataEntity.isMultiline
-          ? TextInputType.multiline
-          : TextInputType.text,
+    return buildFieldWidget(fieldDataEntity);
+  }
+
+  Form buildFieldWidget(FieldDataEntity fieldDataEntity) {
+    return Form(
+      child: TextFormField(
+        // key: ObjectKey(fieldDataEntity.name), // TODO potrzebne?
+        controller: _textEditingControllerMap[fieldDataEntity.uuid]!,
+        maxLines: fieldDataEntity.isMultiline == true ? null : 1,
+        readOnly: !_accountDataEntity.isEditButtonPressed,
+        obscureText:
+            fieldDataEntity.isHidden && !_accountDataEntity.isShowButtonPressed,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: fieldDataEntity.name,
+        ),
+        textInputAction: fieldDataEntity.isMultiline
+            ? TextInputAction.newline
+            : TextInputAction.done,
+        keyboardType: fieldDataEntity.isMultiline
+            ? TextInputType.multiline
+            : TextInputType.text,
+        onChanged: (value) {
+          // fieldDataEntity.value = newText;
+          if (value != fieldDataEntity.value) {
+            BlocProvider.of<EditSingleAccountCubit>(context).changeField(
+                fieldDataEntity: fieldDataEntity.copyWith(value: value));
+          }
+        },
+      ),
     );
   }
+
+// Widget buildFieldWidget() {
+//   return Form(
+//     child: TextFormField(
+//       maxLines: multiline == true ? null : 1,
+//       obscureText: hiddenValue,
+//     ),);
+// }
+
+// ////////////
+// class FieldWidget extends StatelessWidget {
+//   const FieldWidget(
+//       {Key? key,
+//       required this.label,
+//       this.value = "",
+//       this.isPassword = false,
+//       this.readOnly = true,
+//       this.maxLines = 1,
+//       this.textInputType = TextInputType.text,
+//       this.onChangedCallback,
+//       this.onEditingComplete,
+//       this.textInputAction = TextInputAction.done,
+//       this.onFieldSubmitted,
+//       this.multiline = false,
+//       this.hiddenValue = false,
+//       this.controller})
+//       : super(key: key);
+
+//   final bool readOnly;
+//   final String label;
+//   final String value;
+//   final bool isPassword;
+//   final onChangeText? onChangedCallback;
+//   final int? maxLines;
+//   final TextInputType textInputType;
+//   final Function? onEditingComplete;
+//   final onChangeText? onFieldSubmitted;
+//   final TextInputAction textInputAction;
+//   final bool multiline;
+//   final bool hiddenValue;
+//   final TextEditingController? controller;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextFormField(
+//       key: ObjectKey(label),
+//       controller: controller,
+//       decoration: InputDecoration(
+//         border: OutlineInputBorder(),
+//         labelText: label,
+//       ),
+//       readOnly: readOnly,
+//       keyboardType: textInputType,
+//       minLines: 1,
+//       maxLines: multiline == true ? null : 1,
+//       obscureText: hiddenValue,
+//       enableInteractiveSelection: true,
+//       onChanged: (value) {
+//         if (onChangedCallback != null) onChangedCallback!(newText: value);
+//       },
+//       onEditingComplete: () {
+//         if (onEditingComplete != null) onEditingComplete!();
+//       },
+//       onFieldSubmitted: (value) {
+//         if (onFieldSubmitted != null) {
+//           onFieldSubmitted!(newText: value);
+//           FocusScope.of(context).unfocus();
+//         }
+//       },
+//       textInputAction: textInputAction,
+//     );
+//   }
+// }
+//////////
 
   List<Widget> buildFieldsWidgets(
       {required BuildContext context,

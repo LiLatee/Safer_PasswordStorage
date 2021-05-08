@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../../../../logic/cubit/single_account/add_field_cubit.dart';
-import '../../../../../../logic/cubit/single_account/single_account_cubit.dart';
 
 import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
 import '../../../../../../data/models/account_data_entity.dart';
 import '../../../../../../data/models/field_data_entity.dart';
+import '../../../../../../logic/cubit/single_account/add_field_cubit.dart';
 import '../../../../../widgets_templates/dialog_template.dart';
-import '../../../../../widgets_templates/field_widget.dart';
 import 'button_template.dart';
 
 class ButtonAddField extends StatelessWidget {
@@ -24,13 +22,11 @@ class ButtonAddField extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonTemplate(
         onPressed: () async {
-          // if (!_accountDataEntity.isEditButtonPressed)
-          //   _dataProvider.toggleEditButton(
-          //       accountDataEntity: _accountDataEntity);
-
+          // TODO try to refactor Dialog to make some methods
           var result = await showDialog(
             context: context,
             builder: (context) {
+              var _nameFormKey = GlobalKey<FormState>();
               bool isHidden = false;
               bool isMultiline = false;
               var name;
@@ -47,30 +43,49 @@ class ButtonAddField extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(
-                              bottom: AppConstants.defaultPadding),
-                          child: AdditionalFieldWidget(
-                            label: AppLocalizations.of(context)!.name,
-                            readOnly: false,
-                            value: "",
-                            onChangedCallback: ({required newText}) =>
-                                name = newText,
-                            textInputAction: TextInputAction.next,
+                            bottom: AppConstants.defaultPadding,
+                          ),
+                          child: Form(
+                            key: _nameFormKey,
+                            child: TextFormField(
+                              // key: ObjectKey(AppLocalizations.of(context)!
+                              //     .name), // TODO potrzebne?
+                              readOnly: false,
+                              textInputAction: TextInputAction.next,
+                              onChanged: (value) => name = value,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: AppLocalizations.of(context)!.name,
+                              ),
+                              validator: (value) {
+                                if (value != null && value.isEmpty) {
+                                  return AppLocalizations.of(context)!
+                                      .emptyAccountNameValidator;
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                         ),
-                        AdditionalFieldWidget(
-                          label: AppLocalizations.of(context)!.content,
-                          readOnly: false,
-                          value: "",
-                          onChangedCallback: ({required newText}) =>
-                              value = newText,
-                          textInputAction: isMultiline
-                              ? TextInputAction.newline
-                              : TextInputAction.done,
-                          textInputType: isMultiline
-                              ? TextInputType.multiline
-                              : TextInputType.text,
-                          hiddenValue: isHidden,
-                          multiline: isMultiline,
+                        Form(
+                          child: TextFormField(
+                            // key: ObjectKey(AppLocalizations.of(context)!
+                            //     .content), // TODO potrzebne?
+                            readOnly: false,
+                            maxLines: isMultiline == true ? null : 1,
+                            obscureText: isHidden,
+                            textInputAction: isMultiline
+                                ? TextInputAction.newline
+                                : TextInputAction.done,
+                            keyboardType: isMultiline
+                                ? TextInputType.multiline
+                                : TextInputType.text,
+                            onChanged: (newValue) => value = newValue,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: AppLocalizations.of(context)!.content,
+                            ),
+                          ),
                         ),
                         Row(
                           children: [
@@ -112,15 +127,17 @@ class ButtonAddField extends StatelessWidget {
                     MyDialogButton(
                       buttonName: AppLocalizations.of(context)!.add,
                       onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(AppLocalizations.of(context)!
-                                .addedFieldSnackbar(name))));
-                        Navigator.of(context).pop({
-                          "name": name,
-                          "value": value,
-                          "isHidden": isHidden,
-                          "isMultiline": isMultiline,
-                        });
+                        if (_nameFormKey.currentState!.validate()) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(AppLocalizations.of(context)!
+                                  .addedFieldSnackbar(name))));
+                          Navigator.of(context).pop({
+                            "name": name,
+                            "value": value,
+                            "isHidden": isHidden,
+                            "isMultiline": isMultiline,
+                          });
+                        }
                       },
                     )
                   ],
