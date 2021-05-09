@@ -14,9 +14,18 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit({required this.prefs}) : super(NotAuthenticated()) {
+    log('AuthCubit');
     if (prefs.containsKey(SPKeys.securityOn)) {
-      if (prefs.getBool(SPKeys.securityOn)! == false) emit(NoSecurityMode());
+      log('AuthCubit - securityON: ${prefs.getBool(SPKeys.securityOn)}');
+      if (prefs.getBool(SPKeys.securityOn) == false) emit(SecurityModeOff());
     }
+  }
+
+  @override
+  void onChange(Change<AuthState> change) {
+    super.onChange(change);
+    print(
+        'AuthCubit - onChange - ${change.currentState.toString()} --> ${change.nextState.toString()}');
   }
 
   final SharedPreferences prefs;
@@ -24,10 +33,15 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<bool> isBiometricSupported() async => await _auth.isDeviceSupported();
 
-  void setNoSecurityMode() {
+  void setSecurityRequired() {
+    log('AuthCubit - setSecurityRequired');
+    emit(SecurityModeOn());
+  }
+
+  void setSecurityModeOff() {
     log('AuthCubit - setNoSecurityMode');
     prefs.setBool(SPKeys.securityOn, false);
-    emit(NoSecurityMode());
+    emit(SecurityModeOff());
   }
 
   void authenticateWithBiometrics({required BuildContext context}) async {
@@ -35,7 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthInProgress());
 
     if ((await isBiometricSupported()) == false) {
-      emit(SecurityRequired());
+      emit(SecurityModeOn());
       return;
     }
     bool canCheckBiometrics = await _auth.canCheckBiometrics;
@@ -64,15 +78,14 @@ class AuthCubit extends Cubit<AuthState> {
             signInTitle: AppLocalizations.of(context)!.authenticationRequired,
           ),
         );
-      } on Exception catch (e) {
-        // TODO try catch PlatformException
-        log(e.toString());
-
         log('isAuthenticated: $isAuthenticated');
         if (isAuthenticated)
           emit(Authenticated());
         else
           emit(NotAuthenticated());
+      } on Exception catch (e) {
+        // TODO try catch PlatformException
+        log(e.toString());
       }
     } else
       emit(NotAuthenticated());

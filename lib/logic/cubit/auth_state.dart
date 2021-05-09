@@ -15,6 +15,6 @@ class AuthInProgress extends AuthState {}
 
 class AuthFailure extends AuthState {}
 
-class SecurityRequired extends AuthState {}
+class SecurityModeOn extends AuthState {}
 
-class NoSecurityMode extends AuthState {}
+class SecurityModeOff extends AuthState {}

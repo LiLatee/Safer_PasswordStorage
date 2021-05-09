@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/launching_cubit.dart';
 import '../../../logic/cubit/app_key_cubit.dart';
 
 class FirstLaunchScreen extends StatelessWidget {
@@ -34,6 +35,7 @@ class FirstLaunchScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 BlocProvider.of<AppKeyCubit>(context).generateKey();
+                BlocProvider.of<LaunchingCubit>(context).launchAuthScreen();
                 // ScaffoldMessenger.of(context)
                 //     .showSnackBar(SnackBar(content: Text("Hasło ustawione")));
               },

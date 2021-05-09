@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/auth_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/launching_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/theme_cubit.dart';
+import 'package:my_simple_password_storage_clean/presentation/router/app_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/themes/app_theme.dart';
@@ -17,23 +22,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    ThemeType themeType =
-        Provider.of<ThemeModel>(context, listen: false).themeType;
-    return buildHomeScreen(context, themeType);
-    // return BlocBuilder<PreferencesCubit, PreferencesState>(
-    //   builder: (context, state) {
-    //     if (state is PreferencesLoaded && state.keyExists)
-    //       return buildHomeScreen(context, themeType);
-    //     else if (state is PreferencesLoaded && !state.keyExists)
-    //       Future.microtask(
-    //           () => Navigator.pushNamed(context, '/keyIsNeededDialog'));
-
-    //     return Center(child: CircularProgressIndicator());
-    //   },
-    // );
+    return buildHomeScreen(context);
   }
 
-  Localizations buildHomeScreen(BuildContext context, ThemeType themeType) {
+  Localizations buildHomeScreen(BuildContext context) {
     return Localizations.override(
       // TODO remove Localizations.override
       context: context,
@@ -83,20 +75,54 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   PopupMenuItem(
-                    value: "theme",
+                    value: "lightTheme",
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(
                         Icons.circle,
-                        // color: themeType == ThemeType.Light
-                        //     ? Colors.black45
-                        //     : Colors.white70,
+                        color: Colors.white70,
                       ),
                       title: Text(
-                        themeType == ThemeType.Light
-                            ? AppLocalizations.of(context)!.darkTheme
-                            : AppLocalizations.of(context)!.lightTheme,
+                        AppLocalizations.of(context)!.lightTheme,
                       ),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: "darkTheme",
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(
+                        Icons.circle,
+                        color: Colors.black45,
+                      ),
+                      title: Text(
+                        AppLocalizations.of(context)!.darkTheme,
+                      ),
+                    ),
+                  ),
+                  // PopupMenuItem(
+                  //   value: "theme",
+                  //   child: ListTile(
+                  //     contentPadding: EdgeInsets.zero,
+                  //     leading: Icon(
+                  //       Icons.circle,
+                  //       // color: themeType == ThemeType.Light
+                  //       //     ? Colors.black45
+                  //       //     : Colors.white70,
+                  //     ),
+                  //     title: Text(
+                  //       themeType == ThemeType.Light
+                  //           ? AppLocalizations.of(context)!.darkTheme
+                  //           : AppLocalizations.of(context)!.lightTheme,
+                  //     ),
+                  //   ),
+                  // ),
+                  PopupMenuItem(
+                    value: "systemTheme",
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(Icons.brightness_auto),
+                      title: Text("System theme"),
                     ),
                   ),
                   PopupMenuItem(
@@ -104,7 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.security),
-                      title: Text("Change security mode"),
+                      title: Text(
+                          AppLocalizations.of(context)!.changeSecurityMode),
                     ),
                   ),
                   // const PopupMenuItem(
@@ -155,9 +182,16 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context) => ImportDialog(),
         // builder: (context) => Container(),
       );
-    else if (value == 'theme')
-      Provider.of<ThemeModel>(context, listen: false).toggleTheme();
-    else if (value == 'auth') Navigator.pushNamed(context, '/authPage');
+    else if (value == 'lightTheme')
+      BlocProvider.of<ThemeCubit>(context, listen: false).setLightTheme();
+    else if (value == 'darkTheme')
+      BlocProvider.of<ThemeCubit>(context, listen: false).setDarkTheme();
+    else if (value == 'systemTheme')
+      BlocProvider.of<ThemeCubit>(context, listen: false).setSystemTheme();
+    else if (value == 'auth') {
+      BlocProvider.of<AuthCubit>(context).setSecurityRequired();
+      BlocProvider.of<LaunchingCubit>(context).launchAuthScreen();
+    }
   }
 
   // AppBar buildAppBar() {

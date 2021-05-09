@@ -88,6 +88,8 @@
   "authenticationRequired": "Wymagane uwierzytelnienie",
   "securityRequired": "Nie masz ustawionej żadnej blokady telefonu.\n Czy chcesz używać aplikacji bez weryfikacji Twojej tożsamości?",
   "skipSecurity": "Nie chcę używać weryfikacji tożsamości",
-  "setSecurity": "Ustaw blokadę telefonu"
+  "setSecurity": "Ustaw blokadę telefonu",
+  "changeSecurityMode": "Włącz/Wyłącz blokadę aplikacji"
+
 
 }
