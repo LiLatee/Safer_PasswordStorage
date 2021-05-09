@@ -6,6 +6,7 @@ import 'data/repositories/accounts_repository_impl.dart';
 import 'logic/cubit/all_accounts/accounts_cubit.dart';
 import 'logic/cubit/all_accounts/add_account_cubit.dart';
 import 'logic/cubit/all_accounts/delete_account_cubit.dart';
+import 'logic/cubit/auth_cubit.dart';
 import 'logic/cubit/export_data_cubit.dart';
 import 'logic/cubit/single_account/add_field_cubit.dart';
 import 'logic/cubit/single_account/single_account_cubit.dart';
@@ -21,11 +22,14 @@ import 'logic/cubit/single_account/edit_single_account_cubit.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  final sharedPreferences = await SharedPreferences.getInstance();
+
   //! AppRouter
   sl.registerLazySingleton(() => AppRouter(sqlProvider: sl()));
 
   //! Bloc/Cubit
   //* Singletons
+  sl.registerLazySingleton(() => AuthCubit(prefs: sharedPreferences));
   sl.registerLazySingleton(() => AccountsCubit(accountsRepository: sl()));
   sl.registerLazySingleton(
       () => AddAccountCubit(accountsRepository: sl(), accountsCubit: sl()));
@@ -40,7 +44,6 @@ Future<void> init() async {
     ),
   );
 
-  final sharedPreferences = await SharedPreferences.getInstance();
   // sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => AppKeyCubit(prefs: sharedPreferences));
 

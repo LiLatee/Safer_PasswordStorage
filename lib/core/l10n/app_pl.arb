@@ -82,5 +82,12 @@
   "secretKey": "Klucz",
   "chooseEncryptedFile": "Wybierz plik z danymi...",
   "darkTheme": "Ciemny motyw",
-  "lightTheme": "Jasny motyw"
+  "lightTheme": "Jasny motyw",
+  "signIn": "Zaloguj",
+  "confirmIdentity": "Proszę potwierdzić tożsamość aby przejść do aplikacji.",
+  "authenticationRequired": "Wymagane uwierzytelnienie",
+  "securityRequired": "Nie masz ustawionej żadnej blokady telefonu.\n Czy chcesz używać aplikacji bez weryfikacji Twojej tożsamości?",
+  "skipSecurity": "Nie chcę używać weryfikacji tożsamości",
+  "setSecurity": "Ustaw blokadę telefonu"
+
 }

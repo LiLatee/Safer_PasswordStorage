@@ -12,6 +12,7 @@ const double maxHeightForFields = 300.0;
 //! SharedPreferences Keys
 class SPKeys {
   static const appKey = 'key';
+  static const securityOn = 'securityOn';
 }
 
 const List<Color> iconDefaultColors = const [
