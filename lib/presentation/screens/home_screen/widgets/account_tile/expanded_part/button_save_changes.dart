@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../../../logic/cubit/single_account/edit_single_account_cubit.dart';
 import '../../../../../../logic/cubit/single_account/single_account_cubit.dart';
 
-import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../../../core/constants/AppConstants.dart';
 
 class ButtonSaveChanges extends StatelessWidget {
   ButtonSaveChanges({

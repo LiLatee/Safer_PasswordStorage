@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../../../core/constants/AppConstants.dart';
 import '../../../../../../data/models/account_data_entity.dart';
 
 typedef void SetChosenDefaultIcon(

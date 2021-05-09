@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../../../core/constants/AppConstants.dart';
 import '../../../../../../data/models/account_data_entity.dart';
 import '../../../../../../logic/cubit/single_account/edit_single_account_cubit.dart';
 import 'button_add_field.dart';

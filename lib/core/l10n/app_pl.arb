@@ -23,8 +23,8 @@
   "addNewFieldTitle": "Dodaj nowe pole",
   "name": "Nazwa",
   "content": "Zawartość",
-  "makeHiddenFieldQuestion": "Ukryć wartość pola?",
-  "makeMultilineFieldQuestion": "Pole z wieloma wierszami?",
+  "makeHiddenFieldQuestion": "Ukryj",
+  "makeMultilineFieldQuestion": "Wiele wierszy",
 
   "removeAccountConfirmationTitle": "Potwierdzenie",
   "removeAccountConfirmationMessage": "Czy chcesz usunąć to konto?",
@@ -81,15 +81,19 @@
   "others___": "___OTHERS_________________________________",
   "secretKey": "Klucz",
   "chooseEncryptedFile": "Wybierz plik z danymi...",
-  "darkTheme": "Ciemny motyw",
-  "lightTheme": "Jasny motyw",
+  "theme": "Motyw",
+  "dark": "Ciemny",
+  "light": "Jasny",
+  "system": "Systemowy",
   "signIn": "Zaloguj",
   "confirmIdentity": "Proszę potwierdzić tożsamość aby przejść do aplikacji.",
   "authenticationRequired": "Wymagane uwierzytelnienie",
   "securityRequired": "Nie masz ustawionej żadnej blokady telefonu.\n Czy chcesz używać aplikacji bez weryfikacji Twojej tożsamości?",
   "skipSecurity": "Nie chcę używać weryfikacji tożsamości",
   "setSecurity": "Ustaw blokadę telefonu",
-  "changeSecurityMode": "Włącz/Wyłącz blokadę aplikacji"
+  "changeSecurityMode": "Włącz/Wyłącz blokadę aplikacji",
+  "settings": "Ustawienia"
+
 
 
 }

@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../../logic/cubit/all_accounts/add_account_cubit.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../../core/constants/AppConstants.dart';
 import '../../../../../core/constants/AppFunctions.dart' as AppFunctions;
 import '../../../../../data/models/account_data_entity.dart';
 import '../../../../widgets_templates/account_name_field_widget.dart';

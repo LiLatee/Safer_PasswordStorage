@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../../../core/constants/AppConstants.dart';
 import '../../../../../../data/models/account_data_entity.dart';
 import '../../../../../../logic/cubit/all_accounts/delete_account_cubit.dart';
 import '../../../../../widgets_templates/dialog_template.dart';

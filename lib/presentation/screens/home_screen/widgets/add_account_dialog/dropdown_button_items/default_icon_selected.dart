@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../../../core/constants/AppConstants.dart';
 
 class DefaultIconSelectedDropdownMenuItem extends DropdownMenuItem {
   final MapEntry<String, Image> mapElement;

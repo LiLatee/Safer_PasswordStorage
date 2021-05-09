@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_simple_password_storage_clean/presentation/screens/auth_screen/auth_screen.dart';
+import 'package:my_simple_password_storage_clean/presentation/screens/settings_screen/settings_screen.dart';
 
 import '../../data/data_providers/base_data_provider.dart';
 import '../../data/repositories/accounts_repository_impl.dart';
@@ -12,6 +13,7 @@ class AppRouterNames {
   static const String home = '/homePage';
   static const String firstLaunch = '/firstLaunchPage';
   static const String auth = '/authPage';
+  static const String settings = '/settingsPage';
 }
 
 class AppRouter {
@@ -33,11 +35,15 @@ class AppRouter {
       case AppRouterNames.firstLaunch:
         return MaterialPageRoute(
           builder: (context) => FirstLaunchScreen(),
-          fullscreenDialog: true,
+          // fullscreenDialog: true,
         );
       case AppRouterNames.auth:
         return MaterialPageRoute(
           builder: (context) => AuthScreen(),
+        );
+      case AppRouterNames.settings:
+        return MaterialPageRoute(
+          builder: (context) => SettingsScreen(),
         );
     }
   }
