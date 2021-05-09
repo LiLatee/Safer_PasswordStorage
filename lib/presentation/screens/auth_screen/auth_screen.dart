@@ -4,6 +4,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/auth_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/launching_cubit.dart';
 import '../../../core/constants/AppConstants.dart' as AppConstants;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -35,24 +36,24 @@ class _AuthScreenState extends State<AuthScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    if (!wasAuthenticationShowed) {
-      wasAuthenticationShowed = true;
-      BlocProvider.of<AuthCubit>(context)
-          .authenticateWithBiometrics(context: context);
-    }
     return Scaffold(
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
-          if (state is SecurityRequired) {
-            return buildIfSecurityIsDisabled();
+          if ((state is SecurityModeOff) || (state is Authenticated)) {
+            BlocProvider.of<LaunchingCubit>(context).launchHomeScreen();
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is SecurityModeOn) {
+            return buildIfPhoneSecurityIsDisabled();
           } else
-            return buildIfSecurityIsEnabled(context);
+            return buildIfPhoneSecurityIsEnabled(context);
         },
       ),
     );
   }
 
-  Widget buildIfSecurityIsDisabled() {
+  Widget buildIfPhoneSecurityIsDisabled() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -69,14 +70,14 @@ class _AuthScreenState extends State<AuthScreen> with WidgetsBindingObserver {
               AppLocalizations.of(context)!.skipSecurity,
             ),
             onPressed: () =>
-                BlocProvider.of<AuthCubit>(context).setNoSecurityMode(),
+                BlocProvider.of<AuthCubit>(context).setSecurityModeOff(),
           ),
         ],
       ),
     );
   }
 
-  Widget buildIfSecurityIsEnabled(BuildContext context) {
+  Widget buildIfPhoneSecurityIsEnabled(BuildContext context) {
     return Center(
       child: TextButton(
         onPressed: () {

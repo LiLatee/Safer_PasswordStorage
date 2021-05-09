@@ -104,5 +104,6 @@
   "authenticationRequired": "Authentication required",
   "securityRequired": "You do not have set any password to Your phone.\n Do you want to use app without an authentication?",
   "skipSecurity": "I don't want to set up identity verification",
-  "setSecurity": "Set phone identity verification"
+  "setSecurity": "Set phone identity verification",
+  "changeSecurityMode": "Change security mode"
 }

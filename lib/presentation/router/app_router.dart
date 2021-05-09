@@ -8,6 +8,12 @@ import '../../logic/cubit/all_accounts/accounts_cubit.dart';
 import '../screens/first_launch/first_launch_screen.dart';
 import '../screens/home_screen/home_screen.dart';
 
+class AppRouterNames {
+  static const String home = '/homePage';
+  static const String firstLaunch = '/firstLaunchPage';
+  static const String auth = '/authPage';
+}
+
 class AppRouter {
   late AccountsRepositoryImlp _accountsRepository;
   late AccountsCubit _accountsCubit;
@@ -20,16 +26,16 @@ class AppRouter {
 
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
+      case AppRouterNames.home:
         return MaterialPageRoute(
           builder: (_) => HomeScreen(),
         );
-      case '/firstLaunchPage':
+      case AppRouterNames.firstLaunch:
         return MaterialPageRoute(
           builder: (context) => FirstLaunchScreen(),
           fullscreenDialog: true,
         );
-      case '/authPage':
+      case AppRouterNames.auth:
         return MaterialPageRoute(
           builder: (context) => AuthScreen(),
         );

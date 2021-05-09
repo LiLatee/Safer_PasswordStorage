@@ -1,39 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
-enum ThemeType { Light, Dark }
-
-class ThemeModel extends ChangeNotifier {
-  ThemeData currentTheme = AppTheme.lightTheme;
-  ThemeType themeType = ThemeType.Light;
-
-  // ThemeModel() {
-  //   if (SchedulerBinding.instance != null) {
-  //     var brightness = SchedulerBinding.instance!.window.platformBrightness;
-  //     currentTheme = brightness == Brightness.light ? AppTheme.lightTheme : AppTheme.darkTheme;
-  //     themeType = brightness == Brightness.light ? ThemeType.Light : ThemeType.Dark;
-  //   }
-  // }
-
-  toggleTheme() {
-    if (themeType == ThemeType.Dark) {
-      currentTheme = AppTheme.lightTheme;
-      themeType = ThemeType.Light;
-      return notifyListeners();
-    }
-
-    if (themeType == ThemeType.Light) {
-      currentTheme = AppTheme.darkTheme;
-      themeType = ThemeType.Dark;
-      return notifyListeners();
-    }
-  }
-}
+enum ThemeType { Light, Dark, System }
 
 class AppTheme {
   const AppTheme._();
 
-  static final lightColorScheme = ColorScheme(
+  static final _lightColorScheme = ColorScheme(
     surface: Color(0xffFFFFFF),
     primary: Color(0xff8e24aa),
     primaryVariant: Color(0xff5c007a), // FlatButton text color
@@ -50,9 +22,9 @@ class AppTheme {
     brightness: Brightness.light,
   );
 
-  static final lightTheme = ThemeData.from(colorScheme: lightColorScheme);
+  static final lightTheme = ThemeData.from(colorScheme: _lightColorScheme);
 
-  static final darkColorScheme = ColorScheme(
+  static final _darkColorScheme = ColorScheme(
     surface: Color(0xff121212),
     primary: Color(0xffb39ddb),
     primaryVariant: Color(0xff836fa9), // FlatButton text color
@@ -69,5 +41,5 @@ class AppTheme {
     brightness: Brightness.dark,
   );
 
-  static final darkTheme = ThemeData.from(colorScheme: darkColorScheme);
+  static final darkTheme = ThemeData.from(colorScheme: _darkColorScheme);
 }

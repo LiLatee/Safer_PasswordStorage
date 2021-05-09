@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:my_simple_password_storage_clean/core/themes/app_theme.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/launching_cubit.dart';
 import 'data/data_providers/base_data_provider.dart';
 import 'data/models/account_data_entity.dart';
 import 'data/repositories/accounts_repository.dart';
@@ -10,6 +12,7 @@ import 'logic/cubit/auth_cubit.dart';
 import 'logic/cubit/export_data_cubit.dart';
 import 'logic/cubit/single_account/add_field_cubit.dart';
 import 'logic/cubit/single_account/single_account_cubit.dart';
+import 'logic/cubit/theme_cubit.dart';
 import 'presentation/router/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +32,8 @@ Future<void> init() async {
 
   //! Bloc/Cubit
   //* Singletons
+  sl.registerLazySingleton(() => ThemeCubit(prefs: sharedPreferences));
+  sl.registerLazySingleton(() => LaunchingCubit());
   sl.registerLazySingleton(() => AuthCubit(prefs: sharedPreferences));
   sl.registerLazySingleton(() => AccountsCubit(accountsRepository: sl()));
   sl.registerLazySingleton(
