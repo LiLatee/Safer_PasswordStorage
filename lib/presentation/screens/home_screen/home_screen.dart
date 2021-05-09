@@ -99,6 +99,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  PopupMenuItem(
+                    value: "auth",
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(Icons.security),
+                      title: Text("Change security mode"),
+                    ),
+                  ),
                   // const PopupMenuItem(
                   //   child: ListTile(
                   //     leading: Icon(Icons.article),
@@ -149,6 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     else if (value == 'theme')
       Provider.of<ThemeModel>(context, listen: false).toggleTheme();
+    else if (value == 'auth') Navigator.pushNamed(context, '/authPage');
   }
 
   // AppBar buildAppBar() {

@@ -98,5 +98,11 @@
   "secretKey": "Secret Key",
   "chooseEncryptedFile": "Choose file with data...",
   "darkTheme": "Dark theme",
-  "lightTheme": "Light theme"
+  "lightTheme": "Light theme",
+  "signIn": "Sign in",
+  "confirmIdentity": "Please confirm identity to proceed to app.",
+  "authenticationRequired": "Authentication required",
+  "securityRequired": "You do not have set any password to Your phone.\n Do you want to use app without an authentication?",
+  "skipSecurity": "I don't want to set up identity verification",
+  "setSecurity": "Set phone identity verification"
 }

@@ -1,19 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../logic/cubit/all_accounts/accounts_cubit.dart';
-import '../../../../../../logic/cubit/all_accounts/delete_account_cubit.dart';
 import '../../../../../../logic/cubit/single_account/delete_field_cubit.dart';
 import '../../../../../../logic/cubit/single_account/edit_single_account_cubit.dart';
-import '../../../../../../logic/cubit/single_account/single_account_cubit.dart';
 import '../../../../../../data/models/account_data_entity.dart';
 import '../../../../../../data/models/field_data_entity.dart';
 import '../../../../../widgets_templates/dialog_template.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../core/constants/AppConstants.dart' as AppConstants;
-import 'account_data_expanded_part.dart';
 import 'field_edit_section.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

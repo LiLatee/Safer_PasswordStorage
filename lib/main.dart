@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/auth_cubit.dart';
+import 'package:my_simple_password_storage_clean/presentation/screens/auth_screen/auth_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'core/themes/app_theme.dart';
@@ -61,6 +63,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<AppKeyCubit>(
             create: (_) => sl<AppKeyCubit>(),
           ),
+          BlocProvider<AuthCubit>(
+            create: (_) => sl<AuthCubit>(),
+          ),
         ],
         child: Builder(
           builder: (context) => MaterialApp(
@@ -77,9 +82,15 @@ class MyApp extends StatelessWidget {
 
   Widget _getStartScreen({required BuildContext context}) {
     var appKeyCubitState = context.watch<AppKeyCubit>().state;
-    if (appKeyCubitState is AppKeyPresent)
-      return HomeScreen();
-    else
+    var authCubitState = context.watch<AuthCubit>().state;
+
+    if (appKeyCubitState is AppKeyPresent) {
+      if (authCubitState is Authenticated || authCubitState is NoSecurityMode)
+        return HomeScreen();
+      else
+        return AuthScreen();
+    } else {
       return FirstLaunchScreen();
+    }
   }
 }
