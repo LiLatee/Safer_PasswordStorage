@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-enum ThemeType { Light, Dark, System }
+// enum ThemeType { Light, Dark, System }
+
+extension ThemeModeExt on ThemeMode {
+  String themeName({required BuildContext context}) {
+    switch (this) {
+      case ThemeMode.light:
+        return AppLocalizations.of(context)!.light;
+      case ThemeMode.dark:
+        return AppLocalizations.of(context)!.dark;
+      case ThemeMode.system:
+        return AppLocalizations.of(context)!.system;
+    }
+  }
+}
 
 class AppTheme {
   const AppTheme._();
@@ -22,7 +36,9 @@ class AppTheme {
     brightness: Brightness.light,
   );
 
-  static final lightTheme = ThemeData.from(colorScheme: _lightColorScheme);
+  static final lightTheme = ThemeData.from(
+    colorScheme: _lightColorScheme,
+  );
 
   static final _darkColorScheme = ColorScheme(
     surface: Color(0xff121212),

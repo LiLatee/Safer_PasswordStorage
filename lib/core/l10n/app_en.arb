@@ -31,8 +31,8 @@
   "addNewFieldTitle": "Add new field",
   "name": "Name",
   "content": "Content",
-  "makeHiddenFieldQuestion": "Hide the value of field?",
-  "makeMultilineFieldQuestion": "Multiline?",
+  "makeHiddenFieldQuestion": "Hide",
+  "makeMultilineFieldQuestion": "Multiline",
 
   "removeAccountConfirmationTitle": "Confirmation",
   "removeAccountConfirmationMessage": "Do you want to remove this account?",
@@ -97,13 +97,16 @@
   "others___": "___OTHERS_________________________________",
   "secretKey": "Secret Key",
   "chooseEncryptedFile": "Choose file with data...",
-  "darkTheme": "Dark theme",
-  "lightTheme": "Light theme",
+  "theme": "Theme",
+  "dark": "Dark",
+  "light": "Light",
+  "system": "System",
   "signIn": "Sign in",
   "confirmIdentity": "Please confirm identity to proceed to app.",
   "authenticationRequired": "Authentication required",
   "securityRequired": "You do not have set any password to Your phone.\n Do you want to use app without an authentication?",
   "skipSecurity": "I don't want to set up identity verification",
   "setSecurity": "Set phone identity verification",
-  "changeSecurityMode": "Change security mode"
+  "changeSecurityMode": "Change security mode",
+  "settings": "Settings"
 }

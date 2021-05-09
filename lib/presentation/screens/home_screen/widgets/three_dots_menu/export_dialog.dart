@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../../logic/cubit/export_data_cubit.dart';
 
-import '../../../../../core/constants/AppConstants.dart' as AppConstants;
+import '../../../../../core/constants/AppConstants.dart';
 import '../../../../widgets_templates/dialog_template.dart';
 
 class ExportDialog extends StatelessWidget {

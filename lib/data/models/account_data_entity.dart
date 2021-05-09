@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:uuid/uuid.dart';
 import 'package:encrypt/encrypt.dart' as enc;
 
-import '../../core/constants/AppConstants.dart' as AppConstants;
+import '../../core/constants/AppConstants.dart';
 import '../../core/constants/AppFunctions.dart' as AppFunctions;
 import 'field_data_entity.dart';
 

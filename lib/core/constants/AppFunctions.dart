@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 
-import 'AppConstants.dart' as AppConstants;
+import 'AppConstants.dart';
 
 Widget generateRandomColorIconAsWidget(
     {String name = '',

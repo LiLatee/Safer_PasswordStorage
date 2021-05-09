@@ -74,32 +74,32 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: Text(AppLocalizations.of(context)!.importData),
                     ),
                   ),
-                  PopupMenuItem(
-                    value: "lightTheme",
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: Icon(
-                        Icons.circle,
-                        color: Colors.white70,
-                      ),
-                      title: Text(
-                        AppLocalizations.of(context)!.lightTheme,
-                      ),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: "darkTheme",
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: Icon(
-                        Icons.circle,
-                        color: Colors.black45,
-                      ),
-                      title: Text(
-                        AppLocalizations.of(context)!.darkTheme,
-                      ),
-                    ),
-                  ),
+                  // PopupMenuItem(
+                  //   value: "lightTheme",
+                  //   child: ListTile(
+                  //     contentPadding: EdgeInsets.zero,
+                  //     leading: Icon(
+                  //       Icons.circle,
+                  //       color: Colors.white70,
+                  //     ),
+                  //     title: Text(
+                  //       AppLocalizations.of(context)!.lightTheme,
+                  //     ),
+                  //   ),
+                  // ),
+                  // PopupMenuItem(
+                  //   value: "darkTheme",
+                  //   child: ListTile(
+                  //     contentPadding: EdgeInsets.zero,
+                  //     leading: Icon(
+                  //       Icons.circle,
+                  //       color: Colors.black45,
+                  //     ),
+                  //     title: Text(
+                  //       AppLocalizations.of(context)!.darkTheme,
+                  //     ),
+                  //   ),
+                  // ),
                   // PopupMenuItem(
                   //   value: "theme",
                   //   child: ListTile(
@@ -118,11 +118,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   //   ),
                   // ),
                   PopupMenuItem(
-                    value: "systemTheme",
+                    value: "settings",
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
-                      leading: Icon(Icons.brightness_auto),
-                      title: Text("System theme"),
+                      leading: Icon(Icons.settings),
+                      title: Text(AppLocalizations.of(context)!.settings),
                     ),
                   ),
                   PopupMenuItem(
@@ -182,12 +182,8 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context) => ImportDialog(),
         // builder: (context) => Container(),
       );
-    else if (value == 'lightTheme')
-      BlocProvider.of<ThemeCubit>(context, listen: false).setLightTheme();
-    else if (value == 'darkTheme')
-      BlocProvider.of<ThemeCubit>(context, listen: false).setDarkTheme();
-    else if (value == 'systemTheme')
-      BlocProvider.of<ThemeCubit>(context, listen: false).setSystemTheme();
+    else if (value == 'settings')
+      Navigator.pushNamed(context, AppRouterNames.settings);
     else if (value == 'auth') {
       BlocProvider.of<AuthCubit>(context).setSecurityRequired();
       BlocProvider.of<LaunchingCubit>(context).launchAuthScreen();

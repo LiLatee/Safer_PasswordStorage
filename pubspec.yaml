@@ -38,6 +38,7 @@ dependencies:
   flutter_bloc: ^7.0.0
   flutter_colorpicker: ^0.4.0-nullsafety.0
   get_it: ^7.0.0
+  group_button: ^2.1.2
   image_picker: ^0.7.2+1
   intl: ^0.17.0
   local_auth: ^1.1.5
