@@ -114,10 +114,7 @@ class AccountsRepositoryImlp extends AccountsRepository {
       } on Exception {
         return Left(BackupDecryptionFailure());
       }
-      // AppSecretKeyEntity? importedAppSecretKey =
-      await (sqlProvider as SQLprovider).getAppSecretKeyEntity();
-      // AppSecretKeyEntity(key: importedAppSecretKey!.key);
-      (sqlProvider as SQLprovider).deleteAppSecretKeyFromSQL();
+      await (sqlProvider as SQLprovider).importAppSecretKey();
       return Right(null);
     }
   }
@@ -131,20 +128,16 @@ class AccountsRepositoryImlp extends AccountsRepository {
           "MySimplePasswordStorage Backup ${now.year}-${now.month}-${now.day} ${now.hour}-${now.minute}-${now.second}.aes";
       String path = "/storage/emulated/0/Download/" + filename;
 
-      var crypt = AesCrypt(secretKey);
+      var aesCrypt = AesCrypt(secretKey);
       String databasePath = (sqlProvider as SQLprovider).getDatabasePath();
       String exportedDataPath;
       if (databasePath == null)
         return Left(SqlLiteFailure());
       else {
         try {
-          (sqlProvider as SQLprovider)
-              .saveAppSecretKey(appSecretKeyEntity: AppSecretKeyEntity());
-          exportedDataPath = crypt.encryptFileSync(
-            databasePath,
-            path,
-          );
-          (sqlProvider as SQLprovider).deleteAppSecretKeyFromSQL();
+          exportedDataPath = await (sqlProvider as SQLprovider)
+              .exportAppSecretKey(
+                  aesCrypt: aesCrypt, databasePath: databasePath, path: path);
         } on FileSystemException {
           return Left(BackupEncryptionFailure());
         }

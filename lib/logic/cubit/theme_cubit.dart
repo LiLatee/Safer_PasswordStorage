@@ -22,6 +22,8 @@ class ThemeCubit extends Cubit<ThemeState> {
         setDarkTheme();
       else if (prefs.getString(SPKeys.theme) == ThemeMode.system.toString())
         setSystemTheme();
+    } else {
+      setSystemTheme();
     }
   }
 
@@ -32,14 +34,16 @@ class ThemeCubit extends Cubit<ThemeState> {
         'ThemeCubit - onChange - ${change.currentState.toString()} --> ${change.nextState.toString()}');
   }
 
-  ThemeMode? getCurrentThemeMode() {
+  ThemeMode getCurrentThemeMode() {
     if (prefs.containsKey(SPKeys.theme)) {
       if (prefs.getString(SPKeys.theme) == ThemeMode.light.toString())
         return ThemeMode.light;
       else if (prefs.getString(SPKeys.theme) == ThemeMode.dark.toString())
         return ThemeMode.dark;
-      else if (prefs.getString(SPKeys.theme) == ThemeMode.system.toString())
+      else
         return ThemeMode.system;
+    } else {
+      return ThemeMode.system;
     }
   }
 

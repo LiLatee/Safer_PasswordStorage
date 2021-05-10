@@ -86,7 +86,7 @@ class SettingsScreen extends StatelessWidget {
           GroupButton(
             selectedButtons: [
               BlocProvider.of<ThemeCubit>(context)
-                  .getCurrentThemeMode()!
+                  .getCurrentThemeMode()
                   .themeName(context: context)
             ],
             spacing: AppConstants.defaultPadding * 2,

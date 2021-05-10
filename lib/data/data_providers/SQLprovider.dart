@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:aes_crypt/aes_crypt.dart';
 import 'package:my_simple_password_storage_clean/data/models/app_secret_key_entity.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
@@ -78,11 +79,16 @@ class SQLprovider implements BaseDataProvider {
     return await _SQL_DB.appSecretKeyDao.insert(appSecretKeyEntity);
   }
 
-  Future<void> deleteAppSecretKeyFromSQL() async {
-    return await _SQL_DB.appSecretKeyDao.delete();
+  Future<void> importAppSecretKey() async {
+    await _SQL_DB.appSecretKeyDao.importAppSecretKey();
   }
 
-  Future<AppSecretKeyEntity?> getAppSecretKeyEntity() async {
-    return await _SQL_DB.appSecretKeyDao.getAppSecretKeyEntity();
+  Future<String> exportAppSecretKey({
+    required AesCrypt aesCrypt,
+    required String databasePath,
+    required String path,
+  }) async {
+    return await _SQL_DB.appSecretKeyDao
+        .exportAppSecretKey(aesCrypt, databasePath, path);
   }
 }
