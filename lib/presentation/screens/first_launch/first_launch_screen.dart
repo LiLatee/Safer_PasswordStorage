@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/launching_cubit.dart';
-import '../../../logic/cubit/app_key_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/app_key_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/launching_cubit.dart';
 
 class FirstLaunchScreen extends StatelessWidget {
   @override

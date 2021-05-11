@@ -9,8 +9,14 @@ abstract class LaunchingState extends Equatable {
 
 class LaunchingSplashScreen extends LaunchingState {}
 
+class LaunchingLoginScreen extends LaunchingState {}
+
+class LaunchingSetPinCodeScreen extends LaunchingState {}
+
 class LaunchingStartScreen extends LaunchingState {}
 
 class LaunchingAuthScreen extends LaunchingState {}
 
 class LaunchingHomeScreen extends LaunchingState {}
+
+class LaunchingSettingSecurityScreen extends LaunchingState {}

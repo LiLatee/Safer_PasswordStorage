@@ -5,6 +5,7 @@ class SPKeys {
   static const appKey = 'appKey';
   static const securityOn = 'securityOn';
   static const theme = 'theme';
+  static const String pincode = 'pincode';
 }
 
 class AppConstants {
