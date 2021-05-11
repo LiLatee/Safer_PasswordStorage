@@ -48,11 +48,18 @@ class AuthCubit extends Cubit<AuthState> {
     log('AuthCubit - authenticateWithBiometrics');
     emit(AuthInProgress());
 
+    var isDeviceSupported = await _auth.isDeviceSupported();
+    var canCheckBiometrics = await _auth.canCheckBiometrics;
+
+    log('isDeviceSupported $isDeviceSupported');
+    log('canCheckBiometrics $canCheckBiometrics');
+
     if ((await isBiometricSupported()) == false) {
       emit(SecurityModeOn());
       return;
     }
-    bool canCheckBiometrics = await _auth.canCheckBiometrics;
+    // bool canCheckBiometrics = await _auth.canCheckBiometrics;
+
     bool isAuthenticated = false;
 
     if (canCheckBiometrics) {

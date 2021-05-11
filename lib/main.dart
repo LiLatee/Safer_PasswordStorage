@@ -3,22 +3,25 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/auth_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/launching_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/theme_cubit.dart';
-import 'package:my_simple_password_storage_clean/presentation/screens/auth_screen/auth_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
 
 import 'core/themes/app_theme.dart';
 import 'logic/cubit/all_accounts/accounts_cubit.dart';
 import 'logic/cubit/all_accounts/add_account_cubit.dart';
 import 'logic/cubit/all_accounts/delete_account_cubit.dart';
-import 'logic/cubit/app_key_cubit.dart';
-import 'logic/cubit/export_data_cubit.dart';
-import 'logic/cubit/import_data_cubit.dart';
+import 'logic/cubit/general/app_key_cubit.dart';
+import 'logic/cubit/general/auth_cubit.dart';
+import 'logic/cubit/general/export_data_cubit.dart';
+import 'logic/cubit/general/import_data_cubit.dart';
+import 'logic/cubit/general/launching_cubit.dart';
+import 'logic/cubit/general/phone_lock_cubit.dart';
+import 'logic/cubit/general/theme_cubit.dart';
 import 'presentation/router/app_router.dart';
-import 'presentation/screens/first_launch/first_launch_screen.dart';
+import 'presentation/screens/auth_screen/auth_screen.dart';
 import 'presentation/screens/home_screen/home_screen.dart';
+import 'presentation/screens/login_screen/login_screen.dart';
+import 'presentation/screens/set_pin_code_screen/set_pin_code_screen.dart';
+import 'presentation/screens/settings_screen/settings_screen.dart';
 import 'presentation/screens/splash_screen/splash_screen.dart';
 import 'service_locator.dart';
 import 'service_locator.dart' as di;
@@ -70,6 +73,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<ThemeCubit>(
           create: (_) => sl<ThemeCubit>(),
         ),
+        BlocProvider<PhoneLockCubit>(
+          create: (_) => sl<PhoneLockCubit>(),
+        ),
+        BlocProvider<LoginCubit>(
+          create: (_) => sl<LoginCubit>(),
+        ),
       ],
       child: Builder(
         builder: (context) => BlocBuilder<ThemeCubit, ThemeState>(
@@ -118,8 +127,12 @@ class MyApp extends StatelessWidget {
       builder: (context, state) {
         if (state is LaunchingSplashScreen)
           return SplashScreen();
-        // else if (state is LaunchingStartScreen)
-        //   return FirstLaunchScreen();
+        else if (state is LaunchingLoginScreen)
+          return LoginScreen();
+        else if (state is LaunchingSetPinCodeScreen)
+          return SetPinCodeScreen();
+        else if (state is LaunchingSettingSecurityScreen)
+          return SettingsScreen();
         else if (state is LaunchingAuthScreen)
           return AuthScreen();
         else if (state is LaunchingHomeScreen)

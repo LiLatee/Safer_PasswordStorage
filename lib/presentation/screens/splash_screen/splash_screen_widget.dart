@@ -2,7 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/launching_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/launching_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
 
 class SplashScreenWidget extends StatefulWidget {
   @override
@@ -56,6 +57,9 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
   //This method will dispatch the navigateToHomeScreen event.
   void _dispatchEvent(BuildContext context) {
     log('_dispatchEvent');
-    BlocProvider.of<LaunchingCubit>(context).launchAuthScreen();
+    if (BlocProvider.of<LoginCubit>(context).checkIfPinCodeExists())
+      BlocProvider.of<LaunchingCubit>(context).launchLoginScreen();
+    else
+      BlocProvider.of<LaunchingCubit>(context).launchSetPinCodeScreen();
   }
 }

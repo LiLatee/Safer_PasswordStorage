@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/auth_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/launching_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/theme_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/auth_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/launching_cubit.dart';
 import 'package:my_simple_password_storage_clean/presentation/router/app_router.dart';
 import 'package:provider/provider.dart';
 
