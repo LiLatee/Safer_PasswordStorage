@@ -15,7 +15,6 @@ import 'logic/cubit/general/auth_cubit.dart';
 import 'logic/cubit/general/export_data_cubit.dart';
 import 'logic/cubit/general/import_data_cubit.dart';
 import 'logic/cubit/general/launching_cubit.dart';
-import 'logic/cubit/general/phone_lock_cubit.dart';
 import 'logic/cubit/general/login_cubit.dart';
 import 'logic/cubit/general/theme_cubit.dart';
 import 'logic/cubit/single_account/add_field_cubit.dart';
@@ -37,8 +36,7 @@ Future<void> init() async {
   //* Singletons
   sl.registerLazySingleton(() => ThemeCubit(prefs: sharedPreferences));
   sl.registerLazySingleton(() => LoginCubit(prefs: sharedPreferences));
-  sl.registerLazySingleton(() => PhoneLockCubit(localAuth: localAuth));
-  sl.registerLazySingleton(() => LaunchingCubit(phoneLockCubit: sl()));
+  sl.registerLazySingleton(() => LaunchingCubit(loginCubit: sl()));
   sl.registerLazySingleton(() => AuthCubit(prefs: sharedPreferences));
   sl.registerLazySingleton(() => AccountsCubit(accountsRepository: sl()));
   sl.registerLazySingleton(

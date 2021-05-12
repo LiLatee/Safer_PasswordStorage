@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_simple_password_storage_clean/presentation/screens/auth_screen/auth_screen.dart';
+import 'package:my_simple_password_storage_clean/presentation/screens/login_screen/login_screen.dart';
+import 'package:my_simple_password_storage_clean/presentation/screens/set_pin_code_screen/set_pin_code_screen.dart';
 import 'package:my_simple_password_storage_clean/presentation/screens/settings_screen/settings_screen.dart';
 
 import '../../data/data_providers/base_data_provider.dart';
@@ -12,8 +13,9 @@ import '../screens/home_screen/home_screen.dart';
 class AppRouterNames {
   static const String home = '/homePage';
   static const String firstLaunch = '/firstLaunchPage';
-  static const String auth = '/authPage';
+  static const String setPinCode = '/setPinCodePage';
   static const String settings = '/settingsPage';
+  static const String login = '/loginPage';
 }
 
 class AppRouter {
@@ -37,14 +39,38 @@ class AppRouter {
           builder: (context) => FirstLaunchScreen(),
           // fullscreenDialog: true,
         );
-      case AppRouterNames.auth:
+      case AppRouterNames.setPinCode:
         return MaterialPageRoute(
-          builder: (context) => AuthScreen(),
+          builder: (context) => SetPinCodeScreen(),
+        );
+      case AppRouterNames.login:
+        return MaterialPageRoute(
+          builder: (context) => LoginScreen(),
         );
       case AppRouterNames.settings:
         return MaterialPageRoute(
           builder: (context) => SettingsScreen(),
+          // fullscreenDialog: true,
         );
     }
   }
 }
+
+// class NoAnimationMaterialPageRoute<T> extends MaterialPageRoute<T> {
+//   NoAnimationMaterialPageRoute({
+//     required WidgetBuilder builder,
+//     RouteSettings? settings,
+//     bool maintainState = true,
+//     bool fullscreenDialog = false,
+//   }) : super(
+//             builder: builder,
+//             maintainState: maintainState,
+//             settings: settings,
+//             fullscreenDialog: fullscreenDialog);
+
+//   @override
+//   Widget buildTransitions(BuildContext context, Animation<double> animation,
+//       Animation<double> secondaryAnimation, Widget child) {
+//     return child;
+//   }
+// }

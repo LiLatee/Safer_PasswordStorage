@@ -7,14 +7,20 @@ abstract class AuthState extends Equatable {
   List<Object> get props => [];
 }
 
-class NotAuthenticated extends AuthState {}
+class AuthInitialState extends AuthState {}
 
-class Authenticated extends AuthState {}
+class BiometricOn extends AuthState {}
 
-class AuthInProgress extends AuthState {}
+class BiometricOff extends AuthState {}
 
-class AuthFailure extends AuthState {}
+// class NotAuthenticated extends AuthState {}
 
-class SecurityModeOn extends AuthState {}
+// class Authenticated extends AuthState {}
 
-class SecurityModeOff extends AuthState {}
+// class AuthInProgress extends AuthState {}
+
+// class AuthFailure extends AuthState {}
+
+// class SecurityModeOn extends AuthState {}
+
+// class SecurityModeOff extends AuthState {}

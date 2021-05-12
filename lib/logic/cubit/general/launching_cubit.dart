@@ -1,19 +1,35 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/phone_lock_cubit.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
 
 part 'launching_state.dart';
 
-class LaunchingCubit extends Cubit<LaunchingState> {
-  final PhoneLockCubit phoneLockCubit;
-  late StreamSubscription phoneLockSS;
+class LaunchingCubit extends Cubit<LaunchingState> with WidgetsBindingObserver {
+  final LoginCubit loginCubit;
+  LaunchingCubit({required this.loginCubit}) : super(LaunchingSplashScreen()) {
+    WidgetsBinding.instance!.addObserver(this);
+  }
 
-  LaunchingCubit({required this.phoneLockCubit})
-      : super(LaunchingSplashScreen()) {
-    monitorPhoneLock();
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (loginCubit.checkIfPinCodeExists())
+        emit(LaunchingLoginScreen());
+      else
+        emit(LaunchingSetPinCodeScreen());
+    }
+  }
+
+  @override
+  Future<void> close() {
+    WidgetsBinding.instance!.removeObserver(this);
+    return super.close();
   }
 
   @override
@@ -47,21 +63,5 @@ class LaunchingCubit extends Cubit<LaunchingState> {
   void launchHomeScreen() {
     log('LaunchingCubit - launchHomeScreen');
     emit(LaunchingHomeScreen());
-  }
-
-  void monitorPhoneLock() {
-    log('LaunchingCubit - monitorPhoneLock');
-    phoneLockSS = phoneLockCubit.stream.listen((phoneLockState) {
-      if (phoneLockState is PhoneHasLock)
-        emit(LaunchingAuthScreen());
-      else
-        emit(LaunchingSettingSecurityScreen());
-    });
-  }
-
-  @override
-  Future<void> close() {
-    phoneLockSS.cancel();
-    return super.close();
   }
 }

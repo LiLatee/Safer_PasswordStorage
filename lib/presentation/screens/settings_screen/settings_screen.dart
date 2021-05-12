@@ -5,12 +5,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
 import 'package:my_simple_password_storage_clean/core/constants/AppConstants.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/auth_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/launching_cubit.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/theme_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_simple_password_storage_clean/presentation/router/app_router.dart';
 import '../../../core/themes/app_theme.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool showBiometricOptions = false;
+
+  @override
+  Future<void> didChangeDependencies() async {
+    if (await BlocProvider.of<AuthCubit>(context).isBiometricSupported())
+      setState(() {
+        showBiometricOptions = true;
+      });
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -30,47 +46,101 @@ class SettingsScreen extends StatelessWidget {
         Divider(
           color: Theme.of(context).colorScheme.onBackground,
         ),
-        Padding(
+        buildBiometricLoginSettings(context),
+        Divider(
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AppRouterNames.setPinCode);
+                },
+                child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(AppLocalizations.of(context)!.changePin)),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget buildBiometricLoginSettings(BuildContext context) {
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        bool enabledBiometric;
+        if (state is BiometricOn)
+          enabledBiometric = true;
+        else
+          enabledBiometric = false;
+
+        return Padding(
           padding: EdgeInsets.only(
             left: AppConstants.defaultPadding,
             right: AppConstants.defaultPadding,
-            bottom: AppConstants.defaultPadding,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              buildSectionHeader(
-                context: context,
-                sectionName: "Blokada aplikacji",
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: AppConstants.defaultPadding),
-                child: BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, state) {
-                    bool enabled;
-                    if ((state is SecurityModeOn) || (state is Authenticated))
-                      enabled = true;
+              Flexible(
+                flex: 9,
+                child: InkWell(
+                  onTap: () {
+                    if (enabledBiometric)
+                      BlocProvider.of<AuthCubit>(context)
+                          .setBiometricLoginOff();
                     else
-                      enabled = false;
-
-                    return Switch(
-                      activeColor: Theme.of(context).colorScheme.secondary,
-                      onChanged: (bool value) {
-                        BlocProvider.of<AuthCubit>(context)
-                            .setSecurityRequired();
-                        BlocProvider.of<LaunchingCubit>(context)
-                            .launchAuthScreen();
-                        Navigator.of(context).pop();
-                      },
-                      value: enabled,
+                      BlocProvider.of<AuthCubit>(context).setBiometricLoginOn();
+                  },
+                  child: Row(
+                    children: [
+                      Flexible(
+                        flex: 8,
+                        child: Text(
+                          AppLocalizations.of(context)!.biometricLogin,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
+                      Flexible(
+                        flex: 2,
+                        child: Switch(
+                          activeColor: Theme.of(context).colorScheme.secondary,
+                          onChanged: (bool value) {
+                            if (value)
+                              BlocProvider.of<AuthCubit>(context)
+                                  .setBiometricLoginOn();
+                            else
+                              BlocProvider.of<AuthCubit>(context)
+                                  .setBiometricLoginOff();
+                          },
+                          value: enabledBiometric,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: InkWell(
+                  child: Icon(Icons.info_outline),
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content:
+                            Text(AppLocalizations.of(context)!.biometricInfo),
+                      ),
                     );
                   },
                 ),
-              )
+              ),
             ],
           ),
-        )
-      ],
+        );
+      },
     );
   }
 

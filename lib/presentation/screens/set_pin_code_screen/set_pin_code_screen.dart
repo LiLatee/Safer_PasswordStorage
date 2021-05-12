@@ -30,6 +30,24 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen> {
               height: 50,
             ),
             buildRepeatPinCode(context),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    BlocProvider.of<LoginCubit>(context)
+                        .savePinCode(pincode: pinSet!);
+                    if (BlocProvider.of<LoginCubit>(context)
+                        .checkIfPinCodeExists())
+                      Navigator.of(context).pop();
+                    else
+                      BlocProvider.of<LaunchingCubit>(context)
+                          .launchHomeScreen();
+                  },
+                  child: Text('Ustaw pin'),
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -108,8 +126,8 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen> {
         onCompleted: (v) {
           print("CompletedRepeat");
           if (pinSet == pinRepeat) {
-            BlocProvider.of<LoginCubit>(context).savePinCode(pincode: pinSet!);
-            BlocProvider.of<LaunchingCubit>(context).launchHomeScreen();
+            // BlocProvider.of<LoginCubit>(context).savePinCode(pincode: pinSet!);
+            // BlocProvider.of<LaunchingCubit>(context).launchHomeScreen();
           }
         },
         onChanged: (value) {

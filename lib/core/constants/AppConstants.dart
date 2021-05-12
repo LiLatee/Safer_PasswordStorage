@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //! SharedPreferences Keys
 class SPKeys {
   static const appKey = 'appKey';
-  static const securityOn = 'securityOn';
+  static const biometricOn = 'biometricOn';
   static const theme = 'theme';
   static const String pincode = 'pincode';
 }

@@ -92,7 +92,11 @@
   "skipSecurity": "Nie chcę używać weryfikacji tożsamości",
   "setSecurity": "Ustaw blokadę telefonu",
   "changeSecurityMode": "Włącz/Wyłącz blokadę aplikacji",
-  "settings": "Ustawienia"
+  "settings": "Ustawienia",
+  "biometricLogin": "Logowanie z użyciem odcisku palca/twarzy",
+  "changePin": "Zmien kod pin",
+  "biometricInfo": "Działa tylko w przypadku włączonego odblokowywania telefonu z użyciem odcisku palca lub twarzy."
+
 
 
 

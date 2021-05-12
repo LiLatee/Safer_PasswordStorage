@@ -14,10 +14,8 @@ import 'logic/cubit/general/auth_cubit.dart';
 import 'logic/cubit/general/export_data_cubit.dart';
 import 'logic/cubit/general/import_data_cubit.dart';
 import 'logic/cubit/general/launching_cubit.dart';
-import 'logic/cubit/general/phone_lock_cubit.dart';
 import 'logic/cubit/general/theme_cubit.dart';
 import 'presentation/router/app_router.dart';
-import 'presentation/screens/auth_screen/auth_screen.dart';
 import 'presentation/screens/home_screen/home_screen.dart';
 import 'presentation/screens/login_screen/login_screen.dart';
 import 'presentation/screens/set_pin_code_screen/set_pin_code_screen.dart';
@@ -33,9 +31,14 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     FlutterError.onError = (FlutterErrorDetails details) {
@@ -73,9 +76,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<ThemeCubit>(
           create: (_) => sl<ThemeCubit>(),
         ),
-        BlocProvider<PhoneLockCubit>(
-          create: (_) => sl<PhoneLockCubit>(),
-        ),
         BlocProvider<LoginCubit>(
           create: (_) => sl<LoginCubit>(),
         ),
@@ -83,58 +83,39 @@ class MyApp extends StatelessWidget {
       child: Builder(
         builder: (context) => BlocBuilder<ThemeCubit, ThemeState>(
           builder: (context, state) {
-            if (state is ThemeSystem) {
-              return MaterialApp(
-                title: 'My Simple Password Storage',
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                supportedLocales: AppLocalizations.supportedLocales,
-                theme: AppTheme.lightTheme,
-                darkTheme: AppTheme.darkTheme,
-                onGenerateRoute: sl<AppRouter>().onGenerateRoute,
-                home: _getStartScreen(context: context),
-              );
-            } else {
-              return MaterialApp(
-                title: 'My Simple Password Storage',
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                supportedLocales: AppLocalizations.supportedLocales,
-                theme: state is ThemeDark
-                    ? AppTheme.darkTheme
-                    : AppTheme.lightTheme,
-                onGenerateRoute: sl<AppRouter>().onGenerateRoute,
-                home: _getStartScreen(context: context),
-              );
-            }
+            if (state is ThemeSystem)
+              return buildMaterialApp(
+                  home: _getStartScreen(context: context), state: state);
+            else
+              return buildMaterialApp(
+                  home: _getStartScreen(context: context), state: state);
           },
         ),
       ),
-      // child: Builder(
-      //   builder: (context) => MaterialApp(
-      //     title: 'My Simple Password Storage',
-      //     localizationsDelegates: AppLocalizations.localizationsDelegates,
-      //     supportedLocales: AppLocalizations.supportedLocales,
-      //     theme: BlocProvider.of<ThemeCubit>(context).lightTheme,
-      //     darkTheme: BlocProvider.of<ThemeCubit>(context).darkTheme,
-      //     onGenerateRoute: sl<AppRouter>().onGenerateRoute,
-      //     home: _getStartScreen(context: context),
-      //   ),
-      // ),
     );
   }
 
-  Widget? _getStartScreen({required BuildContext context}) {
+  MaterialApp buildMaterialApp({required Widget home, ThemeState? state}) {
+    return MaterialApp(
+      title: 'My Simple Password Storage',
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      theme: state is ThemeDark ? AppTheme.darkTheme : AppTheme.lightTheme,
+      onGenerateRoute: sl<AppRouter>().onGenerateRoute,
+      home: home,
+    );
+  }
+
+  Widget _getStartScreen({required BuildContext context}) {
     return BlocBuilder<LaunchingCubit, LaunchingState>(
       builder: (context, state) {
+        log('_getStartScreen - state = $state');
         if (state is LaunchingSplashScreen)
           return SplashScreen();
         else if (state is LaunchingLoginScreen)
           return LoginScreen();
         else if (state is LaunchingSetPinCodeScreen)
           return SetPinCodeScreen();
-        else if (state is LaunchingSettingSecurityScreen)
-          return SettingsScreen();
-        else if (state is LaunchingAuthScreen)
-          return AuthScreen();
         else if (state is LaunchingHomeScreen)
           return HomeScreen();
         else
@@ -142,16 +123,4 @@ class MyApp extends StatelessWidget {
       },
     );
   }
-  //   var appKeyCubitState = context.watch<AppKeyCubit>().state;
-  //   var authCubitState = context.watch<AuthCubit>().state;
-
-  //   if (appKeyCubitState is AppKeyPresent) {
-  //     if (authCubitState is Authenticated || authCubitState is NoSecurityMode)
-  //       return HomeScreen();
-  //     else
-  //       return AuthScreen();
-  //   } else {
-  //     return FirstLaunchScreen();
-  //   }
-  // }
 }
