@@ -7,6 +7,8 @@ abstract class LaunchingState extends Equatable {
   List<Object> get props => [];
 }
 
+class LaunchingBlankScreen extends LaunchingState {}
+
 class LaunchingSplashScreen extends LaunchingState {}
 
 class LaunchingLoginScreen extends LaunchingState {}

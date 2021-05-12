@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/presentation/screens/auth_screen/auth_screen.dart';
 import 'package:my_simple_password_storage_clean/presentation/screens/first_launch/first_launch_screen.dart';
 
 import 'splash_screen_widget.dart';

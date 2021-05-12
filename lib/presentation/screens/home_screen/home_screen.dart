@@ -18,10 +18,35 @@ class HomeScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+  AppLifecycleState? _appLifecycleState;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    setState(() {
+      _appLifecycleState = state;
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return buildHomeScreen(context);
+    if (_appLifecycleState == AppLifecycleState.inactive) {
+      return Scaffold(body: Center(child: Text(';)')));
+    } else
+      return buildHomeScreen(context);
   }
 
   Localizations buildHomeScreen(BuildContext context) {
@@ -31,31 +56,23 @@ class _HomeScreenState extends State<HomeScreen> {
       locale: const Locale('pl'),
       child: Scaffold(
         bottomNavigationBar: BottomAppBar(
-          // color: Theme.of(context).colorScheme.primary,
           shape: CircularNotchedRectangle(),
           child: Row(
             children: [
               IconButton(
                 icon: Icon(
                   Icons.menu,
-                  // color: Theme.of(context).colorScheme.onPrimary,
                 ),
                 onPressed: null,
               ),
               Spacer(),
               IconButton(
-                icon: Icon(
-                  Icons.search,
-                  // color: Theme.of(context).colorScheme.onPrimary,
-                ),
+                icon: Icon(Icons.search),
                 onPressed: null,
               ),
               PopupMenuButton(
                 onSelected: popupMenuOnSelected,
-                icon: Icon(
-                  Icons.more_vert,
-                  // color: Theme.of(context).colorScheme.onPrimary,
-                ),
+                icon: Icon(Icons.more_vert),
                 itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                   PopupMenuItem(
                     value: "export",
@@ -73,49 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: Text(AppLocalizations.of(context)!.importData),
                     ),
                   ),
-                  // PopupMenuItem(
-                  //   value: "lightTheme",
-                  //   child: ListTile(
-                  //     contentPadding: EdgeInsets.zero,
-                  //     leading: Icon(
-                  //       Icons.circle,
-                  //       color: Colors.white70,
-                  //     ),
-                  //     title: Text(
-                  //       AppLocalizations.of(context)!.lightTheme,
-                  //     ),
-                  //   ),
-                  // ),
-                  // PopupMenuItem(
-                  //   value: "darkTheme",
-                  //   child: ListTile(
-                  //     contentPadding: EdgeInsets.zero,
-                  //     leading: Icon(
-                  //       Icons.circle,
-                  //       color: Colors.black45,
-                  //     ),
-                  //     title: Text(
-                  //       AppLocalizations.of(context)!.darkTheme,
-                  //     ),
-                  //   ),
-                  // ),
-                  // PopupMenuItem(
-                  //   value: "theme",
-                  //   child: ListTile(
-                  //     contentPadding: EdgeInsets.zero,
-                  //     leading: Icon(
-                  //       Icons.circle,
-                  //       // color: themeType == ThemeType.Light
-                  //       //     ? Colors.black45
-                  //       //     : Colors.white70,
-                  //     ),
-                  //     title: Text(
-                  //       themeType == ThemeType.Light
-                  //           ? AppLocalizations.of(context)!.darkTheme
-                  //           : AppLocalizations.of(context)!.lightTheme,
-                  //     ),
-                  //   ),
-                  // ),
                   PopupMenuItem(
                     value: "settings",
                     child: ListTile(
@@ -124,15 +98,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: Text(AppLocalizations.of(context)!.settings),
                     ),
                   ),
-                  PopupMenuItem(
-                    value: "auth",
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: Icon(Icons.security),
-                      title: Text(
-                          AppLocalizations.of(context)!.changeSecurityMode),
-                    ),
-                  ),
+                  // PopupMenuItem(
+                  //   value: "auth",
+                  //   child: ListTile(
+                  //     contentPadding: EdgeInsets.zero,
+                  //     leading: Icon(Icons.security),
+                  //     title: Text(
+                  //         AppLocalizations.of(context)!.changeSecurityMode),
+                  //   ),
+                  // ),
                   // const PopupMenuItem(
                   //   child: ListTile(
                   //     leading: Icon(Icons.article),
@@ -173,20 +147,14 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context) => ExportDialog(
           superContext: context,
         ),
-        // builder: (context) => Container(),
       );
     else if (value == 'import')
       showDialog(
         context: context,
         builder: (context) => ImportDialog(),
-        // builder: (context) => Container(),
       );
     else if (value == 'settings')
       Navigator.pushNamed(context, AppRouterNames.settings);
-    else if (value == 'auth') {
-      BlocProvider.of<AuthCubit>(context).setSecurityRequired();
-      BlocProvider.of<LaunchingCubit>(context).launchAuthScreen();
-    }
   }
 
   // AppBar buildAppBar() {

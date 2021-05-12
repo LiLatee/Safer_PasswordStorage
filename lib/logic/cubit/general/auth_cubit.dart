@@ -13,13 +13,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit({required this.prefs}) : super(NotAuthenticated()) {
+  AuthCubit({required this.prefs}) : super((AuthInitialState())) {
     log('AuthCubit');
-    if (prefs.containsKey(SPKeys.securityOn)) {
-      log('AuthCubit - securityON: ${prefs.getBool(SPKeys.securityOn)}');
-      if (prefs.getBool(SPKeys.securityOn) == false) emit(SecurityModeOff());
+    if (prefs.containsKey(SPKeys.biometricOn)) {
+      log('AuthCubit - biometricOn: ${prefs.getBool(SPKeys.biometricOn)}');
+      if (prefs.getBool(SPKeys.biometricOn)!)
+        emit(BiometricOn());
+      else
+        emit(BiometricOff());
     }
   }
+
+  final SharedPreferences prefs;
+  final LocalAuthentication _auth = LocalAuthentication();
 
   @override
   void onChange(Change<AuthState> change) {
@@ -28,37 +34,36 @@ class AuthCubit extends Cubit<AuthState> {
         'AuthCubit - onChange - ${change.currentState.toString()} --> ${change.nextState.toString()}');
   }
 
-  final SharedPreferences prefs;
-  final LocalAuthentication _auth = LocalAuthentication();
-
   Future<bool> isBiometricSupported() async => await _auth.isDeviceSupported();
+  Future<bool> canCheckBiometrics() async => await _auth.canCheckBiometrics;
 
-  void setSecurityRequired() {
-    log('AuthCubit - setSecurityRequired');
-    emit(SecurityModeOn());
+  void setBiometricLoginOff() {
+    log('AuthCubit - setBiometricLoginOff');
+    prefs.setBool(SPKeys.biometricOn, false);
+    emit(BiometricOff());
   }
 
-  void setSecurityModeOff() {
-    log('AuthCubit - setNoSecurityMode');
-    prefs.setBool(SPKeys.securityOn, false);
-    emit(SecurityModeOff());
+  void setBiometricLoginOn() {
+    log('AuthCubit - setBiometricLoginOn');
+    prefs.setBool(SPKeys.biometricOn, true);
+    emit(BiometricOn());
   }
 
-  void authenticateWithBiometrics({required BuildContext context}) async {
-    log('AuthCubit - authenticateWithBiometrics');
-    emit(AuthInProgress());
-
+  Future<bool> authenticateWithBiometricsIfOn(
+      {required BuildContext context}) async {
+    log('AuthCubit - authenticateWithBiometricsIfOn');
     var isDeviceSupported = await _auth.isDeviceSupported();
     var canCheckBiometrics = await _auth.canCheckBiometrics;
 
+    var availableMiometrics = await _auth.getAvailableBiometrics();
     log('isDeviceSupported $isDeviceSupported');
     log('canCheckBiometrics $canCheckBiometrics');
+    log('availableMiometrics $availableMiometrics');
 
     if ((await isBiometricSupported()) == false) {
-      emit(SecurityModeOn());
-      return;
+      emit(BiometricOff());
+      return false;
     }
-    // bool canCheckBiometrics = await _auth.canCheckBiometrics;
 
     bool isAuthenticated = false;
 
@@ -66,7 +71,7 @@ class AuthCubit extends Cubit<AuthState> {
       try {
         isAuthenticated = await _auth.authenticate(
           localizedReason: AppLocalizations.of(context)!.confirmIdentity,
-          // biometricOnly: true,
+          biometricOnly: true,
           stickyAuth: true,
           // sensitiveTransaction: true,
           useErrorDialogs:
@@ -85,16 +90,18 @@ class AuthCubit extends Cubit<AuthState> {
             signInTitle: AppLocalizations.of(context)!.authenticationRequired,
           ),
         );
-        log('isAuthenticated: $isAuthenticated');
-        if (isAuthenticated)
-          emit(Authenticated());
-        else
-          emit(NotAuthenticated());
+        // log('isAuthenticated: $isAuthenticated');
+        // if (isAuthenticated)
+        //   emit(Authenticated());
+        // else
+        //   emit(NotAuthenticated());
       } on Exception catch (e) {
         // TODO try catch PlatformException
         log(e.toString());
       }
-    } else
-      emit(NotAuthenticated());
+    }
+    return isAuthenticated;
+    // else
+    //   emit(NotAuthenticated());
   }
 }

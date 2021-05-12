@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/auth_cubit.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/launching_cubit.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -16,6 +18,21 @@ class _LoginScreenState extends State<LoginScreen> {
       StreamController<ErrorAnimationType>();
   TextEditingController textEditingController = TextEditingController();
   String? currentText;
+
+  bool isAuthenticated = false;
+
+  @override
+  Future<void> didChangeDependencies() async {
+    super.didChangeDependencies();
+
+    if (BlocProvider.of<AuthCubit>(context).state is BiometricOn) {
+      isAuthenticated = await BlocProvider.of<AuthCubit>(context)
+          .authenticateWithBiometricsIfOn(context: context);
+    }
+
+    if (isAuthenticated)
+      BlocProvider.of<LaunchingCubit>(context).launchHomeScreen();
+  }
 
   @override
   Widget build(BuildContext context) {
