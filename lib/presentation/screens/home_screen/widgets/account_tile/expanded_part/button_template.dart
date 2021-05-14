@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/constants/AppConstants.dart';
 
 class ButtonTemplate extends StatefulWidget {
-  final Function onPressed;
+  final Function()? onPressed;
   final IconData icon;
   final String label;
   final Color pressedButtonColor;
@@ -39,28 +39,29 @@ class _ButtonTemplateState extends State<ButtonTemplate> {
         color: widget.pressedButtonColor,
       ),
       duration: AppConstants.animationsDuration,
-      child: FlatButton(
-        // textColor: _textColor,
-        onPressed: () {
-          widget.onPressed();
-        },
-        child: Row(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  widget.icon,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-                Text(
-                  widget.label,
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                )
-              ],
-            ),
-          ],
+      child: Opacity(
+        opacity: widget.onPressed == null ? 0.38 : 1.0,
+        child: TextButton(
+          // textColor: _textColor,
+          onPressed: widget.onPressed == null ? null : widget.onPressed,
+          child: Row(
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    widget.icon,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  Text(
+                    widget.label,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

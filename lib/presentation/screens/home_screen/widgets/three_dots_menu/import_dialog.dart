@@ -91,12 +91,21 @@ class _ImportDialogState extends State<ImportDialog> {
     );
   }
 
-  Row buildChooseEncryptedFile() {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: AppConstants.defaultPadding),
-          child: TextButton(
+  Widget buildChooseEncryptedFile() {
+    return Padding(
+      padding: const EdgeInsets.only(top: AppConstants.defaultPadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(right: AppConstants.defaultPadding),
+            decoration: BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+                      width: 1.0,
+                      color: Theme.of(context).colorScheme.primary)),
+            ),
+            child: TextButton(
               onPressed: () async {
                 FilePickerResult? result = await FilePicker.platform.pickFiles(
                   allowMultiple: false,
@@ -108,16 +117,19 @@ class _ImportDialogState extends State<ImportDialog> {
                   setState(() => _filepath = result.files.single.path);
                 }
               },
-              child: Icon(Icons.file_upload)),
-        ),
-        Expanded(
-            child: SingleChildScrollView(
-          child: Text(
-            _filepath ?? AppLocalizations.of(context)!.chooseEncryptedFile,
+              child: Icon(Icons.file_upload),
+            ),
           ),
-          scrollDirection: Axis.horizontal,
-        )),
-      ],
+          Expanded(
+              child: SingleChildScrollView(
+            child: Text(
+              _filepath ?? AppLocalizations.of(context)!.chooseEncryptedFile,
+              overflow: TextOverflow.ellipsis,
+            ),
+            scrollDirection: Axis.horizontal,
+          )),
+        ],
+      ),
     );
   }
 

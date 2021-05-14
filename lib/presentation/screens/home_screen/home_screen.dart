@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,15 +15,34 @@ import 'widgets/list_of_accounts.dart';
 import 'widgets/three_dots_menu/export_dialog.dart';
 import 'widgets/three_dots_menu/import_dialog.dart';
 
+import 'dart:developer';
+
 class HomeScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+  Duration _inactivityTimeout = Duration(seconds: 5);
+  Timer? _keepAliveTimer;
+
+  void _keepAlive(bool visible) {
+    if (_keepAliveTimer != null) _keepAliveTimer!.cancel();
+
+    if (visible) {
+      _keepAliveTimer = null;
+    } else {
+      _keepAliveTimer = Timer(_inactivityTimeout, () {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacementNamed(AppRouterNames.login);
+      });
+    }
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance!.addObserver(this);
+    _keepAlive(true);
     super.initState();
   }
 
@@ -35,100 +56,112 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        _keepAlive(true);
+        break;
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+        _keepAlive(false); // Conservatively set a timer on all three
+        break;
+    }
     setState(() {
+      log('HomeScreen - state: $state');
       _appLifecycleState = state;
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      // Navigator.of(context).popUntil((route) => route.isFirst);
     });
   }
 
+  late BuildContext superContext;
   @override
   Widget build(BuildContext context) {
-    if (_appLifecycleState == AppLifecycleState.inactive) {
-      return Scaffold(body: Center(child: Text(';)')));
-    } else
-      return buildHomeScreen(context);
+    return Builder(
+      builder: (context) {
+        superContext = context;
+        if (_appLifecycleState == AppLifecycleState.inactive) {
+          return Scaffold(body: Center(child: Text(';)')));
+        } else
+          return buildHomeScreen(superContext);
+      },
+    );
   }
 
-  Localizations buildHomeScreen(BuildContext context) {
-    return Localizations.override(
-      // TODO remove Localizations.override
-      context: context,
-      locale: const Locale('pl'),
-      child: Scaffold(
-        bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          child: Row(
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.menu,
+  Widget buildHomeScreen(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        child: Row(
+          children: [
+            IconButton(
+              icon: Icon(
+                Icons.menu,
+              ),
+              onPressed: null,
+            ),
+            Spacer(),
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: null,
+            ),
+            PopupMenuButton(
+              onSelected: popupMenuOnSelected,
+              icon: Icon(Icons.more_vert),
+              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                PopupMenuItem(
+                  value: "export",
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(Icons.arrow_upward),
+                    title: Text(AppLocalizations.of(context)!.exportData),
+                  ),
                 ),
-                onPressed: null,
-              ),
-              Spacer(),
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: null,
-              ),
-              PopupMenuButton(
-                onSelected: popupMenuOnSelected,
-                icon: Icon(Icons.more_vert),
-                itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                  PopupMenuItem(
-                    value: "export",
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: Icon(Icons.arrow_upward),
-                      title: Text(AppLocalizations.of(context)!.exportData),
-                    ),
+                PopupMenuItem(
+                  value: "import",
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(Icons.arrow_downward),
+                    title: Text(AppLocalizations.of(context)!.importData),
                   ),
-                  PopupMenuItem(
-                    value: "import",
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: Icon(Icons.arrow_downward),
-                      title: Text(AppLocalizations.of(context)!.importData),
-                    ),
+                ),
+                PopupMenuItem(
+                  value: "settings",
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(Icons.settings),
+                    title: Text(AppLocalizations.of(context)!.settings),
                   ),
-                  PopupMenuItem(
-                    value: "settings",
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: Icon(Icons.settings),
-                      title: Text(AppLocalizations.of(context)!.settings),
-                    ),
-                  ),
-                  // PopupMenuItem(
-                  //   value: "auth",
-                  //   child: ListTile(
-                  //     contentPadding: EdgeInsets.zero,
-                  //     leading: Icon(Icons.security),
-                  //     title: Text(
-                  //         AppLocalizations.of(context)!.changeSecurityMode),
-                  //   ),
-                  // ),
-                  // const PopupMenuItem(
-                  //   child: ListTile(
-                  //     leading: Icon(Icons.article),
-                  //     title: Text('Item 3'),
-                  //   ),
-                  // ),
-                  // const PopupMenuDivider(),
-                  // const PopupMenuItem(child: Text('Item A')),
-                  // const PopupMenuItem(child: Text('Item B')),
-                ],
-              ),
-            ],
-          ),
+                ),
+                // PopupMenuItem(
+                //   value: "auth",
+                //   child: ListTile(
+                //     contentPadding: EdgeInsets.zero,
+                //     leading: Icon(Icons.security),
+                //     title: Text(
+                //         AppLocalizations.of(context)!.changeSecurityMode),
+                //   ),
+                // ),
+                // const PopupMenuItem(
+                //   child: ListTile(
+                //     leading: Icon(Icons.article),
+                //     title: Text('Item 3'),
+                //   ),
+                // ),
+                // const PopupMenuDivider(),
+                // const PopupMenuItem(child: Text('Item A')),
+                // const PopupMenuItem(child: Text('Item B')),
+              ],
+            ),
+          ],
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: ListOfAccounts(),
-          ),
-        ),
-        floatingActionButton: AddAccountFloatingButton(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: ListOfAccounts(),
+        ),
+      ),
+      floatingActionButton: AddAccountFloatingButton(superContext: context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -143,14 +176,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void popupMenuOnSelected(value) {
     if (value == "export")
       showDialog(
-        context: context,
+        context: superContext,
         builder: (context) => ExportDialog(
           superContext: context,
         ),
       );
     else if (value == 'import')
       showDialog(
-        context: context,
+        context: superContext,
         builder: (context) => ImportDialog(),
       );
     else if (value == 'settings')

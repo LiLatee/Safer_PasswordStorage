@@ -33,6 +33,9 @@ class ButtonUndoChanges extends StatelessWidget {
                     Icons.undo,
                     // color: AppConstants.dismissColor,
                   ),
+                  SizedBox(
+                    width: AppConstants.defaultPadding,
+                  ),
                   // VerticalDivider(color: Colors.black),
                   Text(AppLocalizations.of(context)!.undoChangedFields),
                 ],

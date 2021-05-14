@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/launching_cubit.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
+import 'package:my_simple_password_storage_clean/presentation/router/app_router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class SetPinCodeScreen extends StatefulWidget {
@@ -41,8 +42,8 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen> {
                         .checkIfPinCodeExists())
                       Navigator.of(context).pop();
                     else
-                      BlocProvider.of<LaunchingCubit>(context)
-                          .launchHomeScreen();
+                      Navigator.of(context)
+                          .pushReplacementNamed(AppRouterNames.home);
                   },
                   child: Text('Ustaw pin'),
                 )

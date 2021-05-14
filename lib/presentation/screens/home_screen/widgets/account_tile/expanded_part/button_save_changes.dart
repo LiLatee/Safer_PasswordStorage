@@ -34,6 +34,10 @@ class ButtonSaveChanges extends StatelessWidget {
                     Icons.save,
                     // color: AppConstants.dismissColor,
                   ),
+                  SizedBox(
+                    width: AppConstants.defaultPadding,
+                  ),
+
                   // VerticalDivider(color: Colors.black),
                   Text(AppLocalizations.of(context)!.saveChangedFields),
                 ],

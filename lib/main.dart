@@ -116,8 +116,6 @@ class _MyAppState extends State<MyApp> {
           return LoginScreen();
         else if (state is LaunchingSetPinCodeScreen)
           return SetPinCodeScreen();
-        else if (state is LaunchingHomeScreen)
-          return HomeScreen();
         else
           throw Exception(); // TODO
       },

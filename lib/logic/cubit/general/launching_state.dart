@@ -7,18 +7,10 @@ abstract class LaunchingState extends Equatable {
   List<Object> get props => [];
 }
 
-class LaunchingBlankScreen extends LaunchingState {}
-
 class LaunchingSplashScreen extends LaunchingState {}
 
 class LaunchingLoginScreen extends LaunchingState {}
 
 class LaunchingSetPinCodeScreen extends LaunchingState {}
 
-class LaunchingStartScreen extends LaunchingState {}
-
-class LaunchingAuthScreen extends LaunchingState {}
-
-class LaunchingHomeScreen extends LaunchingState {}
-
-class LaunchingSettingSecurityScreen extends LaunchingState {}
+// class LaunchingStartScreen extends LaunchingState {}

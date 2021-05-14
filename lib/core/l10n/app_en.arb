@@ -89,6 +89,19 @@
   "decryptionFailed": "Decryption failed. Did you choose right file and entered correct password?",
   "importSuccess": "Data has been correctly imported.",
   "encryptionError": "Encryption error.",
+  "removedAccount": "Removed account \"{accountName}\".",
+  "@removedAccount": {
+    "placeholders": {
+      "accountName": {
+        "type": "String",
+        "example": "Twitter"
+      }
+    }
+  },
+
+
+
+
 
   "fieldsValidators___": "___FIELDS_VALIDATORS_________________________________",
   "emptyAccountNameValidator": "Name can't be empty.",

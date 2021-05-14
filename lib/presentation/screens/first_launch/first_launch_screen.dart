@@ -35,7 +35,7 @@ class FirstLaunchScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 BlocProvider.of<AppKeyCubit>(context).generateKey();
-                BlocProvider.of<LaunchingCubit>(context).launchAuthScreen();
+                // BlocProvider.of<LaunchingCubit>(context).launchAuthScreen();
                 // ScaffoldMessenger.of(context)
                 //     .showSnackBar(SnackBar(content: Text("Hasło ustawione")));
               },

@@ -72,6 +72,7 @@
   "decryptionFailed": "Błąd odszyfrowywania. Czy na pewno wybrałeś odpowiedni plik oraz podałeś właściwy klucz?",
   "importSuccess": "Dane zostały prawdiłowo załadowane.",
   "encryptionError": "Błąd szyfrowania.",
+  "removedAccount": "Usunięto konto \"{accountName}\".",
 
 
   "fieldsValidators___": "___FIELDS_VALIDATORS_________________________________",
