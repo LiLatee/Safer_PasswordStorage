@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/auth_cubit.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/launching_cubit.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
+import 'package:my_simple_password_storage_clean/presentation/router/app_router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,7 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     if (isAuthenticated)
-      BlocProvider.of<LaunchingCubit>(context).launchHomeScreen();
+      Navigator.of(context).pushReplacementNamed(AppRouterNames.home);
+    // BlocProvider.of<LaunchingCubit>(context).launchHomeScreen();
   }
 
   @override
@@ -66,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
               print("Completed");
               if (BlocProvider.of<LoginCubit>(context)
                   .checkPinCode(pincode: currentText!))
-                BlocProvider.of<LaunchingCubit>(context).launchHomeScreen();
+                Navigator.of(context).pushReplacementNamed(AppRouterNames.home);
             },
             onChanged: (value) {
               print(value);

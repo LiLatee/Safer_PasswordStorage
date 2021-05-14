@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'add_account_dialog/add_account_dialog.dart';
 
 class AddAccountFloatingButton extends StatelessWidget {
+  final BuildContext superContext;
+
+  const AddAccountFloatingButton({Key? key, required this.superContext})
+      : super(key: key);
   @override
-  Widget build(BuildContext superContext) {
-    Size size = MediaQuery.of(superContext).size;
+  Widget build(BuildContext context) {
+    // Size size = MediaQuery.of(context).size;
 
     return FloatingActionButton(
       onPressed: () {

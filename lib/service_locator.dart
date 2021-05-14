@@ -23,11 +23,10 @@ import 'logic/cubit/single_account/edit_single_account_cubit.dart';
 import 'logic/cubit/single_account/single_account_cubit.dart';
 import 'presentation/router/app_router.dart';
 
-final sl = GetIt.instance;
+final GetIt sl = GetIt.instance;
 
 Future<void> init() async {
   final sharedPreferences = await SharedPreferences.getInstance();
-  final localAuth = LocalAuthentication();
 
   //! AppRouter
   sl.registerLazySingleton(() => AppRouter(sqlProvider: sl()));

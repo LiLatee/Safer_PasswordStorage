@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,38 +47,38 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
 
   epn.ExpansionPanelRadio buildExpansionPanel(
       {required AccountDataEntity accountDataEntity}) {
-    var singleAccountCubit =
-        sl<SingleAccountCubit>(param1: accountDataEntity, param2: null);
-
     return epn.ExpansionPanelRadio(
       canTapOnHeader: true,
       value: accountDataEntity.uuid!,
       headerBuilder: (BuildContext context, bool isExpanded) {
-        // return Text("${accountDataEntity.accountName}");
         return Provider.value(
           value: accountDataEntity,
           child: AccountTileHeader(),
         );
       },
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider<SingleAccountCubit>.value(
-            value: singleAccountCubit,
-          ),
-          BlocProvider<AddFieldCubit>(
-            create: (_) =>
-                sl<AddFieldCubit>(param1: singleAccountCubit, param2: null),
-          ),
-          BlocProvider<DeleteFieldCubit>(
-            create: (_) =>
-                sl<DeleteFieldCubit>(param1: singleAccountCubit, param2: null),
-          ),
-          BlocProvider<EditSingleAccountCubit>(
-            create: (_) => sl<EditSingleAccountCubit>(
-                param1: singleAccountCubit, param2: null),
-          ),
-        ],
-        child: AccountDataExpandedPart(),
+      body: BlocProvider(
+        create: (context) =>
+            sl<SingleAccountCubit>(param1: accountDataEntity, param2: null),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<AddFieldCubit>(
+              create: (context) => sl<AddFieldCubit>(
+                  param1: BlocProvider.of<SingleAccountCubit>(context),
+                  param2: null),
+            ),
+            BlocProvider<DeleteFieldCubit>(
+              create: (context) => sl<DeleteFieldCubit>(
+                  param1: BlocProvider.of<SingleAccountCubit>(context),
+                  param2: null),
+            ),
+            BlocProvider<EditSingleAccountCubit>(
+              create: (context) => sl<EditSingleAccountCubit>(
+                  param1: BlocProvider.of<SingleAccountCubit>(context),
+                  param2: null),
+            ),
+          ],
+          child: AccountDataExpandedPart(),
+        ),
       ),
     );
   }
