@@ -162,62 +162,67 @@ class _LoginScreenState extends State<LoginScreen>
                   width: pinFieldsWidth,
                   // margin: EdgeInsets.symmetric(
                   //     horizontal: AppConstants.defaultToScreenEdgePadding),
-                  child: PinCodeTextField(
-                    blinkWhenObscuring: true,
-                    keyboardType: TextInputType.number,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    length: 4,
-                    obscureText: true,
-                    animationType: AnimationType.fade,
-                    pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.underline,
-                      activeFillColor: Theme.of(context).colorScheme.background,
-                      inactiveColor: Colors.red,
-                      activeColor: Colors.green,
-                      disabledColor: Colors.white,
-                      selectedColor: Colors.blue,
-                      selectedFillColor:
-                          Theme.of(context).colorScheme.background,
-                      inactiveFillColor:
-                          Theme.of(context).colorScheme.background,
+                  child: AbsorbPointer(
+                    // Prevent to show keyboard after cliking on pin field.
+                    child: PinCodeTextField(
+                      // enablePinAutofill: false,
+                      blinkWhenObscuring: true,
+                      keyboardType: TextInputType.number,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      length: 4,
+                      obscureText: true,
+                      animationType: AnimationType.fade,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.underline,
+                        activeFillColor:
+                            Theme.of(context).colorScheme.background,
+                        inactiveColor: Colors.red,
+                        activeColor: Colors.green,
+                        disabledColor: Colors.white,
+                        selectedColor: Colors.blue,
+                        selectedFillColor:
+                            Theme.of(context).colorScheme.background,
+                        inactiveFillColor:
+                            Theme.of(context).colorScheme.background,
+                      ),
+                      animationDuration: Duration(milliseconds: 300),
+                      textStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground),
+                      // backgroundColor: Colors.blue.shade50,
+                      enableActiveFill: true,
+                      // errorAnimationController: errorController,
+                      controller: textEditingController,
+                      onCompleted: (v) async {
+                        if (BlocProvider.of<LoginCubit>(context).checkPinCode(
+                            pincode: textEditingController.text)) {
+                          Navigator.of(context)
+                              .pushReplacementNamed(AppRouterNames.home);
+                        } else {
+                          await animationController.forward();
+                          animationController.reset();
+                          textEditingController.text = '';
+                        }
+                      },
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                      beforeTextPaste: (text) {
+                        return false;
+                      },
+                      appContext: context,
+                      validator: (value) {
+                        bool isInvalidPin =
+                            !BlocProvider.of<LoginCubit>(context).checkPinCode(
+                                pincode: textEditingController.text);
+
+                        if ((value!.length == 4) && (isInvalidPin)) {
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //     SnackBar(content: Text("Nieprawidłowy pin")));
+
+                          return 'Nieprawidłowy pin';
+                        }
+                      },
                     ),
-                    animationDuration: Duration(milliseconds: 300),
-                    textStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground),
-                    // backgroundColor: Colors.blue.shade50,
-                    enableActiveFill: true,
-                    // errorAnimationController: errorController,
-                    controller: textEditingController,
-                    onCompleted: (v) async {
-                      print("Completed");
-                      if (BlocProvider.of<LoginCubit>(context)
-                          .checkPinCode(pincode: textEditingController.text)) {
-                        Navigator.of(context)
-                            .pushReplacementNamed(AppRouterNames.home);
-                      } else {
-                        await animationController.forward();
-                        animationController.reset();
-                        textEditingController.text = '';
-                      }
-                    },
-                    onChanged: (value) {
-                      setState(() {});
-                    },
-                    beforeTextPaste: (text) {
-                      return false;
-                    },
-                    appContext: context,
-                    validator: (value) {
-                      bool isInvalidPin = !BlocProvider.of<LoginCubit>(context)
-                          .checkPinCode(pincode: textEditingController.text);
-
-                      if ((value!.length == 4) && (isInvalidPin)) {
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //     SnackBar(content: Text("Nieprawidłowy pin")));
-
-                        return 'Nieprawidłowy pin';
-                      }
-                    },
                   ),
                 ),
               ),
