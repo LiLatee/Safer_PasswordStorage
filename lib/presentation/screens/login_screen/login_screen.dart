@@ -13,6 +13,8 @@ import 'package:my_simple_password_storage_clean/presentation/router/app_router.
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -32,7 +34,6 @@ class _LoginScreenState extends State<LoginScreen>
   bool wasBiometricShowed = false;
   bool isAuthenticated = false;
 
-  final double pinFieldsWidth = 300.0;
   late AnimationController animationController;
   late Animation shakeAnimation;
   late CurvedAnimation curve;
@@ -110,14 +111,17 @@ class _LoginScreenState extends State<LoginScreen>
               });
             });
           } else {
-            setState(() {
-              textEditingController.text = textEditingController.text
-                  .substring(0, textEditingController.text.length - 1);
-            });
+            if (textEditingController.text.isNotEmpty) {
+              setState(() {
+                textEditingController.text = textEditingController.text
+                    .substring(0, textEditingController.text.length - 1);
+              });
+            }
           }
         },
         onKeyboardTap: (text) {
-          textEditingController.text += text;
+          if (textEditingController.text.length < 4)
+            textEditingController.text += text;
         },
       ),
     );
@@ -136,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Cześć!",
+              AppLocalizations.of(context)!.hi,
               style: Theme.of(context).textTheme.headline4,
             )
           ],
@@ -156,10 +160,10 @@ class _LoginScreenState extends State<LoginScreen>
               Positioned(
                 top: 220,
                 left: MediaQuery.of(context).size.width / 2 -
-                    pinFieldsWidth / 2 +
+                    AppConstants.pinFieldsWidth / 2 +
                     shakeAnimation.value,
                 child: Container(
-                  width: pinFieldsWidth,
+                  width: AppConstants.pinFieldsWidth,
                   // margin: EdgeInsets.symmetric(
                   //     horizontal: AppConstants.defaultToScreenEdgePadding),
                   child: AbsorbPointer(
@@ -219,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen>
                           // ScaffoldMessenger.of(context).showSnackBar(
                           //     SnackBar(content: Text("Nieprawidłowy pin")));
 
-                          return 'Nieprawidłowy pin';
+                          return AppLocalizations.of(context)!.wrongPinCode;
                         }
                       },
                     ),
