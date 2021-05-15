@@ -96,7 +96,10 @@
   "settings": "Ustawienia",
   "biometricLogin": "Logowanie z użyciem odcisku palca/twarzy",
   "changePin": "Zmien kod pin",
-  "biometricInfo": "Działa tylko w przypadku włączonego odblokowywania telefonu z użyciem odcisku palca lub twarzy."
+  "biometricInfo": "Działa tylko w przypadku włączonego odblokowywania telefonu z użyciem odcisku palca lub twarzy.",
+  "hi": "Cześć!",
+  "wrongPinCode": "Zły kod pin",
+  "setPinCode": "Ustaw kod pin"
 
 
 
