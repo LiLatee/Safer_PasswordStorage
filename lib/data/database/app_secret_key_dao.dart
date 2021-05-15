@@ -26,7 +26,7 @@ abstract class AppSecretKeyDao {
     String path,
   ) async {
     await insert(AppSecretKeyEntity());
-    var exportedDataPath = aesCrypt.encryptFileSync(
+    var exportedDataPath = aesCrypt.encryptFile(
       databasePath,
       path,
     );

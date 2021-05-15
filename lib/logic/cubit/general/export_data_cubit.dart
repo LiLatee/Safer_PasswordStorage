@@ -16,7 +16,7 @@ class ExportDataCubit extends Cubit<ExportDataState> {
         await accountsRepository.exportEncryptedDatabase(secretKey: secretKey);
 
     failureOrSuccess.fold(
-      (failure) => emit(ExportError()),
+      (failure) => emit(ExportError(message: failure.toString())),
       (success) => emit(ExportedData(exportedDataLocation: success)),
     );
   }

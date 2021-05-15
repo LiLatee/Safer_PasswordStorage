@@ -156,9 +156,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: ListOfAccounts(),
-        ),
+        child: ListOfAccounts(),
       ),
       floatingActionButton: AddAccountFloatingButton(superContext: context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

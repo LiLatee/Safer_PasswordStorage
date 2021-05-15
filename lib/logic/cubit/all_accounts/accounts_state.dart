@@ -16,3 +16,9 @@ class AccountsLoaded extends AccountsState {
   AccountsLoaded({required accountDataList})
       : super(accountDataList: accountDataList);
 }
+
+class AccountsError extends AccountsState {
+  final String message;
+
+  AccountsError({required this.message}) : super(accountDataList: []);
+}

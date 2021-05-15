@@ -18,30 +18,57 @@ class _ImportDialogState extends State<ImportDialog> {
   String? _secretKey;
   String? _filepath;
   final _formKey = GlobalKey<FormState>();
+  bool hideText = true;
 
   @override
   Widget build(BuildContext context) {
     _filepath ??= AppLocalizations.of(context)!.chooseEncryptedFile;
 
-    return MyDialog(
-      title: AppLocalizations.of(context)!.importDataDialogTitle,
-      content: Padding(
-        padding: const EdgeInsets.only(
-          top: AppConstants.defaultPadding,
-          left: AppConstants.defaultPadding,
-          right: AppConstants.defaultPadding,
-        ),
-        child: Column(
-          children: [
-            buildSecretKeyForm(context),
-            buildChooseEncryptedFile(),
+    return BlocConsumer<ImportDataCubit, ImportDataState>(
+      listener: (context, state) {
+        if (state is ImportingData) {
+          log("importing - listener");
+        }
+        if (state is ImportedData) {
+          Navigator.of(context).pop(); // Close loading screen.
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(AppLocalizations.of(context)!.importSuccess)));
+        } else if (state is ImportError) {
+          Navigator.of(context).pop(); // Close loading screen.
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(AppLocalizations.of(context)!.decryptionFailed)));
+        }
+      },
+      builder: (context, state) {
+        if (state is ImportingData) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return MyDialog(
+          title: AppLocalizations.of(context)!.importDataDialogTitle,
+          content: Padding(
+            padding: const EdgeInsets.only(
+              top: AppConstants.defaultPadding,
+              left: AppConstants.defaultPadding,
+              right: AppConstants.defaultPadding,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: buildSecretKeyForm(context)),
+                    buildShowHideTextButton(),
+                  ],
+                ),
+                buildChooseEncryptedFile(),
+              ],
+            ),
+          ),
+          buttons: [
+            buildCancelButton(context),
+            buildImportButton(context),
           ],
-        ),
-      ),
-      buttons: [
-        buildCancelButton(context),
-        buildImportButton(context),
-      ],
+        );
+      },
     );
   }
 
@@ -53,40 +80,15 @@ class _ImportDialogState extends State<ImportDialog> {
   }
 
   Widget buildImportButton(BuildContext context) {
-    return BlocConsumer<ImportDataCubit, ImportDataState>(
-      listener: (context, state) {
-        if (state is ImportedData) {
-          Navigator.of(context).pop(); // Close loading screen.
-          Navigator.of(context).pop(); // Back to HomeScreen.
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(AppLocalizations.of(context)!.importSuccess)));
-        } else if (state is ImportError) {
-          Navigator.of(context).pop(); // Close loading screen.
-          Navigator.of(context).pop(); // Back to HomeScreen.
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(AppLocalizations.of(context)!.decryptionFailed)));
+    return MyDialogButton(
+      buttonName: AppLocalizations.of(context)!.import,
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          BlocProvider.of<ImportDataCubit>(context).importData(
+            secretKey: _secretKey!,
+            filepath: _filepath!,
+          );
         }
-      },
-      builder: (context, state) {
-        return MyDialogButton(
-          buttonName: AppLocalizations.of(context)!.import,
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              // Loading screen.
-              showDialog(
-                context: context,
-                builder: (context) =>
-                    Center(child: CircularProgressIndicator()),
-                barrierDismissible: false,
-              );
-
-              BlocProvider.of<ImportDataCubit>(context).importData(
-                secretKey: _secretKey!,
-                filepath: _filepath!,
-              );
-            }
-          },
-        );
       },
     );
   }
@@ -137,6 +139,7 @@ class _ImportDialogState extends State<ImportDialog> {
     return Form(
       key: _formKey,
       child: TextFormField(
+        obscureText: hideText,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
@@ -159,6 +162,57 @@ class _ImportDialogState extends State<ImportDialog> {
           return null;
         },
       ),
+    );
+  }
+
+  buildShowHideTextButton() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(left: AppConstants.defaultPadding),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(
+              AppConstants.defaultCircularBorderRadius,
+            ),
+            onTap: () {
+              setState(() {
+                hideText = !hideText;
+              });
+            },
+            child: AnimatedContainer(
+              duration: AppConstants.animationsDuration,
+              padding: const EdgeInsets.all(7.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  AppConstants.defaultCircularBorderRadius,
+                ),
+                color: hideText
+                    ? Theme.of(context).colorScheme.background.withOpacity(0.05)
+                    : Theme.of(context).colorScheme.secondary,
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    hideText
+                        ? Icons.remove_red_eye_outlined
+                        : Icons.remove_red_eye,
+                    color: hideText ? Colors.white : Colors.black,
+                  ),
+                  SizedBox(
+                    width: AppConstants.defaultPadding,
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.showHiddenFields,
+                    style: TextStyle(
+                        color: hideText ? Colors.white : Colors.black),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
