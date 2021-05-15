@@ -9,7 +9,8 @@ class SPKeys {
 }
 
 class AppConstants {
-  static const double defaultPadding = 16.0;
+  static const double defaultPadding = 10.0;
+  static const double defaultToScreenEdgePadding = 16.0;
   static const double defaultIconRadius = kMinInteractiveDimension / 2;
   static const double defaultCircularBorderRadius = 25.0;
   static const Color pressedButtonColor = Color(0xFFe94560);

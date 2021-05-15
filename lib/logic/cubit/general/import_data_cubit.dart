@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../../data/repositories/accounts_repository.dart';
@@ -15,9 +17,13 @@ class ImportDataCubit extends Cubit<ImportDataState> {
 
   Future<void> importData(
       {required String secretKey, required String filepath}) async {
+    emit(ImportingData());
+    log("ImportingData()");
+    // await Future.delayed(Duration(seconds: 3));
     var failureOrSuccess = await accountsRepository.importEncryptedDatabase(
         secretKey: secretKey, filepath: filepath);
 
+    emit(ImportedData());
     failureOrSuccess.fold(
       (failure) => emit(ImportError()),
       (success) {

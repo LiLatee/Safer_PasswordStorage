@@ -22,7 +22,7 @@ class AccountsCubit extends Cubit<AccountsState> {
     accountsRepository.getAllAccounts().then(
       (failureOrAccountsList) {
         failureOrAccountsList.fold(
-          (failure) => null,
+          (failure) => emit(AccountsError(message: failure.toString())),
           (accountsList) => emit(AccountsLoaded(accountDataList: accountsList)),
         );
       },

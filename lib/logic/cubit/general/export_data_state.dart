@@ -17,4 +17,13 @@ class ExportedData extends ExportDataState {
   ExportedData({required this.exportedDataLocation});
 }
 
-class ExportError extends ExportDataState {}
+class ExportError extends ExportDataState {
+  final String message;
+
+  ExportError({required this.message});
+
+  @override
+  String toString() {
+    return "ExportError - $message";
+  }
+}

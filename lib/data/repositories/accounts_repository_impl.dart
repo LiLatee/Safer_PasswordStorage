@@ -26,23 +26,34 @@ class AccountsRepositoryImlp extends AccountsRepository {
   @override
   Future<Either<Failure, void>> addAccountLogic(
       {required AccountDataEntity accountData}) async {
-    // saveAppSecretKey();
-    return Right(await sqlProvider.addAccount(accountData: accountData));
+    try {
+      return Right(await sqlProvider.addAccount(accountData: accountData));
+    } catch (e) {
+      return Left(SqlLiteFailure(message: e.toString()));
+    }
   }
 
   @override
   Future<Either<Failure, void>> deleteAccount(
       {required AccountDataEntity accountData}) async {
-    return Right(await sqlProvider.deleteAccount(accountData: accountData));
+    try {
+      return Right(await sqlProvider.deleteAccount(accountData: accountData));
+    } catch (e) {
+      return Left(SqlLiteFailure(message: e.toString()));
+    }
   }
 
   @override
   Future<Either<Failure, void>> updateAccountLogic(
       {required AccountDataEntity accountData}) async {
-    for (var field in accountData.fields)
-      await sqlProvider.updateField(fieldData: field);
+    try {
+      for (var field in accountData.fields)
+        await sqlProvider.updateField(fieldData: field);
 
-    return Right(await sqlProvider.updateAccount(accountData: accountData));
+      return Right(await sqlProvider.updateAccount(accountData: accountData));
+    } catch (e) {
+      return Left(SqlLiteFailure(message: e.toString()));
+    }
   }
 
   // @override
@@ -58,17 +69,21 @@ class AccountsRepositoryImlp extends AccountsRepository {
 
   @override
   Future<Either<Failure, List<AccountDataEntity>>> getAllAccountsLogic() async {
-    var accounts = await sqlProvider.getAllAccounts();
+    try {
+      var accounts = await sqlProvider.getAllAccounts();
 
-    for (var acc in accounts) {
-      List<FieldDataEntity>? fields =
-          await sqlProvider.getFieldsOfAccount(accountData: acc);
+      for (var acc in accounts) {
+        List<FieldDataEntity>? fields =
+            await sqlProvider.getFieldsOfAccount(accountData: acc);
 
-      acc.fields = fields ?? [];
-      acc.fields.sort((a, b) => a.position.compareTo(b.position));
-      acc.setIconWidget();
+        acc.fields = fields ?? [];
+        acc.fields.sort((a, b) => a.position.compareTo(b.position));
+        acc.setIconWidget();
+      }
+      return Right(accounts);
+    } catch (e) {
+      return Left(SqlLiteFailure(message: e.toString()));
     }
-    return Right(accounts);
   }
 
   //! Single Account operations.
@@ -76,13 +91,21 @@ class AccountsRepositoryImlp extends AccountsRepository {
   @override
   Future<Either<Failure, void>> addFieldLogic(
       {required FieldDataEntity fieldData}) async {
-    return Right(await sqlProvider.addField(fieldData: fieldData));
+    try {
+      return Right(await sqlProvider.addField(fieldData: fieldData));
+    } catch (e) {
+      return Left(SqlLiteFailure(message: e.toString()));
+    }
   }
 
   @override
   Future<Either<Failure, void>> deleteField(
       {required FieldDataEntity fieldData}) async {
-    return Right(await sqlProvider.deleteField(fieldData: fieldData));
+    try {
+      return Right(await sqlProvider.deleteField(fieldData: fieldData));
+    } catch (e) {
+      return Left(SqlLiteFailure(message: e.toString()));
+    }
   }
 
   // @override
@@ -101,50 +124,59 @@ class AccountsRepositoryImlp extends AccountsRepository {
   @override
   Future<Either<Failure, void>> importEncryptedDatabase(
       {required String secretKey, required String filepath}) async {
-    String databasePath = (sqlProvider as SQLprovider).getDatabasePath();
+    try {
+      String databasePath = (sqlProvider as SQLprovider).getDatabasePath();
 
-    if (databasePath == null)
-      return Left(SqlLiteFailure());
-    else {
-      var crypt = AesCrypt(secretKey);
-      crypt.setOverwriteMode(AesCryptOwMode.on);
-      try {
-        // await Future.delayed(Duration(seconds: 2));
-        crypt.decryptFileSync(filepath, databasePath);
-      } on Exception {
-        return Left(BackupDecryptionFailure());
+      if (databasePath == null)
+        return Left(SqlLiteFailure(message: "SQLite database path not found."));
+      else {
+        var crypt = AesCrypt(secretKey);
+        crypt.setOverwriteMode(AesCryptOwMode.on);
+        try {
+          // await Future.delayed(Duration(seconds: 2));
+          await crypt.decryptFile(filepath, databasePath);
+        } on Exception {
+          return Left(BackupDecryptionFailure("importing failed"));
+        }
+        await (sqlProvider as SQLprovider).importAppSecretKey();
+        return Right(null);
       }
-      await (sqlProvider as SQLprovider).importAppSecretKey();
-      return Right(null);
+    } catch (e) {
+      return Left(SqlLiteFailure(message: e.toString()));
     }
   }
 
   @override
   Future<Either<Failure, String>> exportEncryptedDatabase(
       {required String secretKey}) async {
-    if (await Permission.storage.request().isGranted) {
-      DateTime now = DateTime.now();
-      String filename =
-          "MySimplePasswordStorage Backup ${now.year}-${now.month}-${now.day} ${now.hour}-${now.minute}-${now.second}.aes";
-      String path = "/storage/emulated/0/Download/" + filename;
+    try {
+      if (await Permission.storage.request().isGranted) {
+        DateTime now = DateTime.now();
+        String filename =
+            "MySimplePasswordStorage Backup ${now.year}-${now.month}-${now.day} ${now.hour}-${now.minute}-${now.second}.aes";
+        String path = "/storage/emulated/0/Download/" + filename;
 
-      var aesCrypt = AesCrypt(secretKey);
-      String databasePath = (sqlProvider as SQLprovider).getDatabasePath();
-      String exportedDataPath;
-      if (databasePath == null)
-        return Left(SqlLiteFailure());
-      else {
-        try {
-          exportedDataPath = await (sqlProvider as SQLprovider)
-              .exportAppSecretKey(
-                  aesCrypt: aesCrypt, databasePath: databasePath, path: path);
-        } on FileSystemException {
-          return Left(BackupEncryptionFailure());
+        var aesCrypt = AesCrypt(secretKey);
+        String databasePath = (sqlProvider as SQLprovider).getDatabasePath();
+        String exportedDataPath;
+        if (databasePath == null) {
+          return Left(
+              SqlLiteFailure(message: "SQLite database path not found."));
+        } else {
+          try {
+            exportedDataPath = await (sqlProvider as SQLprovider)
+                .exportAppSecretKey(
+                    aesCrypt: aesCrypt, databasePath: databasePath, path: path);
+          } on FileSystemException catch (e) {
+            return Left(BackupEncryptionFailure(e.toString()));
+          }
+          log("Backup saved: $path");
+          return Right(exportedDataPath);
         }
-        log("Backup saved: $path");
-        return Right(exportedDataPath);
-      }
-    } else
-      return Left(ReadWritePermissionNotGrantedFailure());
+      } else
+        return Left(ReadWritePermissionNotGrantedFailure());
+    } catch (e) {
+      return Left(SqlLiteFailure(message: e.toString()));
+    }
   }
 }

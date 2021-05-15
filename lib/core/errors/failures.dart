@@ -5,10 +5,30 @@ abstract class Failure extends Equatable {
   List<Object?> get props => [];
 }
 
-class SqlLiteFailure extends Failure {}
+class SqlLiteFailure extends Failure {
+  final String message;
 
-class BackupEncryptionFailure extends Failure {}
+  SqlLiteFailure({required this.message});
+}
 
-class BackupDecryptionFailure extends Failure {}
+class BackupEncryptionFailure extends Failure {
+  final String message;
+
+  BackupEncryptionFailure(this.message);
+  @override
+  String toString() {
+    return "BackupDecryptionFailure - $message";
+  }
+}
+
+class BackupDecryptionFailure extends Failure {
+  final String message;
+
+  BackupDecryptionFailure(this.message);
+  @override
+  String toString() {
+    return "BackupDecryptionFailure - $message";
+  }
+}
 
 class ReadWritePermissionNotGrantedFailure extends Failure {}

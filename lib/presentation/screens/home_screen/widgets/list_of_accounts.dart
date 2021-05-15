@@ -30,6 +30,9 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
       builder: (context, state) {
         if (state is AccountsLoading)
           return Center(child: CircularProgressIndicator());
+        else if (state is AccountsError) {
+          return Center(child: Text(state.message));
+        }
 
         return SingleChildScrollView(
           child: epn.ExpansionPanelList.radio(

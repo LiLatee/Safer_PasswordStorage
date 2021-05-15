@@ -37,20 +37,25 @@ abstract class AccountsRepository {
 
   @nonVirtual
   Future<Either<Failure, List<AccountDataEntity>>> getAllAccounts() async {
-    var failureOrAccounts = await getAllAccountsLogic();
-    return failureOrAccounts.fold(
-      (failure) => Left(SqlLiteFailure()),
-      (accounts) {
-        var decryptedAccounts = accounts.map(
-          (e) {
-            var acc = e.decrypt(key: sl<AppKeyCubit>().getKey());
-            acc.setIconWidget();
-            return acc;
-          },
-        ).toList();
-        return Right(decryptedAccounts);
-      },
-    );
+    try {
+      var failureOrAccounts = await getAllAccountsLogic();
+      return failureOrAccounts.fold(
+        (failure) =>
+            Left(SqlLiteFailure(message: "SQLite getAllAccounts error.")),
+        (accounts) {
+          var decryptedAccounts = accounts.map(
+            (e) {
+              var acc = e.decrypt(key: sl<AppKeyCubit>().getKey());
+              acc.setIconWidget();
+              return acc;
+            },
+          ).toList();
+          return Right(decryptedAccounts);
+        },
+      );
+    } catch (e) {
+      return Left(BackupDecryptionFailure("getAllAccounts - $e"));
+    }
   }
 
   Future<Either<Failure, List<AccountDataEntity>>> getAllAccountsLogic();
