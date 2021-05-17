@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/language_cubit.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
 
 import 'core/themes/app_theme.dart';
@@ -79,45 +80,61 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<LoginCubit>(
           create: (_) => sl<LoginCubit>(),
         ),
+        BlocProvider<LanguageCubit>(
+          create: (_) => sl<LanguageCubit>(),
+        ),
       ],
       child: Builder(
         builder: (context) => BlocBuilder<ThemeCubit, ThemeState>(
-          builder: (context, state) {
-            if (state is ThemeSystem)
-              return buildMaterialApp(
-                  home: _getStartScreen(context: context), state: state);
-            else
-              return buildMaterialApp(
-                  home: _getStartScreen(context: context), state: state);
+          builder: (context, themeState) {
+            return buildMaterialApp(
+                home: _getStartScreen(context: context),
+                themeState: themeState,
+                context: context);
           },
         ),
       ),
     );
   }
 
-  MaterialApp buildMaterialApp({required Widget home, ThemeState? state}) {
+  MaterialApp buildMaterialApp(
+      {required Widget home,
+      ThemeState? themeState,
+      required BuildContext context}) {
+    var languageCubitState = context.watch<LanguageCubit>().state;
+
     return MaterialApp(
       title: 'My Simple Password Storage',
+      locale: Locale(languageCubitState.languageCode),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: state is ThemeDark ? AppTheme.darkTheme : AppTheme.lightTheme,
+      // theme: state is ThemeDark ? AppTheme.darkTheme : AppTheme.lightTheme,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeState is ThemeDark ? ThemeMode.dark : ThemeMode.light,
       onGenerateRoute: sl<AppRouter>().onGenerateRoute,
       home: home,
     );
   }
 
   Widget _getStartScreen({required BuildContext context}) {
-    return BlocBuilder<LaunchingCubit, LaunchingState>(
+    // log("LANGUAGE: ${Localizations.localeOf(context).toString()}");
+
+    return BlocBuilder<LanguageCubit, LanguageState>(
       builder: (context, state) {
-        log('_getStartScreen - state = $state');
-        if (state is LaunchingSplashScreen)
-          return SplashScreen();
-        else if (state is LaunchingLoginScreen)
-          return LoginScreen();
-        else if (state is LaunchingSetPinCodeScreen)
-          return SetPinCodeScreen();
-        else
-          throw Exception(); // TODO
+        return BlocBuilder<LaunchingCubit, LaunchingState>(
+          builder: (context, state) {
+            log('_getStartScreen - state = $state');
+            if (state is LaunchingSplashScreen)
+              return SplashScreen();
+            else if (state is LaunchingLoginScreen)
+              return LoginScreen();
+            else if (state is LaunchingSetPinCodeScreen)
+              return SetPinCodeScreen();
+            else
+              throw Exception(); // TODO
+          },
+        );
       },
     );
   }
