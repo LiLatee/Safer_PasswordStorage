@@ -4,7 +4,6 @@ import 'package:my_simple_password_storage_clean/presentation/screens/first_laun
 
 import 'splash_screen_widget.dart';
 
-// This the widget where the BLoC states and events are handled.
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,9 +16,8 @@ class SplashScreen extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      color: Colors.orange,
+      color: Theme.of(context).colorScheme.background,
       child: Center(
-        // Here I have used BlocBuilder, but instead you can also use BlocListner as well.
         child: SplashScreenWidget(),
       ),
     );

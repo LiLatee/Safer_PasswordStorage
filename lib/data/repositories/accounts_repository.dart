@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/app_key_cubit.dart';
@@ -40,8 +42,10 @@ abstract class AccountsRepository {
     try {
       var failureOrAccounts = await getAllAccountsLogic();
       return failureOrAccounts.fold(
-        (failure) =>
-            Left(SqlLiteFailure(message: "SQLite getAllAccounts error.")),
+        (failure) {
+          return Left(SqlLiteFailure(
+              message: "SQLite getAllAccounts error ${failure.toString()}."));
+        },
         (accounts) {
           var decryptedAccounts = accounts.map(
             (e) {
@@ -54,7 +58,7 @@ abstract class AccountsRepository {
         },
       );
     } catch (e) {
-      return Left(BackupDecryptionFailure("getAllAccounts - $e"));
+      return Left(BackupDecryptionFailure(message: "getAllAccounts - $e"));
     }
   }
 
@@ -85,7 +89,9 @@ abstract class AccountsRepository {
       {required String secretKey});
 
   Future<Either<Failure, void>> importEncryptedDatabase(
-      {required String secretKey, required String filepath});
+      {required String secretKey,
+      required String filepath,
+      required AppKeyCubit appKeyCubit});
 
   // Future<Either<Failure, void>> saveAppSecretKey();
 }

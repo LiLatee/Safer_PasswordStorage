@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:math' as math;
 
+import 'package:application_icon/application_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,7 +55,6 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
-    log("LoginScreen - didChangeDependencies");
 
     if ((!wasBiometricShowed) &&
         (BlocProvider.of<AuthCubit>(context).state is BiometricOn)) {
@@ -129,13 +129,18 @@ class _LoginScreenState extends State<LoginScreen>
 
   Column buildHelloHeader(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(height: 30.0),
-        Icon(
-          Icons.apps,
-          size: 70.0,
-        ), // TODO app icon
-        SizedBox(height: 50.0),
+        AppConstants.iconWidget,
+        SizedBox(height: 10.0),
+        Text(
+          AppConstants.appName,
+          style: Theme.of(context).textTheme.headline3!.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+        ),
+        SizedBox(height: 30.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -158,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen>
             alignment: Alignment.center,
             children: [
               Positioned(
-                top: 220,
+                top: 270,
                 left: MediaQuery.of(context).size.width / 2 -
                     AppConstants.pinFieldsWidth / 2 +
                     shakeAnimation.value,

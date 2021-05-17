@@ -17,6 +17,7 @@ import '../modified_flutter_widgets/expansion_panel.dart' as epn;
 // import 'account_tile/expanded_part/account_data_expanded_part.dart';
 import 'account_tile/expanded_part/account_data_expanded_part.dart';
 import 'account_tile/header.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListOfAccounts extends StatefulWidget {
   @override
@@ -34,15 +35,20 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
           return Center(child: Text(state.message));
         }
 
-        return SingleChildScrollView(
-          child: epn.ExpansionPanelList.radio(
-            expandedHeaderPadding:
-                EdgeInsets.only(left: AppConstants.defaultPadding * 3),
-            children: state.accountDataList
-                .map((e) => buildExpansionPanel(accountDataEntity: e))
-                .toList(),
-          ),
-        );
+        if (state.accountDataList.isEmpty)
+          return Center(
+            child: Text(AppLocalizations.of(context)!.nothingHere),
+          );
+        else
+          return SingleChildScrollView(
+            child: epn.ExpansionPanelList.radio(
+              expandedHeaderPadding:
+                  EdgeInsets.only(left: AppConstants.defaultPadding * 3),
+              children: state.accountDataList
+                  .map((e) => buildExpansionPanel(accountDataEntity: e))
+                  .toList(),
+            ),
+          );
       },
       listener: (context, state) {},
     );

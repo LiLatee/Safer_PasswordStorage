@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/language_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/data_providers/SQLprovider.dart';
@@ -34,6 +37,8 @@ Future<void> init() async {
   //! Bloc/Cubit
   //* Singletons
   sl.registerLazySingleton(() => ThemeCubit(prefs: sharedPreferences));
+  sl.registerLazySingleton(() => LanguageCubit(prefs: sharedPreferences));
+  sl.registerLazySingleton(() => AppKeyCubit(prefs: sharedPreferences));
   sl.registerLazySingleton(() => LoginCubit(prefs: sharedPreferences));
   sl.registerLazySingleton(() => LaunchingCubit(loginCubit: sl()));
   sl.registerLazySingleton(() => AuthCubit(prefs: sharedPreferences));
@@ -46,13 +51,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ExportDataCubit(accountsRepository: sl()));
   sl.registerLazySingleton(
     () => ImportDataCubit(
-      accountsRepository: sl(),
-      accountsCubit: sl(),
-    ),
+        accountsRepository: sl(), accountsCubit: sl(), appKeyCubit: sl()),
   );
-
-  // sl.registerLazySingleton(() => sharedPreferences);
-  sl.registerLazySingleton(() => AppKeyCubit(prefs: sharedPreferences));
 
   //* Factories
   sl.registerFactoryParam<SingleAccountCubit, AccountDataEntity, void>(

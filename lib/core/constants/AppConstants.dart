@@ -1,3 +1,4 @@
+import 'package:application_icon/application_icon.dart';
 import 'package:flutter/material.dart';
 
 //! SharedPreferences Keys
@@ -6,9 +7,13 @@ class SPKeys {
   static const biometricOn = 'biometricOn';
   static const theme = 'theme';
   static const String pincode = 'pincode';
+  static const String languageCode = 'languageCode';
 }
 
 class AppConstants {
+  static const String appName = 'Safer';
+  static Widget iconWidget =
+      Image.asset("lib/core/images/safer_icon.png", width: 70, height: 70);
   static const double defaultPadding = 10.0;
   static const double defaultToScreenEdgePadding = 16.0;
   static const double defaultIconRadius = kMinInteractiveDimension / 2;
@@ -19,6 +24,7 @@ class AppConstants {
   static const double heightForOneField = 75.0;
   static const double maxHeightForFields = 300.0;
   static const pinFieldsWidth = 300.0;
+  static const Duration splashScreenDuration = Duration(seconds: 1);
 
   static const List<Color> iconDefaultColors = const [
     Colors.red,

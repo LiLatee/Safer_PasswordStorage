@@ -30,8 +30,9 @@ class _AccountNameFieldWidgetState extends State<AccountNameFieldWidget> {
       ),
       child: Form(
         key: widget.accountNameFormKey,
-        autovalidate: true,
+        // autovalidate: true,
         child: TextFormField(
+          autofocus: true,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             labelText: AppLocalizations.of(context)!.accountName,

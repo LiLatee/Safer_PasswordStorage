@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
 import 'package:my_simple_password_storage_clean/core/constants/AppConstants.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/auth_cubit.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/language_cubit.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/theme_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_simple_password_storage_clean/presentation/router/app_router.dart';
@@ -50,21 +51,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Divider(
           color: Theme.of(context).colorScheme.onBackground,
         ),
-        Row(
-          children: [
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(AppRouterNames.setPinCode);
-                },
-                child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(AppLocalizations.of(context)!.changePin)),
-              ),
-            ),
-          ],
-        )
+        buildChangePinSettings(context),
+        Divider(
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
+        buildLanguageSettings(context),
       ],
+    );
+  }
+
+  Widget buildChangePinSettings(BuildContext context) {
+    return InkWell(
+      onTap: () => Navigator.of(context).pushNamed(AppRouterNames.setPinCode),
+      child: Container(
+        alignment: Alignment.centerLeft,
+        margin: EdgeInsets.symmetric(
+          horizontal: AppConstants.defaultToScreenEdgePadding,
+          vertical: AppConstants.defaultPadding,
+        ),
+        child: Text(AppLocalizations.of(context)!.changePin,
+            style: Theme.of(context).textTheme.bodyText2),
+      ),
     );
   }
 
@@ -78,10 +85,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           enabledBiometric = false;
 
         return Padding(
-          padding: EdgeInsets.only(
-            left: AppConstants.defaultPadding,
-            right: AppConstants.defaultPadding,
-          ),
+          padding: EdgeInsets.symmetric(
+              horizontal: AppConstants.defaultToScreenEdgePadding),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -96,6 +101,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       BlocProvider.of<AuthCubit>(context).setBiometricLoginOn();
                   },
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
                         flex: 8,
@@ -146,7 +152,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget buildThemeSettings(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(AppConstants.defaultPadding),
+      padding: EdgeInsets.symmetric(
+        vertical: AppConstants.defaultPadding,
+        horizontal: AppConstants.defaultToScreenEdgePadding,
+      ),
       child: Column(
         children: [
           buildSectionHeader(
@@ -205,6 +214,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Text(
             sectionName,
             style: Theme.of(context).textTheme.bodyText2,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildLanguageSettings(BuildContext context) {
+    var supportedLanguagesCodes =
+        AppLocalizations.supportedLocales.map((e) => e.toString()).toList();
+
+    supportedLanguagesCodes.add('system');
+
+    var supportedLanguagesNames = {
+      'en': AppLocalizations.of(context)!.english,
+      'pl': AppLocalizations.of(context)!.polish,
+      'system': AppLocalizations.of(context)!.system,
+    };
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          horizontal: AppConstants.defaultToScreenEdgePadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Text(
+              AppLocalizations.of(context)!.language,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+          ),
+          DropdownButton<String>(
+            iconEnabledColor: Theme.of(context).colorScheme.secondary,
+            items: supportedLanguagesCodes
+                .map<DropdownMenuItem<String>>((value) => DropdownMenuItem(
+                      child: Text(supportedLanguagesNames[value]!),
+                      value: value,
+                    ))
+                .toList(),
+            value: BlocProvider.of<LanguageCubit>(context).state.languageCode,
+            onChanged: (value) {
+              BlocProvider.of<LanguageCubit>(context)
+                  .setLanguageCode(languageCode: value!);
+            },
           ),
         ],
       ),

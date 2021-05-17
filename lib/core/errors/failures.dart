@@ -17,14 +17,14 @@ class BackupEncryptionFailure extends Failure {
   BackupEncryptionFailure(this.message);
   @override
   String toString() {
-    return "BackupDecryptionFailure - $message";
+    return "BackupEncryptionFailure - $message";
   }
 }
 
 class BackupDecryptionFailure extends Failure {
   final String message;
 
-  BackupDecryptionFailure(this.message);
+  BackupDecryptionFailure({required this.message});
   @override
   String toString() {
     return "BackupDecryptionFailure - $message";

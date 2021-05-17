@@ -85,10 +85,11 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(AppLocalizations.of(context)!
                     .addedAccountSnackbar(accountData.accountName))));
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Coś nie tak przy dodawaniu konta ;(')));
           }
+          // else {
+          //   ScaffoldMessenger.of(context).showSnackBar(
+          //       SnackBar(content: Text('Coś nie tak przy dodawaniu konta ;(')));
+          // }
         }
       },
     );

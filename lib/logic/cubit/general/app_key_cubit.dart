@@ -13,6 +13,7 @@ class AppKeyCubit extends Cubit<AppKeyState> {
   final SharedPreferences prefs;
 
   AppKeyCubit({required this.prefs}) : super(AppKeyInitial()) {
+    log("AppKeyCubit");
     if (!checkIfKeyExists()) {
       generateKey();
       emit(AppKeyPresent());
@@ -20,7 +21,6 @@ class AppKeyCubit extends Cubit<AppKeyState> {
   }
 
   bool checkIfKeyExists() {
-    // prefs.remove('key'); // TODO, remove!!! Just for testing purposes.
     log("AppKeyCubit - checkIfKeyExists");
     if (prefs.containsKey(SPKeys.appKey)) {
       AppSecretKeyEntity(key: prefs.getString(SPKeys.appKey)!);
@@ -41,4 +41,8 @@ class AppKeyCubit extends Cubit<AppKeyState> {
   }
 
   String getKey() => prefs.getString(SPKeys.appKey)!;
+
+  void setKey({required String key}) {
+    prefs.setString(SPKeys.appKey, key);
+  }
 }

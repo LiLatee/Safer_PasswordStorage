@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_simple_password_storage_clean/core/constants/AppConstants.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/launching_cubit.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
 
@@ -14,8 +15,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
   @override
   void initState() {
     super.initState();
-    this._dispatchEvent(
-        context); // This will dispatch the navigateToHomeScreen event.
+    this._dispatchEvent(context);
   }
 
   @override
@@ -28,15 +28,14 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            // Here place your app logo, tagline etc..
-            Center(
-              child: Text(
-                'LOGO',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 60,
-                ),
-              ),
+            SizedBox(height: 30.0),
+            AppConstants.iconWidget,
+            SizedBox(height: 10.0),
+            Text(
+              AppConstants.appName,
+              style: Theme.of(context).textTheme.headline3!.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -44,9 +43,9 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                 bottom: 30,
               ),
             ),
-            // Here place a gif or a loader as I did.
             CircularProgressIndicator(
-              backgroundColor: Colors.white,
+              valueColor: new AlwaysStoppedAnimation<Color>(
+                  Theme.of(context).colorScheme.secondary),
             ),
           ],
         ),
@@ -54,9 +53,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
     );
   }
 
-  //This method will dispatch the navigateToHomeScreen event.
   void _dispatchEvent(BuildContext context) {
-    log('_dispatchEvent');
     if (BlocProvider.of<LoginCubit>(context).checkIfPinCodeExists())
       BlocProvider.of<LaunchingCubit>(context).launchLoginScreen();
     else

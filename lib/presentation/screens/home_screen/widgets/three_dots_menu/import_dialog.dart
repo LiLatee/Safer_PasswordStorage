@@ -26,9 +26,6 @@ class _ImportDialogState extends State<ImportDialog> {
 
     return BlocConsumer<ImportDataCubit, ImportDataState>(
       listener: (context, state) {
-        if (state is ImportingData) {
-          log("importing - listener");
-        }
         if (state is ImportedData) {
           Navigator.of(context).pop(); // Close loading screen.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -115,7 +112,6 @@ class _ImportDialogState extends State<ImportDialog> {
                   allowedExtensions: ['bin'],
                 );
                 if (result != null) {
-                  log(result.files.single.path!);
                   setState(() => _filepath = result.files.single.path);
                 }
               },
@@ -197,7 +193,9 @@ class _ImportDialogState extends State<ImportDialog> {
                     hideText
                         ? Icons.remove_red_eye_outlined
                         : Icons.remove_red_eye,
-                    color: hideText ? Colors.white : Colors.black,
+                    color: hideText
+                        ? Theme.of(context).colorScheme.onBackground
+                        : Theme.of(context).colorScheme.background,
                   ),
                   SizedBox(
                     width: AppConstants.defaultPadding,
@@ -205,7 +203,10 @@ class _ImportDialogState extends State<ImportDialog> {
                   Text(
                     AppLocalizations.of(context)!.showHiddenFields,
                     style: TextStyle(
-                        color: hideText ? Colors.white : Colors.black),
+                      color: hideText
+                          ? Theme.of(context).colorScheme.onBackground
+                          : Theme.of(context).colorScheme.background,
+                    ),
                   ),
                 ],
               ),

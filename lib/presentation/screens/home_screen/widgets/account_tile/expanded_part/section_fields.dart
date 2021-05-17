@@ -39,9 +39,6 @@ class SectionFieldsState extends State<SectionFields> {
       fieldsDataEntity: _accountDataEntity.fields,
     );
 
-    // log("AccountData w section_fields");
-    // log(_accountDataEntity.toString());
-
     /// TODO: That has to be changed. There is no a proper way to disable reorder in ReorderableListView,
     /// so it has to be used another reorderable widget to make it possible.
     /// Current solution 'works', but there are is no animation during turning on edit mode,
@@ -197,8 +194,6 @@ class SectionFieldsState extends State<SectionFields> {
   List<Widget> buildFieldsWidgets(
       {required BuildContext context,
       required List<FieldDataEntity> fieldsDataEntity}) {
-    // log('${fieldsDataEntity.length}');
-
     return fieldsDataEntity
         .map(
           (e) => Container(
