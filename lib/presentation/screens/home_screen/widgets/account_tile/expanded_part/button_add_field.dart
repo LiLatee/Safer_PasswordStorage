@@ -54,6 +54,7 @@ class ButtonAddField extends StatelessWidget {
                                 child: Form(
                                   key: _nameFormKey,
                                   child: TextFormField(
+                                    autofocus: true,
                                     // key: ObjectKey(AppLocalizations.of(context)!
                                     //     .name), // TODO potrzebne?
                                     readOnly: false,

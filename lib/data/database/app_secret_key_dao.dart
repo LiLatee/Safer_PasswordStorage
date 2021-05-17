@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:aes_crypt/aes_crypt.dart';
 import 'package:floor/floor.dart';
 import 'package:my_simple_password_storage_clean/data/models/app_secret_key_entity.dart';
@@ -30,14 +32,18 @@ abstract class AppSecretKeyDao {
       databasePath,
       path,
     );
-    // throw Exception();
     await delete();
     return exportedDataPath;
   }
 
   @transaction
   Future<void> importAppSecretKey() async {
-    await getAppSecretKeyEntity();
-    await delete();
+    try {
+      await getAppSecretKeyEntity();
+      log("EEE: ${await getAppSecretKeyEntity()}");
+    } catch (e) {
+      log("ERROR: $e");
+    }
+    // await delete();
   }
 }

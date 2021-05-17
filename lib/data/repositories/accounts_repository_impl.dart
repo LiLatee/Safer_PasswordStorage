@@ -4,9 +4,11 @@ import 'dart:io';
 import 'package:aes_crypt/aes_crypt.dart';
 import 'package:dartz/dartz.dart';
 import 'package:my_simple_password_storage_clean/data/models/app_secret_key_entity.dart';
+import 'package:my_simple_password_storage_clean/logic/cubit/general/app_key_cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../core/errors/failures.dart';
+import '../../service_locator.dart';
 import '../data_providers/SQLprovider.dart';
 import '../data_providers/base_data_provider.dart';
 import '../models/account_data_entity.dart';
@@ -123,22 +125,24 @@ class AccountsRepositoryImlp extends AccountsRepository {
   //! Import/Export
   @override
   Future<Either<Failure, void>> importEncryptedDatabase(
-      {required String secretKey, required String filepath}) async {
+      {required String secretKey,
+      required String filepath,
+      required AppKeyCubit appKeyCubit}) async {
     try {
       String databasePath = (sqlProvider as SQLprovider).getDatabasePath();
-
-      if (databasePath == null)
+      if (databasePath == null) {
         return Left(SqlLiteFailure(message: "SQLite database path not found."));
-      else {
+      } else {
         var crypt = AesCrypt(secretKey);
         crypt.setOverwriteMode(AesCryptOwMode.on);
         try {
           // await Future.delayed(Duration(seconds: 2));
           await crypt.decryptFile(filepath, databasePath);
         } on Exception {
-          return Left(BackupDecryptionFailure("importing failed"));
+          return Left(BackupDecryptionFailure(message: "importing failed"));
         }
         await (sqlProvider as SQLprovider).importAppSecretKey();
+        appKeyCubit.setKey(key: AppSecretKeyEntity().key);
         return Right(null);
       }
     } catch (e) {

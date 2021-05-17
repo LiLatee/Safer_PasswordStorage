@@ -127,6 +127,14 @@
   "biometricInfo": "It only works if you've set up a phone lock with fingerprint or face.",
   "hi": "Hi!",
   "wrongPinCode": "Wrong pin code",
-  "setPinCode": "Set pin code"
+  "setPinCode": "Set pin code",
+  "pinsMustBeSame": "Both pin codes must be the same.",
+  "english": "English (EN)",
+  "polish": "Polish (PL)",
+  "language": "Language",
+  "nothingHere": "Nothing here.... yet :)"
+
+
+
 
 }

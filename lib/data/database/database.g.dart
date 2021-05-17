@@ -309,7 +309,8 @@ class _$AppSecretKeyDao extends AppSecretKeyDao {
   @override
   Future<AppSecretKeyEntity?> getAppSecretKeyEntity() async {
     return _queryAdapter.query('SELECT * FROM AppSecretKeyEntity LIMIT 1',
-        mapper: (Map<String, Object?> row) => AppSecretKeyEntity());
+        mapper: (Map<String, Object?> row) =>
+            AppSecretKeyEntity(key: row['key'] as String));
   }
 
   @override

@@ -52,13 +52,13 @@ class AuthCubit extends Cubit<AuthState> {
   Future<bool> authenticateWithBiometricsIfOn(
       {required BuildContext context}) async {
     log('AuthCubit - authenticateWithBiometricsIfOn');
-    var isDeviceSupported = await _auth.isDeviceSupported();
+    // var isDeviceSupported = await _auth.isDeviceSupported();
     var canCheckBiometrics = await _auth.canCheckBiometrics;
 
-    var availableMiometrics = await _auth.getAvailableBiometrics();
-    log('isDeviceSupported $isDeviceSupported');
-    log('canCheckBiometrics $canCheckBiometrics');
-    log('availableMiometrics $availableMiometrics');
+    // var availableMiometrics = await _auth.getAvailableBiometrics();
+    // log('isDeviceSupported $isDeviceSupported');
+    // log('canCheckBiometrics $canCheckBiometrics');
+    // log('availableMiometrics $availableMiometrics');
 
     if ((await isBiometricSupported()) == false) {
       emit(BiometricOff());
@@ -90,18 +90,11 @@ class AuthCubit extends Cubit<AuthState> {
             signInTitle: AppLocalizations.of(context)!.authenticationRequired,
           ),
         );
-        // log('isAuthenticated: $isAuthenticated');
-        // if (isAuthenticated)
-        //   emit(Authenticated());
-        // else
-        //   emit(NotAuthenticated());
       } on Exception catch (e) {
         // TODO try catch PlatformException
         log(e.toString());
       }
     }
     return isAuthenticated;
-    // else
-    //   emit(NotAuthenticated());
   }
 }

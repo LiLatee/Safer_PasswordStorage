@@ -67,11 +67,15 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen>
     return Column(
       children: [
         SizedBox(height: 30.0),
-        Icon(
-          Icons.apps,
-          size: 70.0,
-        ), // TODO app icon
-        SizedBox(height: 50.0),
+        AppConstants.iconWidget,
+        SizedBox(height: 10.0),
+        Text(
+          AppConstants.appName,
+          style: Theme.of(context).textTheme.headline3!.copyWith(
+                color: Theme.of(context).colorScheme.secondaryVariant,
+              ),
+        ),
+        SizedBox(height: 30.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -94,7 +98,7 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen>
             alignment: Alignment.center,
             children: [
               Positioned(
-                top: 220,
+                top: 250,
                 left: MediaQuery.of(context).size.width / 2 -
                     AppConstants.pinFieldsWidth / 2 +
                     shakeAnimation.value,
@@ -128,7 +132,6 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen>
                       enableActiveFill: true,
                       controller: textEditingControllerPin,
                       onCompleted: (v) async {
-                        log('onCompleted');
                         setState(() {
                           isPinFieldsCompleted = true;
                         });
@@ -193,14 +196,15 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen>
                       enableActiveFill: true,
                       controller: textEditingControllerRepeatPin,
                       onCompleted: (v) async {
-                        bool samePins = textEditingControllerRepeatPin.text ==
+                        bool samePins = textEditingControllerPin.text ==
                             textEditingControllerRepeatPin.text;
                         if (samePins) {
                           canBeSaved = true;
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Oba piny muszą byś takie same")));
                         }
+                        // else {
+                        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //       content: Text(AppLocalizations.of(context)!.pinsMustBeSame)));
+                        // }
                       },
                       onChanged: (value) {
                         setState(() {});
@@ -213,7 +217,7 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen>
                         bool samePins = textEditingControllerPin.text ==
                             textEditingControllerRepeatPin.text;
                         if (!samePins) {
-                          return 'Oba piny muszą byś takie same';
+                          return AppLocalizations.of(context)!.pinsMustBeSame;
                         }
                       },
                     ),
@@ -235,19 +239,30 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen>
         children: [
           TextButton(
             onPressed: () {
-              BlocProvider.of<LoginCubit>(context)
-                  .savePinCode(pincode: textEditingControllerRepeatPin.text);
-              if (BlocProvider.of<LoginCubit>(context).checkIfPinCodeExists())
-                Navigator.of(context).pop();
-              else
+              if (canBeSaved) {
+                BlocProvider.of<LoginCubit>(context)
+                    .savePinCode(pincode: textEditingControllerRepeatPin.text);
                 Navigator.of(context).pushReplacementNamed(AppRouterNames.home);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content:
+                        Text(AppLocalizations.of(context)!.pinsMustBeSame)));
+              }
             },
-            child: Text(
-              AppLocalizations.of(context)!.setPinCode,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6!
-                  .copyWith(color: Theme.of(context).colorScheme.primary),
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(50.0))),
+              child: Text(
+                AppLocalizations.of(context)!.setPinCode,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .copyWith(color: Theme.of(context).colorScheme.primary),
+              ),
             ),
           )
         ],

@@ -45,9 +45,6 @@ class FieldDataEntity extends Equatable {
     final iv = enc.IV.fromLength(16);
     enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
 
-    log("encrypt");
-    log('name: ${this.name}');
-    log('value: ${this.value}');
     return this.copyWith(
       name: encrypter.encrypt(this.name, iv: iv).base64,
       value:
@@ -60,9 +57,6 @@ class FieldDataEntity extends Equatable {
     final iv = enc.IV.fromLength(16);
     enc.Encrypter encrypter = enc.Encrypter(enc.AES(aesKey));
 
-    log("decrypt");
-    log('name: ${this.name}');
-    log('value: ${this.value}');
     return this.copyWith(
       name: encrypter.decrypt(enc.Encrypted.fromBase64(this.name), iv: iv),
       value: this.value != ''

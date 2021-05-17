@@ -27,7 +27,6 @@ class SingleAccountCubit extends Cubit<SingleAccountState> {
       newAccountData = accountDataEntity.copyWith(isEditButtonPressed: false);
     else
       newAccountData = accountDataEntity.copyWith(isEditButtonPressed: true);
-    log((this.state.accountDataEntity == newAccountData).toString());
     emit(SingleAccountReadingState(accountDataEntity: newAccountData));
   }
 
@@ -39,7 +38,7 @@ class SingleAccountCubit extends Cubit<SingleAccountState> {
       newAccountData = accountDataEntity.copyWith(isShowButtonPressed: false);
     else
       newAccountData = accountDataEntity.copyWith(isShowButtonPressed: true);
-    log((this.state.accountDataEntity == newAccountData).toString());
+
     emit(SingleAccountReadingState(accountDataEntity: newAccountData));
   }
 

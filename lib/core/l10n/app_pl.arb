@@ -99,7 +99,12 @@
   "biometricInfo": "Działa tylko w przypadku włączonego odblokowywania telefonu z użyciem odcisku palca lub twarzy.",
   "hi": "Cześć!",
   "wrongPinCode": "Zły kod pin",
-  "setPinCode": "Ustaw kod pin"
+  "setPinCode": "Ustaw kod pin",
+  "pinsMustBeSame": "Oba piny muszą być takie same.",
+  "english": "Angielski (EN)",
+  "polish": "Polski (PL)",
+  "language": "Język",
+  "nothingHere": "Nic tu nie ma... jeszcze :)"
 
 
 

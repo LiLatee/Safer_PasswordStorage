@@ -1,11 +1,15 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_simple_password_storage_clean/data/database/app_secret_key_dao.dart';
+import 'package:my_simple_password_storage_clean/data/models/app_secret_key_entity.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/language_cubit.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
 
+import 'core/constants/AppConstants.dart';
 import 'core/themes/app_theme.dart';
 import 'logic/cubit/all_accounts/accounts_cubit.dart';
 import 'logic/cubit/all_accounts/add_account_cubit.dart';
@@ -42,11 +46,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    FlutterError.onError = (FlutterErrorDetails details) {
-      FlutterError.dumpErrorToConsole(details);
-      // print(details);
-      log(details.toString(), name: "OUPS in main.dart");
-    };
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
 
     return MultiBlocProvider(
       providers: [
@@ -67,6 +70,7 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider<AppKeyCubit>(
           create: (_) => sl<AppKeyCubit>(),
+          lazy: false,
         ),
         BlocProvider<AuthCubit>(
           create: (_) => sl<AuthCubit>(),
@@ -104,8 +108,10 @@ class _MyAppState extends State<MyApp> {
     var languageCubitState = context.watch<LanguageCubit>().state;
 
     return MaterialApp(
-      title: 'My Simple Password Storage',
-      locale: Locale(languageCubitState.languageCode),
+      title: AppConstants.appName,
+      locale: languageCubitState.languageCode == 'system'
+          ? null
+          : Locale(languageCubitState.languageCode),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       // theme: state is ThemeDark ? AppTheme.darkTheme : AppTheme.lightTheme,
@@ -118,13 +124,10 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _getStartScreen({required BuildContext context}) {
-    // log("LANGUAGE: ${Localizations.localeOf(context).toString()}");
-
     return BlocBuilder<LanguageCubit, LanguageState>(
       builder: (context, state) {
         return BlocBuilder<LaunchingCubit, LaunchingState>(
           builder: (context, state) {
-            log('_getStartScreen - state = $state');
             if (state is LaunchingSplashScreen)
               return SplashScreen();
             else if (state is LaunchingLoginScreen)
@@ -132,7 +135,7 @@ class _MyAppState extends State<MyApp> {
             else if (state is LaunchingSetPinCodeScreen)
               return SetPinCodeScreen();
             else
-              throw Exception(); // TODO
+              throw Exception();
           },
         );
       },

@@ -34,7 +34,7 @@ class _ExportDialogState extends State<ExportDialog> {
                   .exportSuccess(state.exportedDataLocation))));
         } else if (state is ExportError) {
           Navigator.of(context).pop(); // Close loading screen.
-          log(state.toString());
+
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(AppLocalizations.of(context)!.encryptionError +
                   " ${state.toString()}")));
@@ -153,7 +153,9 @@ class _ExportDialogState extends State<ExportDialog> {
                     hideText
                         ? Icons.remove_red_eye_outlined
                         : Icons.remove_red_eye,
-                    color: hideText ? Colors.white : Colors.black,
+                    color: hideText
+                        ? Theme.of(context).colorScheme.onBackground
+                        : Theme.of(context).colorScheme.background,
                   ),
                   SizedBox(
                     width: AppConstants.defaultPadding,
@@ -161,7 +163,9 @@ class _ExportDialogState extends State<ExportDialog> {
                   Text(
                     AppLocalizations.of(context)!.showHiddenFields,
                     style: TextStyle(
-                        color: hideText ? Colors.white : Colors.black),
+                        color: hideText
+                            ? Theme.of(context).colorScheme.onBackground
+                            : Theme.of(context).colorScheme.background),
                   ),
                 ],
               ),
