@@ -7,10 +7,10 @@
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_test/flutter_test.dart';
-// import 'package:my_simple_password_storage_clean/data/data_providers/SQLprovider.dart';
-// import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository_impl.dart';
+// import 'package:Safer/data/data_providers/SQLprovider.dart';
+// import 'package:Safer/data/repositories/accounts_repository_impl.dart';
 
-// import 'package:my_simple_password_storage_clean/main.dart';
+// import 'package:Safer/main.dart';
 
 // void main() {
 //   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

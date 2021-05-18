@@ -1,12 +1,10 @@
-import 'dart:developer';
 import 'dart:typed_data';
-import 'dart:convert';
 
+import 'package:encrypt/encrypt.dart' as enc;
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:uuid/uuid.dart';
-import 'package:encrypt/encrypt.dart' as enc;
 
 import '../../core/constants/AppConstants.dart';
 import '../../core/constants/AppFunctions.dart' as AppFunctions;

@@ -1,4 +1,4 @@
-package com.example.my_simple_password_storage_clean
+package marcin.hradowicz.Safer
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine

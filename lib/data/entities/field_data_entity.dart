@@ -1,9 +1,7 @@
-import 'dart:developer';
-
+import 'package:encrypt/encrypt.dart' as enc;
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
 import 'package:uuid/uuid.dart';
-import 'package:encrypt/encrypt.dart' as enc;
 
 import 'account_data_entity.dart';
 

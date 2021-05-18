@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+
 import '../../../data/entities/account_data_entity.dart';
 import '../../../data/repositories/accounts_repository.dart';
-
 import 'accounts_cubit.dart';
 
 part 'delete_account_cubit_state.dart';

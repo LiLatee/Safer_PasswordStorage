@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/single_account/edit_single_account_cubit.dart';
 
 import '../../../../../../core/constants/AppConstants.dart';
 import '../../../../../../data/entities/account_data_entity.dart';
 import '../../../../../../data/entities/field_data_entity.dart';
 import '../../../../../../logic/cubit/single_account/add_field_cubit.dart';
+import '../../../../../../logic/cubit/single_account/edit_single_account_cubit.dart';
 import '../../../../../widgets_templates/dialog_template.dart';
 import 'button_template.dart';
 
@@ -108,6 +108,8 @@ class ButtonAddField extends StatelessWidget {
                                         isHidden = value;
                                       });
                                     },
+                                    activeColor:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                                 ],
                               ),
@@ -123,6 +125,8 @@ class ButtonAddField extends StatelessWidget {
                                         isMultiline = value;
                                       });
                                     },
+                                    activeColor:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                                 ],
                               ),

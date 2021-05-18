@@ -1,13 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_simple_password_storage_clean/data/database/app_secret_key_dao.dart';
-import 'package:my_simple_password_storage_clean/data/entities/app_secret_key_entity.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/language_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
 
 import 'core/constants/AppConstants.dart';
 import 'core/themes/app_theme.dart';
@@ -18,13 +12,13 @@ import 'logic/cubit/general/app_key_cubit.dart';
 import 'logic/cubit/general/auth_cubit.dart';
 import 'logic/cubit/general/export_data_cubit.dart';
 import 'logic/cubit/general/import_data_cubit.dart';
+import 'logic/cubit/general/language_cubit.dart';
 import 'logic/cubit/general/launching_cubit.dart';
+import 'logic/cubit/general/login_cubit.dart';
 import 'logic/cubit/general/theme_cubit.dart';
 import 'presentation/router/app_router.dart';
-import 'presentation/screens/home_screen/home_screen.dart';
 import 'presentation/screens/login_screen/login_screen.dart';
 import 'presentation/screens/set_pin_code_screen/set_pin_code_screen.dart';
-import 'presentation/screens/settings_screen/settings_screen.dart';
 import 'presentation/screens/splash_screen/splash_screen.dart';
 import 'service_locator.dart';
 import 'service_locator.dart' as di;

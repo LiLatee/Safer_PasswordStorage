@@ -1,5 +1,3 @@
-import 'package:my_simple_password_storage_clean/data/entities/app_secret_key_entity.dart';
-
 import '../entities/account_data_entity.dart';
 import '../entities/field_data_entity.dart';
 

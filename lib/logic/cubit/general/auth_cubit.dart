@@ -1,15 +1,15 @@
 import 'dart:developer';
 
-import 'package:app_settings/app_settings.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_simple_password_storage_clean/core/constants/AppConstants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../core/constants/AppConstants.dart';
+
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {

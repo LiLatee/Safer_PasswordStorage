@@ -1,20 +1,16 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:math' as math;
 
-import 'package:application_icon/application_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_simple_password_storage_clean/core/constants/AppConstants.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/auth_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/launching_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
-import 'package:my_simple_password_storage_clean/presentation/router/app_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../core/constants/AppConstants.dart';
+import '../../../logic/cubit/general/auth_cubit.dart';
+import '../../../logic/cubit/general/login_cubit.dart';
+import '../../router/app_router.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
