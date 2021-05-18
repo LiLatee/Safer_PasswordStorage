@@ -21,29 +21,35 @@ abstract class AppSecretKeyDao {
   @Query('SELECT * FROM AppSecretKeyEntity LIMIT 1')
   Future<AppSecretKeyEntity?> getAppSecretKeyEntity();
 
-  @transaction
+  // @transaction
   Future<String> exportAppSecretKey(
     AesCrypt aesCrypt,
     String databasePath,
     String path,
   ) async {
     await insert(AppSecretKeyEntity());
-    var exportedDataPath = aesCrypt.encryptFile(
+    // log("Key to EXPORT: ${AppSecretKeyEntity().key}");
+    var exportedDataPath = aesCrypt.encryptFileSync(
       databasePath,
       path,
     );
+    // log("koniec EXPORT");
+    // log("Klucz w SQL przed usunięciem: ${(await getAppSecretKeyEntity())!.key}");
     await delete();
+    // log("usunięto KEY");
+
     return exportedDataPath;
   }
 
-  @transaction
+  // @transaction
   Future<void> importAppSecretKey() async {
-    try {
-      await getAppSecretKeyEntity();
-      log("EEE: ${await getAppSecretKeyEntity()}");
-    } catch (e) {
-      log("ERROR: $e");
-    }
-    // await delete();
+    // try {
+    //   await getAppSecretKeyEntity();
+    //   log("EEE: ${(await getAppSecretKeyEntity())!.key}");
+    // } catch (e) {
+    //   log("ERROR: $e");
+    // }
+    await getAppSecretKeyEntity();
+    await delete();
   }
 }

@@ -318,34 +318,4 @@ class _$AppSecretKeyDao extends AppSecretKeyDao {
     await _appSecretKeyEntityInsertionAdapter.insert(
         field, OnConflictStrategy.replace);
   }
-
-  @override
-  Future<String> exportAppSecretKey(
-      AesCrypt aesCrypt, String databasePath, String path) async {
-    if (database is sqflite.Transaction) {
-      return super.exportAppSecretKey(aesCrypt, databasePath, path);
-    } else {
-      return (database as sqflite.Database)
-          .transaction<String>((transaction) async {
-        final transactionDatabase = _$AppDatabase(changeListener)
-          ..database = transaction;
-        return transactionDatabase.appSecretKeyDao
-            .exportAppSecretKey(aesCrypt, databasePath, path);
-      });
-    }
-  }
-
-  @override
-  Future<void> importAppSecretKey() async {
-    if (database is sqflite.Transaction) {
-      await super.importAppSecretKey();
-    } else {
-      await (database as sqflite.Database)
-          .transaction<void>((transaction) async {
-        final transactionDatabase = _$AppDatabase(changeListener)
-          ..database = transaction;
-        await transactionDatabase.appSecretKeyDao.importAppSecretKey();
-      });
-    }
-  }
 }
