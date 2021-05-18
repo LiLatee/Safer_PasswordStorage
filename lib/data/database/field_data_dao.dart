@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
 
-import '../models/field_data_entity.dart';
+import '../entities/field_data_entity.dart';
 
 @dao
 abstract class FieldDataDao {

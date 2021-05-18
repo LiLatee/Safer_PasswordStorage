@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_simple_password_storage_clean/data/database/app_secret_key_dao.dart';
-import 'package:my_simple_password_storage_clean/data/models/app_secret_key_entity.dart';
+import 'package:my_simple_password_storage_clean/data/entities/app_secret_key_entity.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/language_cubit.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/login_cubit.dart';
 

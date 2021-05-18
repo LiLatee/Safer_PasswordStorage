@@ -9,7 +9,7 @@ import '../../../../../../logic/cubit/single_account/single_account_cubit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/constants/AppConstants.dart';
-import '../../../../../../data/models/account_data_entity.dart';
+import '../../../../../../data/entities/account_data_entity.dart';
 import 'section_buttons.dart';
 import 'section_fields.dart';
 

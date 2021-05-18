@@ -11,7 +11,7 @@ import '../../../../logic/cubit/single_account/single_account_cubit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/constants/AppConstants.dart';
-import '../../../../data/models/account_data_entity.dart';
+import '../../../../data/entities/account_data_entity.dart';
 import '../../../../service_locator.dart';
 import '../modified_flutter_widgets/expansion_panel.dart' as epn;
 // import 'account_tile/expanded_part/account_data_expanded_part.dart';

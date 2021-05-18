@@ -1,7 +1,7 @@
-import 'package:my_simple_password_storage_clean/data/models/app_secret_key_entity.dart';
+import 'package:my_simple_password_storage_clean/data/entities/app_secret_key_entity.dart';
 
-import '../models/account_data_entity.dart';
-import '../models/field_data_entity.dart';
+import '../entities/account_data_entity.dart';
+import '../entities/field_data_entity.dart';
 
 abstract class BaseDataProvider {
   Future<void> addAccount({required AccountDataEntity accountData});

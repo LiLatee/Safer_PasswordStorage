@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../core/constants/AppConstants.dart';
 import '../../../../../core/constants/AppFunctions.dart' as AppFunctions;
-import '../../../../../data/models/account_data_entity.dart';
+import '../../../../../data/entities/account_data_entity.dart';
 import '../../../../widgets_templates/account_name_field_widget.dart';
 import '../../../../widgets_templates/dialog_template.dart';
 import 'choose_icon_widget.dart';

@@ -53,29 +53,13 @@ class AppConstants {
   static const List<String> defaultIconsNames = [
     'Facebook',
     'Twitter',
-    'facebook — kopia',
-    'Twitter — kopia',
-    'facebook — kopia (2)',
-    'facebook — kopia (3)',
-    'Twitter — kopia (2)',
-    'Twitter — kopia (3)',
-    'facebook — kopia (4)',
-    'facebook — kopia (5)',
-    'Twitter — kopia (4)',
-    'Twitter — kopia (5)',
-    'facebook — kopia (4)',
-    'facebook — kopia (5)',
-    'Twitter — kopia (4)',
-    'Twitter — kopia (5)',
-    'facebook — kopia (6)',
-    'facebook — kopia (7)',
-    'Twitter — kopia (6)',
-    'Twitter — kopia (7)',
-    'facebook — kopia (8)',
-    'facebook — kopia (9)',
-    'Twitter — kopia (8)',
-    'Twitter — kopia (9)',
-    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    'YouTube',
+    'WhatsApp',
+    'Twitch',
+    'Google',
+    'Xiaomi',
+    'Amazon',
+    'Discord',
   ];
 
   static final List<Image> defaultIcons = defaultIconsNames
@@ -86,4 +70,17 @@ class AppConstants {
       defaultIconsNames,
       key: (el) => el,
       value: (el) => Image.asset('lib/core/images/${el.toLowerCase()}.png'));
+
+  //       static final Map<String, Widget> defaultIconsMap = {
+  //   "Facebook": CIcon(IconMoon.icon_facebook),
+  //   "YouTube": CIcon(IconMoon.icon_youtube),
+  //   "Twitter": CIcon(IconMoon.icon_twitter),
+  //   "WhatsApp": CIcon(IconMoon.icon_whatsapp),
+  //   "Twitch": CIcon(IconMoon.icon_twitch),
+  //   "Telegram": CIcon(IconMoon.icon_telegram),
+  //   "Amazon": CIcon(IconMoon.icon_amazon),
+  //   "Google": CIcon(IconMoon.icon_google),
+  //   "Xiaomi": CIcon(IconMoon.icon_xiaomi),
+  //   "Discord": CIcon(IconMoon.icon_discord),
+  // };
 }

@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/data_providers/SQLprovider.dart';
 import 'data/data_providers/base_data_provider.dart';
-import 'data/models/account_data_entity.dart';
+import 'data/entities/account_data_entity.dart';
 import 'data/repositories/accounts_repository.dart';
 import 'data/repositories/accounts_repository_impl.dart';
 import 'logic/cubit/all_accounts/accounts_cubit.dart';

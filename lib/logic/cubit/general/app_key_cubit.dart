@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:equatable/equatable.dart';
 import 'package:my_simple_password_storage_clean/core/constants/AppConstants.dart';
-import 'package:my_simple_password_storage_clean/data/models/app_secret_key_entity.dart';
+import 'package:my_simple_password_storage_clean/data/entities/app_secret_key_entity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app_key_state.dart';
