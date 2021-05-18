@@ -28,6 +28,7 @@ import 'presentation/screens/settings_screen/settings_screen.dart';
 import 'presentation/screens/splash_screen/splash_screen.dart';
 import 'service_locator.dart';
 import 'service_locator.dart' as di;
+// test comment
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
