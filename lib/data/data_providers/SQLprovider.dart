@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:aes_crypt/aes_crypt.dart';
-import 'package:my_simple_password_storage_clean/data/entities/app_secret_key_entity.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import '../database/database.dart';
 import '../entities/account_data_entity.dart';
+import '../entities/app_secret_key_entity.dart';
 import '../entities/field_data_entity.dart';
 import 'base_data_provider.dart';
 

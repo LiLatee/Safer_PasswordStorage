@@ -1,11 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 

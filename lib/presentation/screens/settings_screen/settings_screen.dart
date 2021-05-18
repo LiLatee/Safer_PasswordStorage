@@ -1,15 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:group_button/group_button.dart';
-import 'package:my_simple_password_storage_clean/core/constants/AppConstants.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/auth_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/language_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/theme_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_simple_password_storage_clean/presentation/router/app_router.dart';
+import 'package:group_button/group_button.dart';
+
+import '../../../core/constants/AppConstants.dart';
 import '../../../core/themes/app_theme.dart';
+import '../../../logic/cubit/general/auth_cubit.dart';
+import '../../../logic/cubit/general/language_cubit.dart';
+import '../../../logic/cubit/general/theme_cubit.dart';
+import '../../router/app_router.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override

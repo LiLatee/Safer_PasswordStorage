@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_simple_password_storage_clean/presentation/screens/login_screen/login_screen.dart';
-import 'package:my_simple_password_storage_clean/presentation/screens/set_pin_code_screen/set_pin_code_screen.dart';
-import 'package:my_simple_password_storage_clean/presentation/screens/settings_screen/settings_screen.dart';
 
 import '../../data/data_providers/base_data_provider.dart';
 import '../../data/repositories/accounts_repository_impl.dart';
 import '../../logic/cubit/all_accounts/accounts_cubit.dart';
 import '../screens/first_launch/first_launch_screen.dart';
 import '../screens/home_screen/home_screen.dart';
+import '../screens/login_screen/login_screen.dart';
+import '../screens/set_pin_code_screen/set_pin_code_screen.dart';
+import '../screens/settings_screen/settings_screen.dart';
 
 class AppRouterNames {
   static const String home = '/homePage';

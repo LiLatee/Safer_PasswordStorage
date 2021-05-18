@@ -11,7 +11,6 @@ part 'accounts_state.dart';
 
 class AccountsCubit extends Cubit<AccountsState> {
   final AccountsRepository accountsRepository;
-  late StreamSubscription keyStreamSubscription;
 
   AccountsCubit({
     required this.accountsRepository,
@@ -39,8 +38,11 @@ class AccountsCubit extends Cubit<AccountsState> {
 
   void deleteAccount({required AccountDataEntity accountData}) {
     final currentState = state;
-    final accountsList = currentState.accountDataList;
-    accountsList.remove(accountData);
+    var accountsList = currentState.accountDataList;
+    accountsList = accountsList
+        .where((element) => element.uuid != accountData.uuid)
+        .toList();
+
     emit(AccountsLoaded(accountDataList: accountsList));
   }
 

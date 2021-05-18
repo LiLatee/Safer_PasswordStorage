@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../../../logic/cubit/all_accounts/add_account_cubit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/constants/AppConstants.dart';
 import '../../../../../core/constants/AppFunctions.dart' as AppFunctions;
 import '../../../../../data/entities/account_data_entity.dart';
+import '../../../../../logic/cubit/all_accounts/add_account_cubit.dart';
 import '../../../../widgets_templates/account_name_field_widget.dart';
 import '../../../../widgets_templates/dialog_template.dart';
 import 'choose_icon_widget.dart';

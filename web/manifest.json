@@ -1,6 +1,6 @@
 {
-    "name": "my_simple_password_storage_clean",
-    "short_name": "my_simple_password_storage_clean",
+    "name": "Safer",
+    "short_name": "Safer",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

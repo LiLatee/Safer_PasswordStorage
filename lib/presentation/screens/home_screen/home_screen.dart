@@ -1,24 +1,16 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_simple_password_storage_clean/core/constants/AppConstants.dart';
-import 'package:my_simple_password_storage_clean/data/entities/app_secret_key_entity.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/app_key_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/auth_cubit.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/launching_cubit.dart';
-import 'package:my_simple_password_storage_clean/presentation/router/app_router.dart';
-import 'package:provider/provider.dart';
 
-import '../../../core/themes/app_theme.dart';
+import '../../../core/constants/AppConstants.dart';
+import '../../router/app_router.dart';
 import 'widgets/add_account_floating_button.dart';
 import 'widgets/list_of_accounts.dart';
 import 'widgets/three_dots_menu/export_dialog.dart';
 import 'widgets/three_dots_menu/import_dialog.dart';
-
-import 'dart:developer';
 
 class HomeScreen extends StatefulWidget {
   @override

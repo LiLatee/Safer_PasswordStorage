@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:aes_crypt/aes_crypt.dart';
 import 'package:floor/floor.dart';
-import 'package:my_simple_password_storage_clean/data/entities/app_secret_key_entity.dart';
+
+import '../entities/app_secret_key_entity.dart';
 
 @dao
 abstract class AppSecretKeyDao {

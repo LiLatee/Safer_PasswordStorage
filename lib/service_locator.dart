@@ -1,8 +1,4 @@
-import 'dart:developer';
-
 import 'package:get_it/get_it.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:my_simple_password_storage_clean/logic/cubit/general/language_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/data_providers/SQLprovider.dart';
@@ -17,6 +13,7 @@ import 'logic/cubit/general/app_key_cubit.dart';
 import 'logic/cubit/general/auth_cubit.dart';
 import 'logic/cubit/general/export_data_cubit.dart';
 import 'logic/cubit/general/import_data_cubit.dart';
+import 'logic/cubit/general/language_cubit.dart';
 import 'logic/cubit/general/launching_cubit.dart';
 import 'logic/cubit/general/login_cubit.dart';
 import 'logic/cubit/general/theme_cubit.dart';
