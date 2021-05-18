@@ -25,6 +25,7 @@ class AppConstants {
   static const double maxHeightForFields = 300.0;
   static const pinFieldsWidth = 300.0;
   static const Duration splashScreenDuration = Duration(seconds: 1);
+  static const Duration durationToLogOut = Duration(seconds: 60);
 
   static const List<Color> iconDefaultColors = const [
     Colors.red,

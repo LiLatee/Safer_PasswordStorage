@@ -137,11 +137,12 @@ class AccountsRepositoryImlp extends AccountsRepository {
         crypt.setOverwriteMode(AesCryptOwMode.on);
         try {
           // await Future.delayed(Duration(seconds: 2));
-          await crypt.decryptFile(filepath, databasePath);
+          crypt.decryptFileSync(filepath, databasePath);
         } on Exception {
           return Left(BackupDecryptionFailure(message: "importing failed"));
         }
         await (sqlProvider as SQLprovider).importAppSecretKey();
+        log("Ustawianie klucza po IMPORT: ${AppSecretKeyEntity().key}");
         appKeyCubit.setKey(key: AppSecretKeyEntity().key);
         return Right(null);
       }
@@ -168,6 +169,7 @@ class AccountsRepositoryImlp extends AccountsRepository {
               SqlLiteFailure(message: "SQLite database path not found."));
         } else {
           try {
+            log("Przed export KEY: ${databasePath}");
             exportedDataPath = await (sqlProvider as SQLprovider)
                 .exportAppSecretKey(
                     aesCrypt: aesCrypt, databasePath: databasePath, path: path);
