@@ -1,5 +1,5 @@
 import 'package:my_simple_password_storage_clean/data/data_providers/SQLprovider.dart';
-import 'package:my_simple_password_storage_clean/data/models/account_data_entity.dart';
+import 'package:my_simple_password_storage_clean/data/entities/account_data_entity.dart';
 import 'package:my_simple_password_storage_clean/data/repositories/accounts_repository_impl.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/all_accounts/accounts_cubit.dart';

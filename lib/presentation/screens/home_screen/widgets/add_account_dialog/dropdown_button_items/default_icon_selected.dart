@@ -20,7 +20,7 @@ class DefaultIconSelectedDropdownMenuItem extends DropdownMenuItem {
               CircleAvatar(
                 radius: AppConstants.defaultIconRadius,
                 backgroundImage: mapElement.value.image,
-                backgroundColor: Colors.transparent,
+                backgroundColor: Colors.white,
               ),
               Expanded(
                   child: Text(

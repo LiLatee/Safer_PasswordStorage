@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../data/models/field_data_entity.dart';
+import '../../../data/entities/field_data_entity.dart';
 import '../../../data/repositories/accounts_repository.dart';
 import 'single_account_cubit.dart';
 

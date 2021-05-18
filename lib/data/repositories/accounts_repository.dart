@@ -6,8 +6,8 @@ import 'package:my_simple_password_storage_clean/logic/cubit/general/app_key_cub
 
 import '../../core/errors/failures.dart';
 import '../../service_locator.dart';
-import '../models/account_data_entity.dart';
-import '../models/field_data_entity.dart';
+import '../entities/account_data_entity.dart';
+import '../entities/field_data_entity.dart';
 
 abstract class AccountsRepository {
   //! Accounts

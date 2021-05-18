@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../core/constants/AppConstants.dart';
 import '../../../../../core/constants/AppFunctions.dart' as AppFunctions;
-import '../../../../../data/models/account_data_entity.dart';
+import '../../../../../data/entities/account_data_entity.dart';
 import '../../../../widgets_templates/dialog_template.dart';
 import 'dropdown_button_items/choose_color.dart';
 import 'dropdown_button_items/choose_color_selected.dart';
@@ -144,7 +144,7 @@ class _ChooseIconWidgetState extends State<ChooseIconWidget> {
       _accountDataEntity.iconWidget = CircleAvatar(
         radius: AppConstants.defaultIconRadius,
         backgroundImage: image.image,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
       );
       widget.setIsChosenColorIconCallback(isChosenColorIcon: false);
       // chooseImageIcon = widget.accountData.icon;

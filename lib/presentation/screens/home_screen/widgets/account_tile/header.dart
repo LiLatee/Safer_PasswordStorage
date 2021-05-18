@@ -3,7 +3,7 @@ import '../../../../../core/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/constants/AppConstants.dart';
-import '../../../../../data/models/account_data_entity.dart';
+import '../../../../../data/entities/account_data_entity.dart';
 
 class AccountTileHeader extends StatelessWidget {
   const AccountTileHeader({

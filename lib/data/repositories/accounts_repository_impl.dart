@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:aes_crypt/aes_crypt.dart';
 import 'package:dartz/dartz.dart';
-import 'package:my_simple_password_storage_clean/data/models/app_secret_key_entity.dart';
+import 'package:my_simple_password_storage_clean/data/entities/app_secret_key_entity.dart';
 import 'package:my_simple_password_storage_clean/logic/cubit/general/app_key_cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -11,8 +11,8 @@ import '../../core/errors/failures.dart';
 import '../../service_locator.dart';
 import '../data_providers/SQLprovider.dart';
 import '../data_providers/base_data_provider.dart';
-import '../models/account_data_entity.dart';
-import '../models/field_data_entity.dart';
+import '../entities/account_data_entity.dart';
+import '../entities/field_data_entity.dart';
 import 'accounts_repository.dart';
 
 class AccountsRepositoryImlp extends AccountsRepository {
