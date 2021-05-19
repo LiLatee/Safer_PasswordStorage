@@ -67,58 +67,31 @@ class _LoginScreenState extends State<LoginScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Stack(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            buildHelloHeader(context),
-            buildPinFields(context),
-            buildnumericKeyboard(context)
+            Expanded(
+              flex: 1,
+              child: SingleChildScrollView(
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    buildHelloHeader(context),
+                  ],
+                ),
+              ),
+            ),
+            // Spacer(),
+            Expanded(
+                flex: 1,
+                child: Column(
+                  children: [
+                    buildPinFields(context),
+                    buildnumericKeyboard(context),
+                  ],
+                )),
           ],
         ),
-      ),
-    );
-  }
-
-  Positioned buildnumericKeyboard(BuildContext context) {
-    bool isPinEmpty = textEditingController.text.length == 0;
-    bool isBiometricOn =
-        BlocProvider.of<AuthCubit>(context).state is BiometricOn;
-
-    var rightIcon = (isPinEmpty && isBiometricOn)
-        ? Icon(Icons.fingerprint)
-        : Icon(Icons.arrow_back);
-
-    return Positioned(
-      width: MediaQuery.of(context).size.width,
-      bottom: 0.0,
-      child: NumericKeyboard(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        textColor: Theme.of(context).colorScheme.onBackground,
-        rightIcon: rightIcon,
-        rightButtonFn: () async {
-          if (isPinEmpty && isBiometricOn) {
-            BlocProvider.of<AuthCubit>(context)
-                .authenticateWithBiometricsIfOn(context: context)
-                .then((value) {
-              setState(() {
-                isAuthenticated = value;
-                if (isAuthenticated)
-                  Navigator.of(context)
-                      .pushReplacementNamed(AppRouterNames.home);
-              });
-            });
-          } else {
-            if (textEditingController.text.isNotEmpty) {
-              setState(() {
-                textEditingController.text = textEditingController.text
-                    .substring(0, textEditingController.text.length - 1);
-              });
-            }
-          }
-        },
-        onKeyboardTap: (text) {
-          if (textEditingController.text.length < 4)
-            textEditingController.text += text;
-        },
       ),
     );
   }
@@ -153,85 +126,119 @@ class _LoginScreenState extends State<LoginScreen>
 
   Widget buildPinFields(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Expanded(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                top: 270,
-                left: MediaQuery.of(context).size.width / 2 -
-                    AppConstants.pinFieldsWidth / 2 +
-                    shakeAnimation.value,
-                child: Container(
-                  width: AppConstants.pinFieldsWidth,
-                  // margin: EdgeInsets.symmetric(
-                  //     horizontal: AppConstants.defaultToScreenEdgePadding),
-                  child: AbsorbPointer(
-                    // Prevent to show keyboard after cliking on pin field.
-                    child: PinCodeTextField(
-                      // enablePinAutofill: false,
-                      blinkWhenObscuring: true,
-                      keyboardType: TextInputType.number,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      length: 4,
-                      obscureText: true,
-                      animationType: AnimationType.fade,
-                      pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.underline,
-                        activeFillColor:
-                            Theme.of(context).colorScheme.background,
-                        inactiveColor: Colors.red,
-                        activeColor: Colors.green,
-                        disabledColor: Colors.white,
-                        selectedColor: Colors.blue,
-                        selectedFillColor:
-                            Theme.of(context).colorScheme.background,
-                        inactiveFillColor:
-                            Theme.of(context).colorScheme.background,
-                      ),
-                      animationDuration: Duration(milliseconds: 300),
-                      textStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground),
-                      // backgroundColor: Colors.blue.shade50,
-                      enableActiveFill: true,
-                      // errorAnimationController: errorController,
-                      controller: textEditingController,
-                      onCompleted: (v) async {
-                        if (BlocProvider.of<LoginCubit>(context).checkPinCode(
-                            pincode: textEditingController.text)) {
-                          Navigator.of(context)
-                              .pushReplacementNamed(AppRouterNames.home);
-                        } else {
-                          await animationController.forward();
-                          animationController.reset();
-                          textEditingController.text = '';
-                        }
-                      },
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      beforeTextPaste: (text) {
-                        return false;
-                      },
-                      appContext: context,
-                      validator: (value) {
-                        bool isInvalidPin =
-                            !BlocProvider.of<LoginCubit>(context).checkPinCode(
-                                pincode: textEditingController.text);
-
-                        if ((value!.length == 4) && (isInvalidPin)) {
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //     SnackBar(content: Text("Nieprawidłowy pin")));
-
-                          return AppLocalizations.of(context)!.wrongPinCode;
-                        }
-                      },
-                    ),
-                  ),
+          child: Container(
+            width: AppConstants.pinFieldsWidth,
+            // margin: EdgeInsets.symmetric(
+            //     horizontal: AppConstants.defaultToScreenEdgePadding),
+            child: AbsorbPointer(
+              // Prevent to show keyboard after cliking on pin field.
+              child: PinCodeTextField(
+                // enablePinAutofill: false,
+                blinkWhenObscuring: true,
+                keyboardType: TextInputType.number,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                length: 4,
+                obscureText: true,
+                animationType: AnimationType.fade,
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.underline,
+                  activeFillColor: Theme.of(context).colorScheme.background,
+                  inactiveColor: Colors.red,
+                  activeColor: Colors.green,
+                  disabledColor: Colors.white,
+                  selectedColor: Colors.blue,
+                  selectedFillColor: Theme.of(context).colorScheme.background,
+                  inactiveFillColor: Theme.of(context).colorScheme.background,
                 ),
+                animationDuration: Duration(milliseconds: 300),
+                textStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground),
+                // backgroundColor: Colors.blue.shade50,
+                enableActiveFill: true,
+                // errorAnimationController: errorController,
+                controller: textEditingController,
+                onCompleted: (v) async {
+                  if (BlocProvider.of<LoginCubit>(context)
+                      .checkPinCode(pincode: textEditingController.text)) {
+                    Navigator.of(context)
+                        .pushReplacementNamed(AppRouterNames.home);
+                  } else {
+                    await animationController.forward();
+                    animationController.reset();
+                    textEditingController.text = '';
+                  }
+                },
+                onChanged: (value) {
+                  setState(() {});
+                },
+                beforeTextPaste: (text) {
+                  return false;
+                },
+                appContext: context,
+                validator: (value) {
+                  bool isInvalidPin = !BlocProvider.of<LoginCubit>(context)
+                      .checkPinCode(pincode: textEditingController.text);
+
+                  if ((value!.length == 4) && (isInvalidPin)) {
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //     SnackBar(content: Text("Nieprawidłowy pin")));
+
+                    return AppLocalizations.of(context)!.wrongPinCode;
+                  }
+                },
               ),
-            ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildnumericKeyboard(BuildContext context) {
+    bool isPinEmpty = textEditingController.text.length == 0;
+    bool isBiometricOn =
+        BlocProvider.of<AuthCubit>(context).state is BiometricOn;
+
+    var rightIcon = (isPinEmpty && isBiometricOn)
+        ? Icon(Icons.fingerprint)
+        : Icon(Icons.arrow_back);
+
+    return Row(
+      // crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Expanded(
+          child: NumericKeyboard(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            textColor: Theme.of(context).colorScheme.onBackground,
+            rightIcon: rightIcon,
+            rightButtonFn: () async {
+              if (isPinEmpty && isBiometricOn) {
+                BlocProvider.of<AuthCubit>(context)
+                    .authenticateWithBiometricsIfOn(context: context)
+                    .then((value) {
+                  setState(() {
+                    isAuthenticated = value;
+                    if (isAuthenticated)
+                      Navigator.of(context)
+                          .pushReplacementNamed(AppRouterNames.home);
+                  });
+                });
+              } else {
+                if (textEditingController.text.isNotEmpty) {
+                  setState(() {
+                    textEditingController.text = textEditingController.text
+                        .substring(0, textEditingController.text.length - 1);
+                  });
+                }
+              }
+            },
+            onKeyboardTap: (text) {
+              if (textEditingController.text.length < 4)
+                textEditingController.text += text;
+            },
           ),
         ),
       ],

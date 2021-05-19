@@ -46,14 +46,31 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          alignment: Alignment.center,
+        child: Column(
           children: [
-            buildHelloHeader(context),
-            buildPinFields(context),
-            buildSetPinButton(context),
-            buildRepeatPinFields(context),
-            buildnumericKeyboard(context)
+            Expanded(
+              flex: 1,
+              child: SingleChildScrollView(
+                child: Column(
+                  // alignment: Alignment.center,
+                  children: [
+                    buildHelloHeader(context),
+                  ],
+                ),
+              ),
+            ),
+            // Spacer(),
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  buildPinFields(context),
+                  buildRepeatPinFields(context),
+                  buildSetPinButton(context),
+                  buildnumericKeyboard(context),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -91,60 +108,46 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen>
     return Row(
       children: [
         Expanded(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                top: 250,
-                left: MediaQuery.of(context).size.width / 2 -
-                    AppConstants.pinFieldsWidth / 2 +
-                    shakeAnimation.value,
-                child: Container(
-                  width: AppConstants.pinFieldsWidth,
-                  child: AbsorbPointer(
-                    // Prevent to show keyboard after cliking on pin field.
-                    child: PinCodeTextField(
-                      blinkWhenObscuring: true,
-                      keyboardType: TextInputType.number,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      length: 4,
-                      obscureText: true,
-                      animationType: AnimationType.fade,
-                      pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.underline,
-                        activeFillColor:
-                            Theme.of(context).colorScheme.background,
-                        inactiveColor: Colors.red,
-                        activeColor: Colors.green,
-                        disabledColor: Colors.white,
-                        selectedColor: Colors.blue,
-                        selectedFillColor:
-                            Theme.of(context).colorScheme.background,
-                        inactiveFillColor:
-                            Theme.of(context).colorScheme.background,
-                      ),
-                      animationDuration: Duration(milliseconds: 300),
-                      textStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground),
-                      enableActiveFill: true,
-                      controller: textEditingControllerPin,
-                      onCompleted: (v) async {
-                        setState(() {
-                          isPinFieldsCompleted = true;
-                        });
-                      },
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      beforeTextPaste: (text) {
-                        return false;
-                      },
-                      appContext: context,
-                    ),
-                  ),
+          child: Container(
+            width: AppConstants.pinFieldsWidth,
+            child: AbsorbPointer(
+              // Prevent to show keyboard after cliking on pin field.
+              child: PinCodeTextField(
+                blinkWhenObscuring: true,
+                keyboardType: TextInputType.number,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                length: 4,
+                obscureText: true,
+                animationType: AnimationType.fade,
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.underline,
+                  activeFillColor: Theme.of(context).colorScheme.background,
+                  inactiveColor: Colors.red,
+                  activeColor: Colors.green,
+                  disabledColor: Colors.white,
+                  selectedColor: Colors.blue,
+                  selectedFillColor: Theme.of(context).colorScheme.background,
+                  inactiveFillColor: Theme.of(context).colorScheme.background,
                 ),
+                animationDuration: Duration(milliseconds: 300),
+                textStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground),
+                enableActiveFill: true,
+                controller: textEditingControllerPin,
+                onCompleted: (v) async {
+                  setState(() {
+                    isPinFieldsCompleted = true;
+                  });
+                },
+                onChanged: (value) {
+                  setState(() {});
+                },
+                beforeTextPaste: (text) {
+                  return false;
+                },
+                appContext: context,
               ),
-            ],
+            ),
           ),
         ),
       ],
@@ -155,119 +158,101 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen>
     return Row(
       children: [
         Expanded(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                top: 300.0,
-                left: MediaQuery.of(context).size.width / 2 -
-                    AppConstants.pinFieldsWidth / 2 +
-                    shakeAnimation.value,
-                child: Container(
-                  width: AppConstants.pinFieldsWidth,
-                  child: AbsorbPointer(
-                    // Prevent to show keyboard after cliking on pin field.
-                    child: PinCodeTextField(
-                      blinkWhenObscuring: true,
-                      keyboardType: TextInputType.number,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      length: 4,
-                      obscureText: true,
-                      animationType: AnimationType.fade,
-                      pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.underline,
-                        activeFillColor:
-                            Theme.of(context).colorScheme.background,
-                        inactiveColor: Colors.red,
-                        activeColor: Colors.green,
-                        disabledColor: Colors.white,
-                        selectedColor: Colors.blue,
-                        selectedFillColor:
-                            Theme.of(context).colorScheme.background,
-                        inactiveFillColor:
-                            Theme.of(context).colorScheme.background,
-                      ),
-                      animationDuration: Duration(milliseconds: 300),
-                      textStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground),
-                      enableActiveFill: true,
-                      controller: textEditingControllerRepeatPin,
-                      onCompleted: (v) async {
-                        bool samePins = textEditingControllerPin.text ==
-                            textEditingControllerRepeatPin.text;
-                        if (samePins) {
-                          canBeSaved = true;
-                        }
-                        // else {
-                        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //       content: Text(AppLocalizations.of(context)!.pinsMustBeSame)));
-                        // }
-                      },
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      beforeTextPaste: (text) {
-                        return false;
-                      },
-                      appContext: context,
-                      validator: (value) {
-                        bool samePins = textEditingControllerPin.text ==
-                            textEditingControllerRepeatPin.text;
-                        if (!samePins) {
-                          return AppLocalizations.of(context)!.pinsMustBeSame;
-                        }
-                      },
-                    ),
-                  ),
+          child: Container(
+            width: AppConstants.pinFieldsWidth,
+            child: AbsorbPointer(
+              // Prevent to show keyboard after cliking on pin field.
+              child: PinCodeTextField(
+                blinkWhenObscuring: true,
+                keyboardType: TextInputType.number,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                length: 4,
+                obscureText: true,
+                animationType: AnimationType.fade,
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.underline,
+                  activeFillColor: Theme.of(context).colorScheme.background,
+                  inactiveColor: Colors.red,
+                  activeColor: Colors.green,
+                  disabledColor: Colors.white,
+                  selectedColor: Colors.blue,
+                  selectedFillColor: Theme.of(context).colorScheme.background,
+                  inactiveFillColor: Theme.of(context).colorScheme.background,
                 ),
+                animationDuration: Duration(milliseconds: 300),
+                textStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground),
+                enableActiveFill: true,
+                controller: textEditingControllerRepeatPin,
+                onCompleted: (v) async {
+                  bool samePins = textEditingControllerPin.text ==
+                      textEditingControllerRepeatPin.text;
+                  if (samePins) {
+                    canBeSaved = true;
+                  }
+                  // else {
+                  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //       content: Text(AppLocalizations.of(context)!.pinsMustBeSame)));
+                  // }
+                },
+                onChanged: (value) {
+                  setState(() {});
+                },
+                beforeTextPaste: (text) {
+                  return false;
+                },
+                appContext: context,
+                validator: (value) {
+                  bool samePins = textEditingControllerPin.text ==
+                      textEditingControllerRepeatPin.text;
+                  if (!samePins) {
+                    return AppLocalizations.of(context)!.pinsMustBeSame;
+                  }
+                },
               ),
-            ],
+            ),
           ),
         ),
       ],
     );
   }
 
-  Positioned buildSetPinButton(BuildContext context) {
-    return Positioned(
-      top: 380.0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextButton(
-            onPressed: () {
-              if (canBeSaved) {
-                BlocProvider.of<LoginCubit>(context)
-                    .savePinCode(pincode: textEditingControllerRepeatPin.text);
-                Navigator.of(context).pushReplacementNamed(AppRouterNames.home);
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content:
-                        Text(AppLocalizations.of(context)!.pinsMustBeSame)));
-              }
-            },
-            child: Container(
-              padding: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(50.0))),
-              child: Text(
-                AppLocalizations.of(context)!.setPinCode,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6!
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
-              ),
+  Widget buildSetPinButton(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextButton(
+          onPressed: () {
+            if (canBeSaved) {
+              BlocProvider.of<LoginCubit>(context)
+                  .savePinCode(pincode: textEditingControllerRepeatPin.text);
+              Navigator.of(context).pushReplacementNamed(AppRouterNames.home);
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(AppLocalizations.of(context)!.pinsMustBeSame)));
+            }
+          },
+          child: Container(
+            padding: EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(50.0))),
+            child: Text(
+              AppLocalizations.of(context)!.setPinCode,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6!
+                  .copyWith(color: Theme.of(context).colorScheme.primary),
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 
-  Positioned buildnumericKeyboard(BuildContext context) {
+  Widget buildnumericKeyboard(BuildContext context) {
     var textEditingController = isPinFieldsCompleted
         ? textEditingControllerRepeatPin
         : textEditingControllerPin;
@@ -276,34 +261,37 @@ class _SetPinCodeScreenState extends State<SetPinCodeScreen>
 
     var rightIcon = Icon(Icons.arrow_back);
 
-    return Positioned(
-      width: MediaQuery.of(context).size.width,
-      bottom: 0.0,
-      child: NumericKeyboard(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        textColor: Theme.of(context).colorScheme.onBackground,
-        rightIcon: rightIcon,
-        rightButtonFn: () async {
-          setState(() {
-            if (textEditingController.text.isEmpty) {
-              if (textEditingControllerPin.text.isNotEmpty) {
-                textEditingControllerPin.text = textEditingControllerPin.text
-                    .substring(0, textEditingControllerPin.text.length - 1);
-              }
+    return Row(
+      children: [
+        Expanded(
+          child: NumericKeyboard(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            textColor: Theme.of(context).colorScheme.onBackground,
+            rightIcon: rightIcon,
+            rightButtonFn: () async {
               setState(() {
-                isPinFieldsCompleted = false;
+                if (textEditingController.text.isEmpty) {
+                  if (textEditingControllerPin.text.isNotEmpty) {
+                    textEditingControllerPin.text = textEditingControllerPin
+                        .text
+                        .substring(0, textEditingControllerPin.text.length - 1);
+                  }
+                  setState(() {
+                    isPinFieldsCompleted = false;
+                  });
+                } else {
+                  textEditingController.text = textEditingController.text
+                      .substring(0, textEditingController.text.length - 1);
+                }
               });
-            } else {
-              textEditingController.text = textEditingController.text
-                  .substring(0, textEditingController.text.length - 1);
-            }
-          });
-        },
-        onKeyboardTap: (text) {
-          if (textEditingController.text.length < 4)
-            textEditingController.text += text;
-        },
-      ),
+            },
+            onKeyboardTap: (text) {
+              if (textEditingController.text.length < 4)
+                textEditingController.text += text;
+            },
+          ),
+        ),
+      ],
     );
   }
 }
