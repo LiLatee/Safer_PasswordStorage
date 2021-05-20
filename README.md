@@ -1,16 +1,44 @@
 # Safer
 
-A new Flutter project.
+## Polski (PL)
+***Safer*** pozwala w przejrzysty sposób zapisywać wszystkie istotne informacje dotyczące Twoich kont w internecie. 
+Nie korzysta z połączenia z internetem, wszystkie dane są zapisywanie bezpośrednio na Twoim urządzeniu, więc nie musisz się bać o ich wyciek. 
 
-## Getting Started
+***Safer*** pozwala na eksportowanie zapisanych danych w przypadku zmiany urządzenia na nowe. Może to także służyć jako ręczny mechanizm tworzenia kopii zapasowej. 
 
-This project is a starting point for a Flutter application.
+***Safer*** jest aplikacją hobbistyczną, która w przyszłości będzie dalej się rozwijać.
 
-A few resources to get you started if this is your first Flutter project:
+**UWAGA**: Wszystkie zapisywane dane na urządzeniu są szyfrowane. Podobnie podczas eksportowania danych. Jednak wciąż nie zalecamy przetrzymywania w aplikacji bardzo ważnych informacji takich jak dane logowania do konta bankowego.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+**Funkcjonalności/Narzędzia**:
+- architektura w większości wykorzystująca wzorzec projektowy **BLOC** (oparta na cubitach);
+- zmiana motywu jasny/ciemny/systemowy;
+- zmiana języka polski/angielski/systemowy;
+- szyfrowanie eksportowanego pliku z danymi z użyciem bibliotkei [aes_crypt](https://pub.dev/packages/aes_crypt) - jedyna wykorzystana biblioteka nie spełniająca *null-safety*;
+- wykorzystanie biblioteki [floor](https://pub.dev/packages/floor) do zarządzania lokalną bazą danych **SQLite**;
+- szyfrowanie danych w bazie za pomocą [encrypt](https://pub.dev/packages/encrypt);
+- logowanie z użyciem kodu PIN, a także możliwość włączenia logowania z użyciem biometrii [local_auth](https://pub.dev/packages/local_auth);
+- automatyczne wylogowanie z aplikacji po 1 minucie przebywania jako aplikacja w tle;
+- *dependency injection* za pomocą biblioteki [get_it](https://pub.dev/packages/get_it).
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## English (EN)
+***Safer*** is a simple way to save Your precious passwords in a safe way. It doesn't use an internet connection, all data is saved locally on a device, so You don't have to worry about data leaks to the internet.
+***Safer***
+Tom allows exporting Your data in case You need to for example switch to new device. It also can be a manual way to make a backup of Your data.
+
+***Safer*** has been created for learning purposes and it should be still developed in the future.
+
+IMPORTANT: All saved data on the device are encrypted. Exported backup file also. However, we still don't recommend storing very crucial information like bank account credentials.
+
+UWAGA: Wszystkie zapisywane dane na urządzeniu są szyfrowane. Podobnie podczas eksportowania danych. Jednak wciąż nie zalecamy przetrzymywania w aplikacji bardzo ważnych informacji takich jak dane logowania do konta bankowego.
+**Use cases/Tools**:
+- architecture uses in a majority **BLOC** pattern (based on cubits);
+- changing app theme light/dark/system;
+- changing app language english/polish/system;
+- encryption of exported file with [aes_crypt](https://pub.dev/packages/aes_crypt) package - the only one used in project, which doesn't fulfill *null-safety*;
+- [floor](https://pub.dev/packages/floor) package to mantain local **SQLite** database, 
+- encryption of data in local databse using [encrypt](https://pub.dev/packages/encrypt);
+- logging with use of PIN code, and also a possibility to turn on logging with biometric [local_auth](https://pub.dev/packages/local_auth);
+- automatic logout after 1 minute of being app in background
+- *dependency injection* with use of [get_it](https://pub.dev/packages/get_it) library.
