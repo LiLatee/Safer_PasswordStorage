@@ -22,7 +22,6 @@ import 'presentation/screens/set_pin_code_screen/set_pin_code_screen.dart';
 import 'presentation/screens/splash_screen/splash_screen.dart';
 import 'service_locator.dart';
 import 'service_locator.dart' as di;
-// test comment
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
