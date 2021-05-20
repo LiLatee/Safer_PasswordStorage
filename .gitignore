@@ -1,9 +1,3 @@
-# Custom
-android/key.properties
-android/safer_upload_keystore.jks
-android/upload_keystore.jks
-
-
 # Miscellaneous
 *.class
 *.log
