@@ -1,0 +1,140 @@
+{
+  "@@locale": "en",
+
+  "buttons___": "___BUTTONS_________________________________",
+  "showHiddenFields": "Show",
+  "editFields": "Edit",
+  "addField": "Add field",
+  "removeAccount": "Remove account",
+  "cancel": "Cancel",
+  "remove": "Remove",
+  "add": "Add",
+  "export": "Export",
+  "exportData": "Export data",
+  "import": "Import",
+  "importData": "Import data",
+  "saveChangedFields": "Save changes",
+  "undoChangedFields": "Undo changes",
+
+  "dialogs___": "___DIALOGS_________________________________",
+  "removeFieldConfirmationTitle": "Confirmation",
+  "removeFieldConfirmationMessage": "Do you want to remove field \"{field}\"?",
+  "@removeFieldConfirmationMessage": {
+    "placeholders": {
+      "field": {
+        "type": "String",
+        "example": "Email"
+      }
+    }
+  },
+
+  "addNewFieldTitle": "Add new field",
+  "name": "Name",
+  "content": "Content",
+  "makeHiddenFieldQuestion": "Hide",
+  "makeMultilineFieldQuestion": "Multiline",
+
+  "removeAccountConfirmationTitle": "Confirmation",
+  "removeAccountConfirmationMessage": "Do you want to remove this account?",
+
+  "importDataDialogTitle": "Importing data",
+  "exportDataDialogTitle": "Exporting data",
+
+  "addNewAccountTitle": "Adding new account",
+  "accountName": "Account name",
+  "selectIcon": "Select icon",
+  "chooseColor": "Choose color",
+  "chooseImage": "Choose image",
+  "pickColorTitle": "Pick a color",
+
+
+  "snackbars___": "___SNACKBARS_________________________________",
+  "emptySecretKeySnackbar": "Secret key can't be empty.",
+  "addedAccountSnackbar": "Added account \"{accName}\".",
+  "@addedAccountSnackbar": {
+    "placeholders": {
+      "accName": {
+        "type": "String"
+      }
+    }
+  },
+  "addedFieldSnackbar": "Added field \"{fieldName}\".",
+  "@addedFieldSnackbar": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "saveChangedFieldsSnackbar": "Changes saved :)",
+  "fieldRemovedSnackbar": "Field \"{fieldName}\" removed.",
+  "@fieldRemovedSnackbar": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "exportSuccess": "Your data has been exported to {path}",
+  "@exportSuccess": {
+    "placeholders": {
+      "path": {
+        "type": "String",
+        "example": "/storage/A/DirectoryA/file.aes"
+      }
+    }
+  },
+  "sqlNotFound": "SQLDatabase not found.",
+  "noRequiredPermissions": "Required permissions not granted.",
+  "decryptionFailed": "Decryption failed. Did you choose right file and entered correct password?",
+  "importSuccess": "Data has been correctly imported.",
+  "encryptionError": "Encryption error.",
+  "removedAccount": "Removed account \"{accountName}\".",
+  "@removedAccount": {
+    "placeholders": {
+      "accountName": {
+        "type": "String",
+        "example": "Twitter"
+      }
+    }
+  },
+
+
+
+
+
+  "fieldsValidators___": "___FIELDS_VALIDATORS_________________________________",
+  "emptyAccountNameValidator": "Name can't be empty.",
+  "existAccountNameValidator": "Name already exists.",
+
+  "others___": "___OTHERS_________________________________",
+  "secretKey": "Secret Key",
+  "chooseEncryptedFile": "Choose file with data...",
+  "theme": "Theme",
+  "dark": "Dark",
+  "light": "Light",
+  "system": "System",
+  "signIn": "Sign in",
+  "confirmIdentity": "Please confirm identity to proceed to app.",
+  "authenticationRequired": "Authentication required",
+  "securityRequired": "You do not have set any password to Your phone.\n Do you want to use app without an authentication?",
+  "skipSecurity": "I don't want to set up identity verification",
+  "setSecurity": "Set phone identity verification",
+  "changeSecurityMode": "Change security mode",
+  "settings": "Settings",
+  "biometricLogin": "Login with fingerprint/face",
+  "changePin": "Change PIN code",
+  "biometricInfo": "It only works if you've set up a phone lock with fingerprint or face.",
+  "hi": "Hi!",
+  "wrongPinCode": "Wrong PIN code",
+  "setPinCode": "Set PIN code",
+  "pinsMustBeSame": "Both PIN codes must be the same.",
+  "english": "English (EN)",
+  "polish": "Polish (PL)",
+  "language": "Language",
+  "nothingHere": "Nothing here.... yet :)"
+
+
+
+
+}

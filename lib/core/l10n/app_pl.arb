@@ -1,0 +1,112 @@
+{
+  "@@locale": "pl",
+
+  "buttons___": "___BUTTONS_________________________________",
+  "showHiddenFields": "Pokaż",
+  "editFields": "Edytuj",
+  "addField": "Dodaj pole",
+  "removeAccount": "Usuń konto",
+  "cancel": "Anuluj",
+  "remove": "Usuń",
+  "add": "Dodaj",
+  "export": "Eksportuj",
+  "exportData": "Eksportuj dane",
+  "import": "Importuj",
+  "importData": "Importuj dane",
+  "saveChangedFields": "Zapisz zmiany",
+  "undoChangedFields": "Cofnij zmiany",
+
+  "dialogs___": "___DIALOGS_________________________________",
+  "removeFieldConfirmationTitle": "Potwierdzenie",
+  "removeFieldConfirmationMessage": "Czy chcesz usunąć pole \"{field}\"?",
+
+  "addNewFieldTitle": "Dodaj nowe pole",
+  "name": "Nazwa",
+  "content": "Zawartość",
+  "makeHiddenFieldQuestion": "Ukryj",
+  "makeMultilineFieldQuestion": "Wiele wierszy",
+
+  "removeAccountConfirmationTitle": "Potwierdzenie",
+  "removeAccountConfirmationMessage": "Czy chcesz usunąć to konto?",
+
+  "importDataDialogTitle": "Importowanie danych",
+  "exportDataDialogTitle": "Eksportowanie danych",
+
+  "addNewAccountTitle": "Dodawanie konta",
+  "accountName": "Nazwa konta",
+  "selectIcon": "Wybierz ikonę",
+  "chooseColor": "Wybierz kolor",
+  "chooseImage": "Wybierz obraz",
+  "pickColorTitle": "Wybierz kolor",
+
+  "snackbars___": "___SNACKBARS_________________________________",
+  "emptySecretKeySnackbar": "Klucz nie może być pusty.",
+  "addedAccountSnackbar": "Dodano konto \"{accName}\".",
+  "@addedAccountSnackbar": {
+    "placeholders": {
+      "accName": {
+        "type": "String"
+      }
+    }
+  },
+  "addedFieldSnackbar": "Dodano pole \"{fieldName}\".",
+  "@addedFieldSnackbar": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "saveChangedFieldsSnackbar": "Zmiany zapisane :)",
+  "fieldRemovedSnackbar": "Pole \"{fieldName}\" usunięte.",
+  "@fieldRemovedSnackbar": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "exportSuccess": "Twoje dane zostały zapisane w {path}",
+  "sqlNotFound": "SQLDatabase nie znaleziono.",
+  "noRequiredPermissions": "Nie nadano wymaganych uprawnień.",
+  "decryptionFailed": "Błąd odszyfrowywania. Czy na pewno wybrałeś odpowiedni plik oraz podałeś właściwy klucz?",
+  "importSuccess": "Dane zostały prawdiłowo załadowane.",
+  "encryptionError": "Błąd szyfrowania.",
+  "removedAccount": "Usunięto konto \"{accountName}\".",
+
+
+  "fieldsValidators___": "___FIELDS_VALIDATORS_________________________________",
+  "emptyAccountNameValidator": "Nazwa nie może być pusta.",
+  "existAccountNameValidator": "Konto o takiej nazwie istnieje.",
+
+  "others___": "___OTHERS_________________________________",
+  "secretKey": "Klucz",
+  "chooseEncryptedFile": "Wybierz plik z danymi...",
+  "theme": "Motyw",
+  "dark": "Ciemny",
+  "light": "Jasny",
+  "system": "Systemowy",
+  "signIn": "Zaloguj",
+  "confirmIdentity": "Proszę potwierdzić tożsamość aby przejść do aplikacji.",
+  "authenticationRequired": "Wymagane uwierzytelnienie",
+  "securityRequired": "Nie masz ustawionej żadnej blokady telefonu.\n Czy chcesz używać aplikacji bez weryfikacji Twojej tożsamości?",
+  "skipSecurity": "Nie chcę używać weryfikacji tożsamości",
+  "setSecurity": "Ustaw blokadę telefonu",
+  "changeSecurityMode": "Włącz/Wyłącz blokadę aplikacji",
+  "settings": "Ustawienia",
+  "biometricLogin": "Logowanie z użyciem odcisku palca/twarzy",
+  "changePin": "Zmien kod PIN",
+  "biometricInfo": "Działa tylko w przypadku włączonego odblokowywania telefonu z użyciem odcisku palca lub twarzy.",
+  "hi": "Cześć!",
+  "wrongPinCode": "Zły kod PIN",
+  "setPinCode": "Ustaw kod PIN",
+  "pinsMustBeSame": "Oba PINy muszą być takie same.",
+  "english": "Angielski (EN)",
+  "polish": "Polski (PL)",
+  "language": "Język",
+  "nothingHere": "Nic tu nie ma... jeszcze :)"
+
+
+
+
+}
