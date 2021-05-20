@@ -98,56 +98,76 @@ packages:
       name: build
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.6.3"
+=======
+    version: "2.0.1"
+>>>>>>> origin/bloc_pattern
   build_config:
     dependency: transitive
     description:
       name: build_config
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.4.6"
+=======
+    version: "0.4.7"
+>>>>>>> origin/bloc_pattern
   build_daemon:
     dependency: transitive
     description:
       name: build_daemon
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.7"
+    version: "2.1.10"
   build_resolvers:
     dependency: transitive
     description:
       name: build_resolvers
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.5.4"
+=======
+    version: "2.0.0"
+>>>>>>> origin/bloc_pattern
   build_runner:
     dependency: "direct dev"
     description:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.11.5"
+=======
+    version: "1.12.2"
+>>>>>>> origin/bloc_pattern
   build_runner_core:
     dependency: transitive
     description:
       name: build_runner_core
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "6.1.10"
+=======
+    version: "6.1.12"
+>>>>>>> origin/bloc_pattern
   built_collection:
     dependency: transitive
     description:
       name: built_collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.2"
+    version: "5.0.0"
   built_value:
     dependency: transitive
     description:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.1.0"
+    version: "8.0.6"
   characters:
     dependency: transitive
     description:
@@ -168,7 +188,7 @@ packages:
       name: checked_yaml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "2.0.1"
   cli_util:
     dependency: transitive
     description:
@@ -189,7 +209,7 @@ packages:
       name: code_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.6.0"
+    version: "3.7.0"
   collection:
     dependency: transitive
     description:
@@ -210,7 +230,11 @@ packages:
       name: coverage
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.15.2"
+=======
+    version: "1.0.2"
+>>>>>>> origin/bloc_pattern
   crypto:
     dependency: transitive
     description:
@@ -231,14 +255,22 @@ packages:
       name: dart_style
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.3.14"
+=======
+    version: "2.0.1"
+>>>>>>> origin/bloc_pattern
   dartz:
     dependency: "direct main"
     description:
       name: dartz
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.10.0-nullsafety.2"
+=======
+    version: "0.10.0-nullsafety.1"
+>>>>>>> origin/bloc_pattern
   effective_dart:
     dependency: "direct dev"
     description:
@@ -259,7 +291,11 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.0.2"
+=======
+    version: "2.0.0"
+>>>>>>> origin/bloc_pattern
   fake_async:
     dependency: transitive
     description:
@@ -280,7 +316,11 @@ packages:
       name: file
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "6.1.1"
+=======
+    version: "6.1.0"
+>>>>>>> origin/bloc_pattern
   file_picker:
     dependency: "direct main"
     description:
@@ -294,7 +334,7 @@ packages:
       name: fixnum
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.11"
+    version: "1.0.0"
   floor:
     dependency: "direct main"
     description:
@@ -315,7 +355,11 @@ packages:
       name: floor_generator
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.0.0"
+=======
+    version: "1.0.1"
+>>>>>>> origin/bloc_pattern
   flutter:
     dependency: "direct main"
     description: flutter
@@ -384,7 +428,11 @@ packages:
       name: graphs
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.2.0"
+=======
+    version: "1.0.0"
+>>>>>>> origin/bloc_pattern
   group_button:
     dependency: "direct main"
     description:
@@ -398,14 +446,14 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.0"
+    version: "0.13.3"
   http_multi_server:
     dependency: transitive
     description:
       name: http_multi_server
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0"
+    version: "3.0.1"
   http_parser:
     dependency: transitive
     description:
@@ -426,7 +474,11 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.7.5+2"
+=======
+    version: "0.7.4"
+>>>>>>> origin/bloc_pattern
   image_picker_for_web:
     dependency: transitive
     description:
@@ -440,7 +492,11 @@ packages:
       name: image_picker_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.0.1"
+=======
+    version: "2.1.0"
+>>>>>>> origin/bloc_pattern
   intl:
     dependency: "direct main"
     description:
@@ -454,7 +510,7 @@ packages:
       name: io
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.5"
+    version: "1.0.0"
   js:
     dependency: transitive
     description:
@@ -468,7 +524,11 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "3.1.1"
+=======
+    version: "4.0.1"
+>>>>>>> origin/bloc_pattern
   local_auth:
     dependency: "direct main"
     description:
@@ -482,7 +542,7 @@ packages:
       name: logging
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.4"
+    version: "1.0.1"
   matcher:
     dependency: transitive
     description:
@@ -503,7 +563,11 @@ packages:
       name: mime
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.9.7"
+=======
+    version: "1.0.0"
+>>>>>>> origin/bloc_pattern
   mocktail:
     dependency: transitive
     description:
@@ -587,7 +651,11 @@ packages:
       name: permission_handler_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "3.4.0"
+=======
+    version: "3.3.0"
+>>>>>>> origin/bloc_pattern
   petitparser:
     dependency: transitive
     description:
@@ -657,14 +725,7 @@ packages:
       name: pubspec_parse
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.8"
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.5"
+    version: "1.0.0"
   random_color:
     dependency: "direct main"
     description:
@@ -704,6 +765,7 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_web
+<<<<<<< HEAD
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
@@ -714,10 +776,36 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+=======
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  shared_preferences_windows:
+    dependency: transitive
+    description:
+      name: shared_preferences_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+>>>>>>> origin/bloc_pattern
   shelf:
     dependency: transitive
     description:
       name: shelf
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
+  shelf_packages_handler:
+    dependency: transitive
+    description:
+      name: shelf_packages_handler
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
+  shelf_static:
+    dependency: transitive
+    description:
+      name: shelf_static
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
@@ -741,7 +829,7 @@ packages:
       name: shelf_web_socket
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.4+1"
+    version: "1.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -753,7 +841,11 @@ packages:
       name: source_gen
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.9.10+3"
+=======
+    version: "1.0.0"
+>>>>>>> origin/bloc_pattern
   source_map_stack_trace:
     dependency: transitive
     description:
@@ -823,7 +915,7 @@ packages:
       name: stream_transform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "2.0.0"
   string_scanner:
     dependency: transitive
     description:
@@ -879,7 +971,7 @@ packages:
       name: timing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1+3"
+    version: "1.0.0"
   typed_data:
     dependency: transitive
     description:
@@ -921,14 +1013,22 @@ packages:
       name: web_socket_channel
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.2.0"
+=======
+    version: "2.1.0"
+>>>>>>> origin/bloc_pattern
   webkit_inspection_protocol:
     dependency: transitive
     description:
       name: webkit_inspection_protocol
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.7.5"
+=======
+    version: "1.0.0"
+>>>>>>> origin/bloc_pattern
   win32:
     dependency: transitive
     description:

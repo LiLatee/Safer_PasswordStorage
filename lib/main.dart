@@ -1,116 +1,139 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:mysimplepasswordstorage/models/DataProvider.dart';
-import 'package:mysimplepasswordstorage/models/account_data_entity.dart';
-import 'package:mysimplepasswordstorage/models/database.dart';
-import 'package:mysimplepasswordstorage/models/field_data_entity.dart';
-import 'package:mysimplepasswordstorage/models/moor_database/moor_database.dart';
-import 'package:mysimplepasswordstorage/models/SQLprovider.dart';
-import 'package:provider/provider.dart';
-import 'screens/passwords_list/passwords_list_page.dart';
-import 'utils/themes.dart' as custom_themes;
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'core/constants/AppConstants.dart';
+import 'core/themes/app_theme.dart';
+import 'logic/cubit/all_accounts/accounts_cubit.dart';
+import 'logic/cubit/all_accounts/add_account_cubit.dart';
+import 'logic/cubit/all_accounts/delete_account_cubit.dart';
+import 'logic/cubit/general/app_key_cubit.dart';
+import 'logic/cubit/general/auth_cubit.dart';
+import 'logic/cubit/general/export_data_cubit.dart';
+import 'logic/cubit/general/import_data_cubit.dart';
+import 'logic/cubit/general/language_cubit.dart';
+import 'logic/cubit/general/launching_cubit.dart';
+import 'logic/cubit/general/login_cubit.dart';
+import 'logic/cubit/general/theme_cubit.dart';
+import 'presentation/router/app_router.dart';
+import 'presentation/screens/login_screen/login_screen.dart';
+import 'presentation/screens/set_pin_code_screen/set_pin_code_screen.dart';
+import 'presentation/screens/splash_screen/splash_screen.dart';
+import 'service_locator.dart';
+import 'service_locator.dart' as di;
+// test comment
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // final database =
-  //     await $FloorAppDatabase.databaseBuilder("app_database.db").build();
-  // log(database.database.toString());
-  // final accountDao = database.accountDao;
-  // final account1 = AccountDataEntity(accountName: "Moje konto3");
-  // // final account2 = AccountDataEntity(accountName: "Moje konto");
-  //
-  // // await accountDao.insertAccount(account1);
-  // // await accountDao.setEditButtonState(1, 1);
-  // // await accountDao.pressShowButton(1, 0);
-  // // var el = await accountDao.getAccountById(1);
-  // // log("${el.id} : ${el.accountName}, ${el.isShowButtonPressed}, ${el.isEditButtonPressed}");
-  //
-  // final result = await accountDao.getAllAccounts();
-  // for (AccountDataEntity el in result)
-  //   log("${el.id} : ${el.accountName}, ${el.isShowButtonPressed}, ${el.isEditButtonPressed}");
-  //
-  // final fieldData =
-  //     FieldDataEntity(name: "Haslo", value: "haselko", accountId: account1.id);
-  // final fieldDao = database.fieldDao;
-  // // fieldDao.insertField(fieldData);
-  //
-  // // var result2 = await fieldDao.getAllFieldsOfAccount(1);
-  // // for (FieldDataEntity el in result2)
-  // //   log("${el.id} : ${el.name}, ${el.value}, ${el.accountId}");
   WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
 
-  final database =
-      await $FloorAppDatabase.databaseBuilder("app_database.db").build();
-
-  // await database.accountDao.insertAccount(AccountDataEntity(accountName: "Test1"));
-  // await database.accountDao.insertAccount(AccountDataEntity(accountName: "Test2"));
-  // await database.fieldDao.insertField(FieldDataEntity(accountId: 1, name: "Moje pole 2", value: "Taka se wartość2", position: 2));
-  // await database.fieldDao.insertField(FieldDataEntity(accountId: 1, name: "Moje pole 1", value: "Taka se wartość1", position: 1));
-  // await database.fieldDao.insertField(FieldDataEntity(accountId: 2, name: "Moje pole 11", value: "Taka se wartość22", position: 1));
-
-  runApp(MyApp(database));
+  runApp(MyApp());
 }
 
-//Future<void> main() async {
-//  log("elo1", name: "LOL");
-//  var key = MyEncryption().generateKey(length: 5);
-//  var message = "Co tam słychać?";
-//  log("elo2", name: "LOL");
-//  var encrypted = await MyEncryption().encrypt(password: message, secretKey: key);
-//  log("elo3", name: "LOL");
-//  log(encrypted.toString(), name: "LOL");
-//
-//}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  final AppDatabase database;
-
-  MyApp(this.database);
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
-    FlutterError.onError = (FlutterErrorDetails details) {
-      FlutterError.dumpErrorToConsole(details);
-      print(details);
-      log(details.toString(), name: "OUPS in main.dart");
-    };
-    return MaterialApp(
-      title: 'My Simple Password Storage',
-      theme: custom_themes.lightTheme,
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<SQLprovider>(
-            create: (context) => SQLprovider(),
-          ),
-          ChangeNotifierProxyProvider<SQLprovider, DataProvider>(
-            create: (context) => DataProvider(
-              sql_provider: Provider.of<SQLprovider>(context, listen: false),
-            ),
-            update: (context, availableSQL_provider, previousDataProvider) =>
-                DataProvider(
-              sql_provider: availableSQL_provider,
-            ),
-          ),
-        ],
-        child: PasswordsListPage(),
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AccountsCubit>(
+          create: (_) => sl<AccountsCubit>(),
+        ),
+        BlocProvider<AddAccountCubit>(
+          create: (_) => sl<AddAccountCubit>(),
+        ),
+        BlocProvider<DeleteAccountCubit>(
+          create: (_) => sl<DeleteAccountCubit>(),
+        ),
+        BlocProvider<ExportDataCubit>(
+          create: (_) => sl<ExportDataCubit>(),
+        ),
+        BlocProvider<ImportDataCubit>(
+          create: (_) => sl<ImportDataCubit>(),
+        ),
+        BlocProvider<AppKeyCubit>(
+          create: (_) => sl<AppKeyCubit>(),
+          lazy: false,
+        ),
+        BlocProvider<AuthCubit>(
+          create: (_) => sl<AuthCubit>(),
+        ),
+        BlocProvider<LaunchingCubit>(
+          create: (_) => sl<LaunchingCubit>(),
+        ),
+        BlocProvider<ThemeCubit>(
+          create: (_) => sl<ThemeCubit>(),
+        ),
+        BlocProvider<LoginCubit>(
+          create: (_) => sl<LoginCubit>(),
+        ),
+        BlocProvider<LanguageCubit>(
+          create: (_) => sl<LanguageCubit>(),
+        ),
+      ],
+      child: Builder(
+        builder: (context) => BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, themeState) {
+            return buildMaterialApp(
+                home: _getStartScreen(context: context),
+                themeState: themeState,
+                context: context);
+          },
+        ),
       ),
     );
   }
 
-// @override
-// Widget build(BuildContext context) {
-//   FlutterError.onError = (FlutterErrorDetails details) {
-//     FlutterError.dumpErrorToConsole(details);
-//     print(details);
-//     log(details.toString(), name: "OUPS in main.dart");
-//   };
-//   return MaterialApp(
-//     title: 'My Simple Password Storage',
-//     theme: custom_themes.lightTheme,
-//     home: PasswordsListPage(),
-//   );
-// }
+  MaterialApp buildMaterialApp(
+      {required Widget home,
+      ThemeState? themeState,
+      required BuildContext context}) {
+    var languageCubitState = context.watch<LanguageCubit>().state;
+
+    return MaterialApp(
+      title: AppConstants.appName,
+      locale: languageCubitState.languageCode == 'system'
+          ? null
+          : Locale(languageCubitState.languageCode),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      // theme: state is ThemeDark ? AppTheme.darkTheme : AppTheme.lightTheme,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeState is ThemeDark ? ThemeMode.dark : ThemeMode.light,
+      onGenerateRoute: sl<AppRouter>().onGenerateRoute,
+      home: home,
+    );
+  }
+
+  Widget _getStartScreen({required BuildContext context}) {
+    return BlocBuilder<LanguageCubit, LanguageState>(
+      builder: (context, state) {
+        return BlocBuilder<LaunchingCubit, LaunchingState>(
+          builder: (context, state) {
+            if (state is LaunchingSplashScreen)
+              return SplashScreen();
+            else if (state is LaunchingLoginScreen)
+              return LoginScreen();
+            else if (state is LaunchingSetPinCodeScreen)
+              return SetPinCodeScreen();
+            else
+              throw Exception();
+          },
+        );
+      },
+    );
+  }
 }
