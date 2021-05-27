@@ -63,7 +63,7 @@ class ButtonDeleteAccount extends StatelessWidget {
               );
             },
       icon: Icons.delete_forever,
-      label: AppLocalizations.of(superContext)!.remove,
+      label: AppLocalizations.of(superContext)!.removeAccount,
     );
   }
 }

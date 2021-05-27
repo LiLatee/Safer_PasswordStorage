@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -18,7 +20,6 @@ class AddAccountCubit extends Cubit<AddAccountState> {
 
   Future<void> addAccount({required AccountDataEntity accountData}) async {
     emit(AddingAccount());
-
     var failureOrSuccess =
         await accountsRepository.addAccount(accountData: accountData);
 

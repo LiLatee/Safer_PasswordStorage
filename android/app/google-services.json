@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "870777258032",
+    "project_id": "safer-66545",
+    "storage_bucket": "safer-66545.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870777258032:android:79438ee485a063057a2df5",
+        "android_client_info": {
+          "package_name": "marcin.hradowicz.Safer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "870777258032-b43tut39vjskl6ihana7e7i7lhem33fl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMt_1Zw1kp3lBlytyez_7ZNNbOt5uElHo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "870777258032-b43tut39vjskl6ihana7e7i7lhem33fl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
