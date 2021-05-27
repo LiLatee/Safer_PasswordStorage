@@ -28,7 +28,12 @@ class AccountsRepositoryImlp extends AccountsRepository {
   Future<Either<Failure, void>> addAccountLogic(
       {required AccountDataEntity accountData}) async {
     try {
-      return Right(await sqlProvider.addAccount(accountData: accountData));
+      var result = await sqlProvider.addAccount(accountData: accountData);
+
+      for (var field in accountData.fields)
+        await sqlProvider.addField(fieldData: field);
+
+      return Right(result);
     } catch (e) {
       return Left(SqlLiteFailure(message: e.toString()));
     }

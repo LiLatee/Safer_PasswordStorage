@@ -29,6 +29,17 @@ class AccountsCubit extends Cubit<AccountsState> {
     );
   }
 
+  // Future<AccountDataEntity?> getAccountById({required String uuid}) async {
+  //   var accountOrFailure = await accountsRepository.getAccountById(uuid);
+
+  //   accountOrFailure.fold(
+  //     (failure) => null,
+  //     (accountDataEntity) {
+  //       return accountDataEntity;
+  //     },
+  //   );
+  // }
+
   void addAccount({required AccountDataEntity accountData}) {
     final currentState = state;
     final accountsList = currentState.accountDataList;
