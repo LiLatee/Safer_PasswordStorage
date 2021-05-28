@@ -1,8 +1,8 @@
 # Safer
 
 ## Polski (PL)
-***Safer*** pozwala w przejrzysty sposób zapisywać wszystkie istotne informacje dotyczące Twoich kont w internecie. 
-Nie korzysta z połączenia z internetem, wszystkie dane są zapisywanie bezpośrednio na Twoim urządzeniu, więc nie musisz się bać o ich wyciek. 
+***Safer*** pozwala w przejrzysty sposób zapisywać wszystkie istotne informacje dotyczące Twoich kont w internecie i nie tylko. 
+Nie korzysta z połączenia z internetem, wszystkie dane zapisywanie są bezpośrednio na Twoim urządzeniu, więc nie musisz bać się o ich wyciek. 
 
 ***Safer*** pozwala na eksportowanie zapisanych danych w przypadku zmiany urządzenia na nowe. Może to także służyć jako ręczny mechanizm tworzenia kopii zapasowej. 
 
@@ -24,14 +24,12 @@ Nie korzysta z połączenia z internetem, wszystkie dane są zapisywanie bezpoś
 
 ## English (EN)
 ***Safer*** is a simple way to save Your precious passwords in a safe way. It doesn't use an internet connection, all data is saved locally on a device, so You don't have to worry about data leaks to the internet.
-***Safer***
-Tom allows exporting Your data in case You need to for example switch to new device. It also can be a manual way to make a backup of Your data.
+***Safer*** allows exporting Your data in case switching to new device or so on. It also can be a manual way to make a backup of Your data.
 
-***Safer*** has been created for learning purposes and it should be still developed in the future.
+***Safer*** has been created for educational purposes and it would be still developed in the future.
 
 IMPORTANT: All saved data on the device are encrypted. Exported backup file also. However, we still don't recommend storing very crucial information like bank account credentials.
 
-UWAGA: Wszystkie zapisywane dane na urządzeniu są szyfrowane. Podobnie podczas eksportowania danych. Jednak wciąż nie zalecamy przetrzymywania w aplikacji bardzo ważnych informacji takich jak dane logowania do konta bankowego.
 **Use cases/Tools**:
 - architecture uses in a majority **BLOC** pattern (based on cubits);
 - changing app theme light/dark/system;
