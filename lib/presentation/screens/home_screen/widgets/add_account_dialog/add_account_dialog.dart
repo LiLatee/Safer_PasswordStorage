@@ -13,7 +13,7 @@ import '../../../../../logic/cubit/all_accounts/add_account_cubit.dart';
 import 'account_name_field_widget.dart';
 import '../../../../widgets_templates/dialog_template.dart';
 import 'choose_icon_widget.dart';
-import 'email_field_widget.dart';
+import 'login_field_widget.dart';
 import 'password_field_widget.dart';
 
 class AddAccountDialog extends StatefulWidget {
@@ -28,7 +28,7 @@ class AddAccountDialog extends StatefulWidget {
 class _AddAccountDialogState extends State<AddAccountDialog> {
   AccountDataEntity accountData =
       AccountDataEntity(accountName: '?????'); // TODO
-  String email = "";
+  String login = "";
   String password = "";
 
   Color _currentColor = AppConstants.iconDefaultColors[0];
@@ -49,9 +49,9 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
     });
   }
 
-  void setEmail({required String email}) {
+  void setLogin({required String login}) {
     setState(() {
-      this.email = email;
+      this.login = login;
     });
   }
 
@@ -75,10 +75,8 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
             onChangedCallback: setAccountName,
             accountNameFormKey: accountNameFormKey,
           ),
-          EmailFieldWidget(
-            superContext: widget.superContext,
-            onChangedCallback: setEmail,
-          ),
+          LoginFieldWidget(
+              superContext: widget.superContext, onChangedCallback: setLogin),
           PasswordFieldWidget(
             superContext: widget.superContext,
             onChangedCallback: setPassword,
@@ -108,8 +106,8 @@ class _AddAccountDialogState extends State<AddAccountDialog> {
           if (accountNameFormKey.currentState!.validate()) {
             accountData.fields.add(FieldDataEntity(
               accountId: accountData.uuid!,
-              name: AppLocalizations.of(context)!.email,
-              value: email,
+              name: AppLocalizations.of(context)!.login,
+              value: login,
             ));
             accountData.fields.add(FieldDataEntity(
               accountId: accountData.uuid!,

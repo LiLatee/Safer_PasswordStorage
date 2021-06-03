@@ -27,12 +27,12 @@ class AuthCubit extends Cubit<AuthState> {
   final SharedPreferences prefs;
   final LocalAuthentication _auth = LocalAuthentication();
 
-  @override
-  void onChange(Change<AuthState> change) {
-    super.onChange(change);
-    print(
-        'AuthCubit - onChange - ${change.currentState.toString()} --> ${change.nextState.toString()}');
-  }
+  // @override
+  // void onChange(Change<AuthState> change) {
+  //   super.onChange(change);
+  //   print(
+  //       'AuthCubit - onChange - ${change.currentState.toString()} --> ${change.nextState.toString()}');
+  // }
 
   Future<bool> isBiometricSupported() async => await _auth.isDeviceSupported();
   Future<bool> canCheckBiometrics() async => await _auth.canCheckBiometrics;
