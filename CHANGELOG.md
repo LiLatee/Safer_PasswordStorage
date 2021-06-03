@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Nothing
 
 ## [1.0.1](https://github.com/LiLatee/Safer_PasswordStorage/tree/1.0.1) - 2021-05-28
-[Download APK](https://github.com/LiLatee/test/releases/download/1.0.1/app-release.apk)
+[Download APK](https://github.com/LiLatee/Safer_PasswordStorage/releases/download/1.0.1/app-release.apk)
 ### Added
 - Adding Email and Password fields during account creation.
 
