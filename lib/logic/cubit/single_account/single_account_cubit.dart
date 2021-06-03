@@ -42,68 +42,60 @@ class SingleAccountCubit extends Cubit<SingleAccountState> {
     emit(SingleAccountReadingState(accountDataEntity: newAccountData));
   }
 
-  @override
-  void onChange(Change<SingleAccountState> change) {
-    var toPrint = 'single_account_cubit:\tChange(\n';
-    if (change.currentState.accountDataEntity.uuid !=
-        change.nextState.accountDataEntity.uuid)
-      toPrint += "\tuuid: " +
-          change.currentState.accountDataEntity.uuid.toString() +
-          " --> " +
-          change.nextState.accountDataEntity.uuid.toString() +
-          '\n';
+  // @override
+  // void onChange(Change<SingleAccountState> change) {
+  //   super.onChange(change);
+  //   var toPrint = 'single_account_cubit:\tChange(\n';
+  //   if (change.currentState.accountDataEntity.uuid !=
+  //       change.nextState.accountDataEntity.uuid)
+  //     toPrint += "\tuuid: " +
+  //         change.currentState.accountDataEntity.uuid.toString() +
+  //         " --> " +
+  //         change.nextState.accountDataEntity.uuid.toString() +
+  //         '\n';
 
-    if (change.currentState.accountDataEntity.accountName !=
-        change.nextState.accountDataEntity.accountName)
-      toPrint += "\taccountName: " +
-          change.currentState.accountDataEntity.accountName.toString() +
-          " --> " +
-          change.nextState.accountDataEntity.accountName.toString() +
-          '\n';
+  //   if (change.currentState.accountDataEntity.accountName !=
+  //       change.nextState.accountDataEntity.accountName)
+  //     toPrint += "\taccountName: " +
+  //         change.currentState.accountDataEntity.accountName.toString() +
+  //         " --> " +
+  //         change.nextState.accountDataEntity.accountName.toString() +
+  //         '\n';
 
-    if (change.currentState.accountDataEntity.iconColorHex !=
-        change.nextState.accountDataEntity.iconColorHex)
-      toPrint += "\ticonColorHex: " +
-          change.currentState.accountDataEntity.iconColorHex.toString() +
-          " --> " +
-          change.nextState.accountDataEntity.iconColorHex.toString() +
-          '\n';
+  //   if (change.currentState.accountDataEntity.iconColorHex !=
+  //       change.nextState.accountDataEntity.iconColorHex)
+  //     toPrint += "\ticonColorHex: " +
+  //         change.currentState.accountDataEntity.iconColorHex.toString() +
+  //         " --> " +
+  //         change.nextState.accountDataEntity.iconColorHex.toString() +
+  //         '\n';
 
-    if (change.currentState.accountDataEntity.isShowButtonPressed !=
-        change.nextState.accountDataEntity.isShowButtonPressed)
-      toPrint += "\tisShowButtonPressed: " +
-          change.currentState.accountDataEntity.isShowButtonPressed.toString() +
-          " --> " +
-          change.nextState.accountDataEntity.isShowButtonPressed.toString() +
-          '\n';
+  //   if (change.currentState.accountDataEntity.isShowButtonPressed !=
+  //       change.nextState.accountDataEntity.isShowButtonPressed)
+  //     toPrint += "\tisShowButtonPressed: " +
+  //         change.currentState.accountDataEntity.isShowButtonPressed.toString() +
+  //         " --> " +
+  //         change.nextState.accountDataEntity.isShowButtonPressed.toString() +
+  //         '\n';
 
-    if (change.currentState.accountDataEntity.isEditButtonPressed !=
-        change.nextState.accountDataEntity.isEditButtonPressed)
-      toPrint += "\tisEditButtonPressed: " +
-          change.currentState.accountDataEntity.isEditButtonPressed.toString() +
-          " --> " +
-          change.nextState.accountDataEntity.isEditButtonPressed.toString() +
-          '\n';
+  //   if (change.currentState.accountDataEntity.isEditButtonPressed !=
+  //       change.nextState.accountDataEntity.isEditButtonPressed)
+  //     toPrint += "\tisEditButtonPressed: " +
+  //         change.currentState.accountDataEntity.isEditButtonPressed.toString() +
+  //         " --> " +
+  //         change.nextState.accountDataEntity.isEditButtonPressed.toString() +
+  //         '\n';
 
-    if (change.currentState.accountDataEntity.fields !=
-        change.nextState.accountDataEntity.fields)
-      toPrint += "\tfields: " +
-          change.currentState.accountDataEntity.fields.toString() +
-          " --> " +
-          change.nextState.accountDataEntity.fields.toString() +
-          '\n)';
+  //   if (change.currentState.accountDataEntity.fields !=
+  //       change.nextState.accountDataEntity.fields)
+  //     toPrint += "\tfields: " +
+  //         change.currentState.accountDataEntity.fields.toString() +
+  //         " --> " +
+  //         change.nextState.accountDataEntity.fields.toString() +
+  //         '\n)';
 
-    // if (change.currentState.accountDataEntity.iconImage !=
-    //     change.nextState.accountDataEntity.iconImage)
-    //   toPrint += "iconImage: " +
-    //       change.currentState.accountDataEntity.iconImage.toString() +
-    //       " --> " +
-    //       change.nextState.accountDataEntity.iconImage.toString() +
-    //       '\n)';
-
-    print(toPrint);
-    super.onChange(change);
-  }
+  //   print(toPrint);
+  // }
 
   void addField({required FieldDataEntity fieldData}) {
     final currentState = state;

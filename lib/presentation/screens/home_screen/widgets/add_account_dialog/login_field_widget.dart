@@ -1,24 +1,23 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../../core/constants/AppConstants.dart';
 
-class EmailFieldWidget extends StatefulWidget {
+class LoginFieldWidget extends StatefulWidget {
   final Function onChangedCallback;
   final BuildContext superContext;
 
-  EmailFieldWidget({
+  LoginFieldWidget({
     Key? key,
     required this.onChangedCallback,
     required this.superContext,
   }) : super(key: key);
 
   @override
-  _EmailFieldWidget createState() => _EmailFieldWidget();
+  _LoginFieldWidget createState() => _LoginFieldWidget();
 }
 
-class _EmailFieldWidget extends State<EmailFieldWidget> {
+class _LoginFieldWidget extends State<LoginFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,19 +33,14 @@ class _EmailFieldWidget extends State<EmailFieldWidget> {
           autofocus: true,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            labelText: AppLocalizations.of(context)!.email,
+            labelText: AppLocalizations.of(context)!.login,
             labelStyle: TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
           readOnly: false,
-          validator: (value) => EmailValidator.validate(value!)
-
-              /// Not used
-              ? null
-              : AppLocalizations.of(context)!.notAnEmail,
           onChanged: (value) {
-            widget.onChangedCallback(email: value);
+            widget.onChangedCallback(login: value);
           },
         ),
       ),

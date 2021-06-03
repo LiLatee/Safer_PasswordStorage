@@ -120,6 +120,7 @@
   "language": "Language",
   "nothingHere": "Nothing here.... yet :)",
   "email": "Email",
+  "login": "Login",
   "password": "Password",
   "notAnEmail": "That's not an email address"
 }

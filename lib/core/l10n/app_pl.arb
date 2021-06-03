@@ -96,6 +96,7 @@
   "language": "Język",
   "nothingHere": "Nic tu nie ma... jeszcze :)",
   "email": "Email",
+  "login": "Login",
   "password": "Hasło",
   "notAnEmail": "To nie jest adres email"
 }
