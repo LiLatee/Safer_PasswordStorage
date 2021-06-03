@@ -1,4 +1,5 @@
 # Safer
+## [Changelog](./CHANGELOG.md)
 
 ## Polski (PL)
 ***Safer*** pozwala w przejrzysty sposób zapisywać wszystkie istotne informacje dotyczące Twoich kont w internecie i nie tylko. 
