@@ -1,6 +1,7 @@
 # Safer
 ## [Changelog](./CHANGELOG.md) <-- Available apks to download
 
+{YouTube Video](https://www.youtube.com/watch?v=nzW00jSm-D8&list=PLngjrGkIotwzGb2arctKFKAfTSqlDCeoV&index=1&t=1s)
 ## Polski (PL)
 ***Safer*** pozwala w przejrzysty sposób zapisywać wszystkie istotne informacje dotyczące Twoich kont w internecie i nie tylko. 
 Nie korzysta z połączenia z internetem, wszystkie dane zapisywanie są bezpośrednio na Twoim urządzeniu, więc nie musisz bać się o ich wyciek. 
