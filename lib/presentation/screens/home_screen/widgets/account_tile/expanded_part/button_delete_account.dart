@@ -13,7 +13,7 @@ class ButtonDeleteAccount extends StatelessWidget {
   const ButtonDeleteAccount({
     Key? key,
     required AccountDataEntity accountDataEntity,
-  })   : _accountDataEntity = accountDataEntity,
+  })  : _accountDataEntity = accountDataEntity,
         super(key: key);
 
   final AccountDataEntity _accountDataEntity;

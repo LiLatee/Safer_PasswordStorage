@@ -1,4 +1,3 @@
-import 'package:application_icon/application_icon.dart';
 import 'package:flutter/material.dart';
 
 //! SharedPreferences Keys

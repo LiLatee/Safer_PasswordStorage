@@ -10,7 +10,7 @@ class ButtonShowHiddenFields extends StatelessWidget {
   const ButtonShowHiddenFields({
     Key? key,
     required AccountDataEntity accountDataEntity,
-  })   : _accountDataEntity = accountDataEntity,
+  })  : _accountDataEntity = accountDataEntity,
         super(key: key);
 
   final AccountDataEntity _accountDataEntity;

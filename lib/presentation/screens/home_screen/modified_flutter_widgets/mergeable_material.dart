@@ -37,7 +37,7 @@ class MaterialSlice extends MergeableMaterialItem {
   const MaterialSlice({
     required LocalKey key,
     required this.child,
-  })   : assert(key != null),
+  })  : assert(key != null),
         super(key);
 
   /// The contents of this slice.

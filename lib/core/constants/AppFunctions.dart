@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'AppConstants.dart';
 
 Widget generateRandomColorIconAsWidget(
-    {String name = '', double radius = AppConstants.defaultIconRadius, Color? color}) {
+    {String name = '',
+    double radius = AppConstants.defaultIconRadius,
+    Color? color}) {
   // color ??= RandomColor().randomColor(
   //     colorHue: ColorHue.multiple(
   //         colorHues: [ColorHue.red, ColorHue.green, ColorHue.blue]),
@@ -20,7 +22,8 @@ Widget generateRandomColorIconAsWidget(
     child: Center(
       child: Text(
         name.length > 0 ? name[0].toUpperCase() : '?',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.white),
+        style: TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 22, color: Colors.white),
       ),
     ),
   );
@@ -57,12 +60,16 @@ Widget generateRandomColorIconAsWidget(
 //   return iconWidget;
 // }
 
-Widget buildCircleAvatarUsingImage({double radius = AppConstants.defaultIconRadius, required Image imageForIcon}) {
+Widget buildCircleAvatarUsingImage(
+    {double radius = AppConstants.defaultIconRadius,
+    required Image imageForIcon}) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(AppConstants.defaultIconRadius),
       color: Colors.white,
-      boxShadow: [BoxShadow(blurRadius: 5, offset: Offset(0, 0), color: Colors.grey)],
+      boxShadow: [
+        BoxShadow(blurRadius: 5, offset: Offset(0, 0), color: Colors.grey)
+      ],
     ),
     child: ClipRRect(
       borderRadius: BorderRadius.circular(AppConstants.defaultIconRadius),

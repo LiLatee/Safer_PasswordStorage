@@ -10,7 +10,7 @@ class FieldEditSection extends StatelessWidget {
     required Duration duration,
     required this.index,
     // required this.buildItem,
-  })   : _right = right,
+  })  : _right = right,
         _duration = duration,
         super(key: key);
 

@@ -16,7 +16,7 @@ class ButtonAddField extends StatelessWidget {
   ButtonAddField({
     Key? key,
     required AccountDataEntity accountDataEntity,
-  })   : _accountDataEntity = accountDataEntity,
+  })  : _accountDataEntity = accountDataEntity,
         super(key: key);
 
   @override

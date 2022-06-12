@@ -11,7 +11,7 @@ class ButtonEditAccount extends StatelessWidget {
   const ButtonEditAccount({
     Key? key,
     required AccountDataEntity accountDataEntity,
-  })   : _accountDataEntity = accountDataEntity,
+  })  : _accountDataEntity = accountDataEntity,
         super(key: key);
 
   final AccountDataEntity _accountDataEntity;
