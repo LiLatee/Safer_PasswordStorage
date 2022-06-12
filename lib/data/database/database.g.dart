@@ -6,6 +6,7 @@ part of 'database.dart';
 // FloorGenerator
 // **************************************************************************
 
+// ignore: avoid_classes_with_only_static_members
 class $FloorAppDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
@@ -72,6 +73,7 @@ class _$AppDatabase extends AppDatabase {
       version: 1,
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');
+        await callback?.onConfigure?.call(database);
       },
       onOpen: (database) async {
         await callback?.onOpen?.call(database);
@@ -310,7 +312,7 @@ class _$AppSecretKeyDao extends AppSecretKeyDao {
   Future<AppSecretKeyEntity?> getAppSecretKeyEntity() async {
     return _queryAdapter.query('SELECT * FROM AppSecretKeyEntity LIMIT 1',
         mapper: (Map<String, Object?> row) =>
-            AppSecretKeyEntity(key: row['key'] as String));
+            AppSecretKeyEntity(key: row['key'] as String?));
   }
 
   @override

@@ -85,27 +85,19 @@ class _MyAppState extends State<MyApp> {
       child: Builder(
         builder: (context) => BlocBuilder<ThemeCubit, ThemeState>(
           builder: (context, themeState) {
-            return buildMaterialApp(
-                home: _getStartScreen(context: context),
-                themeState: themeState,
-                context: context);
+            return buildMaterialApp(home: _getStartScreen(context: context), themeState: themeState, context: context);
           },
         ),
       ),
     );
   }
 
-  MaterialApp buildMaterialApp(
-      {required Widget home,
-      ThemeState? themeState,
-      required BuildContext context}) {
+  MaterialApp buildMaterialApp({required Widget home, ThemeState? themeState, required BuildContext context}) {
     var languageCubitState = context.watch<LanguageCubit>().state;
 
     return MaterialApp(
       title: AppConstants.appName,
-      locale: languageCubitState.languageCode == 'system'
-          ? null
-          : Locale(languageCubitState.languageCode),
+      locale: languageCubitState.languageCode == 'system' ? null : Locale(languageCubitState.languageCode),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       // theme: state is ThemeDark ? AppTheme.darkTheme : AppTheme.lightTheme,
