@@ -23,7 +23,7 @@ import 'presentation/screens/splash_screen/splash_screen.dart';
 import 'service_locator.dart';
 import 'service_locator.dart' as di;
 
-// test commet priv
+// test commet priv 2
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
